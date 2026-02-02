@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SwipeRx — Scaling vs Mission in Social Enterprise</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-alt: #1a1a2e;
+    --surface-hover: #1e1e2a;
+    --border: #1e1e2e;
+    --border-alt: #2a2a4a;
+    --text: #e8e8ed;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-dim: #6b7280;
+    --accent: #5ec4b6;
+    --accent-glow: rgba(94, 196, 182, 0.12);
+    --green: #34d399;
+    --green-glow: rgba(52, 211, 153, 0.12);
+    --red: #ef4444;
+    --red-glow: rgba(239, 68, 68, 0.12);
+    --orange: #f59e0b;
+    --orange-glow: rgba(245, 158, 11, 0.12);
+    --highlight: #fbbf24;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --accent: #1a8a7d;
+    --accent-glow: rgba(26, 138, 125, 0.06);
+    --green: #059669;
+    --green-glow: rgba(5, 150, 105, 0.08);
+    --red: #dc2626;
+    --red-glow: rgba(220, 38, 38, 0.08);
+    --orange: #d97706;
+    --orange-glow: rgba(217, 119, 6, 0.08);
+    --highlight: #b45309;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .container { max-width: 800px; margin: 0 auto; }
+
+  .top-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 800px; margin: 0 auto; padding: 0 0 16px 0;
+  }
+  .back-link {
+    font-size: 13px; color: var(--text-muted); text-decoration: none;
+    display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+  .theme-toggle {
+    background: none; border: 1.5px solid var(--border-alt); border-radius: 8px;
+    padding: 6px 10px; cursor: pointer; font-size: 16px; color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero { text-align: center; margin: 2rem 0 3rem; animation: fadeUp 0.6s ease-out; }
+  .hero .tag {
+    display: inline-block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-glow); padding: 6px 14px;
+    border-radius: 6px; margin-bottom: 16px; font-weight: 700;
+  }
+  .hero h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .hero .subtitle { color: var(--text-muted); font-size: 14px; }
+
+  .section { margin-bottom: 2.5rem; animation: fadeUp 0.6s ease-out; }
+  .section h2 {
+    font-size: 18px; font-weight: 700; color: var(--accent);
+    margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
+  }
+  .section h3 { font-size: 15px; font-weight: 700; margin: 1.25rem 0 0.5rem; }
+  .section p { font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 0.75rem; }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 1.25rem; margin-bottom: 1rem;
+  }
+  .card-title { font-size: 14px; font-weight: 700; margin-bottom: 0.5rem; }
+  .card p { margin-bottom: 0.4rem; }
+
+  .highlight-box {
+    background: var(--accent-glow); border: 1px solid var(--accent);
+    border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;
+  }
+  .highlight-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 0.5rem; }
+  .highlight-box p { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+  .warning-box {
+    background: var(--orange-glow); border: 1px solid var(--orange);
+    border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;
+  }
+  .warning-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--orange); margin-bottom: 0.5rem; }
+  .warning-box p { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+  .danger-box {
+    background: var(--red-glow); border: 1px solid var(--red);
+    border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;
+  }
+  .danger-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--red); margin-bottom: 0.5rem; }
+  .danger-box p { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+  .success-box {
+    background: var(--green-glow); border: 1px solid var(--green);
+    border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;
+  }
+  .success-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--green); margin-bottom: 0.5rem; }
+  .success-box p { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+  .vs-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;
+  }
+  @media (max-width: 600px) { .vs-grid { grid-template-columns: 1fr; } }
+
+  .footer {
+    margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+    text-align: center; font-size: 12px; color: var(--text-dim);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="../index.html" class="back-link">← Back to Study Hub</a>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+    <span id="theme-icon">🌙</span>
+  </button>
+</div>
+
+<div class="container">
+  <div class="hero">
+    <span class="tag">Social Innovation & Design — Case Study</span>
+    <h1>🌱 SwipeRx — Scaling vs Mission</h1>
+    <p class="subtitle">When does growth help your mission, and when does it betray it?</p>
+  </div>
+
+  <!-- Overview -->
+  <div class="section">
+    <h2>📱 What is SwipeRx?</h2>
+    <p><strong>SwipeRx</strong> (formerly mClinica) started as a <strong>pharmacy education and networking platform</strong> in Southeast Asia. Pharmacists use it for continuing education, drug information, and professional community.</p>
+    <p>The company has since expanded into <strong>wholesale distribution</strong> (connecting pharmacies directly with manufacturers) and <strong>retail pharmacy ownership</strong> through the <strong>Apotek Inofarma</strong> brand — a chain of pharmacies targeting underserved peri-urban and rural areas.</p>
+    <p>This evolution raises the central question: <strong>when does scaling help your social mission, and when does it start to undermine it?</strong></p>
+  </div>
+
+  <!-- Zahra Typology -->
+  <div class="section">
+    <h2>📊 Zahra Typology of Social Enterprises</h2>
+    <p>Zahra et al. identify different types of social entrepreneurs based on how they approach scaling:</p>
+
+    <div class="card">
+      <div class="card-title">🔬 Social Bricoleurs</div>
+      <p>Address local, small-scale problems. Limited resources, limited scope. Think: a neighborhood food bank.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🏗️ Social Constructionists</div>
+      <p>Build structures to fill gaps that markets and governments don't address. Create new institutional forms. More systematic than bricoleurs.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🌍 Social Engineers</div>
+      <p>Aim to replace existing systems entirely. Revolutionary scope. Think: microfinance movements, universal education platforms.</p>
+    </div>
+
+    <p>SwipeRx started as a <strong>constructionist</strong> — building a new platform to connect and educate pharmacists where nothing existed. But as it scales into wholesale and retail, it's moving toward <strong>social engineer</strong> territory.</p>
+  </div>
+
+  <!-- The Scaling Question -->
+  <div class="section">
+    <h2>⚖️ The Scaling Question</h2>
+    <p>Not all scaling is created equal. The critical question is whether <strong>revenue growth and social impact move in the same direction</strong> or diverge.</p>
+
+    <div class="vs-grid">
+      <div class="success-box">
+        <div class="label">✅ Scaling Helps Mission</div>
+        <p>Revenue model and social impact <strong>compound together</strong>. More customers = more impact. Growth reinforces the mission.</p>
+      </div>
+      <div class="danger-box">
+        <div class="label">❌ Scaling Hurts Mission</div>
+        <p>Revenue model and social impact <strong>diverge</strong>. Growth pressures push toward profit at the expense of beneficiaries.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Compartamos -->
+  <div class="section">
+    <h2>🏦 The Compartamos Warning</h2>
+    <p><strong>Compartamos Banco</strong> is the textbook case of scaling gone wrong in social enterprise:</p>
+
+    <div class="card">
+      <p>Started as a Mexican microfinance NGO serving poor women borrowers. Scaled aggressively, converted to a for-profit bank, then <strong>IPO'd in 2007</strong> — making founders and investors rich.</p>
+      <p>The problem? To sustain growth and satisfy shareholders, Compartamos charged <strong>annual interest rates of 80–100%</strong> on loans to poor borrowers. The people the organization was created to help became the source of profit extraction.</p>
+      <p style="color: var(--red); font-weight: 600;">Muhammad Yunus (Nobel Peace Prize, Grameen Bank) publicly condemned it as a betrayal of microfinance principles.</p>
+    </div>
+
+    <p>Compartamos shows what happens when the revenue model and social mission diverge — and financial incentives win.</p>
+  </div>
+
+  <!-- SwipeRx Wholesale -->
+  <div class="section">
+    <h2>📦 SwipeRx Wholesale: Where It Works</h2>
+
+    <div class="success-box">
+      <div class="label">✅ Revenue + Impact Aligned</div>
+      <p>SwipeRx's wholesale platform connects pharmacies directly with manufacturers, <strong>cutting out middlemen</strong>. This simultaneously:</p>
+      <p>• <strong>Lowers drug prices</strong> for pharmacies (and their patients)</p>
+      <p>• <strong>Improves drug quality</strong> by shortening and formalizing the supply chain</p>
+      <p>• <strong>Generates revenue</strong> for SwipeRx through transaction margins</p>
+      <p>Every additional pharmacy on the platform = more revenue AND better drug access. <strong>The incentives compound in the same direction.</strong></p>
+    </div>
+  </div>
+
+  <!-- Apotek Inofarma -->
+  <div class="section">
+    <h2>🏪 Apotek Inofarma: Double Social Impact</h2>
+    <p>SwipeRx's retail pharmacy expansion through <strong>Apotek Inofarma</strong> targets peri-urban and rural areas in Indonesia — places that are <strong>underserved by existing pharmacy chains</strong>.</p>
+
+    <div class="card">
+      <div class="card-title">🎯 Two Layers of Social Impact</div>
+      <p><strong>Layer 1: Access.</strong> Bringing quality pharmaceutical services to areas where people currently lack convenient access to medicines and professional pharmacy care.</p>
+      <p><strong>Layer 2: Economic Empowerment.</strong> The pharmacies are led by <strong>women pharmacists</strong>, creating professional employment and economic opportunity in underserved communities. This is especially meaningful in Indonesia's peri-urban context.</p>
+    </div>
+
+    <p>When both layers reinforce each other — access expansion AND women's empowerment — the social enterprise model is at its strongest.</p>
+  </div>
+
+  <!-- Key Insight -->
+  <div class="highlight-box">
+    <div class="label">💡 Key Insight</div>
+    <p><strong>"Scaling works when the revenue model and social impact compound in the same direction. The moment those two diverge — that's when you need to watch out."</strong></p>
+    <p style="margin-top: 0.5rem;">SwipeRx wholesale ✅ — every new pharmacy on the platform increases both revenue and drug access. Compartamos ❌ — growth required extracting more from the people they were supposed to help.</p>
+  </div>
+
+  <!-- Risk -->
+  <div class="section">
+    <h2>⚠️ Potential Risk</h2>
+
+    <div class="warning-box">
+      <div class="label">🔍 Watch Point</div>
+      <p>At pharmacy #500, does SwipeRx start creeping into areas where <strong>existing wholesale partners already operate?</strong> If the retail expansion shifts from genuinely underserved areas to competitive urban markets, the social impact justification weakens — and it starts looking more like a conventional pharmacy chain that happens to have a social origin story.</p>
+      <p style="margin-top: 0.5rem;">The test: <strong>is each new pharmacy still serving people who wouldn't otherwise have access?</strong> If yes, keep going. If no, pause and reassess.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    Social Innovation & Design — Study Hub · Built with 🐱 by Robin
+  </div>
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('theme-icon').textContent = saved === 'dark' ? '☀️' : '🌙';
+  });
+})();
+</script>
+</body>
+</html>

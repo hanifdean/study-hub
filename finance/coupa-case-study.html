@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coupa — Venture Growth & IPO Strategy</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-alt: #1a1a2e;
+    --surface-hover: #1e1e2a;
+    --border: #1e1e2e;
+    --border-alt: #2a2a4a;
+    --text: #e8e8ed;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-dim: #6b7280;
+    --accent: #5ec4b6;
+    --accent-glow: rgba(94, 196, 182, 0.12);
+    --green: #34d399;
+    --green-glow: rgba(52, 211, 153, 0.12);
+    --red: #ef4444;
+    --red-glow: rgba(239, 68, 68, 0.12);
+    --orange: #f59e0b;
+    --orange-glow: rgba(245, 158, 11, 0.12);
+    --highlight: #fbbf24;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --accent: #1a8a7d;
+    --accent-glow: rgba(26, 138, 125, 0.06);
+    --green: #059669;
+    --green-glow: rgba(5, 150, 105, 0.08);
+    --red: #dc2626;
+    --red-glow: rgba(220, 38, 38, 0.08);
+    --orange: #d97706;
+    --orange-glow: rgba(217, 119, 6, 0.08);
+    --highlight: #b45309;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .container { max-width: 800px; margin: 0 auto; }
+
+  .top-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 800px; margin: 0 auto; padding: 0 0 16px 0;
+  }
+  .back-link {
+    font-size: 13px; color: var(--text-muted); text-decoration: none;
+    display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+  .theme-toggle {
+    background: none; border: 1.5px solid var(--border-alt); border-radius: 8px;
+    padding: 6px 10px; cursor: pointer; font-size: 16px; color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero { text-align: center; margin: 2rem 0 3rem; animation: fadeUp 0.6s ease-out; }
+  .hero .tag {
+    display: inline-block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-glow); padding: 6px 14px;
+    border-radius: 6px; margin-bottom: 16px; font-weight: 700;
+  }
+  .hero h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .hero .subtitle { color: var(--text-muted); font-size: 14px; }
+
+  .section { margin-bottom: 2.5rem; animation: fadeUp 0.6s ease-out; }
+  .section h2 {
+    font-size: 18px; font-weight: 700; color: var(--accent);
+    margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
+  }
+  .section h3 { font-size: 15px; font-weight: 700; margin: 1.25rem 0 0.5rem; }
+  .section p { font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 0.75rem; }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 1.25rem; margin-bottom: 1rem;
+  }
+  .card-title { font-size: 14px; font-weight: 700; margin-bottom: 0.5rem; }
+  .card p { margin-bottom: 0.4rem; }
+
+  .highlight-box {
+    background: var(--accent-glow); border: 1px solid var(--accent);
+    border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;
+  }
+  .highlight-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 0.5rem; }
+  .highlight-box p { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+  table {
+    width: 100%; border-collapse: collapse; font-size: 13px; margin: 1rem 0;
+  }
+  th, td {
+    padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border);
+  }
+  th { font-weight: 700; color: var(--accent); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  td { color: var(--text-secondary); }
+
+  .metric-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem; margin: 1rem 0;
+  }
+  .metric {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 1rem; text-align: center;
+  }
+  .metric .value { font-size: 24px; font-weight: 800; color: var(--accent); }
+  .metric .label { font-size: 11px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+
+  .timeline { margin: 1rem 0; }
+  .timeline-item {
+    display: flex; gap: 1rem; padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-year { font-weight: 700; color: var(--accent); min-width: 60px; font-size: 13px; }
+  .timeline-desc { font-size: 13px; color: var(--text-secondary); }
+
+  .footer {
+    margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+    text-align: center; font-size: 12px; color: var(--text-dim);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="../index.html" class="back-link">← Back to Study Hub</a>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+    <span id="theme-icon">🌙</span>
+  </button>
+</div>
+
+<div class="container">
+  <div class="hero">
+    <span class="tag">Entrepreneurial Finance — Case Study</span>
+    <h1>💰 Coupa — Venture Growth & IPO Strategy</h1>
+    <p class="subtitle">How a SaaS company prioritized growth over profitability — and why the math worked</p>
+  </div>
+
+  <!-- Company Overview -->
+  <div class="section">
+    <h2>🏢 Company Overview</h2>
+    <p><strong>Coupa Software</strong> is a SaaS platform for <strong>Business Spend Management</strong> (BSM) — helping companies manage indirect spending (everything that isn't core COGS). Think procurement, invoicing, expenses, and supplier management.</p>
+    <p>Led by CEO <strong>Rob Bernshteyn</strong>, who joined in 2009 and transformed the company from on-premise software to a cloud-first SaaS model. Bernshteyn brought deep enterprise SaaS experience, having previously been VP of Marketing at SuccessFactors.</p>
+  </div>
+
+  <!-- POC Framework -->
+  <div class="section">
+    <h2>🧭 POC Framework</h2>
+    <p>The <strong>People–Opportunity–Context</strong> framework helps evaluate whether a venture is worth backing:</p>
+
+    <div class="card">
+      <div class="card-title">👤 People</div>
+      <p>Rob Bernshteyn — experienced enterprise SaaS executive. Proven ability to build sales teams and drive enterprise adoption. Strong board with VC backing from Battery Ventures, Crosslink Capital.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🎯 Opportunity</div>
+      <p><strong>Large addressable market</strong> — indirect spending is ~30% of revenue for most companies, yet poorly managed. Clear ROI proposition: customers see 5–10x return on platform spend. <strong>High switching costs</strong> once embedded in procurement workflows. Land-and-expand model within enterprises.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🌍 Context</div>
+      <p>Post-2008 financial crisis — companies actively looking to cut costs. SaaS gaining enterprise credibility (Salesforce proving the model). Cloud infrastructure maturing. Procurement automation was still early innings.</p>
+    </div>
+  </div>
+
+  <!-- Cash Flow Drivers -->
+  <div class="section">
+    <h2>💸 Three Cash Flow Drivers</h2>
+
+    <div class="metric-grid">
+      <div class="metric">
+        <div class="value">~52%</div>
+        <div class="label">Gross Margin</div>
+      </div>
+      <div class="metric">
+        <div class="value">-$12M/yr</div>
+        <div class="label">Net Income (investing in growth)</div>
+      </div>
+      <div class="metric">
+        <div class="value">~-30%</div>
+        <div class="label">Net Operating Assets / Rev</div>
+      </div>
+    </div>
+
+    <h3>1. Profitability</h3>
+    <p>Gross margins of ~52% are healthy for SaaS, but the company was losing ~$12M/year. This is <strong>deliberate</strong> — the losses came from aggressive sales & marketing investment, not from a broken business model. Each dollar spent on growth generated compounding future revenue.</p>
+
+    <h3>2. Asset Intensity</h3>
+    <p>Coupa operated with <strong>negative net operating assets</strong> (~-30% of revenue). How? <strong>Deferred revenue.</strong> Customers pay upfront for annual subscriptions, so the business is effectively funded by its customers. This is the SaaS dream — you get paid before you deliver the service.</p>
+
+    <h3>3. Growth (The Key Driver)</h3>
+    <p>This is where the math gets compelling:</p>
+
+    <div class="card">
+      <div class="card-title">📊 Sales Rep Unit Economics</div>
+      <table>
+        <tr><th>Metric</th><th>Value</th></tr>
+        <tr><td>Loaded cost per rep (salary + benefits + overhead)</td><td>~$192K/year</td></tr>
+        <tr><td>Revenue per rep by Year 6</td><td>~$996K/year</td></tr>
+        <tr><td>IRR per sales rep</td><td>>110%</td></tr>
+        <tr><td>Payback period</td><td>~2 years</td></tr>
+      </table>
+      <p style="font-size:13px; color:var(--text-muted); margin-top:0.5rem;">Each sales rep is essentially a mini-investment with >110% IRR. When your unit economics look like this, the rational move is to hire as fast as possible.</p>
+    </div>
+  </div>
+
+  <!-- Strategic Options -->
+  <div class="section">
+    <h2>🎯 Strategic Options</h2>
+    <table>
+      <tr><th>Strategy</th><th>Details</th><th>Revenue Target</th></tr>
+      <tr><td><strong>Organic Growth</strong></td><td>Add ~20 reps/year, steady expansion</td><td>~$35M</td></tr>
+      <tr><td><strong>Aggressive Growth</strong></td><td>Add ~60 reps/year, blitz-scale</td><td>~$45M</td></tr>
+      <tr><td><strong>Roll-up Acquisitions</strong></td><td>Acquire complementary tools to expand platform</td><td>Variable</td></tr>
+      <tr><td><strong>Exit / Sale</strong></td><td>Sell to strategic buyer (SAP, Oracle)</td><td>N/A</td></tr>
+    </table>
+  </div>
+
+  <!-- Valuation -->
+  <div class="section">
+    <h2>📈 Valuation</h2>
+    <p>Traditional P/E valuation doesn't work here — the company is intentionally unprofitable. Instead, we use <strong>revenue multiples</strong>, which is standard for high-growth SaaS:</p>
+
+    <div class="metric-grid">
+      <div class="metric">
+        <div class="value">~$210M</div>
+        <div class="label">Organic Scenario (6x Revenue)</div>
+      </div>
+      <div class="metric">
+        <div class="value">~$452M</div>
+        <div class="label">Aggressive Scenario (10x Revenue)</div>
+      </div>
+    </div>
+
+    <p>The aggressive scenario commands a higher multiple because faster growth signals market dominance and higher future cash flows. Investors pay a premium for velocity.</p>
+  </div>
+
+  <!-- Key Takeaway -->
+  <div class="highlight-box">
+    <div class="label">💡 Key Takeaway</div>
+    <p><strong>For high-growth ventures, the priority is NOT immediate profitability.</strong> When your unit economics are attractive (each sales rep generates >110% IRR), the rational strategy is to invest aggressively in growth. The "losses" aren't losses — they're investments with compounding returns. You're buying future cash flows at a discount.</p>
+  </div>
+
+  <!-- Aftermath -->
+  <div class="section">
+    <h2>🔮 What Actually Happened</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="timeline-year">2013</span>
+        <span class="timeline-desc">Series F — raised ~$400M cumulative</span>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2015</span>
+        <span class="timeline-desc">Series G — valuation reached ~$1B (unicorn status)</span>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2016</span>
+        <span class="timeline-desc"><strong>IPO on NASDAQ</strong> at $1.9B valuation</span>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2023</span>
+        <span class="timeline-desc">Taken private by <strong>Thoma Bravo</strong> for ~$8B — validating the long-term platform value</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Entrepreneurial Finance — Study Hub · Built with 🐱 by Robin
+  </div>
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('theme-icon').textContent = saved === 'dark' ? '☀️' : '🌙';
+  });
+})();
+</script>
+</body>
+</html>

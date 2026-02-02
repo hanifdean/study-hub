@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 3 Readings — Kroes, Simon & Lawson</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-alt: #1a1a2e;
+    --surface-hover: #1e1e2a;
+    --border: #1e1e2e;
+    --border-alt: #2a2a4a;
+    --text: #e8e8ed;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-dim: #6b7280;
+    --accent: #5ec4b6;
+    --accent-glow: rgba(94, 196, 182, 0.12);
+    --green: #34d399;
+    --green-glow: rgba(52, 211, 153, 0.12);
+    --red: #ef4444;
+    --red-glow: rgba(239, 68, 68, 0.12);
+    --orange: #f59e0b;
+    --orange-glow: rgba(245, 158, 11, 0.12);
+    --highlight: #fbbf24;
+    --purple: #a78bfa;
+    --purple-glow: rgba(167, 139, 250, 0.12);
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --accent: #1a8a7d;
+    --accent-glow: rgba(26, 138, 125, 0.06);
+    --green: #059669;
+    --green-glow: rgba(5, 150, 105, 0.08);
+    --red: #dc2626;
+    --red-glow: rgba(220, 38, 38, 0.08);
+    --orange: #d97706;
+    --orange-glow: rgba(217, 119, 6, 0.08);
+    --highlight: #b45309;
+    --purple: #7c3aed;
+    --purple-glow: rgba(124, 58, 237, 0.08);
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .container { max-width: 800px; margin: 0 auto; }
+
+  .top-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 800px; margin: 0 auto; padding: 0 0 16px 0;
+  }
+  .back-link {
+    font-size: 13px; color: var(--text-muted); text-decoration: none;
+    display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+  .theme-toggle {
+    background: none; border: 1.5px solid var(--border-alt); border-radius: 8px;
+    padding: 6px 10px; cursor: pointer; font-size: 16px; color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero { text-align: center; margin: 2rem 0 3rem; animation: fadeUp 0.6s ease-out; }
+  .hero .tag {
+    display: inline-block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-glow); padding: 6px 14px;
+    border-radius: 6px; margin-bottom: 16px; font-weight: 700;
+  }
+  .hero h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .hero .subtitle { color: var(--text-muted); font-size: 14px; max-width: 500px; margin: 0 auto; }
+
+  .section { margin-bottom: 2.5rem; animation: fadeUp 0.6s ease-out; }
+  .section h2 {
+    font-size: 18px; font-weight: 700; color: var(--accent);
+    margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
+  }
+  .section h3 { font-size: 15px; font-weight: 700; margin: 1.25rem 0 0.5rem; }
+  .section p { font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 0.75rem; }
+  .section ul { margin: 0.5rem 0 1rem 1.5rem; }
+  .section li { font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 0.4rem; }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 1.25rem; margin-bottom: 1rem;
+  }
+  .card-title { font-size: 14px; font-weight: 700; margin-bottom: 0.5rem; }
+
+  .highlight-box {
+    background: var(--accent-glow); border: 1px solid var(--accent);
+    border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;
+  }
+  .highlight-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 0.5rem; }
+  .highlight-box p { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+  .purple-box {
+    background: var(--purple-glow); border: 1px solid var(--purple);
+    border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;
+  }
+  .purple-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--purple); margin-bottom: 0.5rem; }
+  .purple-box p { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+  .concept-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;
+  }
+  @media (max-width: 600px) { .concept-grid { grid-template-columns: 1fr; } }
+
+  .concept-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 1rem;
+  }
+  .concept-card .title { font-size: 12px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.4rem; }
+  .concept-card p { font-size: 13px; line-height: 1.6; color: var(--text-secondary); margin-bottom: 0; }
+
+  .reading-header {
+    display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;
+  }
+  .reading-number {
+    background: var(--accent); color: var(--bg); width: 32px; height: 32px;
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px; flex-shrink: 0;
+  }
+  .reading-title { font-size: 16px; font-weight: 700; }
+
+  .footer {
+    margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+    text-align: center; font-size: 12px; color: var(--text-dim);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="../index.html" class="back-link">← Back to Study Hub</a>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+    <span id="theme-icon">🌙</span>
+  </button>
+</div>
+
+<div class="container">
+  <div class="hero">
+    <span class="tag">Public Management — Week 3 Readings</span>
+    <h1>📖 Kroes, Simon & Lawson</h1>
+    <p class="subtitle">Dual nature of artefacts, the science of the artificial, and why people can't draw bicycles</p>
+  </div>
+
+  <!-- Reading 1: Kroes -->
+  <div class="section">
+    <div class="reading-header">
+      <span class="reading-number">1</span>
+      <span class="reading-title">Kroes — Dual Nature of Technical Artefacts</span>
+    </div>
+
+    <p>Kroes argues that technical artefacts have a <strong>dual nature</strong> — they can be described in two fundamentally different ways that cannot be reduced to each other:</p>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="title">Structural Description</div>
+        <p>What the artefact <em>is</em> physically — its materials, components, geometry, physical properties. Governed by laws of physics. Objective, measurable.</p>
+      </div>
+      <div class="concept-card">
+        <div class="title">Functional Description</div>
+        <p>What the artefact <em>does</em> — its purpose, use, the human intention behind it. Governed by intentional frameworks. Depends on context and user.</p>
+      </div>
+    </div>
+
+    <h3>Two Frameworks</h3>
+    <ul>
+      <li><strong>Physical framework:</strong> Describes the artefact using natural science — causal mechanisms, material properties, physical processes</li>
+      <li><strong>Intentional framework:</strong> Describes the artefact using purpose and design intent — what it's <em>for</em>, what problem it solves</li>
+    </ul>
+
+    <h3>Designer vs User Intentions</h3>
+    <p>There's a crucial distinction between <strong>designer intentions</strong> (what the creator meant the artefact to do) and <strong>user intentions</strong> (how people actually use it). These don't always align — think of how people use screwdrivers as pry bars, or how social media platforms get used in ways their designers never intended.</p>
+
+    <h3>Epistemological & Ontological Implications</h3>
+    <p><strong>Epistemologically:</strong> You need <em>both</em> descriptions to fully understand a technical artefact. Knowing only the physical structure doesn't tell you the function, and knowing only the function doesn't tell you how it works.</p>
+    <p><strong>Ontologically:</strong> The artefact exists simultaneously as a physical object AND as a functional entity. Neither description is more "real" than the other — the dual nature is fundamental.</p>
+  </div>
+
+  <!-- Reading 2: Simon -->
+  <div class="section">
+    <div class="reading-header">
+      <span class="reading-number">2</span>
+      <span class="reading-title">Simon — Understanding the Natural and Artificial Worlds</span>
+    </div>
+
+    <h3>The Need for a "Science of the Artificial"</h3>
+    <p>Simon argues that the natural sciences are insufficient for understanding <strong>designed systems</strong> — things made by humans to serve purposes. We need a distinct <strong>science of the artificial</strong> that deals with how things <em>ought to be</em> (design) rather than just how things <em>are</em> (analysis).</p>
+
+    <h3>Professional Schools' Crisis of Identity</h3>
+    <p>Engineering, business, medicine, law — professional schools struggled because they tried to become more "scientific" by importing natural science methods. But their core activity is <strong>design</strong>, not analysis. Simon argues they should reclaim design as their intellectual core.</p>
+
+    <h3>Artefact as Interface</h3>
+    <div class="card">
+      <div class="card-title">🔗 Inner Environment ↔ Outer Environment</div>
+      <p>Every artefact sits at the <strong>interface</strong> between:</p>
+      <p><strong>Inner environment:</strong> The internal structure and mechanisms — how it works under the hood</p>
+      <p><strong>Outer environment:</strong> The context in which it operates — the problems it faces, the goals it serves</p>
+      <p>The artefact's behavior emerges from the <strong>interaction</strong> between inner and outer environments. You can understand what it does (outer) without understanding how (inner) — this is <strong>functional equivalence</strong>.</p>
+    </div>
+
+    <h3>Functional Equivalence</h3>
+    <p>Different inner environments can produce the same outer behavior. A mechanical watch and a digital watch both tell time — same function, completely different mechanisms. This means <strong>function doesn't determine structure</strong> (and vice versa).</p>
+
+    <h3>State vs Process Descriptions</h3>
+    <p><strong>State description:</strong> What the system looks like at a point in time (snapshot). <strong>Process description:</strong> How the system evolves over time (movie). Both are needed — state tells you where you are, process tells you how you get somewhere.</p>
+
+    <h3>Simulation</h3>
+    <p>Simon was an early advocate of <strong>simulation as a way of understanding</strong>. If you can simulate a system, you understand it. Simulation bridges the gap between inner mechanism and outer behavior.</p>
+
+    <h3>Hierarchy & Near-Decomposability</h3>
+    <p>Complex systems are almost always <strong>hierarchical</strong> — composed of subsystems that are themselves composed of sub-subsystems. These systems are <strong>nearly decomposable</strong>: interactions within subsystems are much stronger than interactions between subsystems. This is what makes complexity manageable — you can understand each level somewhat independently.</p>
+  </div>
+
+  <!-- Reading 3: Lawson -->
+  <div class="section">
+    <div class="reading-header">
+      <span class="reading-number">3</span>
+      <span class="reading-title">Lawson — The Science of Cycology</span>
+    </div>
+
+    <h3>The Illusion of Explanatory Depth</h3>
+    <p>People systematically <strong>overestimate how well they understand</strong> how everyday things work. Lawson demonstrates this with a beautifully simple experiment: <strong>ask people to draw a bicycle.</strong></p>
+
+    <div class="card">
+      <div class="card-title">🚲 The Bicycle Drawing Experiment</div>
+      <p>When asked to draw a bicycle from memory, <strong>over 40% of participants make significant structural errors</strong> — misplacing the chain, connecting the frame incorrectly, or putting pedals in the wrong position.</p>
+      <p>This is a bicycle. Something most people have ridden. Something they see every day. And they still can't accurately represent its structure.</p>
+    </div>
+
+    <h3>Key Findings</h3>
+    <ul>
+      <li><strong>Experts vs non-experts:</strong> People with mechanical expertise (engineers, bike mechanics) made significantly fewer errors, but even some experts got details wrong</li>
+      <li><strong>Sex differences:</strong> Men tended to produce more accurate drawings than women, likely reflecting differences in mechanical exposure and interest rather than inherent ability</li>
+      <li><strong>Self-rating disconnect:</strong> People who rated their understanding as high often produced drawings with major errors — confidence and competence were poorly correlated</li>
+    </ul>
+
+    <p>The takeaway: <strong>familiarity with function creates an illusion of understanding structure.</strong> You know what a bicycle does (gets you from A to B) without knowing how it actually works (chain drives rear wheel through gear mechanism, frame geometry creates stability, etc.).</p>
+  </div>
+
+  <!-- How They Connect -->
+  <div class="section">
+    <h2>🔗 How They Connect</h2>
+
+    <div class="card">
+      <p><strong>Kroes</strong> gives us the <em>philosophical framework</em>: artefacts have a dual nature (structural + functional), and you need both descriptions.</p>
+      <p><strong>Simon</strong> gives us the <em>practical science</em>: artefacts sit at the interface between inner and outer environments, and we need design-oriented disciplines to understand them.</p>
+      <p><strong>Lawson</strong> gives us the <em>empirical evidence</em>: people systematically lack functional understanding even for simple, everyday objects.</p>
+    </div>
+
+    <p>The thread connecting all three: <strong>people only engage with the functional side</strong> (Kroes) — they understand the outer environment (Simon) — without ever looking under the hood at the structural side (Kroes) or inner environment (Simon). Lawson proves this empirically.</p>
+  </div>
+
+  <!-- Conversation Insight -->
+  <div class="purple-box">
+    <div class="label">💬 From the Discussion</div>
+    <p><strong>"People understand the outer environment (what a bicycle is for) but not the inner environment (how gears, chain, and pedals connect). Simon's interface concept maps directly onto Kroes's structure-function distinction."</strong></p>
+    <p style="margin-top: 0.75rem;">Kroes's <em>structural description</em> = Simon's <em>inner environment</em>. Kroes's <em>functional description</em> = Simon's <em>outer environment</em>. And Lawson shows that for most people, the inner/structural side is effectively invisible — we navigate the world through function alone, confident we understand more than we do.</p>
+  </div>
+
+  <!-- Implications -->
+  <div class="highlight-box">
+    <div class="label">💡 Why This Matters for Public Management</div>
+    <p>Public institutions are artefacts too — designed systems with inner mechanisms and outer purposes. Citizens (and often managers) engage only with the <strong>functional surface</strong>: what the institution does. Understanding <em>how</em> it works — its inner environment, its structural mechanisms — requires deliberate effort. And as Lawson shows, most people overestimate how well they already understand it.</p>
+  </div>
+
+  <div class="footer">
+    Public Management — Study Hub · Built with 🐱 by Robin
+  </div>
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('theme-icon').textContent = saved === 'dark' ? '☀️' : '🌙';
+  });
+})();
+</script>
+</body>
+</html>

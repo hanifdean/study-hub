@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -379,17 +379,17 @@
   <div class="header">
     <div class="header-left">
       <h1>📚 Study Hub</h1>
-      <p><span id="page-count">14</span> pages, curated by Robin 🐱</p>
+      <p><span id="page-count">17</span> pages, curated by Robin 🐱</p>
     </div>
     <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
-      <span id="theme-icon">☀️</span>
+      <span id="theme-icon">🌙</span>
     </button>
   </div>
 
   <!-- Search -->
   <div class="search-wrap">
     <span class="search-icon">🔍</span>
-    <input type="text" id="search-input" placeholder="Search pages, tags, topics..." autocomplete="off">
+    <input type="text" id="search-input" placeholder="What are you looking for? Try 'semiconductors', 'Coupa', 'mind map'..." autocomplete="off">
   </div>
 
   <!-- Controls: sort -->
@@ -407,7 +407,7 @@
   <!-- Tabs -->
   <div class="tabs">
     <button class="tab active" data-section="sasya" onclick="switchTab('sasya', this)">✨ Sasya's Materials</button>
-    <button class="tab" data-section="hanif" onclick="switchTab('hanif', this)">💼 Hanif's Materials</button>
+    <button class="tab" data-section="hanif" onclick="switchTab('hanif', this)">💻 Hanif's Materials</button>
   </div>
 
   <!-- Favorites -->
@@ -441,12 +441,48 @@ const PAGES = [
     title: 'Simon — Mind Maps',
     icon: '🗺️',
     desc: "Two interactive mind maps of Herbert Simon's \"Understanding the Natural and the Artificial Worlds\" — Academic Disciplines & Representing Machines.",
-    tags: ['Week 3', 'Mind Map', 'Simon'],
+    tags: ['Public Management', 'Mind Map'],
     url: 'public-management/simon-mindmaps.html',
     category: 'Public Management',
     categoryIcon: '🏛️',
     section: 'sasya',
     date: '2025-01-15'
+  },
+  {
+    id: 'coupa-case',
+    title: 'Coupa — Venture Growth & IPO Strategy',
+    icon: '💰',
+    desc: 'POC framework, cash flow drivers, sales rep IRR, organic vs aggressive growth, valuation at different scenarios.',
+    url: 'finance/coupa-case-study.html',
+    tags: ['Finance', 'Case Study'],
+    category: 'Entrepreneurial Finance',
+    categoryIcon: '💰',
+    section: 'sasya',
+    date: '2026-02-01'
+  },
+  {
+    id: 'swiperx-case',
+    title: 'SwipeRx — Scaling vs Mission in Social Enterprise',
+    icon: '🌱',
+    desc: 'Zahra typology, Compartamos comparison, when scaling helps vs hurts mission, Apotek Inofarma expansion analysis.',
+    url: 'social-innovation/swiperx-case.html',
+    tags: ['Social Innovation', 'Case Study'],
+    category: 'Social Innovation & Design',
+    categoryIcon: '🌱',
+    section: 'sasya',
+    date: '2026-01-31'
+  },
+  {
+    id: 'pm-w3-summaries',
+    title: 'Week 3 Readings — Kroes, Simon & Lawson',
+    icon: '📖',
+    desc: 'Dual nature of artefacts, science of the artificial, illusion of explanatory depth. How they connect to public management.',
+    url: 'public-management/w3-summaries.html',
+    tags: ['Public Management', 'Summary'],
+    category: 'Public Management',
+    categoryIcon: '🏛️',
+    section: 'sasya',
+    date: '2026-02-01'
   },
   // --- Hanif: AI Value Chain ---
   {
@@ -454,7 +490,7 @@ const PAGES = [
     title: 'Layer 1: Raw Materials & Equipment',
     icon: '⛏️',
     desc: 'Rare earths, silicon, copper, lithography machines (ASML), and the geopolitical chokepoints at the base of the stack.',
-    tags: ['Layer 1', 'Deep Dive'],
+    tags: ['Semiconductors', 'Deep Dive'],
     url: 'ai-value-chain/layer1-raw-materials.html',
     category: 'AI & Semiconductor Value Chain',
     categoryIcon: '🤖',
@@ -466,7 +502,7 @@ const PAGES = [
     title: 'Layer 2: Chip Design',
     icon: '🧠',
     desc: 'Nvidia, AMD, Broadcom, ARM, Qualcomm — GPU architectures, EDA tools, and the fabless model.',
-    tags: ['Layer 2', 'Deep Dive'],
+    tags: ['Semiconductors', 'Deep Dive'],
     url: 'ai-value-chain/layer2-chip-design.html',
     category: 'AI & Semiconductor Value Chain',
     categoryIcon: '🤖',
@@ -478,7 +514,7 @@ const PAGES = [
     title: 'Layer 3: Foundries & Fabrication',
     icon: '🏭',
     desc: 'TSMC, Samsung, Intel — process nodes, fab economics, and why manufacturing is the ultimate bottleneck.',
-    tags: ['Layer 3', 'Deep Dive'],
+    tags: ['Semiconductors', 'Deep Dive'],
     url: 'ai-value-chain/layer3-foundries.html',
     category: 'AI & Semiconductor Value Chain',
     categoryIcon: '🤖',
@@ -490,7 +526,7 @@ const PAGES = [
     title: 'Layer 4: HBM & Memory',
     icon: '💾',
     desc: 'High Bandwidth Memory — SK Hynix, Samsung, Micron. Why HBM is the AI bottleneck and production tradeoffs with consumer DRAM.',
-    tags: ['Layer 4', 'Deep Dive'],
+    tags: ['Semiconductors', 'Deep Dive'],
     url: 'ai-value-chain/hbm-memory-layer.html',
     category: 'AI & Semiconductor Value Chain',
     categoryIcon: '🤖',
@@ -502,7 +538,7 @@ const PAGES = [
     title: 'CoWoS Advanced Packaging',
     icon: '📦',
     desc: "TSMC's Chip-on-Wafer-on-Substrate — the critical step that bonds chips to HBM, and why it's capacity-constrained.",
-    tags: ['Packaging', 'Deep Dive'],
+    tags: ['Semiconductors', 'Deep Dive'],
     url: 'ai-value-chain/cowos-packaging.html',
     category: 'AI & Semiconductor Value Chain',
     categoryIcon: '🤖',
@@ -514,7 +550,7 @@ const PAGES = [
     title: 'Layer 5: Systems, Servers & Networking',
     icon: '🖧',
     desc: 'Server racks, NVLink, InfiniBand — how GPUs connect into clusters and the networking stack that makes AI training possible.',
-    tags: ['Layer 5', 'Deep Dive'],
+    tags: ['AI Infrastructure', 'Deep Dive'],
     url: 'ai-value-chain/layer5-systems-networking.html',
     category: 'AI & Semiconductor Value Chain',
     categoryIcon: '🤖',
@@ -526,7 +562,7 @@ const PAGES = [
     title: 'Layer 6: Energy & Data Centers',
     icon: '⚡',
     desc: 'Power demands, cooling, nuclear renaissance — the physical infrastructure powering the AI revolution.',
-    tags: ['Layer 6', 'Deep Dive'],
+    tags: ['AI Infrastructure', 'Deep Dive'],
     url: 'ai-value-chain/layer6-energy-datacenters.html',
     category: 'AI & Semiconductor Value Chain',
     categoryIcon: '🤖',
@@ -538,7 +574,7 @@ const PAGES = [
     title: 'Layer 7: Cloud & Compute Providers',
     icon: '☁️',
     desc: 'AWS, Azure, GCP, CoreWeave — hyperscalers and GPU cloud economics.',
-    tags: ['Layer 7', 'Deep Dive'],
+    tags: ['AI Infrastructure', 'Deep Dive'],
     url: 'ai-value-chain/layer7-cloud-compute.html',
     category: 'AI & Semiconductor Value Chain',
     categoryIcon: '🤖',
@@ -550,7 +586,7 @@ const PAGES = [
     title: 'Layer 8: AI Labs & Software',
     icon: '🤖',
     desc: 'OpenAI, Anthropic, Google DeepMind, Meta AI — the labs building frontier models and the software layer on top.',
-    tags: ['Layer 8', 'Deep Dive'],
+    tags: ['AI Infrastructure', 'Deep Dive'],
     url: 'ai-value-chain/layer8-ai-labs.html',
     category: 'AI & Semiconductor Value Chain',
     categoryIcon: '🤖',
@@ -574,7 +610,7 @@ const PAGES = [
     title: 'Silicon Photonics II: CMOS Leverage',
     icon: '🔬',
     desc: 'How old fabs become gold mines — materials, lithography, design tools & the economic moat.',
-    tags: ['CMOS', 'Legacy Fabs', 'EDA'],
+    tags: ['Semiconductors', 'Emerging Tech'],
     url: 'ai-value-chain/silicon-photonics-2.html',
     category: 'AI & Semiconductor Value Chain',
     categoryIcon: '🤖',
@@ -587,7 +623,7 @@ const PAGES = [
     title: 'Strava — Unit Economics Breakdown',
     icon: '🏃',
     desc: "Deep dive into Strava's business model, subscriber economics, and path to profitability.",
-    tags: ['Unit Economics', 'Case Study'],
+    tags: ['Investing', 'Case Study'],
     url: 'investing/strava-unit-economics.html',
     category: 'Investing & Markets',
     categoryIcon: '💰',
@@ -599,7 +635,7 @@ const PAGES = [
     title: 'Pain + Reflection = Progress',
     icon: '🔥',
     desc: 'Lessons from a 6-sigma silver crash — short gamma mechanics, China premium, and money wisdom from @abcampbell.',
-    tags: ['Options', 'Short Gamma', 'Silver', 'Risk Management'],
+    tags: ['Investing', 'Deep Dive'],
     url: 'investing/pain-reflection-progress.html',
     category: 'Investing & Markets',
     categoryIcon: '💰',
@@ -751,8 +787,8 @@ function render() {
 
   // Add empty categories for Sasya
   if (currentSection === 'sasya') {
-    const sasyaCategories = ['Entrepreneurial Finance (FM-476)', 'Social Innovation & Design (MG4G2)', 'Dissertation (MG4J5)'];
-    const sasyaIcons = ['💰', '🌱', '📖'];
+    const sasyaCategories = ['Dissertation (MG4J5)'];
+    const sasyaIcons = ['📖'];
     const existingCats = new Set(groups.keys());
     sasyaCategories.forEach((cat, i) => {
       if (!existingCats.has(cat) && !searchQuery && activeTags.size === 0) {
@@ -853,16 +889,12 @@ function toggleTheme() {
 // INIT
 // ============================================================
 (function() {
-  // Restore theme
-  const saved = localStorage.getItem('theme');
-  if (saved) {
-    document.documentElement.setAttribute('data-theme', saved);
-  }
+  // Restore theme (default to light)
+  const saved = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
   document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      document.getElementById('theme-icon').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
-    }
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.getElementById('theme-icon').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
 
     // Update page count
     document.getElementById('page-count').textContent = PAGES.length;
