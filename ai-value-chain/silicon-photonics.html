@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,13 +13,29 @@
     --border: #1e1e2e;
     --text: #e8e8ed;
     --muted: #9ca3af;
-    --accent: #06b6d4;
+    --accent: #5ec4b6;
     --blue: #60a5fa;
     --green: #22c55e;
     --purple: #a78bfa;
     --teal: #2dd4bf;
     --pink: #f472b6;
   }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-2: #f5f3ef;
+    --border: #e5e0d8;
+    --text: #2c2a26;
+    --muted: #6b6560;
+    --accent: #1a8a7d;
+    --blue: #2563eb;
+    --green: #059669;
+    --purple: #7c3aed;
+    --teal: #0d9488;
+    --pink: #db2777;
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Inter', -apple-system, sans-serif;
@@ -27,11 +43,12 @@
     color: var(--text);
     line-height: 1.6;
     padding: 32px 20px 80px;
+    transition: background 0.3s ease, color 0.3s ease;
   }
   .container { max-width: 1100px; margin: 0 auto; }
   .pill {
     display: inline-flex; align-items: center; gap: 8px;
-    background: #0f172a; color: #7dd3fc; border: 1px solid #1e293b;
+    background: var(--surface-2); color: var(--accent); border: 1px solid var(--border);
     padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 600;
   }
   .hero {
@@ -82,8 +99,8 @@
     align-items: center;
   }
   .node {
-    background: #0f172a;
-    border: 1px solid #1e293b;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
     border-radius: 14px;
     padding: 14px;
     text-align: center;
@@ -99,7 +116,7 @@
   }
   .badge {
     display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px;
-    background: #0f172a; color: #7dd3fc; border: 1px solid #1e293b;
+    background: var(--surface-2); color: var(--accent); border: 1px solid var(--border);
   }
   .stats {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;
@@ -107,7 +124,7 @@
   .stat {
     background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px;
   }
-  .stat .num { font-size: 20px; font-weight: 800; color: #7dd3fc; }
+  .stat .num { font-size: 20px; font-weight: 800; color: var(--accent); }
   .stat .label { font-size: 12px; color: var(--muted); margin-top: 4px; }
 
   details {
@@ -146,7 +163,7 @@
   .companies { display: flex; flex-wrap: wrap; gap: 10px; }
   .company {
     display: flex; align-items: center; gap: 8px;
-    background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 8px 10px;
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 8px 10px;
     font-size: 12px; font-weight: 600;
   }
   .logo {
@@ -185,6 +202,36 @@
     margin-top: 26px; font-size: 12px; color: var(--muted);
   }
 
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto 0;
+    padding: 0 0 16px 0;
+  }
+  .back-link {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
   @media (max-width: 720px) {
     body { padding: 20px 14px 60px; }
     .hero { padding: 20px; }
@@ -195,6 +242,12 @@
 </head>
 <body>
   <div class="container">
+<div class="top-bar">
+  <a href="../" class="back-link">← Back to Study Hub</a>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+    <span id="theme-icon">☀️</span>
+  </button>
+</div>
     <div class="hero">
       <span class="pill">L5.5 • Photonics Bridge</span>
       <h1>Silicon Photonics: The Next Fabless Revolution</h1>
@@ -206,8 +259,8 @@
     </div>
 
     <!-- ROBIN'S TLDR -->
-    <div class="card" style="border-color:#06b6d4;background:linear-gradient(135deg,rgba(6,182,212,0.08),transparent 60%),var(--surface);margin-bottom:24px;">
-      <h3 style="color:#06b6d4;font-size:14px;margin-bottom:8px;">🐱 Robin's TLDR — What is this really about?</h3>
+    <div class="card" style="border-color:var(--accent);background:linear-gradient(135deg,rgba(6,182,212,0.08),transparent 60%),var(--surface);margin-bottom:24px;">
+      <h3 style="color:var(--accent);font-size:14px;margin-bottom:8px;">🐱 Robin's TLDR — What is this really about?</h3>
       <p style="font-size:14px;color:var(--text);line-height:1.7;">
         <strong>The one-liner:</strong> Data centers are drowning in heat because copper wires can't keep up. Silicon photonics replaces copper with <em>light</em> inside chips — and the genius part is it reuses the same old factories that make regular chips.
       </p>
@@ -242,8 +295,8 @@
         </p>
       </div>
       <!-- Robin's simple explanation -->
-      <div class="card" style="border-left:3px solid #06b6d4;border-radius:0 14px 14px 0;">
-        <p style="font-size:13px;color:#7dd3fc;font-weight:600;margin-bottom:6px;">🐱 Simply put</p>
+      <div class="card" style="border-left:3px solid var(--accent);border-radius:0 14px 14px 0;">
+        <p style="font-size:13px;color:var(--accent);font-weight:600;margin-bottom:6px;">🐱 Simply put</p>
         <p style="font-size:13px;color:var(--muted);">
           <strong>Electrons vs Photons</strong> = think of it as "balls vs ghosts." Electrons are like billiard balls — they crash into each other, create friction, generate heat. The faster you push them through copper, the worse it gets. Photons (light particles) are like ghosts — they pass right through each other. You can send millions of light signals through the same wire simultaneously (that's WDM), and they don't interfere or heat up. That's why fiber optic internet is so much faster than old copper DSL — same principle, now being applied <em>inside</em> the chip itself.
         </p>
@@ -258,8 +311,8 @@
         and EPDA tools merge electronics + photonics. The center of gravity shifts to system architects who design
         scalable optical platforms.
       </p>
-      <div style="margin-top:12px;padding:12px;background:#0a0a14;border-radius:10px;border-left:3px solid #06b6d4;">
-        <p style="font-size:13px;color:#7dd3fc;font-weight:600;margin-bottom:4px;">🐱 Simply put</p>
+      <div style="margin-top:12px;padding:12px;background:var(--surface-2);border-radius:10px;border-left:3px solid var(--accent);">
+        <p style="font-size:13px;color:var(--accent);font-weight:600;margin-bottom:4px;">🐱 Simply put</p>
         <p style="font-size:13px;color:var(--muted);">
           Remember how in the 1980s, chip companies stopped needing their own factories? That was the first "fabless revolution" — companies like Nvidia just <em>designed</em> chips and let TSMC build them. The same thing is now happening with optical chips. You used to need a PhD in physics to design anything with light on silicon. Now there are software tools (like Photoshop but for photonic circuits) that let engineers drag-and-drop optical components. The barrier to entry just collapsed.
         </p>
@@ -272,8 +325,8 @@
         are far larger than electron paths, so legacy 65-130nm processes are ideal. Tower Semiconductor even leverages
         Intel's depreciated 65nm Fab 11X — massive capital efficiency with zero new fab buildout.
       </p>
-      <div style="margin-top:12px;padding:12px;background:#0a0a14;border-radius:10px;border-left:3px solid #06b6d4;">
-        <p style="font-size:13px;color:#7dd3fc;font-weight:600;margin-bottom:4px;">🐱 Simply put</p>
+      <div style="margin-top:12px;padding:12px;background:var(--surface-2);border-radius:10px;border-left:3px solid var(--accent);">
+        <p style="font-size:13px;color:var(--accent);font-weight:600;margin-bottom:4px;">🐱 Simply put</p>
         <p style="font-size:13px;color:var(--muted);">
           This is the killer insight. Building a cutting-edge chip factory costs $20B+. But silicon photonics doesn't <em>need</em> cutting-edge. Light is physically bigger than electrons, so you can use "old" 65nm equipment that's already been paid off. It's like discovering your 15-year-old printer can print money. Tower Semiconductor literally uses Intel's old depreciated factory — zero new capex, world-class optical chips. <strong>That's why this is investable now, not in 10 years.</strong>
         </p>
@@ -283,24 +336,24 @@
     <details>
       <summary>Key Jargon Decoded</summary>
       <div style="margin-top:10px;display:grid;gap:10px;">
-        <div style="padding:10px;background:#0a0a14;border-radius:10px;">
-          <p style="font-size:13px;"><strong style="color:#06b6d4;">WDM (Wavelength Division Multiplexing)</strong></p>
+        <div style="padding:10px;background:var(--surface-2);border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">WDM (Wavelength Division Multiplexing)</strong></p>
           <p style="font-size:12px;color:var(--muted);">Sending multiple colors of light through one fiber simultaneously. Each color = a separate data channel. Like having 80 radio stations on one antenna — but with light.</p>
         </div>
-        <div style="padding:10px;background:#0a0a14;border-radius:10px;">
-          <p style="font-size:13px;"><strong style="color:#06b6d4;">CPO (Co-Packaged Optics)</strong></p>
+        <div style="padding:10px;background:var(--surface-2);border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">CPO (Co-Packaged Optics)</strong></p>
           <p style="font-size:12px;color:var(--muted);">Instead of plugging optical modules into a switch externally, you put the optics directly <em>on</em> the chip package. Less distance = less power = less heat. This is what Broadcom's Bailly platform does with Tomahawk switches.</p>
         </div>
-        <div style="padding:10px;background:#0a0a14;border-radius:10px;">
-          <p style="font-size:13px;"><strong style="color:#06b6d4;">PAM4 DSP</strong></p>
+        <div style="padding:10px;background:var(--surface-2);border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">PAM4 DSP</strong></p>
           <p style="font-size:12px;color:var(--muted);">A way to encode 2 bits per symbol instead of 1 (so double the data rate). The DSP (Digital Signal Processor) cleans up the signal after it gets noisy traveling through fiber. Marvell's Inphi acquisition was all about this — it's the "brain" that makes high-speed optical links actually work cleanly.</p>
         </div>
-        <div style="padding:10px;background:#0a0a14;border-radius:10px;">
-          <p style="font-size:13px;"><strong style="color:#06b6d4;">ELS (External Light Source)</strong></p>
+        <div style="padding:10px;background:var(--surface-2);border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">ELS (External Light Source)</strong></p>
           <p style="font-size:12px;color:var(--muted);">Silicon is great at guiding light but terrible at <em>generating</em> it. So you need a separate laser (usually made from indium phosphide) to create the light beam. Coherent and Lumentum dominate this — they're the "light suppliers" for the whole ecosystem.</p>
         </div>
-        <div style="padding:10px;background:#0a0a14;border-radius:10px;">
-          <p style="font-size:13px;"><strong style="color:#06b6d4;">PDK (Process Design Kit)</strong></p>
+        <div style="padding:10px;background:var(--surface-2);border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">PDK (Process Design Kit)</strong></p>
           <p style="font-size:12px;color:var(--muted);">A toolkit from the foundry that tells designers "here are the building blocks you can use." Like a Lego instruction manual — you don't need to know how plastic is made, just how to snap pieces together. This is what makes the fabless model possible.</p>
         </div>
       </div>
@@ -323,8 +376,8 @@
     </div>
 
     <div class="section-title">Value Chain Map</div>
-    <div class="card" style="border-left:3px solid #06b6d4;border-radius:0 14px 14px 0;margin-bottom:16px;">
-      <p style="font-size:13px;color:#7dd3fc;font-weight:600;margin-bottom:4px;">🐱 How to read this map</p>
+    <div class="card" style="border-left:3px solid var(--accent);border-radius:0 14px 14px 0;margin-bottom:16px;">
+      <p style="font-size:13px;color:var(--accent);font-weight:600;margin-bottom:4px;">🐱 How to read this map</p>
       <p style="font-size:13px;color:var(--muted);">
         Think of it like building a house. You need <strong style="color:#60a5fa;">architects & blueprints</strong> (EDA/Design), <strong style="color:#22c55e;">construction crews & land</strong> (foundries), <strong style="color:#60a5fa;">the electrical system</strong> (platform/chip companies that route the light), <strong style="color:#a78bfa;">the power company</strong> (light source suppliers — without them, nothing lights up), and <strong style="color:#2dd4bf;">the building inspectors</strong> (testing & packaging — they make sure it actually works). No single company does everything — that's why mapping the ecosystem matters for investing.
       </p>
@@ -400,5 +453,25 @@
 
     <p class="source">Source: <a href="https://x.com/photoncap/status/2015457552381997258" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline;">@PhotonCap on X</a> — "PC101 Lecture 1: Why Silicon Photonics Now?" (Jan 25, 2026)</p>
   </div>
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = saved === 'dark' ? '☀️' : '🌙';
+    });
+  }
+})();
+</script>
 </body>
 </html>
