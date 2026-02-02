@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +8,57 @@
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-alt: #1a1a2e;
+    --surface-hover: #1e1e2a;
+    --border: #1e1e2e;
+    --border-alt: #2a2a4a;
+    --text: #e8e8ed;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-dim: #6b7280;
+    --text-dimmer: #4b5563;
+    --accent: #5ec4b6;
+    --accent-light: #34d399;
+    --accent-glow: rgba(94, 196, 182, 0.12);
+    --highlight-text: #fbbf24;
+    --worth-accent: #a78bfa;
+    --table-current-bg: rgba(94, 196, 182, 0.08);
+    --table-current-text: #5ec4b6;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --text-dimmer: #a5a09a;
+    --accent: #1a8a7d;
+    --accent-light: #059669;
+    --accent-glow: rgba(26, 138, 125, 0.06);
+    --highlight-text: #b45309;
+    --worth-accent: #7c3aed;
+    --table-current-bg: rgba(26, 138, 125, 0.08);
+    --table-current-text: #1a8a7d;
+  }
+
   
   body {
     font-family: 'Inter', -apple-system, sans-serif;
-    background: #0a0a0f;
-    color: #e8e8ed;
+    background: var(--bg);
+    color: var(--text);
     padding: 40px 24px;
     min-height: 100vh;
+  
+    transition: background 0.3s ease, color 0.3s ease;
   }
   
   .container {
@@ -33,7 +77,7 @@
   
   .subtitle {
     font-size: 14px;
-    color: #6b7280;
+    color: var(--text-dim);
     margin-bottom: 36px;
     font-weight: 500;
   }
@@ -50,8 +94,8 @@
   
   /* === BIG PICTURE === */
   .big-picture {
-    background: #111118;
-    border: 1px solid #1e1e2e;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 32px;
     margin-bottom: 32px;
@@ -68,15 +112,15 @@
   }
   
   .flow-node {
-    background: #1a1a2e;
-    border: 1.5px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1.5px solid var(--border-alt);
     border-radius: 12px;
     padding: 14px 16px;
     text-align: center;
     min-width: 120px;
     flex-shrink: 0;
   }
-  .flow-node .label { font-size: 11px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .flow-node .label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
   .flow-node .name { font-size: 14px; font-weight: 700; margin-top: 4px; }
   .flow-node.highlight {
     border-color: #22c55e;
@@ -88,7 +132,7 @@
   
   .flow-arrow {
     font-size: 18px;
-    color: #4b5563;
+    color: var(--text-dimmer);
     padding: 0 6px;
     flex-shrink: 0;
   }
@@ -103,8 +147,8 @@
   
   /* === ANATOMY CARDS === */
   .anatomy-card {
-    background: #111118;
-    border: 1px solid #1e1e2e;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 28px;
     margin-bottom: 32px;
@@ -140,7 +184,7 @@
     width: 560px;
     height: 40px;
     background: linear-gradient(135deg, #2a2a3a, #4a4a5a);
-    border: 1px solid #6b7280;
+    border: 1px solid var(--text-dim);
     margin-bottom: 4px;
   }
   
@@ -218,7 +262,7 @@
   }
   .cs-hbm-label {
     font-size: 9px;
-    color: #9ca3af;
+    color: var(--text-muted);
     font-weight: 500;
     margin-top: 2px;
   }
@@ -254,7 +298,7 @@
     align-items: center;
     gap: 6px;
     font-size: 11px;
-    color: #9ca3af;
+    color: var(--text-muted);
     font-weight: 500;
   }
   .cs-legend-item .swatch {
@@ -282,8 +326,8 @@
   }
   
   .funnel-input-box {
-    background: #1a1a2e;
-    border: 1.5px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1.5px solid var(--border-alt);
     border-radius: 10px;
     padding: 14px 20px;
     text-align: center;
@@ -296,7 +340,7 @@
   }
   .funnel-input-box .fi-label {
     font-size: 11px;
-    color: #9ca3af;
+    color: var(--text-muted);
     margin-top: 4px;
     font-weight: 500;
   }
@@ -305,7 +349,7 @@
   
   .funnel-arrows-down {
     font-size: 24px;
-    color: #4b5563;
+    color: var(--text-dimmer);
     margin: 4px 0;
   }
   
@@ -371,8 +415,8 @@
   }
   
   .funnel-output-box {
-    background: #1a1a2e;
-    border: 1.5px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1.5px solid var(--border-alt);
     border-radius: 10px;
     padding: 14px 20px;
     text-align: center;
@@ -385,7 +429,7 @@
   }
   .funnel-output-box .fo-label {
     font-size: 11px;
-    color: #9ca3af;
+    color: var(--text-muted);
     margin-top: 4px;
     font-weight: 500;
   }
@@ -399,8 +443,8 @@
   }
   
   .evo-card {
-    background: #1a1a2e;
-    border: 1.5px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1.5px solid var(--border-alt);
     border-radius: 12px;
     padding: 20px;
     position: relative;
@@ -417,24 +461,24 @@
   }
   .evo-card .evo-era {
     font-size: 11px;
-    color: #9ca3af;
+    color: var(--text-muted);
     font-weight: 500;
     margin-bottom: 12px;
   }
   .evo-card .evo-desc {
     font-size: 12px;
-    color: #d1d5db;
+    color: var(--text-secondary);
     line-height: 1.6;
     margin-bottom: 12px;
   }
   .evo-card .evo-detail {
     font-size: 11px;
-    color: #9ca3af;
+    color: var(--text-muted);
     line-height: 1.5;
     padding-top: 10px;
-    border-top: 1px solid #2a2a4a;
+    border-top: 1px solid var(--border-alt);
   }
-  .evo-card .evo-detail strong { color: #e8e8ed; }
+  .evo-card .evo-detail strong { color: var(--text); }
   
   .evo-badge {
     display: inline-block;
@@ -502,8 +546,8 @@
   }
   
   .key-num {
-    background: #111118;
-    border: 1px solid #1e1e2e;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 20px;
     text-align: center;
@@ -519,7 +563,7 @@
   
   .key-num .desc {
     font-size: 11px;
-    color: #9ca3af;
+    color: var(--text-muted);
     margin-top: 6px;
     line-height: 1.4;
   }
@@ -549,7 +593,7 @@
   .bar-track {
     flex: 1;
     height: 32px;
-    background: #1a1a2e;
+    background: var(--surface-alt);
     border-radius: 6px;
     overflow: hidden;
     position: relative;
@@ -569,7 +613,7 @@
   .bar-fill.tsmc { background: linear-gradient(90deg, #166534, #22c55e); }
   .bar-fill.samsung-bar { background: linear-gradient(90deg, #1e40af, #3b82f6); }
   .bar-fill.intel-bar { background: linear-gradient(90deg, #7c2d12, #f97316); }
-  .bar-fill.others-bar { background: linear-gradient(90deg, #3a3a4a, #6b7280); }
+  .bar-fill.others-bar { background: linear-gradient(90deg, #3a3a4a, var(--text-dim)); }
   
   .bar-flag {
     font-size: 10px;
@@ -586,8 +630,8 @@
   }
   
   .comp-card {
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
     border-radius: 12px;
     padding: 18px;
   }
@@ -598,13 +642,13 @@
   }
   .comp-card .comp-tech {
     font-size: 11px;
-    color: #9ca3af;
+    color: var(--text-muted);
     font-weight: 600;
     margin-bottom: 10px;
   }
   .comp-card .comp-desc {
     font-size: 12px;
-    color: #d1d5db;
+    color: var(--text-secondary);
     line-height: 1.5;
   }
   .comp-card.leader {
@@ -623,8 +667,8 @@
   }
   
   .sf-node {
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
     border-radius: 8px;
     padding: 10px 14px;
     font-size: 12px;
@@ -646,15 +690,15 @@
   
   .sf-arrow {
     font-size: 16px;
-    color: #4b5563;
+    color: var(--text-dimmer);
     padding: 0 6px;
   }
   
   /* === WORTH KNOWING === */
   .worth-knowing {
-    background: #111118;
-    border: 1px solid #2a2a4a;
-    border-left: 3px solid #a78bfa;
+    background: var(--surface);
+    border: 1px solid var(--border-alt);
+    border-left: 3px solid var(--worth-accent);
     border-radius: 0 12px 12px 0;
     padding: 24px;
     margin-top: 32px;
@@ -663,7 +707,7 @@
   .worth-knowing h3 {
     font-size: 15px;
     font-weight: 700;
-    color: #a78bfa;
+    color: var(--worth-accent);
     margin-bottom: 12px;
   }
   
@@ -676,11 +720,11 @@
     font-size: 13px;
     line-height: 1.6;
     padding: 6px 0;
-    border-bottom: 1px solid #1e1e2e;
-    color: #d1d5db;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
   }
   .worth-knowing li:last-child { border-bottom: none; }
-  .worth-knowing li strong { color: #e8e8ed; }
+  .worth-knowing li strong { color: var(--text); }
   
   /* === GEN TABLE === */
   .gen-table {
@@ -693,8 +737,8 @@
   .gen-table th {
     text-align: left;
     padding: 10px 12px;
-    border-bottom: 2px solid #2a2a4a;
-    color: #9ca3af;
+    border-bottom: 2px solid var(--border-alt);
+    color: var(--text-muted);
     font-weight: 600;
     font-size: 11px;
     text-transform: uppercase;
@@ -703,12 +747,12 @@
   
   .gen-table td {
     padding: 10px 12px;
-    border-bottom: 1px solid #1e1e2e;
+    border-bottom: 1px solid var(--border);
     font-weight: 500;
   }
   
   .gen-table tr.current {
-    background: rgba(34, 197, 94, 0.08);
+    background: var(--table-current-bg);
   }
   .gen-table tr.current td { color: #4ade80; font-weight: 600; }
   
@@ -750,12 +794,12 @@
   .cap-year {
     font-size: 12px;
     font-weight: 600;
-    color: #9ca3af;
+    color: var(--text-muted);
   }
   
   .cap-label {
     font-size: 10px;
-    color: #6b7280;
+    color: var(--text-dim);
     margin-top: 2px;
   }
   
@@ -900,10 +944,47 @@
     .cap-bar { width: 32px; font-size: 9px; }
     .key-num .num { font-size: 22px; }
   }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto 0;
+    padding: 0 0 16px 0;
+  }
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border-alt);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
 </style>
 </head>
 <body>
 <div class="container">
+<div class="top-bar">
+  <a href="../" class="back-link">← Back to Study Hub</a>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+    <span id="theme-icon">☀️</span>
+  </button>
+</div>
+
   
   <h1>📦 CoWoS & Advanced Packaging</h1>
   <p class="subtitle">The hidden bottleneck between making chips and shipping them — where GPU dies meet HBM</p>
@@ -911,7 +992,7 @@
   <!-- ========== 1. WHERE COWOS SITS ========== -->
   <div class="big-picture">
     <div class="section-title"><span class="emoji">🗺️</span> Where CoWoS Sits in the AI Value Chain</div>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">CoWoS is the <strong style="color:#4ade80;">packaging step</strong> — it takes a finished GPU die (from the foundry) and finished HBM stacks (from memory makers) and combines them into one working chip package. Without it, you just have separate pieces that can't talk to each other.</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">CoWoS is the <strong style="color:#4ade80;">packaging step</strong> — it takes a finished GPU die (from the foundry) and finished HBM stacks (from memory makers) and combines them into one working chip package. Without it, you just have separate pieces that can't talk to each other.</p>
     <div class="flow-row">
       <div class="flow-node dim"><div class="label">Layer 1-2</div><div class="name">Materials & Equipment</div></div>
       <div class="flow-arrow">→</div>
@@ -931,7 +1012,7 @@
   <!-- ========== 2. CROSS-SECTION DIAGRAM ========== -->
   <div class="anatomy-card">
     <h3>🔬 What CoWoS Actually Is — Cross-Section View</h3>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:8px;">
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">
       <strong>C</strong>hip-<strong>o</strong>n-<strong>W</strong>afer-<strong>o</strong>n-<strong>S</strong>ubstrate. The GPU die and HBM stacks are placed on a silicon interposer, which acts as a "bridge" connecting them with ultra-dense wiring. The interposer then sits on an organic substrate (PCB).
     </p>
     
@@ -1103,8 +1184,8 @@
   <!-- ========== 3. WHY IT'S A BOTTLENECK ========== -->
   <div class="anatomy-card">
     <h3>🚧 Why CoWoS Is the Bottleneck</h3>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:8px;">
-      TSMC is essentially the <strong style="color:#e8e8ed;">only company on Earth</strong> that can do advanced CoWoS packaging at the scale needed for AI chips. No matter how many GPU dies Nvidia designs or how many HBM stacks SK Hynix makes — they all have to pass through TSMC's CoWoS lines. It's a literal bottleneck.
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">
+      TSMC is essentially the <strong style="color:var(--text);">only company on Earth</strong> that can do advanced CoWoS packaging at the scale needed for AI chips. No matter how many GPU dies Nvidia designs or how many HBM stacks SK Hynix makes — they all have to pass through TSMC's CoWoS lines. It's a literal bottleneck.
     </p>
     
     <!-- Supply chain flow -->
@@ -1127,7 +1208,7 @@
     
     <!-- Funnel diagram -->
     <div style="margin-top:28px;">
-      <div style="text-align:center;font-size:14px;font-weight:700;margin-bottom:16px;color:#e8e8ed;">The Bottleneck Funnel</div>
+      <div style="text-align:center;font-size:14px;font-weight:700;margin-bottom:16px;color:var(--text);">The Bottleneck Funnel</div>
       <div class="funnel-container">
         <div class="funnel-inputs">
           <div class="funnel-input-box red">
@@ -1166,7 +1247,7 @@
   <!-- ========== 4. COWOS EVOLUTION ========== -->
   <div class="anatomy-card">
     <h3>📈 CoWoS Evolution — Getting Bigger and Bigger</h3>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">
       As AI chips grow larger and need more HBM, the interposer must grow too. Each generation pushes the boundaries of what's physically possible in packaging.
     </p>
     
@@ -1302,7 +1383,7 @@
   <!-- Capacity visual -->
   <div class="anatomy-card">
     <h3>📊 CoWoS Capacity vs Demand (Illustrative)</h3>
-    <p style="font-size:12px;color:#9ca3af;margin-bottom:8px;">Capacity has grown aggressively, but demand keeps outpacing it — especially as each new GPU generation uses a bigger interposer.</p>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">Capacity has grown aggressively, but demand keeps outpacing it — especially as each new GPU generation uses a bigger interposer.</p>
     <div class="cap-chart">
       <div class="cap-bar-group">
         <div class="cap-bar-wrapper">
@@ -1408,5 +1489,25 @@
   </div>
 
 </div>
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = saved === 'dark' ? '☀️' : '🌙';
+    });
+  }
+})();
+</script>
 </body>
 </html>

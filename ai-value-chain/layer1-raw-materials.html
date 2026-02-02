@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +8,57 @@
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-alt: #1a1a2e;
+    --surface-hover: #1e1e2a;
+    --border: #1e1e2e;
+    --border-alt: #2a2a4a;
+    --text: #e8e8ed;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-dim: #6b7280;
+    --text-dimmer: #4b5563;
+    --accent: #5ec4b6;
+    --accent-light: #34d399;
+    --accent-glow: rgba(94, 196, 182, 0.12);
+    --highlight-text: #fbbf24;
+    --worth-accent: #a78bfa;
+    --table-current-bg: rgba(94, 196, 182, 0.08);
+    --table-current-text: #5ec4b6;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --text-dimmer: #a5a09a;
+    --accent: #1a8a7d;
+    --accent-light: #059669;
+    --accent-glow: rgba(26, 138, 125, 0.06);
+    --highlight-text: #b45309;
+    --worth-accent: #7c3aed;
+    --table-current-bg: rgba(26, 138, 125, 0.08);
+    --table-current-text: #1a8a7d;
+  }
+
   
   body {
     font-family: 'Inter', -apple-system, sans-serif;
-    background: #0a0a0f;
-    color: #e8e8ed;
+    background: var(--bg);
+    color: var(--text);
     padding: 40px 24px;
     min-height: 100vh;
+  
+    transition: background 0.3s ease, color 0.3s ease;
   }
   
   .container {
@@ -33,7 +77,7 @@
   
   .subtitle {
     font-size: 14px;
-    color: #6b7280;
+    color: var(--text-dim);
     margin-bottom: 36px;
     font-weight: 500;
   }
@@ -50,8 +94,8 @@
   
   /* === BIG PICTURE === */
   .big-picture {
-    background: #111118;
-    border: 1px solid #1e1e2e;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 32px;
     margin-bottom: 32px;
@@ -68,15 +112,15 @@
   }
   
   .flow-node {
-    background: #1a1a2e;
-    border: 1.5px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1.5px solid var(--border-alt);
     border-radius: 12px;
     padding: 14px 16px;
     text-align: center;
     min-width: 120px;
     flex-shrink: 0;
   }
-  .flow-node .label { font-size: 11px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .flow-node .label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
   .flow-node .name { font-size: 14px; font-weight: 700; margin-top: 4px; }
   .flow-node.highlight {
     border-color: #f59e0b;
@@ -88,15 +132,15 @@
   
   .flow-arrow {
     font-size: 18px;
-    color: #4b5563;
+    color: var(--text-dimmer);
     padding: 0 6px;
     flex-shrink: 0;
   }
   
   /* === ANATOMY CARDS === */
   .anatomy-card {
-    background: #111118;
-    border: 1px solid #1e1e2e;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 28px;
     margin-bottom: 32px;
@@ -143,7 +187,7 @@
   
   .step-icon.sand { background: linear-gradient(135deg, #92400e, #d97706); border: 1.5px solid #f59e0b; }
   .step-icon.purify { background: linear-gradient(135deg, #1a2a3a, #3b82f6); border: 1.5px solid #60a5fa; }
-  .step-icon.ingot { background: linear-gradient(135deg, #374151, #6b7280); border: 1.5px solid #9ca3af; }
+  .step-icon.ingot { background: linear-gradient(135deg, #374151, var(--text-dim)); border: 1.5px solid var(--text-muted); }
   .step-icon.slice { background: linear-gradient(135deg, #3b1f5e, #7c3aed); border: 1.5px solid #a78bfa; }
   .step-icon.polish { background: linear-gradient(135deg, #1a3a2a, #059669); border: 1.5px solid #34d399; }
   .step-icon.wafer { background: linear-gradient(135deg, #1a1a3a, #2563eb); border: 1.5px solid #3b82f6; }
@@ -151,12 +195,12 @@
   .step-name {
     font-size: 11px;
     font-weight: 700;
-    color: #e8e8ed;
+    color: var(--text);
     text-align: center;
   }
   .step-desc {
     font-size: 9px;
-    color: #6b7280;
+    color: var(--text-dim);
     text-align: center;
     max-width: 80px;
     line-height: 1.3;
@@ -164,7 +208,7 @@
   
   .process-arrow {
     font-size: 18px;
-    color: #4b5563;
+    color: var(--text-dimmer);
     padding: 0 4px;
     flex-shrink: 0;
     margin-bottom: 20px;
@@ -269,7 +313,7 @@
   .litho-mask {
     width: 240px;
     height: 40px;
-    background: #1a1a2e;
+    background: var(--surface-alt);
     border: 1.5px solid #a78bfa;
     color: #c4b5fd;
     position: relative;
@@ -281,7 +325,7 @@
     left: 50%;
     transform: translateX(-50%);
     font-size: 8px;
-    color: #a78bfa;
+    color: var(--worth-accent);
     letter-spacing: 2px;
   }
   
@@ -306,7 +350,7 @@
   
   .litho-label {
     font-size: 10px;
-    color: #6b7280;
+    color: var(--text-dim);
     margin: 2px 0;
     font-weight: 500;
   }
@@ -320,8 +364,8 @@
   }
   
   .euv-spec {
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
     border-radius: 10px;
     padding: 14px;
     text-align: center;
@@ -333,7 +377,7 @@
   }
   .euv-spec .spec-label {
     font-size: 11px;
-    color: #9ca3af;
+    color: var(--text-muted);
     margin-top: 4px;
     line-height: 1.3;
   }
@@ -349,8 +393,8 @@
   }
   
   .tin-step {
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
     border-radius: 10px;
     padding: 14px 16px;
     text-align: center;
@@ -358,13 +402,13 @@
     max-width: 150px;
   }
   .tin-step .tin-icon { font-size: 24px; margin-bottom: 6px; }
-  .tin-step .tin-label { font-size: 11px; font-weight: 600; color: #e8e8ed; }
-  .tin-step .tin-detail { font-size: 9px; color: #6b7280; margin-top: 4px; line-height: 1.3; }
+  .tin-step .tin-label { font-size: 11px; font-weight: 600; color: var(--text); }
+  .tin-step .tin-detail { font-size: 9px; color: var(--text-dim); margin-top: 4px; line-height: 1.3; }
   .tin-step.highlight-tin { border-color: #f59e0b; background: #1a1a10; }
   
   .tin-arrow {
     font-size: 18px;
-    color: #4b5563;
+    color: var(--text-dimmer);
     padding: 0 6px;
     flex-shrink: 0;
   }
@@ -394,7 +438,7 @@
   .bar-track {
     flex: 1;
     height: 32px;
-    background: #1a1a2e;
+    background: var(--surface-alt);
     border-radius: 6px;
     overflow: hidden;
     position: relative;
@@ -426,8 +470,8 @@
   }
   
   .equip-card {
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
     border-radius: 12px;
     padding: 20px;
   }
@@ -438,13 +482,13 @@
   }
   .equip-card .eq-role {
     font-size: 11px;
-    color: #9ca3af;
+    color: var(--text-muted);
     font-weight: 600;
     margin-bottom: 10px;
   }
   .equip-card .eq-desc {
     font-size: 12px;
-    color: #d1d5db;
+    color: var(--text-secondary);
     line-height: 1.5;
   }
   .equip-card.asml {
@@ -470,8 +514,8 @@
   }
   
   .choke-node {
-    background: #1a1a2e;
-    border: 1.5px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1.5px solid var(--border-alt);
     border-radius: 10px;
     padding: 12px 16px;
     text-align: center;
@@ -480,7 +524,7 @@
   }
   .choke-node .ch-flag { font-size: 20px; }
   .choke-node .ch-label { font-size: 12px; font-weight: 700; margin-top: 4px; }
-  .choke-node .ch-detail { font-size: 10px; color: #9ca3af; margin-top: 2px; line-height: 1.3; }
+  .choke-node .ch-detail { font-size: 10px; color: var(--text-muted); margin-top: 2px; line-height: 1.3; }
   
   .choke-node.china { border-color: #ef4444; background: #1a1010; }
   .choke-node.china .ch-label { color: #fca5a5; }
@@ -491,7 +535,7 @@
   
   .choke-arrow {
     font-size: 18px;
-    color: #4b5563;
+    color: var(--text-dimmer);
     padding: 0 6px;
     flex-shrink: 0;
   }
@@ -508,12 +552,12 @@
     font-weight: 600;
     text-align: right;
     flex-shrink: 0;
-    color: #d1d5db;
+    color: var(--text-secondary);
   }
   .choke-bar .cb-track {
     flex: 1;
     height: 24px;
-    background: #1a1a2e;
+    background: var(--surface-alt);
     border-radius: 4px;
     overflow: hidden;
   }
@@ -538,8 +582,8 @@
   }
   
   .key-num {
-    background: #111118;
-    border: 1px solid #1e1e2e;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 20px;
     text-align: center;
@@ -555,16 +599,16 @@
   
   .key-num .desc {
     font-size: 11px;
-    color: #9ca3af;
+    color: var(--text-muted);
     margin-top: 6px;
     line-height: 1.4;
   }
   
   /* === WORTH KNOWING === */
   .worth-knowing {
-    background: #111118;
-    border: 1px solid #2a2a4a;
-    border-left: 3px solid #a78bfa;
+    background: var(--surface);
+    border: 1px solid var(--border-alt);
+    border-left: 3px solid var(--worth-accent);
     border-radius: 0 12px 12px 0;
     padding: 24px;
     margin-top: 32px;
@@ -573,7 +617,7 @@
   .worth-knowing h3 {
     font-size: 15px;
     font-weight: 700;
-    color: #a78bfa;
+    color: var(--worth-accent);
     margin-bottom: 12px;
   }
   
@@ -586,11 +630,11 @@
     font-size: 13px;
     line-height: 1.6;
     padding: 6px 0;
-    border-bottom: 1px solid #1e1e2e;
-    color: #d1d5db;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
   }
   .worth-knowing li:last-child { border-bottom: none; }
-  .worth-knowing li strong { color: #e8e8ed; }
+  .worth-knowing li strong { color: var(--text); }
   
   /* === WAFER PLAYERS GRID === */
   .players-grid {
@@ -600,14 +644,14 @@
     margin: 16px 0;
   }
   .player-card {
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
     border-radius: 10px;
     padding: 14px;
     text-align: center;
   }
-  .player-card .pl-name { font-size: 13px; font-weight: 700; color: #e8e8ed; }
-  .player-card .pl-country { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+  .player-card .pl-name { font-size: 13px; font-weight: 700; color: var(--text); }
+  .player-card .pl-country { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
   .player-card .pl-share { font-size: 11px; color: #60a5fa; margin-top: 4px; font-weight: 600; }
   
   /* === EXPORT CONTROL TIMELINE === */
@@ -633,11 +677,11 @@
     height: 10px;
     border-radius: 50%;
     background: #ef4444;
-    border: 2px solid #0a0a0f;
+    border: 2px solid var(--bg);
   }
   .ec-event .ec-date { font-size: 11px; font-weight: 700; color: #f87171; }
-  .ec-event .ec-title { font-size: 13px; font-weight: 600; color: #e8e8ed; margin-top: 2px; }
-  .ec-event .ec-desc { font-size: 12px; color: #9ca3af; margin-top: 4px; line-height: 1.5; }
+  .ec-event .ec-title { font-size: 13px; font-weight: 600; color: var(--text); margin-top: 2px; }
+  .ec-event .ec-desc { font-size: 12px; color: var(--text-muted); margin-top: 4px; line-height: 1.5; }
   
   /* === MOBILE RESPONSIVE === */
   @media (max-width: 600px) {
@@ -725,10 +769,47 @@
     .key-num .num { font-size: 22px; }
     .step-icon { width: 52px; height: 52px; font-size: 22px; }
   }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto 0;
+    padding: 0 0 16px 0;
+  }
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border-alt);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
 </style>
 </head>
 <body>
 <div class="container">
+<div class="top-bar">
+  <a href="../" class="back-link">← Back to Study Hub</a>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+    <span id="theme-icon">☀️</span>
+  </button>
+</div>
+
 
   <h1>⛏️ Layer 1: Raw Materials & Equipment</h1>
   <p class="subtitle">The foundation of everything — from sand to the most complex machines ever built by humans</p>
@@ -736,7 +817,7 @@
   <!-- ========== 1. WHERE THIS SITS ========== -->
   <div class="big-picture">
     <div class="section-title"><span class="emoji">🗺️</span> Where This Sits in the AI Value Chain</div>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Layer 1 is the <strong style="color:#fbbf24;">absolute foundation</strong>. Without purified silicon, without lithography machines, without rare earth elements — nothing else in the AI value chain can exist. Every AI model, every GPU, every data center starts here.</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Layer 1 is the <strong style="color:#fbbf24;">absolute foundation</strong>. Without purified silicon, without lithography machines, without rare earth elements — nothing else in the AI value chain can exist. Every AI model, every GPU, every data center starts here.</p>
     <div class="flow-row">
       <div class="flow-node highlight"><div class="label">Layer 1</div><div class="name">⛏️ Raw Materials & Equipment</div></div>
       <div class="flow-arrow">→</div>
@@ -755,7 +836,7 @@
   <!-- ========== 2. SILICON: SAND TO WAFER ========== -->
   <div class="anatomy-card">
     <h3>🏖️ Silicon — From Sand to Wafer</h3>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:8px;">
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">
       Every chip starts as ordinary sand (silicon dioxide). Through an extraordinary process, this raw material is transformed into the purest substance commercially produced — 99.9999999% pure silicon (9N purity). Here's the journey:
     </p>
     
@@ -821,13 +902,13 @@
         <div class="mu-desc">total chip value per wafer</div>
       </div>
     </div>
-    <p style="font-size:11px;color:#6b7280;text-align:center;margin-top:8px;">A handful of sand → $100,000+ in AI chips. That's the magic of semiconductor manufacturing.</p>
+    <p style="font-size:11px;color:var(--text-dim);text-align:center;margin-top:8px;">A handful of sand → $100,000+ in AI chips. That's the magic of semiconductor manufacturing.</p>
   </div>
   
   <!-- Wafer Key Players -->
   <div class="anatomy-card">
     <h3>🏢 Who Makes Silicon Wafers</h3>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:12px;">Only a handful of companies can produce the ultra-pure 300mm wafers that modern fabs require:</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Only a handful of companies can produce the ultra-pure 300mm wafers that modern fabs require:</p>
     <div class="players-grid">
       <div class="player-card">
         <div class="pl-name">Shin-Etsu</div>
@@ -850,7 +931,7 @@
         <div class="pl-share">~12% share</div>
       </div>
     </div>
-    <p style="font-size:12px;color:#d1d5db;margin-top:8px;line-height:1.6;">
+    <p style="font-size:12px;color:var(--text-secondary);margin-top:8px;line-height:1.6;">
       <strong>Key insight:</strong> Japan alone controls ~54% of global silicon wafer production. This is another strategic chokepoint — if Japan restricted wafer exports, the entire global chip supply would seize up.
     </p>
   </div>
@@ -858,7 +939,7 @@
   <!-- ========== 3. ASML — THE MOST IMPORTANT COMPANY ========== -->
   <div class="anatomy-card">
     <h3>🔦 ASML — The Most Important Company You've Never Heard Of</h3>
-    <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:16px;">
+    <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:16px;">
       ASML is a Dutch company with a <strong style="color:#fbbf24;">100% monopoly</strong> on EUV lithography machines — the only tool that can print transistors small enough for cutting-edge chips (5nm, 3nm, 2nm). Without ASML, there are no advanced AI chips. Period.
     </p>
     
@@ -881,13 +962,13 @@
       <div class="litho-beam"></div>
       <div class="litho-element litho-wafer">💿 Silicon Wafer (coated with photoresist)</div>
     </div>
-    <p style="font-size:11px;color:#6b7280;text-align:center;margin-top:12px;">The pattern on the mask is shrunk 4× and printed onto the wafer surface. Repeat for each layer of the chip (50-80+ layers for modern processors).</p>
+    <p style="font-size:11px;color:var(--text-dim);text-align:center;margin-top:12px;">The pattern on the mask is shrunk 4× and printed onto the wafer surface. Repeat for each layer of the chip (50-80+ layers for modern processors).</p>
   </div>
   
   <!-- The Insane Engineering -->
   <div class="anatomy-card">
     <h3>🤯 The Insane Engineering Inside EUV</h3>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:12px;">
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">
       Generating EUV light is arguably the hardest engineering challenge ever solved commercially. Here's how it works:
     </p>
     
@@ -944,7 +1025,7 @@
       </div>
     </div>
     
-    <p style="font-size:12px;color:#d1d5db;text-align:center;margin-top:12px;line-height:1.6;">
+    <p style="font-size:12px;color:var(--text-secondary);text-align:center;margin-top:12px;line-height:1.6;">
       The newest <strong style="color:#fbbf24;">High-NA EUV</strong> machine (the NXE:3800E) costs ~$350M+ and can print features at 2nm and below. There are currently fewer than 10 in existence.
     </p>
   </div>
@@ -952,7 +1033,7 @@
   <!-- Dutch Export Ban -->
   <div class="anatomy-card">
     <h3>🚫 The Dutch Export Ban — Weaponizing Lithography</h3>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:12px;">
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">
       Because ASML is the <em>only</em> EUV manufacturer on Earth, controlling who gets these machines is arguably the most consequential export control in modern history:
     </p>
     
@@ -987,7 +1068,7 @@
   <!-- ========== 4. OTHER EQUIPMENT MAKERS ========== -->
   <div class="anatomy-card">
     <h3>🏭 Other Critical Equipment Makers</h3>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:12px;">
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">
       ASML gets the headlines, but chip manufacturing requires dozens of different machines. These companies control critical steps in the process:
     </p>
     
@@ -1020,7 +1101,7 @@
     </div>
     
     <div style="margin-top:20px;">
-      <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:#e8e8ed;">Semiconductor Equipment Market Share</div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--text);">Semiconductor Equipment Market Share</div>
       <div class="market-bars">
         <div class="market-bar-row">
           <div class="bar-label">Applied Materials</div>
@@ -1043,14 +1124,14 @@
           <div class="bar-track"><div class="bar-fill" style="width:8%;background:linear-gradient(90deg,#3b1f5e,#7c3aed);">~8% <span class="bar-flag">🇺🇸</span></div></div>
         </div>
       </div>
-      <p style="font-size:11px;color:#6b7280;text-align:center;margin-top:8px;">US + Netherlands + Japan control ~80% of the global semiconductor equipment market. All three are part of the export control alliance against China.</p>
+      <p style="font-size:11px;color:var(--text-dim);text-align:center;margin-top:8px;">US + Netherlands + Japan control ~80% of the global semiconductor equipment market. All three are part of the export control alliance against China.</p>
     </div>
   </div>
 
   <!-- ========== 5. RARE EARTH ELEMENTS ========== -->
   <div class="anatomy-card">
     <h3>🌍 Rare Earth Elements & Critical Materials</h3>
-    <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:16px;">
+    <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:16px;">
       Semiconductors require more than just silicon. They need a cocktail of rare and exotic materials — many of which have highly concentrated supply chains. <strong style="color:#f87171;">China dominates this space.</strong>
     </p>
     
@@ -1081,7 +1162,7 @@
     
     <!-- Key elements grid -->
     <div style="margin:24px 0 16px 0;">
-      <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:#e8e8ed;">Key Elements & Why They Matter</div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--text);">Key Elements & Why They Matter</div>
       <div class="equip-grid">
         <div class="equip-card">
           <div class="eq-name" style="color:#60a5fa;">Gallium</div>
@@ -1110,7 +1191,7 @@
   <!-- China's Export Controls & Geopolitics -->
   <div class="anatomy-card">
     <h3>🔒 Geopolitical Chokepoint — The Material Weapon</h3>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">
       The semiconductor supply chain is now a geopolitical battleground. The West controls equipment (ASML, Applied Materials). China controls materials. Both sides are weaponizing their leverage.
     </p>
     
@@ -1162,7 +1243,7 @@
           <div class="ch-detail">Significant deposits under development. Part of US-allied supply chain push.</div>
         </div>
       </div>
-      <p style="font-size:12px;color:#6b7280;text-align:center;margin-top:12px;">Even with diversification, these alternatives are years away from replacing China's refining dominance. The chokepoint remains.</p>
+      <p style="font-size:12px;color:var(--text-dim);text-align:center;margin-top:12px;">Even with diversification, these alternatives are years away from replacing China's refining dominance. The chokepoint remains.</p>
     </div>
   </div>
 
@@ -1208,5 +1289,25 @@
   </div>
 
 </div>
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = saved === 'dark' ? '☀️' : '🌙';
+    });
+  }
+})();
+</script>
 </body>
 </html>

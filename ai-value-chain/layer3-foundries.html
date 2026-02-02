@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +8,57 @@
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-alt: #1a1a2e;
+    --surface-hover: #1e1e2a;
+    --border: #1e1e2e;
+    --border-alt: #2a2a4a;
+    --text: #e8e8ed;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-dim: #6b7280;
+    --text-dimmer: #4b5563;
+    --accent: #5ec4b6;
+    --accent-light: #34d399;
+    --accent-glow: rgba(94, 196, 182, 0.12);
+    --highlight-text: #fbbf24;
+    --worth-accent: #a78bfa;
+    --table-current-bg: rgba(94, 196, 182, 0.08);
+    --table-current-text: #5ec4b6;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --text-dimmer: #a5a09a;
+    --accent: #1a8a7d;
+    --accent-light: #059669;
+    --accent-glow: rgba(26, 138, 125, 0.06);
+    --highlight-text: #b45309;
+    --worth-accent: #7c3aed;
+    --table-current-bg: rgba(26, 138, 125, 0.08);
+    --table-current-text: #1a8a7d;
+  }
+
   
   body {
     font-family: 'Inter', -apple-system, sans-serif;
-    background: #0a0a0f;
-    color: #e8e8ed;
+    background: var(--bg);
+    color: var(--text);
     padding: 40px 24px;
     min-height: 100vh;
+  
+    transition: background 0.3s ease, color 0.3s ease;
   }
   
   .container {
@@ -33,7 +77,7 @@
   
   .subtitle {
     font-size: 14px;
-    color: #6b7280;
+    color: var(--text-dim);
     margin-bottom: 36px;
     font-weight: 500;
   }
@@ -50,8 +94,8 @@
   
   /* === BIG PICTURE === */
   .big-picture {
-    background: #111118;
-    border: 1px solid #1e1e2e;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 32px;
     margin-bottom: 32px;
@@ -68,15 +112,15 @@
   }
   
   .flow-node {
-    background: #1a1a2e;
-    border: 1.5px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1.5px solid var(--border-alt);
     border-radius: 12px;
     padding: 14px 16px;
     text-align: center;
     min-width: 120px;
     flex-shrink: 0;
   }
-  .flow-node .label { font-size: 11px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .flow-node .label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
   .flow-node .name { font-size: 14px; font-weight: 700; margin-top: 4px; }
   .flow-node.highlight {
     border-color: #34d399;
@@ -88,15 +132,15 @@
   
   .flow-arrow {
     font-size: 18px;
-    color: #4b5563;
+    color: var(--text-dimmer);
     padding: 0 6px;
     flex-shrink: 0;
   }
   
   /* === ANATOMY CARDS === */
   .anatomy-card {
-    background: #111118;
-    border: 1px solid #1e1e2e;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 28px;
     margin-bottom: 32px;
@@ -144,7 +188,7 @@
   .fab-icon.litho { background: linear-gradient(135deg, #92400e, #f59e0b); border: 1.5px solid #fbbf24; }
   .fab-icon.etch { background: linear-gradient(135deg, #7c2d12, #dc2626); border: 1.5px solid #ef4444; }
   .fab-icon.implant { background: linear-gradient(135deg, #166534, #22c55e); border: 1.5px solid #34d399; }
-  .fab-icon.repeat { background: linear-gradient(135deg, #374151, #6b7280); border: 1.5px solid #9ca3af; }
+  .fab-icon.repeat { background: linear-gradient(135deg, #374151, var(--text-dim)); border: 1.5px solid var(--text-muted); }
   .fab-icon.test { background: linear-gradient(135deg, #0f3a2a, #059669); border: 1.5px solid #34d399; }
   .fab-icon.dice { background: linear-gradient(135deg, #1a1a3a, #4338ca); border: 1.5px solid #6366f1; }
   .fab-icon.chip-out { background: linear-gradient(135deg, #34d399, #059669); border: 1.5px solid #34d399; }
@@ -152,12 +196,12 @@
   .fab-name {
     font-size: 10px;
     font-weight: 700;
-    color: #e8e8ed;
+    color: var(--text);
     text-align: center;
   }
   .fab-desc {
     font-size: 8px;
-    color: #6b7280;
+    color: var(--text-dim);
     text-align: center;
     max-width: 70px;
     line-height: 1.3;
@@ -165,7 +209,7 @@
   
   .fab-arrow {
     font-size: 16px;
-    color: #4b5563;
+    color: var(--text-dimmer);
     padding: 0 3px;
     flex-shrink: 0;
     margin-bottom: 20px;
@@ -222,7 +266,7 @@
   .bar-track {
     flex: 1;
     height: 32px;
-    background: #1a1a2e;
+    background: var(--surface-alt);
     border-radius: 6px;
     overflow: hidden;
     position: relative;
@@ -253,15 +297,15 @@
     margin: 16px 0;
   }
   .client-card {
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
     border-radius: 10px;
     padding: 14px;
     text-align: center;
   }
   .client-card .cl-icon { font-size: 24px; margin-bottom: 4px; }
-  .client-card .cl-name { font-size: 12px; font-weight: 700; color: #e8e8ed; }
-  .client-card .cl-chip { font-size: 10px; color: #9ca3af; margin-top: 2px; }
+  .client-card .cl-name { font-size: 12px; font-weight: 700; color: var(--text); }
+  .client-card .cl-chip { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
   
   /* === FAB MAP === */
   .fab-map {
@@ -272,14 +316,14 @@
   }
   
   .fab-location {
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
     border-radius: 10px;
     padding: 16px;
   }
   .fab-location .fl-flag { font-size: 20px; }
   .fab-location .fl-name { font-size: 13px; font-weight: 700; margin-top: 4px; }
-  .fab-location .fl-status { font-size: 11px; color: #9ca3af; margin-top: 2px; line-height: 1.4; }
+  .fab-location .fl-status { font-size: 11px; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
   .fab-location.taiwan-risk {
     border-color: #ef4444;
     background: #1a1010;
@@ -331,12 +375,12 @@
   .node-name {
     font-size: 13px;
     font-weight: 800;
-    color: #e8e8ed;
+    color: var(--text);
   }
   
   .node-year {
     font-size: 10px;
-    color: #6b7280;
+    color: var(--text-dim);
   }
   
   /* === FOUNDRY COMPARISON === */
@@ -348,8 +392,8 @@
   }
   
   .foundry-card {
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
     border-radius: 12px;
     padding: 20px;
   }
@@ -360,19 +404,19 @@
   }
   .foundry-card .fc-subtitle {
     font-size: 11px;
-    color: #9ca3af;
+    color: var(--text-muted);
     font-weight: 600;
     margin-bottom: 12px;
   }
   .foundry-card .fc-stat {
     font-size: 12px;
-    color: #d1d5db;
+    color: var(--text-secondary);
     line-height: 1.6;
     padding: 4px 0;
-    border-bottom: 1px solid #1e1e2e;
+    border-bottom: 1px solid var(--border);
   }
   .foundry-card .fc-stat:last-child { border-bottom: none; }
-  .foundry-card .fc-stat strong { color: #e8e8ed; }
+  .foundry-card .fc-stat strong { color: var(--text); }
   
   .foundry-card.tsmc {
     border-color: #34d399;
@@ -387,10 +431,10 @@
   .foundry-card.samsung .fc-name { color: #60a5fa; }
   
   .foundry-card.intel {
-    border-color: #a78bfa;
+    border-color: var(--worth-accent);
     background: #1a1028;
   }
-  .foundry-card.intel .fc-name { color: #a78bfa; }
+  .foundry-card.intel .fc-name { color: var(--worth-accent); }
   
   /* === CHIPS ACT === */
   .chips-grid {
@@ -401,8 +445,8 @@
   }
   
   .chips-card {
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
     border-radius: 10px;
     padding: 18px;
   }
@@ -413,7 +457,7 @@
     font-weight: 800;
     margin: 6px 0;
   }
-  .chips-card .cc-desc { font-size: 11px; color: #9ca3af; line-height: 1.5; }
+  .chips-card .cc-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
   
   .chips-card.us { border-color: #3b82f6; }
   .chips-card.us .cc-amount { color: #60a5fa; }
@@ -421,8 +465,8 @@
   .chips-card.eu .cc-amount { color: #fbbf24; }
   .chips-card.japan { border-color: #ef4444; }
   .chips-card.japan .cc-amount { color: #f87171; }
-  .chips-card.challenge { border-color: #6b7280; grid-column: 1 / -1; }
-  .chips-card.challenge .cc-amount { color: #9ca3af; font-size: 16px; }
+  .chips-card.challenge { border-color: var(--text-dim); grid-column: 1 / -1; }
+  .chips-card.challenge .cc-amount { color: var(--text-muted); font-size: 16px; }
   
   /* === KEY NUMBERS === */
   .key-numbers {
@@ -433,8 +477,8 @@
   }
   
   .key-num {
-    background: #111118;
-    border: 1px solid #1e1e2e;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 20px;
     text-align: center;
@@ -450,16 +494,16 @@
   
   .key-num .desc {
     font-size: 11px;
-    color: #9ca3af;
+    color: var(--text-muted);
     margin-top: 6px;
     line-height: 1.4;
   }
   
   /* === WORTH KNOWING === */
   .worth-knowing {
-    background: #111118;
-    border: 1px solid #2a2a4a;
-    border-left: 3px solid #a78bfa;
+    background: var(--surface);
+    border: 1px solid var(--border-alt);
+    border-left: 3px solid var(--worth-accent);
     border-radius: 0 12px 12px 0;
     padding: 24px;
     margin-top: 32px;
@@ -468,7 +512,7 @@
   .worth-knowing h3 {
     font-size: 15px;
     font-weight: 700;
-    color: #a78bfa;
+    color: var(--worth-accent);
     margin-bottom: 12px;
   }
   
@@ -481,11 +525,11 @@
     font-size: 13px;
     line-height: 1.6;
     padding: 6px 0;
-    border-bottom: 1px solid #1e1e2e;
-    color: #d1d5db;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
   }
   .worth-knowing li:last-child { border-bottom: none; }
-  .worth-knowing li strong { color: #e8e8ed; }
+  .worth-knowing li strong { color: var(--text); }
   
   /* === MOBILE RESPONSIVE === */
   @media (max-width: 600px) {
@@ -566,10 +610,47 @@
     .key-num .num { font-size: 22px; }
     .fab-icon { width: 48px; height: 48px; font-size: 20px; }
   }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto 0;
+    padding: 0 0 16px 0;
+  }
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border-alt);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
 </style>
 </head>
 <body>
 <div class="container">
+<div class="top-bar">
+  <a href="../" class="back-link">← Back to Study Hub</a>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+    <span id="theme-icon">☀️</span>
+  </button>
+</div>
+
 
   <h1>🏭 Layer 3: Foundries & Fabrication</h1>
   <p class="subtitle">The factories that turn chip designs into physical silicon — the most complex manufacturing on Earth</p>
@@ -577,7 +658,7 @@
   <!-- ========== 1. WHERE THIS SITS ========== -->
   <div class="big-picture">
     <div class="section-title"><span class="emoji">🗺️</span> Where This Sits in the AI Value Chain</div>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Layer 3 is <strong style="color:#34d399;">the factory floor</strong>. Chip designers (Layer 2 — Nvidia, AMD, Apple) send their blueprints here to be turned into physical silicon. Without foundries, every chip design is just a fancy PDF.</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Layer 3 is <strong style="color:#34d399;">the factory floor</strong>. Chip designers (Layer 2 — Nvidia, AMD, Apple) send their blueprints here to be turned into physical silicon. Without foundries, every chip design is just a fancy PDF.</p>
     <div class="flow-row">
       <div class="flow-node dim"><div class="label">Layer 1</div><div class="name">Raw Materials</div></div>
       <div class="flow-arrow">→</div>
@@ -596,7 +677,7 @@
   <!-- ========== 2. HOW CHIP FABRICATION WORKS ========== -->
   <div class="anatomy-card">
     <h3>🔬 How Chip Fabrication Works — The Process</h3>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:8px;">
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">
       A blank silicon wafer enters the fab and goes through <strong style="color:#fbbf24;">1,000+ process steps over 2-3 months</strong>. Each chip layer requires depositing material, printing patterns with light, and etching away what's not needed — repeated 80+ times.
     </p>
     
@@ -659,7 +740,7 @@
     <p style="font-size:12px;color:#fbbf24;text-align:center;margin:12px 0 16px 0;font-weight:600;">A single advanced chip goes through 1,000+ process steps over 2-3 months</p>
     
     <!-- Cleanroom comparison -->
-    <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:#e8e8ed;">Cleanroom Requirements (particles per cubic meter)</div>
+    <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--text);">Cleanroom Requirements (particles per cubic meter)</div>
     <div class="cleanroom-compare">
       <div class="clean-side outdoor">
         <div class="cl-label">Outdoor Air</div>
@@ -677,18 +758,18 @@
         <div class="cl-desc">particles/m³</div>
       </div>
     </div>
-    <p style="font-size:11px;color:#6b7280;text-align:center;margin-top:8px;">A chip fab cleanroom is <strong style="color:#34d399;">1,000× cleaner</strong> than a hospital operating room. A single speck of dust can destroy a chip worth thousands of dollars.</p>
+    <p style="font-size:11px;color:var(--text-dim);text-align:center;margin-top:8px;">A chip fab cleanroom is <strong style="color:#34d399;">1,000× cleaner</strong> than a hospital operating room. A single speck of dust can destroy a chip worth thousands of dollars.</p>
   </div>
 
   <!-- ========== 3. TSMC ========== -->
   <div class="anatomy-card">
     <h3>🏆 TSMC — The World's Most Important Company</h3>
-    <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:16px;">
+    <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:16px;">
       Taiwan Semiconductor Manufacturing Company manufactures <strong style="color:#34d399;">~92% of the world's most advanced chips</strong> (below 7nm). Every AI GPU, every iPhone chip, every cutting-edge processor flows through TSMC's fabs. No company in history has been this critical to the global technology supply chain.
     </p>
     
     <!-- Market share bars -->
-    <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:#e8e8ed;">Advanced Foundry Market Share (&lt;7nm)</div>
+    <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--text);">Advanced Foundry Market Share (&lt;7nm)</div>
     <div class="market-bars">
       <div class="market-bar-row">
         <div class="bar-label">TSMC</div>
@@ -705,7 +786,7 @@
     </div>
     
     <!-- Clients -->
-    <div style="font-size:13px;font-weight:700;margin:24px 0 12px 0;color:#e8e8ed;">Who TSMC Makes Chips For</div>
+    <div style="font-size:13px;font-weight:700;margin:24px 0 12px 0;color:var(--text);">Who TSMC Makes Chips For</div>
     <div class="client-grid">
       <div class="client-card">
         <div class="cl-icon">💚</div>
@@ -786,15 +867,15 @@
   <!-- ========== 4. PROCESS NODES EXPLAINED ========== -->
   <div class="anatomy-card">
     <h3>📏 Process Nodes Explained Simply</h3>
-    <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:8px;">
+    <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:8px;">
       <strong>"nm"</strong> (nanometer) used to measure the size of transistor features. Smaller = more transistors packed in = more performance, less power consumption. But modern node names are <strong style="color:#fbbf24;">mostly marketing</strong> — "3nm" doesn't mean anything is actually 3 nanometers.
     </p>
-    <p style="font-size:12px;color:#9ca3af;line-height:1.6;margin-bottom:20px;">
+    <p style="font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:20px;">
       What matters is the <strong>transistor density</strong> — how many transistors fit per square millimeter. Each new node packs roughly 1.5-2× more transistors.
     </p>
     
     <!-- Node tower visualization -->
-    <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:#e8e8ed;text-align:center;">Transistor Density by Node (million transistors/mm²)</div>
+    <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:var(--text);text-align:center;">Transistor Density by Node (million transistors/mm²)</div>
     <div class="node-timeline">
       <div class="node-bar">
         <div class="node-tower" style="height:60px;background:linear-gradient(180deg,#1e40af,#3b82f6);">
@@ -835,9 +916,9 @@
       </div>
     </div>
     
-    <div style="background:#1a1a2e;border:1px solid #2a2a4a;border-radius:10px;padding:16px;margin-top:16px;">
+    <div style="background:var(--surface-alt);border:1px solid #2a2a4a;border-radius:10px;padding:16px;margin-top:16px;">
       <div style="font-size:12px;font-weight:700;color:#fbbf24;margin-bottom:8px;">⚠️ Why Node Names Are Mostly Marketing</div>
-      <p style="font-size:12px;color:#d1d5db;line-height:1.6;">
+      <p style="font-size:12px;color:var(--text-secondary);line-height:1.6;">
         In the 1990s, "nm" actually measured the gate length of a transistor. Today, <strong>nothing on a "3nm" chip is 3 nanometers</strong>. The number is a commercial label that roughly indicates the generation. Intel's "Intel 7" is roughly equivalent to TSMC's "5nm." Samsung's "3nm" has fewer transistors/mm² than TSMC's "3nm." The only thing that matters: transistor density, power efficiency, and performance.
       </p>
     </div>
@@ -879,8 +960,8 @@
       </div>
     </div>
     
-    <div style="background:#1a1a2e;border:1px solid #2a2a4a;border-radius:10px;padding:16px;margin-top:16px;">
-      <p style="font-size:12px;color:#d1d5db;line-height:1.6;">
+    <div style="background:var(--surface-alt);border:1px solid #2a2a4a;border-radius:10px;padding:16px;margin-top:16px;">
+      <p style="font-size:12px;color:var(--text-secondary);line-height:1.6;">
         <strong style="color:#34d399;">Why Intel fell behind:</strong> Intel was the dominant chipmaker for decades, designing <em>and</em> manufacturing its own chips. But it got complacent, missed the mobile revolution, and stumbled on the transition from 14nm to 10nm (which took 5+ years instead of 2). Meanwhile, TSMC perfected the pure-foundry model, attracting the world's best chip designers. Now Intel is trying to pivot to be both a chip designer and a contract foundry — a massive organizational challenge.
       </p>
     </div>
@@ -889,7 +970,7 @@
   <!-- ========== 7. CHIPS ACT ========== -->
   <div class="anatomy-card">
     <h3>🏛️ The CHIPS Act & Reshoring — Bringing Fabs Home</h3>
-    <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:16px;">
+    <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:16px;">
       Governments realized that concentrating ~92% of advanced chip production in Taiwan is a catastrophic strategic risk. The result: the biggest industrial policy push in decades.
     </p>
     
@@ -969,5 +1050,25 @@
   </div>
 
 </div>
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = saved === 'dark' ? '☀️' : '🌙';
+    });
+  }
+})();
+</script>
 </body>
 </html>

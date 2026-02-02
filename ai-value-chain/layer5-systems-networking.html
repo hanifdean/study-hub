@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +8,57 @@
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-alt: #1a1a2e;
+    --surface-hover: #1e1e2a;
+    --border: #1e1e2e;
+    --border-alt: #2a2a4a;
+    --text: #e8e8ed;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-dim: #6b7280;
+    --text-dimmer: #4b5563;
+    --accent: #5ec4b6;
+    --accent-light: #34d399;
+    --accent-glow: rgba(94, 196, 182, 0.12);
+    --highlight-text: #fbbf24;
+    --worth-accent: #a78bfa;
+    --table-current-bg: rgba(94, 196, 182, 0.08);
+    --table-current-text: #5ec4b6;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --text-dimmer: #a5a09a;
+    --accent: #1a8a7d;
+    --accent-light: #059669;
+    --accent-glow: rgba(26, 138, 125, 0.06);
+    --highlight-text: #b45309;
+    --worth-accent: #7c3aed;
+    --table-current-bg: rgba(26, 138, 125, 0.08);
+    --table-current-text: #1a8a7d;
+  }
+
   
   body {
     font-family: 'Inter', -apple-system, sans-serif;
-    background: #0a0a0f;
-    color: #e8e8ed;
+    background: var(--bg);
+    color: var(--text);
     padding: 40px 24px;
     min-height: 100vh;
+  
+    transition: background 0.3s ease, color 0.3s ease;
   }
   
   .container {
@@ -33,7 +77,7 @@
   
   .subtitle {
     font-size: 14px;
-    color: #6b7280;
+    color: var(--text-dim);
     margin-bottom: 36px;
     font-weight: 500;
   }
@@ -50,8 +94,8 @@
   
   /* === BIG PICTURE === */
   .big-picture {
-    background: #111118;
-    border: 1px solid #1e1e2e;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 32px;
     margin-bottom: 32px;
@@ -68,15 +112,15 @@
   }
   
   .flow-node {
-    background: #1a1a2e;
-    border: 1.5px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1.5px solid var(--border-alt);
     border-radius: 12px;
     padding: 14px 16px;
     text-align: center;
     min-width: 120px;
     flex-shrink: 0;
   }
-  .flow-node .label { font-size: 11px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .flow-node .label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
   .flow-node .name { font-size: 14px; font-weight: 700; margin-top: 4px; }
   .flow-node.highlight {
     border-color: #34d399;
@@ -88,15 +132,15 @@
   
   .flow-arrow {
     font-size: 18px;
-    color: #4b5563;
+    color: var(--text-dimmer);
     padding: 0 6px;
     flex-shrink: 0;
   }
   
   /* === ANATOMY CARDS === */
   .anatomy-card {
-    background: #111118;
-    border: 1px solid #1e1e2e;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 28px;
     margin-bottom: 32px;
@@ -111,7 +155,7 @@
   /* === SERVER DIAGRAM === */
   .server-diagram {
     background: #0d0d14;
-    border: 1.5px solid #1e1e2e;
+    border: 1.5px solid var(--border);
     border-radius: 14px;
     padding: 24px;
     margin: 20px 0;
@@ -173,17 +217,17 @@
   }
   
   .server-comp {
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
     border-radius: 8px;
     padding: 10px 16px;
     text-align: center;
     font-size: 11px;
     font-weight: 600;
-    color: #d1d5db;
+    color: var(--text-secondary);
   }
   .server-comp.cpu { border-color: #3b82f6; color: #93c5fd; }
-  .server-comp.net { border-color: #a78bfa; color: #c4b5fd; }
+  .server-comp.net { border-color: var(--worth-accent); color: #c4b5fd; }
   .server-comp.nvswitch { border-color: #f59e0b; color: #fde68a; background: #1a1a10; }
   
   /* === COMPARISON TABLE === */
@@ -196,7 +240,7 @@
   
   .compare-card {
     background: #0d0d14;
-    border: 1.5px solid #2a2a4a;
+    border: 1.5px solid var(--border-alt);
     border-radius: 14px;
     padding: 24px;
     text-align: center;
@@ -212,7 +256,7 @@
   }
   .compare-card .cc-sub {
     font-size: 11px;
-    color: #6b7280;
+    color: var(--text-dim);
     margin-bottom: 16px;
   }
   .compare-card .cc-stat {
@@ -222,7 +266,7 @@
   }
   .compare-card .cc-stat-label {
     font-size: 10px;
-    color: #9ca3af;
+    color: var(--text-muted);
     margin-bottom: 12px;
   }
   
@@ -234,14 +278,14 @@
     margin: 16px 0;
   }
   .oem-card {
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
     border-radius: 10px;
     padding: 14px;
     text-align: center;
   }
-  .oem-card .oem-name { font-size: 13px; font-weight: 700; color: #e8e8ed; }
-  .oem-card .oem-role { font-size: 10px; color: #9ca3af; margin-top: 4px; line-height: 1.3; }
+  .oem-card .oem-name { font-size: 13px; font-weight: 700; color: var(--text); }
+  .oem-card .oem-role { font-size: 10px; color: var(--text-muted); margin-top: 4px; line-height: 1.3; }
   
   /* === NETWORK HIERARCHY === */
   .net-hierarchy {
@@ -297,7 +341,7 @@
     font-size: 12px;
   }
   .net-box.spine-level {
-    background: linear-gradient(135deg, #1a1a2e, #991b1b);
+    background: linear-gradient(135deg, var(--surface-alt), #991b1b);
     border: 1.5px solid #ef4444;
     color: #fca5a5;
     font-size: 12px;
@@ -305,7 +349,7 @@
   
   .net-connector {
     font-size: 14px;
-    color: #4b5563;
+    color: var(--text-dimmer);
     padding: 4px 0;
     text-align: center;
   }
@@ -313,9 +357,9 @@
   .net-speed {
     font-size: 10px;
     font-weight: 700;
-    color: #9ca3af;
-    background: #111118;
-    border: 1px solid #2a2a4a;
+    color: var(--text-muted);
+    background: var(--surface);
+    border: 1px solid var(--border-alt);
     border-radius: 4px;
     padding: 2px 8px;
     position: absolute;
@@ -348,7 +392,7 @@
   .bar-track {
     flex: 1;
     height: 32px;
-    background: #1a1a2e;
+    background: var(--surface-alt);
     border-radius: 6px;
     overflow: hidden;
     position: relative;
@@ -406,13 +450,13 @@
   
   .bn-divider {
     width: 40px;
-    background: #1e1e2e;
+    background: var(--border);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 12px;
     font-weight: 800;
-    color: #6b7280;
+    color: var(--text-dim);
   }
   
   /* === COOLING DIAGRAM === */
@@ -428,17 +472,17 @@
     border-radius: 12px;
     padding: 20px;
     text-align: center;
-    border: 1.5px solid #2a2a4a;
+    border: 1.5px solid var(--border-alt);
   }
-  .cool-card.old { border-color: #6b7280; }
+  .cool-card.old { border-color: var(--text-dim); }
   .cool-card.new { border-color: #3b82f6; box-shadow: 0 0 16px rgba(59, 130, 246, 0.1); }
   
   .cool-card .cool-icon { font-size: 36px; margin-bottom: 8px; }
   .cool-card .cool-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-  .cool-card .cool-cap { font-size: 11px; color: #9ca3af; }
+  .cool-card .cool-cap { font-size: 11px; color: var(--text-muted); }
   .cool-card .cool-stat { font-size: 22px; font-weight: 800; margin: 8px 0; }
   .cool-card .cool-verdict { font-size: 11px; font-weight: 600; }
-  .cool-card.old .cool-stat { color: #6b7280; }
+  .cool-card.old .cool-stat { color: var(--text-dim); }
   .cool-card.old .cool-verdict { color: #f87171; }
   .cool-card.new .cool-stat { color: #60a5fa; }
   .cool-card.new .cool-verdict { color: #34d399; }
@@ -450,14 +494,14 @@
     margin: 16px 0;
   }
   .cool-player {
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
     border-radius: 10px;
     padding: 14px;
     text-align: center;
   }
   .cool-player .cp-name { font-size: 13px; font-weight: 700; }
-  .cool-player .cp-role { font-size: 10px; color: #9ca3af; margin-top: 4px; line-height: 1.3; }
+  .cool-player .cp-role { font-size: 10px; color: var(--text-muted); margin-top: 4px; line-height: 1.3; }
   
   /* === KEY NUMBERS === */
   .key-numbers {
@@ -468,8 +512,8 @@
   }
   
   .key-num {
-    background: #111118;
-    border: 1px solid #1e1e2e;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 20px;
     text-align: center;
@@ -485,16 +529,16 @@
   
   .key-num .desc {
     font-size: 11px;
-    color: #9ca3af;
+    color: var(--text-muted);
     margin-top: 6px;
     line-height: 1.4;
   }
   
   /* === WORTH KNOWING === */
   .worth-knowing {
-    background: #111118;
-    border: 1px solid #2a2a4a;
-    border-left: 3px solid #a78bfa;
+    background: var(--surface);
+    border: 1px solid var(--border-alt);
+    border-left: 3px solid var(--worth-accent);
     border-radius: 0 12px 12px 0;
     padding: 24px;
     margin-top: 32px;
@@ -503,7 +547,7 @@
   .worth-knowing h3 {
     font-size: 15px;
     font-weight: 700;
-    color: #a78bfa;
+    color: var(--worth-accent);
     margin-bottom: 12px;
   }
   
@@ -516,11 +560,11 @@
     font-size: 13px;
     line-height: 1.6;
     padding: 6px 0;
-    border-bottom: 1px solid #1e1e2e;
-    color: #d1d5db;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
   }
   .worth-knowing li:last-child { border-bottom: none; }
-  .worth-knowing li strong { color: #e8e8ed; }
+  .worth-knowing li strong { color: var(--text); }
   
   /* === PLAYER CARDS === */
   .player-grid {
@@ -531,8 +575,8 @@
   }
   
   .player-card {
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
     border-radius: 12px;
     padding: 20px;
   }
@@ -548,13 +592,13 @@
   }
   .player-card .pl-role {
     font-size: 11px;
-    color: #9ca3af;
+    color: var(--text-muted);
     font-weight: 600;
     margin-bottom: 10px;
   }
   .player-card .pl-desc {
     font-size: 12px;
-    color: #d1d5db;
+    color: var(--text-secondary);
     line-height: 1.5;
   }
   
@@ -627,10 +671,47 @@
     .oem-grid { grid-template-columns: 1fr; }
     .key-num .num { font-size: 22px; }
   }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto 0;
+    padding: 0 0 16px 0;
+  }
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border-alt);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
 </style>
 </head>
 <body>
 <div class="container">
+<div class="top-bar">
+  <a href="../" class="back-link">← Back to Study Hub</a>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+    <span id="theme-icon">☀️</span>
+  </button>
+</div>
+
 
   <h1>🖥️ Layer 5: Systems, Servers & Networking</h1>
   <p class="subtitle">Assembling GPUs, HBM, and networking into the supercomputers that train AI</p>
@@ -638,7 +719,7 @@
   <!-- ========== 1. WHERE THIS SITS ========== -->
   <div class="big-picture">
     <div class="section-title"><span class="emoji">🗺️</span> Where This Sits in the AI Value Chain</div>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Layer 5 is where all the previous layers converge — GPUs from chip design, HBM from the memory layer, advanced packaging from TSMC — assembled into <strong style="color:#34d399;">complete AI server systems</strong> connected by high-speed networking. This is where compute becomes infrastructure.</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Layer 5 is where all the previous layers converge — GPUs from chip design, HBM from the memory layer, advanced packaging from TSMC — assembled into <strong style="color:#34d399;">complete AI server systems</strong> connected by high-speed networking. This is where compute becomes infrastructure.</p>
     <div class="flow-row">
       <div class="flow-node dim"><div class="label">Layer 1</div><div class="name">Raw Materials</div></div>
       <div class="flow-arrow">→</div>
@@ -657,7 +738,7 @@
   <!-- ========== 2. WHAT AN AI SERVER LOOKS LIKE ========== -->
   <div class="anatomy-card">
     <h3>🔬 What an AI Server Actually Looks Like</h3>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:8px;">
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">
       An AI server isn't just a beefy PC. It's a purpose-built system packing multiple GPUs, each with its own HBM, all connected by ultra-fast interconnects. Here's the inside of an Nvidia DGX system:
     </p>
     
@@ -684,14 +765,14 @@
         <div class="server-comp net">🌐 ConnectX-7 NICs (InfiniBand / Ethernet)</div>
       </div>
       
-      <p style="font-size:11px;color:#6b7280;text-align:center;margin-top:12px;">8 GPUs × 80GB = 640GB total HBM · ~$300K+ per system · 10.2kW power draw</p>
+      <p style="font-size:11px;color:var(--text-dim);text-align:center;margin-top:12px;">8 GPUs × 80GB = 640GB total HBM · ~$300K+ per system · 10.2kW power draw</p>
     </div>
   </div>
 
   <!-- DGX H100 vs DGX GB200 NVL72 -->
   <div class="anatomy-card">
     <h3>📊 DGX H100 vs DGX GB200 NVL72 — The Scale Jump</h3>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:12px;">Nvidia keeps packing more GPUs into tighter, faster-connected systems. The jump from H100 to GB200 is massive:</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Nvidia keeps packing more GPUs into tighter, faster-connected systems. The jump from H100 to GB200 is massive:</p>
     
     <div class="compare-grid">
       <div class="compare-card">
@@ -726,7 +807,7 @@
   <!-- Server OEMs -->
   <div class="anatomy-card">
     <h3>🏢 Who Builds AI Servers — The OEMs</h3>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:12px;">Nvidia designs the reference platform (DGX/HGX), but most AI servers are built by OEM partners using Nvidia's baseboard designs:</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Nvidia designs the reference platform (DGX/HGX), but most AI servers are built by OEM partners using Nvidia's baseboard designs:</p>
     
     <div class="oem-grid">
       <div class="oem-card">
@@ -747,7 +828,7 @@
       </div>
     </div>
     
-    <p style="font-size:12px;color:#d1d5db;margin-top:12px;line-height:1.6;">
+    <p style="font-size:12px;color:var(--text-secondary);margin-top:12px;line-height:1.6;">
       <strong>Key insight:</strong> Supermicro's stock rose ~300% in 2024 largely because of AI server demand. These OEMs don't design the GPU — they design everything around it (power delivery, cooling, chassis, management software).
     </p>
   </div>
@@ -755,11 +836,11 @@
   <!-- ========== 3. GPU-TO-GPU COMMUNICATION ========== -->
   <div class="anatomy-card">
     <h3>🔗 GPU-to-GPU Communication — Why Networking Matters</h3>
-    <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:16px;">
+    <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:16px;">
       Training an AI model isn't done on one GPU — it requires <strong>thousands</strong> of GPUs working in perfect sync. Each GPU computes part of the model, then they must exchange results. The speed of this communication directly determines training speed.
     </p>
     
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">There's a hierarchy of connections — getting faster as GPUs get closer together:</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">There's a hierarchy of connections — getting faster as GPUs get closer together:</p>
     
     <div class="net-hierarchy">
       <!-- Level 1: GPUs -->
@@ -813,7 +894,7 @@
   <!-- InfiniBand vs Ethernet -->
   <div class="anatomy-card">
     <h3>⚔️ InfiniBand vs Ethernet — The Network Protocol War</h3>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Two competing technologies for connecting AI racks. InfiniBand dominates today, but Ethernet is fighting back:</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Two competing technologies for connecting AI racks. InfiniBand dominates today, but Ethernet is fighting back:</p>
     
     <div class="compare-grid">
       <div class="compare-card featured" style="border-color:#f59e0b;box-shadow:0 0 20px rgba(245,158,11,0.1);">
@@ -821,7 +902,7 @@
         <div class="cc-sub">Nvidia/Mellanox · Purpose-built for HPC</div>
         <div class="cc-stat" style="color:#fbbf24;">~80%</div>
         <div class="cc-stat-label">of AI cluster networking today</div>
-        <div style="font-size:11px;color:#d1d5db;line-height:1.5;text-align:left;margin-top:8px;">
+        <div style="font-size:11px;color:var(--text-secondary);line-height:1.5;text-align:left;margin-top:8px;">
           ✅ Ultra-low latency<br>
           ✅ RDMA — bypasses CPU entirely<br>
           ✅ Purpose-built for GPU workloads<br>
@@ -834,7 +915,7 @@
         <div class="cc-sub">Broadcom, Arista · Industry standard</div>
         <div class="cc-stat" style="color:#60a5fa;">~20%</div>
         <div class="cc-stat-label">and growing — backed by hyperscalers</div>
-        <div style="font-size:11px;color:#d1d5db;line-height:1.5;text-align:left;margin-top:8px;">
+        <div style="font-size:11px;color:var(--text-secondary);line-height:1.5;text-align:left;margin-top:8px;">
           ✅ Open standard, multi-vendor<br>
           ✅ Existing data center investment<br>
           ✅ Ultra Ethernet Consortium push<br>
@@ -844,15 +925,15 @@
       </div>
     </div>
     
-    <p style="font-size:12px;color:#9ca3af;text-align:center;margin-top:12px;line-height:1.5;">
-      <strong style="color:#e8e8ed;">Ultra Ethernet Consortium</strong> — AMD, Broadcom, Cisco, Google, Meta, Microsoft all pushing to make Ethernet viable for AI training. The goal: break Nvidia's lock-in on networking too.
+    <p style="font-size:12px;color:var(--text-muted);text-align:center;margin-top:12px;line-height:1.5;">
+      <strong style="color:var(--text);">Ultra Ethernet Consortium</strong> — AMD, Broadcom, Cisco, Google, Meta, Microsoft all pushing to make Ethernet viable for AI training. The goal: break Nvidia's lock-in on networking too.
     </p>
   </div>
 
   <!-- ========== 4. THE NETWORKING BOTTLENECK ========== -->
   <div class="anatomy-card">
     <h3>🚧 The Networking Bottleneck</h3>
-    <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:16px;">
+    <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:16px;">
       Here's a counterintuitive truth: for frontier AI training, <strong style="color:#f87171;">the network is often the bottleneck, not the GPUs</strong>. You can have 100,000 of the fastest GPUs in the world — but if they can't exchange data fast enough, most of them sit idle waiting.
     </p>
     
@@ -869,17 +950,17 @@
     </div>
     
     <div style="margin:20px 0;">
-      <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:12px;">At scale, the math is brutal:</p>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:12px;">At scale, the math is brutal:</p>
       <div style="display:flex;gap:16px;flex-wrap:wrap;">
-        <div style="flex:1;min-width:200px;background:#1a1a2e;border-radius:10px;padding:16px;text-align:center;">
-          <div style="font-size:11px;color:#9ca3af;font-weight:600;">TRAINING GPT-4 CLASS</div>
+        <div style="flex:1;min-width:200px;background:var(--surface-alt);border-radius:10px;padding:16px;text-align:center;">
+          <div style="font-size:11px;color:var(--text-muted);font-weight:600;">TRAINING GPT-4 CLASS</div>
           <div style="font-size:22px;font-weight:800;color:#f87171;margin:8px 0;">25,000+ GPUs</div>
-          <div style="font-size:11px;color:#6b7280;">All must sync gradients every step</div>
+          <div style="font-size:11px;color:var(--text-dim);">All must sync gradients every step</div>
         </div>
-        <div style="flex:1;min-width:200px;background:#1a1a2e;border-radius:10px;padding:16px;text-align:center;">
-          <div style="font-size:11px;color:#9ca3af;font-weight:600;">FRONTIER MODELS (2025)</div>
+        <div style="flex:1;min-width:200px;background:var(--surface-alt);border-radius:10px;padding:16px;text-align:center;">
+          <div style="font-size:11px;color:var(--text-muted);font-weight:600;">FRONTIER MODELS (2025)</div>
           <div style="font-size:22px;font-weight:800;color:#f87171;margin:8px 0;">100,000+ GPUs</div>
-          <div style="font-size:11px;color:#6b7280;">Network complexity grows quadratically</div>
+          <div style="font-size:11px;color:var(--text-dim);">Network complexity grows quadratically</div>
         </div>
       </div>
     </div>
@@ -917,7 +998,7 @@
     </div>
     
     <div style="margin-top:20px;">
-      <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:#e8e8ed;">AI Cluster Networking Market Share</div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--text);">AI Cluster Networking Market Share</div>
       <div class="market-bars">
         <div class="market-bar-row">
           <div class="bar-label">Nvidia/Mellanox</div>
@@ -942,7 +1023,7 @@
   <!-- ========== 6. LIQUID COOLING ========== -->
   <div class="anatomy-card">
     <h3>🌊 Liquid Cooling — The Heat Problem</h3>
-    <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:16px;">
+    <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:16px;">
       AI servers generate so much heat that traditional air cooling simply can't keep up. A single DGX GB200 NVL72 rack puts out <strong style="color:#f87171;">120kW of heat</strong> — that's like running 120 space heaters in a single rack. You can't blow enough air past that.
     </p>
     
@@ -952,7 +1033,7 @@
         <div class="cool-name">Air Cooling</div>
         <div class="cool-cap">Traditional data center approach</div>
         <div class="cool-stat">~30-40 kW</div>
-        <div style="font-size:11px;color:#9ca3af;">Max per rack</div>
+        <div style="font-size:11px;color:var(--text-muted);">Max per rack</div>
         <div class="cool-verdict">❌ Not enough for AI racks</div>
       </div>
       <div class="cool-card new">
@@ -960,12 +1041,12 @@
         <div class="cool-name">Direct Liquid Cooling</div>
         <div class="cool-cap">Cold plates on GPUs + liquid circulation</div>
         <div class="cool-stat">120+ kW</div>
-        <div style="font-size:11px;color:#9ca3af;">Per rack capacity</div>
+        <div style="font-size:11px;color:var(--text-muted);">Per rack capacity</div>
         <div class="cool-verdict">✅ Required for GB200 and beyond</div>
       </div>
     </div>
     
-    <p style="font-size:13px;color:#9ca3af;margin:16px 0 12px 0;font-weight:600;">Key players in AI cooling:</p>
+    <p style="font-size:13px;color:var(--text-muted);margin:16px 0 12px 0;font-weight:600;">Key players in AI cooling:</p>
     
     <div class="cooling-players">
       <div class="cool-player">
@@ -1028,5 +1109,25 @@
   </div>
 
 </div>
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = saved === 'dark' ? '☀️' : '🌙';
+    });
+  }
+})();
+</script>
 </body>
 </html>

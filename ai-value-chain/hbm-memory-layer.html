@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +8,57 @@
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-alt: #1a1a2e;
+    --surface-hover: #1e1e2a;
+    --border: #1e1e2e;
+    --border-alt: #2a2a4a;
+    --text: #e8e8ed;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-dim: #6b7280;
+    --text-dimmer: #4b5563;
+    --accent: #5ec4b6;
+    --accent-light: #34d399;
+    --accent-glow: rgba(94, 196, 182, 0.12);
+    --highlight-text: #fbbf24;
+    --worth-accent: #a78bfa;
+    --table-current-bg: rgba(94, 196, 182, 0.08);
+    --table-current-text: #5ec4b6;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --text-dimmer: #a5a09a;
+    --accent: #1a8a7d;
+    --accent-light: #059669;
+    --accent-glow: rgba(26, 138, 125, 0.06);
+    --highlight-text: #b45309;
+    --worth-accent: #7c3aed;
+    --table-current-bg: rgba(26, 138, 125, 0.08);
+    --table-current-text: #1a8a7d;
+  }
+
   
   body {
     font-family: 'Inter', -apple-system, sans-serif;
-    background: #0a0a0f;
-    color: #e8e8ed;
+    background: var(--bg);
+    color: var(--text);
     padding: 40px 24px;
     min-height: 100vh;
+  
+    transition: background 0.3s ease, color 0.3s ease;
   }
   
   .container {
@@ -33,7 +77,7 @@
   
   .subtitle {
     font-size: 14px;
-    color: #6b7280;
+    color: var(--text-dim);
     margin-bottom: 36px;
     font-weight: 500;
   }
@@ -51,8 +95,8 @@
   
   /* === THE BIG PICTURE DIAGRAM === */
   .big-picture {
-    background: #111118;
-    border: 1px solid #1e1e2e;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 32px;
     margin-bottom: 32px;
@@ -69,15 +113,15 @@
   }
   
   .flow-node {
-    background: #1a1a2e;
-    border: 1.5px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1.5px solid var(--border-alt);
     border-radius: 12px;
     padding: 14px 16px;
     text-align: center;
     min-width: 120px;
     flex-shrink: 0;
   }
-  .flow-node .label { font-size: 11px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .flow-node .label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
   .flow-node .name { font-size: 14px; font-weight: 700; margin-top: 4px; }
   .flow-node.highlight {
     border-color: #f59e0b;
@@ -88,7 +132,7 @@
   
   .flow-arrow {
     font-size: 18px;
-    color: #4b5563;
+    color: var(--text-dimmer);
     padding: 0 6px;
     flex-shrink: 0;
   }
@@ -102,8 +146,8 @@
   }
   
   .anatomy-card {
-    background: #111118;
-    border: 1px solid #1e1e2e;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 28px;
   }
@@ -169,7 +213,7 @@
   
   .stack-label {
     font-size: 10px;
-    color: #9ca3af;
+    color: var(--text-muted);
     text-align: center;
     margin-top: 2px;
     font-weight: 500;
@@ -250,15 +294,15 @@
   
   .cowos-label {
     font-size: 10px;
-    color: #9ca3af;
+    color: var(--text-muted);
     font-weight: 500;
     margin-top: 2px;
   }
   
   /* === TRADEOFF SECTION === */
   .tradeoff {
-    background: #111118;
-    border: 1px solid #1e1e2e;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 28px;
     margin-bottom: 32px;
@@ -301,13 +345,13 @@
   
   .vs-divider {
     width: 40px;
-    background: #1e1e2e;
+    background: var(--border);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 12px;
     font-weight: 800;
-    color: #6b7280;
+    color: var(--text-dim);
   }
   
   .arrow-label {
@@ -328,8 +372,8 @@
   }
   
   .consequence-node {
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
     border-radius: 8px;
     padding: 10px 14px;
     font-size: 12px;
@@ -350,7 +394,7 @@
   
   .c-arrow {
     font-size: 16px;
-    color: #4b5563;
+    color: var(--text-dimmer);
     padding: 0 6px;
   }
   
@@ -365,8 +409,8 @@
   .gen-table th {
     text-align: left;
     padding: 10px 12px;
-    border-bottom: 2px solid #2a2a4a;
-    color: #9ca3af;
+    border-bottom: 2px solid var(--border-alt);
+    color: var(--text-muted);
     font-weight: 600;
     font-size: 11px;
     text-transform: uppercase;
@@ -375,7 +419,7 @@
   
   .gen-table td {
     padding: 10px 12px;
-    border-bottom: 1px solid #1e1e2e;
+    border-bottom: 1px solid var(--border);
     font-weight: 500;
   }
   
@@ -421,7 +465,7 @@
   .bar-track {
     flex: 1;
     height: 32px;
-    background: #1a1a2e;
+    background: var(--surface-alt);
     border-radius: 6px;
     overflow: hidden;
     position: relative;
@@ -444,7 +488,7 @@
   
   .bar-flag {
     font-size: 10px;
-    color: #6b7280;
+    color: var(--text-dim);
     margin-left: 8px;
   }
   
@@ -457,8 +501,8 @@
   }
   
   .key-num {
-    background: #111118;
-    border: 1px solid #1e1e2e;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 20px;
     text-align: center;
@@ -474,16 +518,16 @@
   
   .key-num .desc {
     font-size: 11px;
-    color: #9ca3af;
+    color: var(--text-muted);
     margin-top: 6px;
     line-height: 1.4;
   }
   
   /* === WORTH KNOWING === */
   .worth-knowing {
-    background: #111118;
-    border: 1px solid #2a2a4a;
-    border-left: 3px solid #a78bfa;
+    background: var(--surface);
+    border: 1px solid var(--border-alt);
+    border-left: 3px solid var(--worth-accent);
     border-radius: 0 12px 12px 0;
     padding: 24px;
     margin-top: 32px;
@@ -492,7 +536,7 @@
   .worth-knowing h3 {
     font-size: 15px;
     font-weight: 700;
-    color: #a78bfa;
+    color: var(--worth-accent);
     margin-bottom: 12px;
   }
   
@@ -505,11 +549,11 @@
     font-size: 13px;
     line-height: 1.6;
     padding: 6px 0;
-    border-bottom: 1px solid #1e1e2e;
-    color: #d1d5db;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
   }
   .worth-knowing li:last-child { border-bottom: none; }
-  .worth-knowing li strong { color: #e8e8ed; }
+  .worth-knowing li strong { color: var(--text); }
   
   /* === MOBILE RESPONSIVE === */
   @media (max-width: 600px) {
@@ -629,10 +673,47 @@
     .cowos-base { max-width: 280px; }
     .key-num .num { font-size: 22px; }
   }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto 0;
+    padding: 0 0 16px 0;
+  }
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border-alt);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
 </style>
 </head>
 <body>
 <div class="container">
+<div class="top-bar">
+  <a href="../" class="back-link">← Back to Study Hub</a>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+    <span id="theme-icon">☀️</span>
+  </button>
+</div>
+
   
   <h1>🧠 HBM & the Memory Layer</h1>
   <p class="subtitle">Layer 4 of the AI Value Chain — where silicon meets bandwidth</p>
@@ -661,7 +742,7 @@
     <!-- Physical Structure -->
     <div class="anatomy-card">
       <h3>🔬 What HBM Actually Is</h3>
-      <p style="font-size:13px;color:#9ca3af;margin-bottom:12px;">High Bandwidth Memory = DRAM dies stacked vertically like a tiny skyscraper, connected by thousands of tiny wires (TSVs) punched through each layer</p>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">High Bandwidth Memory = DRAM dies stacked vertically like a tiny skyscraper, connected by thousands of tiny wires (TSVs) punched through each layer</p>
       
       <div class="hbm-stack">
         <div class="hbm-die dram">DRAM Die 12</div>
@@ -685,7 +766,7 @@
     <!-- How it connects to GPU -->
     <div class="anatomy-card">
       <h3>🔗 How HBM Connects to the GPU</h3>
-      <p style="font-size:13px;color:#9ca3af;margin-bottom:8px;">GPU and HBM stacks sit side-by-side on a silicon interposer (CoWoS packaging by TSMC)</p>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">GPU and HBM stacks sit side-by-side on a silicon interposer (CoWoS packaging by TSMC)</p>
       
       <div class="cowos-layout">
         <div class="cowos-element">
@@ -750,21 +831,21 @@
         </div>
       </div>
       <div class="cowos-base">Silicon Interposer (CoWoS by TSMC)</div>
-      <p style="font-size:11px;color:#6b7280;margin-top:10px;text-align:center;">Nvidia H100 has 6 HBM stacks × 80GB = 80GB total · B200 has 8 stacks = 192GB</p>
+      <p style="font-size:11px;color:var(--text-dim);margin-top:10px;text-align:center;">Nvidia H100 has 6 HBM stacks × 80GB = 80GB total · B200 has 8 stacks = 192GB</p>
     </div>
   </div>
 
   <!-- WHY HBM EXISTS -->
   <div class="anatomy-card" style="margin-bottom:32px;">
     <h3>💡 Why HBM Exists — The Bandwidth Problem</h3>
-    <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:16px;">
+    <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:16px;">
       AI models need to move <strong>massive</strong> amounts of data to/from the GPU every second. Regular DDR5 RAM sits far away on the motherboard and connects through narrow pipes. HBM sits <em>right next to</em> the GPU with thousands of parallel connections.
     </p>
     <div style="display:flex;gap:24px;flex-wrap:wrap;">
-      <div style="flex:1;min-width:200px;background:#1a1a2e;border-radius:10px;padding:16px;text-align:center;">
-        <div style="font-size:11px;color:#9ca3af;font-weight:600;">DDR5 (Regular RAM)</div>
-        <div style="font-size:24px;font-weight:800;color:#6b7280;margin:8px 0;">~50 GB/s</div>
-        <div style="font-size:11px;color:#6b7280;">64-bit bus · Far from GPU</div>
+      <div style="flex:1;min-width:200px;background:var(--surface-alt);border-radius:10px;padding:16px;text-align:center;">
+        <div style="font-size:11px;color:var(--text-muted);font-weight:600;">DDR5 (Regular RAM)</div>
+        <div style="font-size:24px;font-weight:800;color:var(--text-dim);margin:8px 0;">~50 GB/s</div>
+        <div style="font-size:11px;color:var(--text-dim);">64-bit bus · Far from GPU</div>
       </div>
       <div style="flex:1;min-width:200px;background:#1a1a3a;border:1px solid #3b82f6;border-radius:10px;padding:16px;text-align:center;">
         <div style="font-size:11px;color:#60a5fa;font-weight:600;">HBM3E</div>
@@ -778,7 +859,7 @@
   <!-- THE TRADEOFF -->
   <div class="tradeoff">
     <div class="section-title"><span class="emoji">⚖️</span> The HBM vs Consumer RAM Tradeoff</div>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:4px;">Same DRAM wafers, two very different products. Manufacturers must choose how to allocate limited fab capacity:</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:4px;">Same DRAM wafers, two very different products. Manufacturers must choose how to allocate limited fab capacity:</p>
     
     <div class="wafer-split">
       <div class="wafer-side ddr">
@@ -806,7 +887,7 @@
       <div class="c-arrow">→</div>
       <div class="consequence-node bad">PC/phone RAM prices rise 📈</div>
     </div>
-    <p style="font-size:12px;color:#6b7280;text-align:center;margin-top:12px;">This is the "memory shortage" you're seeing in the news. It's not that we can't make RAM — it's that the economics of AI are pulling production away from consumers.</p>
+    <p style="font-size:12px;color:var(--text-dim);text-align:center;margin-top:12px;">This is the "memory shortage" you're seeing in the news. It's not that we can't make RAM — it's that the economics of AI are pulling production away from consumers.</p>
   </div>
 
   <!-- HBM GENERATIONS -->
@@ -853,7 +934,7 @@
         </tr>
       </tbody>
     </table>
-    <p style="font-size:11px;color:#6b7280;margin-top:8px;">Each generation = more layers stacked, wider bus, more bandwidth. The trend: models keep getting bigger → need more memory → need faster memory.</p>
+    <p style="font-size:11px;color:var(--text-dim);margin-top:8px;">Each generation = more layers stacked, wider bus, more bandwidth. The trend: models keep getting bigger → need more memory → need faster memory.</p>
   </div>
 
   <!-- MARKET SHARE -->
@@ -873,7 +954,7 @@
         <div class="bar-track"><div class="bar-fill samsung">17% <span class="bar-flag">🇰🇷</span></div></div>
       </div>
     </div>
-    <p style="font-size:12px;color:#d1d5db;margin-top:8px;line-height:1.6;">
+    <p style="font-size:12px;color:var(--text-secondary);margin-top:8px;line-height:1.6;">
       <strong>Key insight:</strong> 79% of HBM production is in South Korea. Micron is the <em>only</em> US-based supplier — which is why it's getting $13.7B in CHIPS Act funding. All three producers are <strong>sold out through end of 2026</strong>.
     </p>
   </div>
@@ -921,5 +1002,25 @@
   </div>
 
 </div>
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = saved === 'dark' ? '☀️' : '🌙';
+    });
+  }
+})();
+</script>
 </body>
 </html>

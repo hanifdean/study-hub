@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +8,57 @@
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-alt: #1a1a2e;
+    --surface-hover: #1e1e2a;
+    --border: #1e1e2e;
+    --border-alt: #2a2a4a;
+    --text: #e8e8ed;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-dim: #6b7280;
+    --text-dimmer: #4b5563;
+    --accent: #5ec4b6;
+    --accent-light: #34d399;
+    --accent-glow: rgba(94, 196, 182, 0.12);
+    --highlight-text: #fbbf24;
+    --worth-accent: #a78bfa;
+    --table-current-bg: rgba(94, 196, 182, 0.08);
+    --table-current-text: #5ec4b6;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --text-dimmer: #a5a09a;
+    --accent: #1a8a7d;
+    --accent-light: #059669;
+    --accent-glow: rgba(26, 138, 125, 0.06);
+    --highlight-text: #b45309;
+    --worth-accent: #7c3aed;
+    --table-current-bg: rgba(26, 138, 125, 0.08);
+    --table-current-text: #1a8a7d;
+  }
+
   
   body {
     font-family: 'Inter', -apple-system, sans-serif;
-    background: #0a0a0f;
-    color: #e8e8ed;
+    background: var(--bg);
+    color: var(--text);
     padding: 40px 24px;
     min-height: 100vh;
+  
+    transition: background 0.3s ease, color 0.3s ease;
   }
   
   .container {
@@ -33,7 +77,7 @@
   
   .subtitle {
     font-size: 14px;
-    color: #6b7280;
+    color: var(--text-dim);
     margin-bottom: 36px;
     font-weight: 500;
   }
@@ -50,8 +94,8 @@
   
   /* === BIG PICTURE === */
   .big-picture {
-    background: #111118;
-    border: 1px solid #1e1e2e;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 32px;
     margin-bottom: 32px;
@@ -68,15 +112,15 @@
   }
   
   .flow-node {
-    background: #1a1a2e;
-    border: 1.5px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1.5px solid var(--border-alt);
     border-radius: 12px;
     padding: 14px 16px;
     text-align: center;
     min-width: 120px;
     flex-shrink: 0;
   }
-  .flow-node .label { font-size: 11px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .flow-node .label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
   .flow-node .name { font-size: 14px; font-weight: 700; margin-top: 4px; }
   .flow-node.highlight {
     border-color: #38bdf8;
@@ -88,15 +132,15 @@
   
   .flow-arrow {
     font-size: 18px;
-    color: #4b5563;
+    color: var(--text-dimmer);
     padding: 0 6px;
     flex-shrink: 0;
   }
   
   /* === ANATOMY CARDS === */
   .anatomy-card {
-    background: #111118;
-    border: 1px solid #1e1e2e;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 28px;
     margin-bottom: 32px;
@@ -117,8 +161,8 @@
   }
   
   .hyper-card {
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
     border-radius: 12px;
     padding: 20px;
     position: relative;
@@ -130,13 +174,13 @@
   }
   .hyper-card .h-parent {
     font-size: 11px;
-    color: #9ca3af;
+    color: var(--text-muted);
     font-weight: 600;
     margin-bottom: 10px;
   }
   .hyper-card .h-desc {
     font-size: 12px;
-    color: #d1d5db;
+    color: var(--text-secondary);
     line-height: 1.5;
   }
   .hyper-card .h-share {
@@ -172,30 +216,30 @@
   }
   
   .native-card {
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
     border-radius: 12px;
     padding: 20px;
   }
   .native-card .n-name {
     font-size: 14px;
     font-weight: 700;
-    color: #e8e8ed;
+    color: var(--text);
     margin-bottom: 2px;
   }
   .native-card .n-focus {
     font-size: 11px;
-    color: #9ca3af;
+    color: var(--text-muted);
     font-weight: 600;
     margin-bottom: 8px;
   }
   .native-card .n-desc {
     font-size: 12px;
-    color: #d1d5db;
+    color: var(--text-secondary);
     line-height: 1.5;
   }
   .native-card.featured {
-    border-color: #a78bfa;
+    border-color: var(--worth-accent);
     background: #1a1a30;
     grid-column: 1 / -1;
   }
@@ -210,15 +254,15 @@
   }
   
   .sovereign-card {
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
     border-radius: 10px;
     padding: 14px;
     text-align: center;
   }
   .sovereign-card .sv-flag { font-size: 28px; }
-  .sovereign-card .sv-name { font-size: 12px; font-weight: 700; margin-top: 6px; color: #e8e8ed; }
-  .sovereign-card .sv-detail { font-size: 10px; color: #9ca3af; margin-top: 4px; line-height: 1.3; }
+  .sovereign-card .sv-name { font-size: 12px; font-weight: 700; margin-top: 6px; color: var(--text); }
+  .sovereign-card .sv-detail { font-size: 10px; color: var(--text-muted); margin-top: 4px; line-height: 1.3; }
   
   /* === PRICING TABLE === */
   .pricing-table {
@@ -231,8 +275,8 @@
   .pricing-table th {
     text-align: left;
     padding: 10px 12px;
-    border-bottom: 2px solid #2a2a4a;
-    color: #9ca3af;
+    border-bottom: 2px solid var(--border-alt);
+    color: var(--text-muted);
     font-weight: 600;
     font-size: 11px;
     text-transform: uppercase;
@@ -241,7 +285,7 @@
   
   .pricing-table td {
     padding: 10px 12px;
-    border-bottom: 1px solid #1e1e2e;
+    border-bottom: 1px solid var(--border);
     font-weight: 500;
   }
   
@@ -287,7 +331,7 @@
   .bar-track {
     flex: 1;
     height: 32px;
-    background: #1a1a2e;
+    background: var(--surface-alt);
     border-radius: 6px;
     overflow: hidden;
     position: relative;
@@ -351,7 +395,7 @@
   
   .vs-divider {
     width: 3px;
-    background: #1e1e2e;
+    background: var(--border);
     flex-shrink: 0;
   }
   
@@ -364,8 +408,8 @@
   }
   
   .key-num {
-    background: #111118;
-    border: 1px solid #1e1e2e;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 20px;
     text-align: center;
@@ -381,16 +425,16 @@
   
   .key-num .desc {
     font-size: 11px;
-    color: #9ca3af;
+    color: var(--text-muted);
     margin-top: 6px;
     line-height: 1.4;
   }
   
   /* === WORTH KNOWING === */
   .worth-knowing {
-    background: #111118;
-    border: 1px solid #2a2a4a;
-    border-left: 3px solid #a78bfa;
+    background: var(--surface);
+    border: 1px solid var(--border-alt);
+    border-left: 3px solid var(--worth-accent);
     border-radius: 0 12px 12px 0;
     padding: 24px;
     margin-top: 32px;
@@ -399,7 +443,7 @@
   .worth-knowing h3 {
     font-size: 15px;
     font-weight: 700;
-    color: #a78bfa;
+    color: var(--worth-accent);
     margin-bottom: 12px;
   }
   
@@ -412,11 +456,11 @@
     font-size: 13px;
     line-height: 1.6;
     padding: 6px 0;
-    border-bottom: 1px solid #1e1e2e;
-    color: #d1d5db;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
   }
   .worth-knowing li:last-child { border-bottom: none; }
-  .worth-knowing li strong { color: #e8e8ed; }
+  .worth-knowing li strong { color: var(--text); }
   
   /* === MOBILE RESPONSIVE === */
   @media (max-width: 600px) {
@@ -483,10 +527,47 @@
     .sovereign-grid { grid-template-columns: 1fr; }
     .key-num .num { font-size: 22px; }
   }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto 0;
+    padding: 0 0 16px 0;
+  }
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border-alt);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
 </style>
 </head>
 <body>
 <div class="container">
+<div class="top-bar">
+  <a href="../" class="back-link">← Back to Study Hub</a>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+    <span id="theme-icon">☀️</span>
+  </button>
+</div>
+
 
   <h1>☁️ Layer 7: Cloud & Compute Providers</h1>
   <p class="subtitle">The companies that buy GPUs and servers, then rent compute to the world</p>
@@ -494,7 +575,7 @@
   <!-- ========== 1. WHERE THIS SITS ========== -->
   <div class="big-picture">
     <div class="section-title"><span class="emoji">🗺️</span> Where This Sits in the AI Value Chain</div>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Layer 7 is where <strong style="color:#7dd3fc;">hardware becomes a service</strong>. These companies spend tens of billions buying GPUs, networking gear, and servers — then rent that compute to AI labs, startups, and enterprises by the hour. They're the bridge between physical infrastructure and the AI models that run on top.</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Layer 7 is where <strong style="color:#7dd3fc;">hardware becomes a service</strong>. These companies spend tens of billions buying GPUs, networking gear, and servers — then rent that compute to AI labs, startups, and enterprises by the hour. They're the bridge between physical infrastructure and the AI models that run on top.</p>
     <div class="flow-row">
       <div class="flow-node dim"><div class="label">Layer 1-3</div><div class="name">Materials → Fab</div></div>
       <div class="flow-arrow">→</div>
@@ -513,7 +594,7 @@
   <!-- ========== 2. HYPERSCALER BIG 3 ========== -->
   <div class="anatomy-card">
     <h3>🏢 The Hyperscaler Big 3</h3>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Three companies dominate global cloud infrastructure. Together they control ~67% of the market — and each is spending $50-80B+ per year building out AI compute capacity.</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Three companies dominate global cloud infrastructure. Together they control ~67% of the market — and each is spending $50-80B+ per year building out AI compute capacity.</p>
     
     <div class="hyper-grid">
       <div class="hyper-card aws">
@@ -540,7 +621,7 @@
     </div>
     
     <div style="margin-top:20px;">
-      <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:#e8e8ed;">Cloud Market Share (IaaS)</div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--text);">Cloud Market Share (IaaS)</div>
       <div class="market-bars">
         <div class="market-bar-row">
           <div class="bar-label">AWS</div>
@@ -567,7 +648,7 @@
   <!-- ========== 3. AI-NATIVE CLOUD PROVIDERS ========== -->
   <div class="anatomy-card">
     <h3>🚀 AI-Native Cloud Providers</h3>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">The hyperscalers can't satisfy demand alone. A new wave of GPU-focused cloud providers has emerged, purpose-built for AI workloads. They're leaner, faster to deploy GPU clusters, and often cheaper for pure AI compute.</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">The hyperscalers can't satisfy demand alone. A new wave of GPU-focused cloud providers has emerged, purpose-built for AI workloads. They're leaner, faster to deploy GPU clusters, and often cheaper for pure AI compute.</p>
     
     <div class="native-grid">
       <div class="native-card featured">
@@ -592,7 +673,7 @@
       </div>
     </div>
     
-    <p style="font-size:12px;color:#d1d5db;margin-top:12px;line-height:1.6;text-align:center;">
+    <p style="font-size:12px;color:var(--text-secondary);margin-top:12px;line-height:1.6;text-align:center;">
       <strong>Why they exist:</strong> Hyperscalers allocate GPUs across all customers. AI-native providers give you dedicated, bare-metal GPU access — like renting a private jet vs booking a seat on a commercial flight.
     </p>
   </div>
@@ -600,7 +681,7 @@
   <!-- ========== 4. SOVEREIGN AI ========== -->
   <div class="anatomy-card">
     <h3>🏳️ Sovereign AI — Nations Building Their Own Compute</h3>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Countries are realizing that <strong style="color:#fbbf24;">AI compute is a strategic resource</strong> — like oil, water, or electricity. Nations that depend on US cloud providers for AI could find their access cut off due to geopolitics, export controls, or sanctions. So they're building their own.</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Countries are realizing that <strong style="color:#fbbf24;">AI compute is a strategic resource</strong> — like oil, water, or electricity. Nations that depend on US cloud providers for AI could find their access cut off due to geopolitics, export controls, or sanctions. So they're building their own.</p>
     
     <div class="sovereign-grid">
       <div class="sovereign-card">
@@ -630,7 +711,7 @@
       </div>
     </div>
     
-    <p style="font-size:12px;color:#d1d5db;margin-top:16px;line-height:1.6;text-align:center;">
+    <p style="font-size:12px;color:var(--text-secondary);margin-top:16px;line-height:1.6;text-align:center;">
       <strong>The logic:</strong> If your country's AI runs on someone else's GPUs in someone else's country, you have zero control. One policy change and your AI capabilities could evaporate overnight.
     </p>
   </div>
@@ -638,7 +719,7 @@
   <!-- ========== 5. GPU RENTAL MARKET ========== -->
   <div class="anatomy-card">
     <h3>💰 The GPU Rental Market — How Pricing Works</h3>
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">GPU compute is sold like cloud instances — by the hour, with different tiers depending on commitment level. The pricing reflects the insane demand-supply imbalance for AI accelerators.</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">GPU compute is sold like cloud instances — by the hour, with different tiers depending on commitment level. The pricing reflects the insane demand-supply imbalance for AI accelerators.</p>
     
     <div class="pricing-visual">
       <div class="pricing-side spot">
@@ -659,7 +740,7 @@
         <div class="side-price" style="color:#fbbf24;">$2.50-3.50/hr</div>
       </div>
     </div>
-    <p style="font-size:11px;color:#6b7280;text-align:center;margin-top:8px;">Approximate pricing per H100 GPU · Prices vary significantly by provider and region</p>
+    <p style="font-size:11px;color:var(--text-dim);text-align:center;margin-top:8px;">Approximate pricing per H100 GPU · Prices vary significantly by provider and region</p>
     
     <table class="pricing-table" style="margin-top:20px;">
       <thead>
@@ -745,5 +826,25 @@
   </div>
 
 </div>
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = saved === 'dark' ? '☀️' : '🌙';
+    });
+  }
+})();
+</script>
 </body>
 </html>
