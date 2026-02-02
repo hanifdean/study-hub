@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Broken Promise — Companies Staying Private Too Long</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-alt: #1a1a2e;
+    --surface-hover: #1e1e2a;
+    --border: #1e1e2e;
+    --border-alt: #2a2a4a;
+    --text: #e8e8ed;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-dim: #6b7280;
+    --accent: #5ec4b6;
+    --accent-glow: rgba(94, 196, 182, 0.12);
+    --green: #34d399;
+    --green-glow: rgba(52, 211, 153, 0.12);
+    --red: #ef4444;
+    --red-glow: rgba(239, 68, 68, 0.12);
+    --orange: #f59e0b;
+    --orange-glow: rgba(245, 158, 11, 0.12);
+    --highlight: #fbbf24;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --accent: #1a8a7d;
+    --accent-glow: rgba(26, 138, 125, 0.06);
+    --green: #059669;
+    --green-glow: rgba(5, 150, 105, 0.08);
+    --red: #dc2626;
+    --red-glow: rgba(220, 38, 38, 0.08);
+    --orange: #d97706;
+    --orange-glow: rgba(217, 119, 6, 0.08);
+    --highlight: #b45309;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .container { max-width: 800px; margin: 0 auto; }
+
+  .top-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 800px; margin: 0 auto; padding: 0 0 16px 0;
+  }
+  .back-link {
+    font-size: 13px; color: var(--text-muted); text-decoration: none;
+    display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+  .theme-toggle {
+    background: none; border: 1.5px solid var(--border-alt); border-radius: 8px;
+    padding: 6px 10px; cursor: pointer; font-size: 16px; color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero { text-align: center; margin: 2rem 0 3rem; animation: fadeUp 0.6s ease-out; }
+  .hero .tag {
+    display: inline-block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-glow); padding: 6px 14px;
+    border-radius: 6px; margin-bottom: 16px; font-weight: 700;
+  }
+  .hero h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .hero .subtitle { color: var(--text-muted); font-size: 14px; line-height: 1.6; }
+  .hero .source { font-size: 12px; color: var(--text-dim); margin-top: 8px; }
+  .hero .source a { color: var(--accent); text-decoration: none; }
+  .hero .source a:hover { text-decoration: underline; }
+
+  .section { margin-bottom: 2.5rem; animation: fadeUp 0.6s ease-out; }
+  .section h2 {
+    font-size: 18px; font-weight: 700; color: var(--accent);
+    margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
+  }
+  .section h3 { font-size: 15px; font-weight: 700; margin: 1.25rem 0 0.5rem; }
+  .section p { font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 0.75rem; }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 1.25rem; margin-bottom: 1rem;
+  }
+  .card-title { font-size: 14px; font-weight: 700; margin-bottom: 0.5rem; }
+  .card p { margin-bottom: 0.4rem; }
+
+  .highlight-box {
+    background: var(--accent-glow); border: 1px solid var(--accent);
+    border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;
+  }
+  .highlight-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 0.5rem; }
+  .highlight-box p { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+  .warning-box {
+    background: var(--orange-glow); border: 1px solid var(--orange);
+    border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;
+  }
+  .warning-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--orange); margin-bottom: 0.5rem; }
+  .warning-box p { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+  .danger-box {
+    background: var(--red-glow); border: 1px solid var(--red);
+    border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;
+  }
+  .danger-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--red); margin-bottom: 0.5rem; }
+  .danger-box p { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+  .success-box {
+    background: var(--green-glow); border: 1px solid var(--green);
+    border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;
+  }
+  .success-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--green); margin-bottom: 0.5rem; }
+  .success-box p { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+  .vs-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;
+  }
+  @media (max-width: 600px) { .vs-grid { grid-template-columns: 1fr; } }
+
+  /* Stats row */
+  .stat-row {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.25rem 0;
+  }
+  @media (max-width: 600px) { .stat-row { grid-template-columns: 1fr; } }
+  .stat-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 1rem; text-align: center;
+  }
+  .stat-card .stat-number { font-size: 24px; font-weight: 800; color: var(--accent); margin-bottom: 4px; }
+  .stat-card .stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+
+  table {
+    width: 100%; border-collapse: collapse; font-size: 13px; margin: 1rem 0;
+  }
+  th, td {
+    padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border);
+  }
+  th { font-weight: 700; color: var(--accent); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  td { color: var(--text-secondary); }
+  tr:hover td { background: var(--surface-hover); }
+
+  .footer {
+    margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+    text-align: center; font-size: 12px; color: var(--text-dim);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="../index.html" class="back-link">← Back to Study Hub</a>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+    <span id="theme-icon">🌙</span>
+  </button>
+</div>
+
+<div class="container">
+  <div class="hero">
+    <span class="tag">Entrepreneurial Finance — Deep Dive</span>
+    <h1>🔒 The Broken Promise</h1>
+    <p class="subtitle">Companies staying private too long is breaking the social contract that built the American middle class.</p>
+    <p class="source">Based on <a href="https://x.com/citrini7/status/2013734569397068268" target="_blank" rel="noopener">@citrini7's thread</a></p>
+  </div>
+
+  <!-- ==================== HOW IT USED TO WORK ==================== -->
+  <div class="section">
+    <h2>📜 How It Used to Work</h2>
+    <p>Public markets were once the great equalizer. Regular people — teachers, firefighters, small business owners — could participate in wealth creation by buying shares in companies they believed in, early in those companies' growth stories.</p>
+
+    <div class="card">
+      <div class="card-title">The Golden Age of IPOs</div>
+      <p>• <strong>Amazon</strong> IPO'd at <strong>3 years old</strong> — $148M revenue, running at a loss</p>
+      <p>• <strong>Apple</strong> went public at <strong>4 years old</strong></p>
+      <p>• <strong>Microsoft's</strong> IPO created millionaires out of <strong>secretaries and teachers</strong> who bought shares early</p>
+    </div>
+
+    <div class="success-box">
+      <div class="label">✅ The Social Contract</div>
+      <p>Companies needed public capital to grow. The public provided that capital. In return, they got to participate in the upside. <strong>Everyone who took the risk shared in the reward.</strong> This is how the American middle class built generational wealth.</p>
+    </div>
+  </div>
+
+  <!-- ==================== THE NUMBERS ==================== -->
+  <div class="section">
+    <h2>📉 The Numbers</h2>
+    <p>The public market ecosystem is shrinking — not because fewer companies are being built, but because the most valuable ones refuse to go public.</p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-number">8,000+</div>
+        <div class="stat-label">Public companies (1996)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">&lt;4,000</div>
+        <div class="stat-label">Public companies (today)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">12.7×</div>
+        <div class="stat-label">Median IPO cap increase</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">IPO Market Cap Then vs. Now</div>
+      <p>• Median IPO market cap in <strong>1980</strong>: <strong>$105 million</strong></p>
+      <p>• Median IPO market cap in <strong>2024</strong>: <strong>$1.33 billion</strong></p>
+      <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 13px;">Companies are doing all their high-growth phases in private markets. By the time they IPO, the explosive growth is already captured by insiders.</p>
+    </div>
+  </div>
+
+  <!-- ==================== WHAT'S CHANGED ==================== -->
+  <div class="section">
+    <h2>🔄 What's Changed</h2>
+    <p>The most transformative companies of our generation are growing entirely while private — and their users, who create much of the value, can't own a single share.</p>
+
+    <div class="danger-box">
+      <div class="label">🔴 The Wealth Is Being Created — Just Not for You</div>
+      <p>• <strong>SpaceX</strong>: valued at <strong>~$800 billion</strong> (~2.6% of US GDP) — still private</p>
+      <p>• <strong>OpenAI</strong>: went from <strong>$157B → $500B+</strong> entirely while private</p>
+      <p>• <strong>Uber</strong>: IPO'd at <strong>$89 billion</strong> after growing <strong>180×</strong> from early rounds — public investors only benefited from a <strong>2×</strong></p>
+    </div>
+
+    <p>Think about what that Uber example means: <strong>99% of the value creation happened in private markets.</strong> The public got the scraps.</p>
+  </div>
+
+  <!-- ==================== NEO-FEUDALISM ==================== -->
+  <div class="section">
+    <h2>🏰 The Neo-Feudalism Argument</h2>
+    <p>Citrini's core thesis is stark: the current system is creating a new class divide — not between workers and owners, but between <strong>accredited and non-accredited investors</strong>.</p>
+
+    <div class="vs-grid">
+      <div class="card">
+        <div class="card-title">🔑 To Be "Accredited"</div>
+        <p>• Net worth: <strong>$1 million+</strong> (excluding primary residence)</p>
+        <p>• OR income: <strong>$200K+/year</strong> ($300K joint)</p>
+        <p style="margin-top: 0.5rem; font-size: 12px; color: var(--text-dim);">These are the SEC minimums to invest in private companies.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">🏠 Median US Household</div>
+        <p>• Net worth: <strong>~$190K</strong></p>
+        <p>• Median household income: <strong>~$75K</strong></p>
+        <p style="margin-top: 0.5rem; font-size: 12px; color: var(--text-dim);">Locked out of the fastest-growing companies by law.</p>
+      </div>
+    </div>
+
+    <div class="warning-box">
+      <div class="label">⚠️ The Crunchbase Unicorn Board</div>
+      <p><strong>$7.7 trillion</strong> in private unicorn valuations — that's more than <strong>10% of the entire S&P 500 market cap</strong>, all completely inaccessible to retail investors. Hundreds of millions of people use ChatGPT daily, creating enormous value for OpenAI — yet none of them can own equity in the company.</p>
+    </div>
+
+    <div class="danger-box">
+      <div class="label">🔴 S&P 500 as "Exit Liquidity"</div>
+      <p>When companies finally IPO at peak valuations, public market investors are essentially providing <strong>exit liquidity</strong> for VCs and insiders who captured all the real growth. The public market is becoming a place where the wealthy cash out, not where the middle class builds wealth.</p>
+    </div>
+  </div>
+
+  <!-- ==================== THE IRONY ==================== -->
+  <div class="section">
+    <h2>🇨🇳 The Irony</h2>
+    <div class="highlight-box">
+      <div class="label">💡 An Uncomfortable Comparison</div>
+      <p>China's <strong>STAR Market</strong> (Shanghai's Nasdaq equivalent) is IPO-ing more early and mid-stage AI companies than the US. The country that America accuses of lacking market freedom is doing a better job of letting ordinary citizens invest in frontier technology companies.</p>
+    </div>
+  </div>
+
+  <!-- ==================== WHY IT WON'T CHANGE ==================== -->
+  <div class="section">
+    <h2>🔒 Why It Won't Change</h2>
+    <p>The incentives for all private market participants are aligned against going public early. This isn't a bug — it's a feature of the current system.</p>
+
+    <div class="card">
+      <div class="card-title">🏢 Companies Don't Want Public Markets</div>
+      <p>Public markets mean quarterly earnings pressure, activist investors, short sellers, and stock price volatility. Why subject yourself to that when you can raise unlimited private capital with no scrutiny?</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💰 VCs Prefer Private Rounds</div>
+      <p>Venture capitalists can mark up their portfolio in private rounds — each new funding round at a higher valuation boosts their fund returns on paper. Public markets would introduce <strong>actual price discovery</strong>, which might be lower.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 Companies Don't Need Public Capital</div>
+      <p>With sovereign wealth funds, mega-VCs, and growth equity firms writing $500M+ cheques, companies can raise more capital privately than most IPOs would generate. They don't need the public market until they're too big for VC — and by then, the growth story is over.</p>
+    </div>
+  </div>
+
+  <!-- ==================== CONNECTION TO COUPA ==================== -->
+  <div class="section">
+    <h2>🔗 Connection to Coupa Case Study</h2>
+    <p>In the <a href="coupa-case-study.html" style="color: var(--accent);">Coupa case study</a>, we examined the classic <strong>VC → growth equity → IPO</strong> path. Coupa IPO'd in 2016 at a <strong>$1.9 billion valuation</strong> — a textbook example of the venture-to-public pipeline working as intended.</p>
+
+    <div class="highlight-box">
+      <div class="label">💡 The Systemic Dimension</div>
+      <p>Citrini's argument adds a <strong>systemic lens</strong> to the Coupa story. When one company stays private longer, it's a strategy. When <em>every</em> company stays private longer, it's a structural shift that <strong>concentrates wealth</strong> among accredited investors and undermines the public market ecosystem that middle-class wealth was built on.</p>
+      <p style="margin-top: 0.5rem;">Coupa represents the old model working. This article asks: <strong>what happens when the old model stops working for everyone else?</strong></p>
+    </div>
+  </div>
+
+  <div class="footer">
+    Entrepreneurial Finance — Study Hub · Built with 🐱 by Robin
+  </div>
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('theme-icon').textContent = saved === 'dark' ? '☀️' : '🌙';
+  });
+})();
+</script>
+</body>
+</html>

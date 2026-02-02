@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Who Pays? — 5 Cases in Social Innovation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-alt: #1a1a2e;
+    --surface-hover: #1e1e2a;
+    --border: #1e1e2e;
+    --border-alt: #2a2a4a;
+    --text: #e8e8ed;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-dim: #6b7280;
+    --accent: #5ec4b6;
+    --accent-glow: rgba(94, 196, 182, 0.12);
+    --green: #34d399;
+    --green-glow: rgba(52, 211, 153, 0.12);
+    --red: #ef4444;
+    --red-glow: rgba(239, 68, 68, 0.12);
+    --orange: #f59e0b;
+    --orange-glow: rgba(245, 158, 11, 0.12);
+    --highlight: #fbbf24;
+    --purple: #a78bfa;
+    --purple-glow: rgba(167, 139, 250, 0.12);
+    --blue: #60a5fa;
+    --blue-glow: rgba(96, 165, 250, 0.12);
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --accent: #1a8a7d;
+    --accent-glow: rgba(26, 138, 125, 0.06);
+    --green: #059669;
+    --green-glow: rgba(5, 150, 105, 0.08);
+    --red: #dc2626;
+    --red-glow: rgba(220, 38, 38, 0.08);
+    --orange: #d97706;
+    --orange-glow: rgba(217, 119, 6, 0.08);
+    --highlight: #b45309;
+    --purple: #7c3aed;
+    --purple-glow: rgba(124, 58, 237, 0.08);
+    --blue: #2563eb;
+    --blue-glow: rgba(37, 99, 235, 0.08);
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .container { max-width: 800px; margin: 0 auto; }
+
+  .top-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 800px; margin: 0 auto; padding: 0 0 16px 0;
+  }
+  .back-link {
+    font-size: 13px; color: var(--text-muted); text-decoration: none;
+    display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+  .theme-toggle {
+    background: none; border: 1.5px solid var(--border-alt); border-radius: 8px;
+    padding: 6px 10px; cursor: pointer; font-size: 16px; color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero { text-align: center; margin: 2rem 0 3rem; animation: fadeUp 0.6s ease-out; }
+  .hero .tag {
+    display: inline-block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-glow); padding: 6px 14px;
+    border-radius: 6px; margin-bottom: 16px; font-weight: 700;
+  }
+  .hero h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .hero .subtitle { color: var(--text-muted); font-size: 14px; line-height: 1.6; }
+
+  .section { margin-bottom: 2.5rem; animation: fadeUp 0.6s ease-out; }
+  .section h2 {
+    font-size: 18px; font-weight: 700; color: var(--accent);
+    margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
+  }
+  .section h3 { font-size: 15px; font-weight: 700; margin: 1.25rem 0 0.5rem; }
+  .section p { font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 0.75rem; }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 1.25rem; margin-bottom: 1rem;
+  }
+  .card-title { font-size: 14px; font-weight: 700; margin-bottom: 0.5rem; }
+  .card p { margin-bottom: 0.4rem; }
+
+  .highlight-box {
+    background: var(--accent-glow); border: 1px solid var(--accent);
+    border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;
+  }
+  .highlight-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 0.5rem; }
+  .highlight-box p { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+  .warning-box {
+    background: var(--orange-glow); border: 1px solid var(--orange);
+    border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;
+  }
+  .warning-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--orange); margin-bottom: 0.5rem; }
+  .warning-box p { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+  .danger-box {
+    background: var(--red-glow); border: 1px solid var(--red);
+    border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;
+  }
+  .danger-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--red); margin-bottom: 0.5rem; }
+  .danger-box p { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+  .success-box {
+    background: var(--green-glow); border: 1px solid var(--green);
+    border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;
+  }
+  .success-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--green); margin-bottom: 0.5rem; }
+  .success-box p { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+  .purple-box {
+    background: var(--purple-glow); border: 1px solid var(--purple);
+    border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;
+  }
+  .purple-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--purple); margin-bottom: 0.5rem; }
+  .purple-box p { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+  .blue-box {
+    background: var(--blue-glow); border: 1px solid var(--blue);
+    border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;
+  }
+  .blue-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--blue); margin-bottom: 0.5rem; }
+  .blue-box p { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+  /* Case cards grid */
+  .case-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;
+  }
+  @media (max-width: 600px) { .case-grid { grid-template-columns: 1fr; } }
+
+  .case-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 1.25rem; transition: border-color 0.2s;
+  }
+  .case-card:hover { border-color: var(--accent); }
+  .case-card .case-emoji { font-size: 24px; margin-bottom: 0.5rem; }
+  .case-card .case-name { font-size: 15px; font-weight: 700; margin-bottom: 0.25rem; }
+  .case-card .case-location { font-size: 12px; color: var(--text-muted); margin-bottom: 0.6rem; }
+  .case-card .case-desc { font-size: 13px; line-height: 1.6; color: var(--text-secondary); margin-bottom: 0.6rem; }
+  .case-card .case-tag {
+    display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; padding: 3px 8px; border-radius: 4px; margin-right: 4px;
+  }
+  .tag-red { background: var(--red-glow); color: var(--red); }
+  .tag-green { background: var(--green-glow); color: var(--green); }
+  .tag-orange { background: var(--orange-glow); color: var(--orange); }
+  .tag-accent { background: var(--accent-glow); color: var(--accent); }
+  .tag-purple { background: var(--purple-glow); color: var(--purple); }
+  .tag-blue { background: var(--blue-glow); color: var(--blue); }
+
+  /* Full-width case card */
+  .case-card-full {
+    grid-column: 1 / -1;
+  }
+
+  /* Comparison table */
+  table {
+    width: 100%; border-collapse: collapse; font-size: 13px; margin: 1rem 0;
+  }
+  th, td {
+    padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border);
+  }
+  th { font-weight: 700; color: var(--accent); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  td { color: var(--text-secondary); }
+  tr:hover td { background: var(--surface-hover); }
+
+  .footer {
+    margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+    text-align: center; font-size: 12px; color: var(--text-dim);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="../index.html" class="back-link">← Back to Study Hub</a>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+    <span id="theme-icon">🌙</span>
+  </button>
+</div>
+
+<div class="container">
+  <div class="hero">
+    <span class="tag">Social Innovation & Design — Week 3</span>
+    <h1>💸 Who Pays?</h1>
+    <p class="subtitle">Five cases exploring who bears the cost of social innovation — and what happens when business models collide with social missions.</p>
+  </div>
+
+  <!-- ==================== CASE 1: INSULIN ==================== -->
+  <div class="section">
+    <h2>💉 Case 1: Insulin</h2>
+    <p>In 1923, Frederick Banting sold the insulin patent to the University of Toronto for <strong>$1</strong>, declaring: <em>"Insulin does not belong to me, it belongs to the world."</em> He believed a life-saving drug should be a public good.</p>
+    <p>A century later, the global insulin market is controlled by <strong>three companies</strong> — Eli Lilly, Novo Nordisk, and Sanofi — who together hold over 90% of market share. In the US, a vial of insulin that costs ~$5 to produce has been priced at <strong>$300+</strong>. One in four American diabetics rations their insulin due to cost.</p>
+
+    <div class="danger-box">
+      <div class="label">🔴 Core Tension</div>
+      <p><strong>Public good origins → private monopoly outcomes.</strong> The insulin case shows how a discovery explicitly intended to be free and universal was captured by market dynamics — patents, regulatory moats, and pricing power — over decades. It's been a century and insulin is still unaffordable for many.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Key Numbers</div>
+      <p>• Patent sold for <strong>$1</strong> (1923)</p>
+      <p>• Production cost per vial: <strong>~$5</strong></p>
+      <p>• US list price per vial: <strong>$300+</strong> (before recent caps)</p>
+      <p>• Market controlled by: <strong>3 firms</strong> (Eli Lilly, Novo Nordisk, Sanofi)</p>
+      <p>• 1 in 4 US diabetics <strong>ration insulin</strong> due to cost</p>
+    </div>
+  </div>
+
+  <!-- ==================== CASE 2: BANCO COMPARTAMOS ==================== -->
+  <div class="section">
+    <h2>🏦 Case 2: Banco Compartamos</h2>
+    <p><strong>Compartamos</strong> began as an NGO providing microloans to low-income women in rural Mexico — the kind of social enterprise Muhammad Yunus championed with Grameen Bank. Small loans, group lending, financial inclusion for the excluded.</p>
+    <p>Then it converted to a for-profit bank. Then it <strong>IPO'd in 2007</strong>. The IPO was wildly successful for investors — but the mechanics of that success tell a darker story.</p>
+
+    <div class="card">
+      <div class="card-title">The Numbers That Disturbed Everyone</div>
+      <p>• Annual interest rates on microloans: <strong>~90%</strong></p>
+      <p>• Return on equity (ROE): <strong>~40%</strong></p>
+      <p>• Borrowers: <strong>low-income women</strong> in rural Mexico</p>
+      <p>• IPO enriched: <strong>founders, early investors, and VCs</strong></p>
+    </div>
+
+    <div class="danger-box">
+      <div class="label">❌ Mission Drift</div>
+      <p>To deliver 40% ROE to shareholders, Compartamos had to charge rates that <strong>trapped borrowers in cycles of debt</strong>. The very people the organization was created to serve became the source of profit extraction. Muhammad Yunus publicly condemned it as a <strong>betrayal of microfinance principles</strong>.</p>
+    </div>
+
+    <div class="warning-box">
+      <div class="label">⚠️ The Cautionary Lesson</div>
+      <p>Compartamos is the textbook case of what happens when a social enterprise scales through for-profit capital without structural guardrails. <strong>When the revenue model requires extracting maximum value from your beneficiaries, profit and mission are fundamentally at odds.</strong></p>
+    </div>
+  </div>
+
+  <!-- ==================== CASE 3: ONEDAY HEALTH ==================== -->
+  <div class="section">
+    <h2>🏥 Case 3: OneDay Health</h2>
+    <p>In rural Uganda, roughly <strong>5 million people</strong> live more than 5km from the nearest health facility — what OneDay Health calls healthcare "black holes." For these communities, even basic medical care (malaria testing, wound treatment, prenatal checkups) requires a half-day journey.</p>
+    <p>OneDay Health's model is radically simple: set up <strong>micro health centres</strong> embedded directly in rural communities, each staffed by a trained community health worker.</p>
+
+    <div class="success-box">
+      <div class="label">✅ The Model</div>
+      <p>• Setup cost per clinic: <strong>$4,000</strong></p>
+      <p>• Patient fee per visit: <strong>$1–2</strong></p>
+      <p>• Centres operating: <strong>70+</strong></p>
+      <p>• Focus: <strong>local, asset-light, community-embedded</strong></p>
+    </div>
+
+    <p>OneDay Health doesn't try to build hospitals or scale into a national health system. It operates within the constraints of its context — low-resource, rural, and community-driven. Each centre is designed to be <strong>sustainable at the local level</strong>, not dependent on external funding to survive.</p>
+
+    <div class="highlight-box">
+      <div class="label">🔬 Zahra Typology: Social Bricoleur</div>
+      <p>OneDay Health is the classic <strong>Social Bricoleur</strong> — working with available resources to solve immediate, local problems. It doesn't try to change the system. It works <em>within</em> the system's gaps, one village at a time.</p>
+    </div>
+  </div>
+
+  <!-- ==================== CASE 4: SWIPERX ==================== -->
+  <div class="section">
+    <h2>📱 Case 4: SwipeRx</h2>
+    <p><strong>SwipeRx</strong> (formerly mClinica) entered Indonesia's pharmacy market through <strong>education</strong> — a free platform where pharmacists could access continuing education and professional community. This built trust and a massive user base before SwipeRx ever tried to monetize.</p>
+    <p>The platform then expanded into <strong>wholesale distribution</strong>, connecting pharmacies directly with manufacturers and cutting out middlemen. The economics work: pharmacies get cheaper drugs, SwipeRx takes a margin, and patients benefit from lower prices.</p>
+
+    <div class="card">
+      <div class="card-title">Scale & Reach</div>
+      <p>• <strong>120,000+</strong> pharmacy professionals on platform</p>
+      <p>• <strong>~10,000 pharmacies</strong> using wholesale (~30% of Indonesia)</p>
+      <p>• Entry strategy: <strong>education-first</strong> → wholesale → retail</p>
+      <p>• Revenue model: <strong>structurally aligned with social mission</strong></p>
+    </div>
+
+    <div class="success-box">
+      <div class="label">✅ Profit & Mission Aligned</div>
+      <p>Every additional pharmacy on SwipeRx's wholesale platform = <strong>more revenue AND better drug access</strong>. The incentives compound in the same direction. This is the opposite of the Compartamos model — here, scaling actually deepens social impact.</p>
+    </div>
+
+    <h3>🏪 Apotek Inofarma — Double Social Impact</h3>
+    <p>SwipeRx's retail expansion through <strong>Apotek Inofarma</strong> targets underserved peri-urban and rural areas with pharmacies led by <strong>women pharmacists</strong> — creating two layers of impact: healthcare access AND economic empowerment.</p>
+  </div>
+
+  <!-- ==================== CASE 5: IMPULSOGOV ==================== -->
+  <div class="section">
+    <h2>🇧🇷 Case 5: ImpulsoGov</h2>
+    <p><strong>ImpulsoGov</strong> is a Brazilian non-profit building technology to improve public healthcare prevention. Their platform connects Electronic Medical Records (EMR) with national health targets, helping municipal governments track and improve preventive care metrics.</p>
+
+    <div class="card">
+      <div class="card-title">Scale & Model</div>
+      <p>• <strong>81 municipalities</strong> using the platform</p>
+      <p>• <strong>~1 million citizens</strong> impacted</p>
+      <p>• Funding: <strong>donor-funded, non-profit</strong></p>
+      <p>• Goal: improve public health <strong>prevention</strong>, not just treatment</p>
+    </div>
+
+    <div class="purple-box">
+      <div class="label">🌍 Zahra Typology: Social Engineer</div>
+      <p>ImpulsoGov isn't filling a gap or building a parallel structure — it's trying to <strong>change how the existing public health system works</strong>. By connecting data infrastructure to policy targets, it aims to shift Brazil's healthcare from reactive treatment to proactive prevention.</p>
+    </div>
+
+    <div class="warning-box">
+      <div class="label">⚠️ The Challenge</div>
+      <p><strong>Demand exceeds capacity.</strong> As a donor-funded non-profit, ImpulsoGov can't scale as fast as demand requires. More municipalities want to join than the organization can support. The funding model creates a ceiling that a for-profit structure wouldn't have — but a for-profit structure might compromise the mission.</p>
+    </div>
+  </div>
+
+  <!-- ==================== COMPARISON TABLE ==================== -->
+  <div class="section">
+    <h2>📊 Comparison: All Five Cases</h2>
+    <div style="overflow-x: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Case</th>
+            <th>Model</th>
+            <th>Who Pays?</th>
+            <th>Revenue ↔ Mission</th>
+            <th>Outcome</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Insulin</strong></td>
+            <td>Public → Private</td>
+            <td>Patients (via monopoly pricing)</td>
+            <td style="color: var(--red);">Diverged</td>
+            <td>Unaffordable after 100 years</td>
+          </tr>
+          <tr>
+            <td><strong>Compartamos</strong></td>
+            <td>NGO → For-profit → IPO</td>
+            <td>Poor borrowers (~90% interest)</td>
+            <td style="color: var(--red);">Diverged</td>
+            <td>Mission drift, extraction</td>
+          </tr>
+          <tr>
+            <td><strong>OneDay Health</strong></td>
+            <td>Micro-clinics, $1-2/visit</td>
+            <td>Patients (affordable fees)</td>
+            <td style="color: var(--green);">Aligned</td>
+            <td>Stable, local, sustainable</td>
+          </tr>
+          <tr>
+            <td><strong>SwipeRx</strong></td>
+            <td>Platform → Wholesale → Retail</td>
+            <td>Transaction margins</td>
+            <td style="color: var(--green);">Aligned</td>
+            <td>Scaling deepens impact</td>
+          </tr>
+          <tr>
+            <td><strong>ImpulsoGov</strong></td>
+            <td>Non-profit, donor-funded</td>
+            <td>Donors & grants</td>
+            <td style="color: var(--accent);">Aligned (but constrained)</td>
+            <td>Demand > capacity</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ==================== CROSS-CASE ANALYSIS ==================== -->
+  <div class="section">
+    <h2>🔍 Cross-Case Analysis: Zahra et al. (2009) Mapping</h2>
+    <p>Zahra, Gedajlovic, Neubaum, and Shulman (2009) categorize social entrepreneurs into three types based on how they approach change. Here's how each case maps:</p>
+
+    <div class="case-grid">
+      <div class="case-card">
+        <div class="case-emoji">🔬</div>
+        <div class="case-name">OneDay Health</div>
+        <div class="case-location">Uganda</div>
+        <div class="case-desc">Works with what's available, solves local problems, doesn't try to change the system.</div>
+        <span class="case-tag tag-green">Social Bricoleur</span>
+      </div>
+
+      <div class="case-card">
+        <div class="case-emoji">🏗️</div>
+        <div class="case-name">SwipeRx</div>
+        <div class="case-location">Indonesia</div>
+        <div class="case-desc">Built new institutional infrastructure (platform) to fill a gap that markets didn't address.</div>
+        <span class="case-tag tag-accent">Social Constructionist</span>
+      </div>
+
+      <div class="case-card">
+        <div class="case-emoji">⚠️</div>
+        <div class="case-name">Compartamos</div>
+        <div class="case-location">Mexico</div>
+        <div class="case-desc">Started as Constructionist building microfinance access, but IPO pressure warped the mission entirely.</div>
+        <span class="case-tag tag-red">Constructionist Gone Wrong</span>
+      </div>
+
+      <div class="case-card">
+        <div class="case-emoji">🌍</div>
+        <div class="case-name">ImpulsoGov</div>
+        <div class="case-location">Brazil</div>
+        <div class="case-desc">Trying to change how Brazil's public health system works — from reactive to preventive.</div>
+        <span class="case-tag tag-purple">Social Engineer</span>
+      </div>
+
+      <div class="case-card case-card-full">
+        <div class="case-emoji">💉</div>
+        <div class="case-name">Insulin (Banting et al.)</div>
+        <div class="case-location">Global</div>
+        <div class="case-desc">The original inventors were Social Engineers — they wanted to change how a life-saving drug was distributed. But the outcome became a market failure: private monopoly captured a public good.</div>
+        <span class="case-tag tag-purple">Social Engineers</span>
+        <span class="case-tag tag-red">→ Market Failure</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== KEY INSIGHTS ==================== -->
+  <div class="section">
+    <h2>💡 Key Insights</h2>
+
+    <div class="highlight-box">
+      <div class="label">💡 The Alignment Test</div>
+      <p><strong>"Scaling works when the revenue model and social impact compound in the same direction. When they diverge — that's when mission drift creeps in."</strong></p>
+      <p style="margin-top: 0.5rem;">SwipeRx ✅ — every new pharmacy increases both revenue and drug access. Compartamos ❌ — growth required extracting more from the people they were supposed to help. Insulin ❌ — public good captured by private monopoly over time.</p>
+    </div>
+
+    <div class="blue-box">
+      <div class="label">🧠 Sasya's Insight</div>
+      <p><strong>"Stability > scalability — not every organisation needs to scale; some interventions should be localised."</strong></p>
+      <p style="margin-top: 0.5rem;">OneDay Health works precisely <em>because</em> it doesn't try to become a national health system. It's stable, community-embedded, and replicable without centralization. The pressure to "scale or die" is a VC framework, not a universal truth for social impact.</p>
+    </div>
+
+    <div class="warning-box">
+      <div class="label">⚠️ The Funding Trap</div>
+      <p>ImpulsoGov shows the flip side: <strong>donor funding preserves mission purity but creates a capacity ceiling.</strong> Compartamos shows what happens when you remove that ceiling with for-profit capital. There's no clean answer — only trade-offs to manage deliberately.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    Social Innovation & Design · Week 3 — Study Hub · Built with 🐱 by Robin
+  </div>
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('theme-icon').textContent = saved === 'dark' ? '☀️' : '🌙';
+  });
+})();
+</script>
+</body>
+</html>
