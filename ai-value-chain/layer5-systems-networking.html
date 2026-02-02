@@ -701,6 +701,41 @@
     transition: border-color 0.2s, color 0.2s;
   }
   .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Inline jargon links */
+  .jargon {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1.5px dotted var(--accent);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .jargon:hover {
+    color: var(--teal, var(--accent-light, #2dd4bf));
+    border-color: var(--teal, var(--accent-light, #2dd4bf));
+  }
+  .jargon-def {
+    scroll-margin-top: 24px;
+  }
+  .jargon-def:target {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 10px;
+    animation: jargon-flash 1.2s ease;
+  }
+  @keyframes jargon-flash {
+    0%, 100% { outline-color: transparent; }
+    20%, 80% { outline-color: var(--accent); }
+  }
+  .jargon-back {
+    font-size: 11px;
+    color: var(--muted, var(--text-muted, #9ca3af));
+    text-decoration: none;
+    margin-left: 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .jargon-back:hover { opacity: 1; color: var(--accent); }
 </style>
 </head>
 <body>
@@ -739,11 +774,11 @@
   <div class="anatomy-card">
     <h3>🔬 What an AI Server Actually Looks Like</h3>
     <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">
-      An AI server isn't just a beefy PC. It's a purpose-built system packing multiple GPUs, each with its own HBM, all connected by ultra-fast interconnects. Here's the inside of an Nvidia DGX system:
+      An AI server isn't just a beefy PC. It's a purpose-built system packing multiple GPUs, each with its own HBM, all connected by ultra-fast interconnects. Here's the inside of an Nvidia <a href="#jargon-dgx" class="jargon">DGX</a> system:
     </p>
     
     <div class="server-diagram">
-      <div class="server-label">Nvidia DGX H100 — Inside the Box</div>
+      <div class="server-label">Nvidia <a href="#jargon-dgx" class="jargon">DGX</a> H100 — Inside the Box</div>
       
       <div class="gpu-grid">
         <div class="gpu-unit"><div class="gpu-label">H100</div><div class="gpu-sub">80GB HBM3</div></div>
@@ -757,12 +792,12 @@
       </div>
       
       <div class="nvlink-bar"></div>
-      <div class="nvlink-bar-label">⚡ NVLink + NVSwitch — 900 GB/s all-to-all GPU interconnect</div>
+      <div class="nvlink-bar-label">⚡ <a href="#jargon-nvlink" class="jargon">NVLink</a> + NVSwitch — 900 GB/s all-to-all GPU interconnect</div>
       
       <div class="server-component-row">
         <div class="server-comp nvswitch">🔀 NVSwitch × 4</div>
         <div class="server-comp cpu">🧠 CPU Host (2× Intel Xeon / AMD EPYC)</div>
-        <div class="server-comp net">🌐 ConnectX-7 NICs (InfiniBand / Ethernet)</div>
+        <div class="server-comp net">🌐 ConnectX-7 NICs (<a href="#jargon-infiniband" class="jargon">InfiniBand</a> / Ethernet)</div>
       </div>
       
       <p style="font-size:11px;color:var(--text-dim);text-align:center;margin-top:12px;">8 GPUs × 80GB = 640GB total HBM · ~$300K+ per system · 10.2kW power draw</p>
@@ -771,7 +806,7 @@
 
   <!-- DGX H100 vs DGX GB200 NVL72 -->
   <div class="anatomy-card">
-    <h3>📊 DGX H100 vs DGX GB200 NVL72 — The Scale Jump</h3>
+    <h3>📊 <a href="#jargon-dgx" class="jargon">DGX</a> H100 vs DGX GB200 NVL72 — The Scale Jump</h3>
     <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Nvidia keeps packing more GPUs into tighter, faster-connected systems. The jump from H100 to GB200 is massive:</p>
     
     <div class="compare-grid">
@@ -850,7 +885,7 @@
           <span class="net-speed" style="color:#22c55e;">900 GB/s</span>
         </div>
       </div>
-      <div class="net-connector">↕ NVLink</div>
+      <div class="net-connector">↕ <a href="#jargon-nvlink" class="jargon">NVLink</a></div>
       
       <!-- Level 2: NVSwitch -->
       <div class="net-level">
@@ -859,7 +894,7 @@
           <span class="net-speed" style="color:#f59e0b;">900 GB/s bisection</span>
         </div>
       </div>
-      <div class="net-connector">↕ NVLink across trays</div>
+      <div class="net-connector">↕ <a href="#jargon-nvlink" class="jargon">NVLink</a> across trays</div>
       
       <!-- Level 3: Rack -->
       <div class="net-level">
@@ -868,12 +903,12 @@
           <span class="net-speed" style="color:#6366f1;">130 TB/s total</span>
         </div>
       </div>
-      <div class="net-connector">↕ InfiniBand / Ethernet</div>
+      <div class="net-connector">↕ <a href="#jargon-infiniband" class="jargon">InfiniBand</a> / Ethernet</div>
       
       <!-- Level 4: Cross-rack -->
       <div class="net-level">
         <div class="net-box ib-level">
-          🟠 Cross-Rack (InfiniBand)<br><span style="font-size:10px;opacity:0.8;">Rack-to-rack in a cluster</span>
+          🟠 Cross-Rack (<a href="#jargon-infiniband" class="jargon">InfiniBand</a>)<br><span style="font-size:10px;opacity:0.8;">Rack-to-rack in a cluster</span>
           <span class="net-speed" style="color:#f97316;">400-800 Gb/s per link</span>
         </div>
       </div>
@@ -904,7 +939,7 @@
         <div class="cc-stat-label">of AI cluster networking today</div>
         <div style="font-size:11px;color:var(--text-secondary);line-height:1.5;text-align:left;margin-top:8px;">
           ✅ Ultra-low latency<br>
-          ✅ RDMA — bypasses CPU entirely<br>
+          ✅ <a href="#jargon-rdma" class="jargon">RDMA</a> — bypasses CPU entirely<br>
           ✅ Purpose-built for GPU workloads<br>
           ❌ Nvidia proprietary ecosystem<br>
           ❌ More expensive per port
@@ -1098,6 +1133,42 @@
   </div>
 
   <!-- ========== 8. WORTH KNOWING ========== -->
+  
+  <!-- JARGON DECODER -->
+  <div class="anatomy-card" style="margin-bottom:32px;">
+    <h3>📖 Jargon Decoder</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+        <div id="jargon-nvlink" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">NVLink</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Nvidia's proprietary high-speed GPU-to-GPU interconnect. Much faster than PCIe, essential for multi-GPU AI training where GPUs need to share data rapidly.</p>
+        </div>
+        <div id="jargon-infiniband" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">InfiniBand</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A high-throughput, low-latency networking technology used in AI data centers. Nvidia (via Mellanox acquisition) dominates this market.</p>
+        </div>
+        <div id="jargon-dgx" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">DGX</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Nvidia's turnkey AI server systems containing multiple GPUs, NVLink interconnects, and networking — a complete "AI supercomputer in a box."</p>
+        </div>
+        <div id="jargon-pcie" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">PCIe</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">PCI Express — the standard interface for connecting GPUs to CPUs. Slower than NVLink for GPU-to-GPU communication but universally supported.</p>
+        </div>
+        <div id="jargon-rdma" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">RDMA</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Remote Direct Memory Access — allows one computer to directly access another's memory without involving the CPU, reducing latency for distributed AI training.</p>
+        </div>
+        <div id="jargon-gpu-cluster" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">GPU Cluster</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Thousands of GPUs networked together to train large AI models. Modern frontier models require 10,000-100,000+ GPU clusters.</p>
+        </div>
+        <div id="jargon-npu" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">NPU (Network Processing Unit)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A specialized processor that handles network traffic, offloading work from the main CPU to speed up data transfer between GPUs.</p>
+        </div>
+    </div>
+  </div>
+
   <div class="worth-knowing">
     <h3>📌 Worth Knowing</h3>
     <ul>

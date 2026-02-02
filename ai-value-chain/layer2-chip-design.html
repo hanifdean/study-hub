@@ -759,6 +759,41 @@
     transition: border-color 0.2s, color 0.2s;
   }
   .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Inline jargon links */
+  .jargon {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1.5px dotted var(--accent);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .jargon:hover {
+    color: var(--teal, var(--accent-light, #2dd4bf));
+    border-color: var(--teal, var(--accent-light, #2dd4bf));
+  }
+  .jargon-def {
+    scroll-margin-top: 24px;
+  }
+  .jargon-def:target {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 10px;
+    animation: jargon-flash 1.2s ease;
+  }
+  @keyframes jargon-flash {
+    0%, 100% { outline-color: transparent; }
+    20%, 80% { outline-color: var(--accent); }
+  }
+  .jargon-back {
+    font-size: 11px;
+    color: var(--muted, var(--text-muted, #9ca3af));
+    text-decoration: none;
+    margin-left: 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .jargon-back:hover { opacity: 1; color: var(--accent); }
 </style>
 </head>
 <body>
@@ -772,12 +807,12 @@
 
   
   <h1>🏗️ Layer 2: Chip Design</h1>
-  <p class="subtitle">The architects who design AI chips but don't manufacture them — the fabless revolution</p>
+  <p class="subtitle">The architects who design AI chips but don't manufacture them — the <a href="#jargon-fabless" class="jargon">fabless</a> revolution</p>
 
   <!-- ========== 1. WHERE THIS SITS ========== -->
   <div class="big-picture">
     <div class="section-title"><span class="emoji">🗺️</span> Where Chip Design Sits in the Stack</div>
-    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Layer 2 companies are the <strong style="color:#fbbf24;">architects</strong> — they design the chips that power AI but rely on foundries (TSMC) to actually manufacture them. This is the "fabless" model that revolutionized the semiconductor industry.</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Layer 2 companies are the <strong style="color:#fbbf24;">architects</strong> — they design the chips that power AI but rely on foundries (TSMC) to actually manufacture them. This is the "<a href="#jargon-fabless" class="jargon">fabless</a>" model that revolutionized the semiconductor industry.</p>
     <div class="flow-row">
       <div class="flow-node dim"><div class="label">Layer 1</div><div class="name">Raw Materials</div></div>
       <div class="flow-arrow">→</div>
@@ -795,13 +830,13 @@
 
   <!-- ========== 2. THE FABLESS REVOLUTION ========== -->
   <div class="anatomy-card">
-    <h3>⚡ The Fabless Revolution</h3>
+    <h3>⚡ The <a href="#jargon-fabless" class="jargon">Fabless</a> Revolution</h3>
     <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">The semiconductor industry split in two. Companies used to design AND manufacture chips. Now, the best chip designers don't own a single factory — they outsource manufacturing to foundries like TSMC.</p>
     
     <div class="split-container">
       <div class="model-box old">
         <div class="model-label">Old Model (1970s–2000s)</div>
-        <div class="model-title">Integrated (IDM)</div>
+        <div class="model-title">Integrated (<a href="#jargon-idm" class="jargon">IDM</a>)</div>
         <div class="model-desc">One company does <strong>everything</strong>: design + manufacturing in their own fabs</div>
         <div class="company-tags">
           <span class="company-tag">Intel</span>
@@ -834,9 +869,9 @@
     <div class="fabless-flow" style="margin-top:20px;">
       <div class="ff-node design"><div class="ff-label">DESIGN</div><div class="ff-name">Nvidia designs GPU</div></div>
       <div class="ff-arrow">→</div>
-      <div class="ff-node"><div class="ff-label">EDA TOOLS</div><div class="ff-name">Synopsys / Cadence</div></div>
+      <div class="ff-node"><div class="ff-label"><a href="#jargon-eda" class="jargon">EDA</a> TOOLS</div><div class="ff-name">Synopsys / Cadence</div></div>
       <div class="ff-arrow">→</div>
-      <div class="ff-node"><div class="ff-label">BLUEPRINT</div><div class="ff-name">GDSII file sent</div></div>
+      <div class="ff-node"><div class="ff-label">BLUEPRINT</div><div class="ff-name"><a href="#jargon-gdsii" class="jargon">GDSII</a> file sent</div></div>
       <div class="ff-arrow">→</div>
       <div class="ff-node foundry"><div class="ff-label">MANUFACTURING</div><div class="ff-name">TSMC builds it</div></div>
       <div class="ff-arrow">→</div>
@@ -847,7 +882,7 @@
   <!-- ========== 3. NVIDIA — THE KING ========== -->
   <div class="anatomy-card">
     <h3>👑 Nvidia — The King of AI Chips</h3>
-    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Nvidia dominates AI compute with 94%+ discrete GPU market share. Their moat isn't just hardware — it's the entire CUDA software ecosystem built over 20+ years.</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Nvidia dominates AI compute with 94%+ discrete GPU market share. Their moat isn't just hardware — it's the entire <a href="#jargon-cuda" class="jargon">CUDA</a> software ecosystem built over 20+ years.</p>
     
     <!-- CPU vs GPU Architecture -->
     <div style="font-size:14px;font-weight:700;margin-bottom:12px;">Why GPUs Work for AI — CPU vs GPU Architecture</div>
@@ -893,13 +928,13 @@
       <div class="timeline-node">
         <div class="tl-name">A100</div>
         <div class="tl-year">2020 · Ampere</div>
-        <div class="tl-stat"><strong>6,912</strong> CUDA cores<br><strong>80GB</strong> HBM2e<br><strong>2 TB/s</strong> bandwidth</div>
+        <div class="tl-stat"><strong>6,912</strong> <a href="#jargon-cuda" class="jargon">CUDA</a> cores<br><strong>80GB</strong> HBM2e<br><strong>2 TB/s</strong> bandwidth</div>
       </div>
       <div class="timeline-arrow">→</div>
       <div class="timeline-node">
         <div class="tl-name">H100</div>
         <div class="tl-year">2022 · Hopper</div>
-        <div class="tl-stat"><strong>16,896</strong> CUDA cores<br><strong>80GB</strong> HBM3<br><strong>3.4 TB/s</strong> bandwidth</div>
+        <div class="tl-stat"><strong>16,896</strong> <a href="#jargon-cuda" class="jargon">CUDA</a> cores<br><strong>80GB</strong> HBM3<br><strong>3.4 TB/s</strong> bandwidth</div>
       </div>
       <div class="timeline-arrow">→</div>
       <div class="timeline-node current">
@@ -993,7 +1028,7 @@
     <div class="hyper-grid">
       <div class="hyper-card google">
         <div class="hyper-logo">🔵</div>
-        <div class="hyper-co">Google — TPU v6 (Trillium)</div>
+        <div class="hyper-co">Google — <a href="#jargon-tpu" class="jargon">TPU</a> v6 (Trillium)</div>
         <div class="hyper-chip">Tensor Processing Unit · 6th generation</div>
         <div class="hyper-desc">The original custom AI chip (since 2016). Optimized for TensorFlow/JAX workloads. Powers Google Search, Gemini, YouTube recommendations. <strong>Not sold externally</strong> — only available via Google Cloud.</div>
       </div>
@@ -1050,14 +1085,14 @@
       <div class="df-arrow">→</div>
       <div class="df-node eda">
         <div class="df-icon">💻</div>
-        <div class="df-name">EDA Tools</div>
+        <div class="df-name"><a href="#jargon-eda" class="jargon">EDA</a> Tools</div>
         <div class="df-sub">Synopsys / Cadence</div>
       </div>
       <div class="df-arrow">→</div>
       <div class="df-node">
         <div class="df-icon">📋</div>
         <div class="df-name">Design Complete</div>
-        <div class="df-sub">GDSII blueprint</div>
+        <div class="df-sub"><a href="#jargon-gdsii" class="jargon">GDSII</a> blueprint</div>
       </div>
       <div class="df-arrow">→</div>
       <div class="df-node tsmc">
@@ -1078,18 +1113,18 @@
     <div class="eco-grid">
       <div class="eco-card" style="border-color:#60a5fa;">
         <div class="eco-name" style="color:#93c5fd;">ARM Holdings</div>
-        <div class="eco-role">Instruction Set Architecture (ISA) Licensor</div>
+        <div class="eco-role">Instruction Set Architecture (<a href="#jargon-isa" class="jargon">ISA</a>) Licensor</div>
         <div class="eco-desc">ARM doesn't make chips — they license the <strong>instruction set architecture</strong> that ~95% of mobile chips use. Apple, Qualcomm, Google, Amazon all build on ARM's designs. Collects royalties on every chip sold.</div>
       </div>
       <div class="eco-card" style="border-color:#a78bfa;">
         <div class="eco-name" style="color:#c4b5fd;">Synopsys & Cadence</div>
-        <div class="eco-role">EDA Tools — Duopoly</div>
+        <div class="eco-role"><a href="#jargon-eda" class="jargon">EDA</a> Tools — Duopoly</div>
         <div class="eco-desc">The software used to design chips. <strong>Every single advanced chip</strong> in the world is designed using their tools. Combined ~70% market share. No chip gets made without them — it's like Adobe for chip design.</div>
       </div>
       <div class="eco-card" style="border-color:#f59e0b;">
         <div class="eco-name" style="color:#fbbf24;">Broadcom</div>
         <div class="eco-role">Custom Silicon & Networking</div>
-        <div class="eco-desc">Designs custom AI chips for Google (TPU), Meta, and others. Also makes the networking chips that connect GPUs together. $14B+ custom silicon revenue. The "design services" powerhouse.</div>
+        <div class="eco-desc">Designs custom AI chips for Google (<a href="#jargon-tpu" class="jargon">TPU</a>), Meta, and others. Also makes the networking chips that connect GPUs together. $14B+ custom silicon revenue. The "design services" powerhouse.</div>
       </div>
       <div class="eco-card" style="border-color:#22c55e;">
         <div class="eco-name" style="color:#4ade80;">Marvell</div>
@@ -1101,8 +1136,8 @@
 
   <!-- ========== 7. ISAs EXPLAINED ========== -->
   <div class="anatomy-card">
-    <h3>🗣️ Instruction Set Architectures (ISAs) — The "Language" Chips Speak</h3>
-    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">An ISA is the fundamental "language" that software uses to communicate with a chip. Different ISAs = different ecosystems of software, tools, and developers. Think of it like human languages — switching is expensive and disruptive.</p>
+    <h3>🗣️ Instruction Set Architectures (<a href="#jargon-isa" class="jargon">ISAs</a>) — The "Language" Chips Speak</h3>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">An <a href="#jargon-isa" class="jargon">ISA</a> is the fundamental "language" that software uses to communicate with a chip. Different ISAs = different ecosystems of software, tools, and developers. Think of it like human languages — switching is expensive and disruptive.</p>
     
     <div class="isa-grid">
       <div class="isa-card x86">
@@ -1150,7 +1185,7 @@
       </div>
       
       <div class="isa-card riscv">
-        <div class="isa-name">RISC-V</div>
+        <div class="isa-name"><a href="#jargon-risc-v" class="jargon">RISC-V</a></div>
         <div class="isa-owners">Open Source (no license fees)</div>
         <div class="isa-desc">
           The open-source challenger. No royalties, anyone can use it. China is investing heavily. Still early for AI/servers, but growing fast in embedded and IoT.
@@ -1204,6 +1239,46 @@
   </div>
 
   <!-- ========== 9. WORTH KNOWING ========== -->
+  
+  <!-- JARGON DECODER -->
+  <div class="anatomy-card" style="margin-bottom:32px;">
+    <h3>📖 Jargon Decoder</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+        <div id="jargon-fabless" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Fabless</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A semiconductor company that designs chips but outsources manufacturing to foundries like TSMC. Examples: Nvidia, AMD, Qualcomm.</p>
+        </div>
+        <div id="jargon-idm" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">IDM (Integrated Device Manufacturer)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A company that both designs and manufactures its own chips in-house. The traditional model, now rare. Examples: Intel, Samsung.</p>
+        </div>
+        <div id="jargon-cuda" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">CUDA</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Nvidia's proprietary parallel computing platform. The software ecosystem built over 20+ years that makes switching from Nvidia GPUs nearly impossible.</p>
+        </div>
+        <div id="jargon-eda" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">EDA (Electronic Design Automation)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Software tools used to design semiconductor chips. Synopsys and Cadence control ~70% of this market — every advanced chip is designed using their tools.</p>
+        </div>
+        <div id="jargon-isa" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">ISA (Instruction Set Architecture)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The fundamental "language" that software uses to communicate with a chip (e.g., x86, ARM, RISC-V). Switching ISAs means rewriting/recompiling all software.</p>
+        </div>
+        <div id="jargon-gdsii" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">GDSII</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The standard file format for the final chip design blueprint sent to the foundry for manufacturing. Contains all the geometric information for every layer.</p>
+        </div>
+        <div id="jargon-tpu" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">TPU (Tensor Processing Unit)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Google's custom AI accelerator chip, optimized for TensorFlow/JAX workloads. Not sold externally — only available via Google Cloud.</p>
+        </div>
+        <div id="jargon-risc-v" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">RISC-V</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">An open-source instruction set architecture with no license fees. Growing rapidly, especially in China and IoT applications.</p>
+        </div>
+    </div>
+  </div>
+
   <div class="worth-knowing">
     <h3>📌 Worth Knowing</h3>
     <ul>

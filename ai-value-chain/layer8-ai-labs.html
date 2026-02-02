@@ -610,6 +610,41 @@
     transition: border-color 0.2s, color 0.2s;
   }
   .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Inline jargon links */
+  .jargon {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1.5px dotted var(--accent);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .jargon:hover {
+    color: var(--teal, var(--accent-light, #2dd4bf));
+    border-color: var(--teal, var(--accent-light, #2dd4bf));
+  }
+  .jargon-def {
+    scroll-margin-top: 24px;
+  }
+  .jargon-def:target {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 10px;
+    animation: jargon-flash 1.2s ease;
+  }
+  @keyframes jargon-flash {
+    0%, 100% { outline-color: transparent; }
+    20%, 80% { outline-color: var(--accent); }
+  }
+  .jargon-back {
+    font-size: 11px;
+    color: var(--muted, var(--text-muted, #9ca3af));
+    text-decoration: none;
+    margin-left: 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .jargon-back:hover { opacity: 1; color: var(--accent); }
 </style>
 </head>
 <body>
@@ -693,8 +728,8 @@
         <div class="lab-icon">🔮</div>
         <div class="lab-info">
           <div class="l-name">Meta AI</div>
-          <div class="l-focus">Llama (open source) · Largest open model ecosystem</div>
-          <div class="l-desc">Meta's bet: give away the models for free, make the ecosystem dependent on your platform. Llama 3 and 4 are the most widely used open-source AI models in the world. This undercuts competitors' revenue while Meta benefits from AI across Instagram, Facebook, WhatsApp, and Ray-Ban Meta glasses.</div>
+          <div class="l-focus">Llama (<a href="#jargon-open-source" class="jargon">open source</a>) · Largest open model ecosystem</div>
+          <div class="l-desc">Meta's bet: give away the models for free, make the ecosystem dependent on your platform. Llama 3 and 4 are the most widely used <a href="#jargon-open-source" class="jargon">open-source</a> AI models in the world. This undercuts competitors' revenue while Meta benefits from AI across Instagram, Facebook, WhatsApp, and Ray-Ban Meta glasses.</div>
         </div>
         <div class="lab-val">
           <div class="val-num">Open</div>
@@ -761,15 +796,15 @@
     <div class="breakthrough-list">
       <div class="bt-item">
         <div class="bt-name">📐 Scaling Laws (2020)</div>
-        <div class="bt-desc">OpenAI discovered that model performance improves <em>predictably</em> as you increase compute, data, and parameters. This meant you could plan investments — spend 10× more compute, get a reliably better model. This kicked off the GPU arms race because labs could justify billions in spending with predictable returns.</div>
+        <div class="bt-desc">OpenAI discovered that model performance improves <em>predictably</em> as you increase compute, data, and <a href="#jargon-parameters" class="jargon">parameters</a>. This meant you could plan investments — spend 10× more compute, get a reliably better model. This kicked off the GPU arms race because labs could justify billions in spending with predictable returns.</div>
       </div>
       <div class="bt-item">
-        <div class="bt-name">🔄 Transformer Architecture (2017)</div>
-        <div class="bt-desc">Google's "Attention Is All You Need" paper introduced the transformer — a neural network architecture that processes all input tokens in parallel (not sequentially). This made training massively parallelizable across thousands of GPUs. Every major AI model today (GPT, Claude, Gemini, Llama) is a transformer.</div>
+        <div class="bt-name">🔄 <a href="#jargon-transformer" class="jargon">Transformer</a> Architecture (2017)</div>
+        <div class="bt-desc">Google's "Attention Is All You Need" paper introduced the <a href="#jargon-transformer" class="jargon">transformer</a> — a neural network architecture that processes all input tokens in parallel (not sequentially). This made training massively parallelizable across thousands of GPUs. Every major AI model today (GPT, Claude, Gemini, Llama) is a <a href="#jargon-transformer" class="jargon">transformer</a>.</div>
       </div>
       <div class="bt-item">
-        <div class="bt-name">🎯 RLHF & Constitutional AI (2022-2023)</div>
-        <div class="bt-desc">Reinforcement Learning from Human Feedback (RLHF) taught models to follow instructions and be helpful. Anthropic's Constitutional AI went further — training models to follow a set of principles (be honest, avoid harm) rather than just mimicking human preferences. These techniques turned raw language models into useful assistants.</div>
+        <div class="bt-name">🎯 <a href="#jargon-rlhf" class="jargon">RLHF</a> & Constitutional AI (2022-2023)</div>
+        <div class="bt-desc">Reinforcement Learning from Human Feedback (<a href="#jargon-rlhf" class="jargon">RLHF</a>) taught models to follow instructions and be helpful. Anthropic's Constitutional AI went further — training models to follow a set of principles (be honest, avoid harm) rather than just mimicking human preferences. These techniques turned raw language models into useful assistants.</div>
       </div>
       <div class="bt-item">
         <div class="bt-name">💭 Chain-of-Thought & Reasoning (2024-2025)</div>
@@ -838,7 +873,7 @@
       </div>
       <div class="stack-layer l3">
         <div class="sl-label">Inference Engines</div>
-        <div class="sl-items">vLLM · TensorRT-LLM (Nvidia) · Triton · ONNX Runtime · llama.cpp</div>
+        <div class="sl-items">vLLM · TensorRT-<a href="#jargon-llm" class="jargon">LLM</a> (Nvidia) · Triton · ONNX Runtime · llama.cpp</div>
       </div>
       <div class="stack-layer l4">
         <div class="sl-label">Frameworks</div>
@@ -885,6 +920,46 @@
   </div>
 
   <!-- ========== 8. WORTH KNOWING ========== -->
+  
+  <!-- JARGON DECODER -->
+  <div class="anatomy-card" style="margin-bottom:32px;">
+    <h3>📖 Jargon Decoder</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+        <div id="jargon-llm" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">LLM (Large Language Model)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">AI models trained on massive text datasets that can generate, understand, and reason about language. GPT-4, Claude, and Gemini are LLMs.</p>
+        </div>
+        <div id="jargon-parameters" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Parameters</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The numerical values a model learns during training. More parameters generally = more capability. GPT-4 is estimated at ~1.8 trillion parameters.</p>
+        </div>
+        <div id="jargon-transformer" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Transformer</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The neural network architecture behind modern AI. Invented by Google in 2017 ("Attention Is All You Need"), it enables models to process sequences in parallel.</p>
+        </div>
+        <div id="jargon-fine-tuning" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Fine-tuning</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Taking a pre-trained model and further training it on specialized data for a specific task, much cheaper than training from scratch.</p>
+        </div>
+        <div id="jargon-rlhf" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">RLHF (Reinforcement Learning from Human Feedback)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A training technique where human evaluators rate AI outputs, and the model learns to produce responses humans prefer. Key to making LLMs helpful and safe.</p>
+        </div>
+        <div id="jargon-scaling-laws" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Scaling Laws</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The empirical observation that AI model performance improves predictably as you increase compute, data, and parameters. Drives the "bigger is better" arms race.</p>
+        </div>
+        <div id="jargon-open-source" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Open Source (AI)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">AI models whose weights and code are publicly released (e.g., Meta's LLaMA). Enables broad access but raises safety and competitive concerns.</p>
+        </div>
+        <div id="jargon-agi" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">AGI (Artificial General Intelligence)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A hypothetical AI system that matches or exceeds human-level intelligence across all domains. The stated goal of OpenAI and others.</p>
+        </div>
+    </div>
+  </div>
+
   <div class="worth-knowing">
     <h3>📌 Worth Knowing</h3>
     <ul>

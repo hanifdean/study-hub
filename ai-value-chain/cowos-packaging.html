@@ -974,6 +974,41 @@
     transition: border-color 0.2s, color 0.2s;
   }
   .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Inline jargon links */
+  .jargon {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1.5px dotted var(--accent);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .jargon:hover {
+    color: var(--teal, var(--accent-light, #2dd4bf));
+    border-color: var(--teal, var(--accent-light, #2dd4bf));
+  }
+  .jargon-def {
+    scroll-margin-top: 24px;
+  }
+  .jargon-def:target {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 10px;
+    animation: jargon-flash 1.2s ease;
+  }
+  @keyframes jargon-flash {
+    0%, 100% { outline-color: transparent; }
+    20%, 80% { outline-color: var(--accent); }
+  }
+  .jargon-back {
+    font-size: 11px;
+    color: var(--muted, var(--text-muted, #9ca3af));
+    text-decoration: none;
+    margin-left: 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .jargon-back:hover { opacity: 1; color: var(--accent); }
 </style>
 </head>
 <body>
@@ -986,13 +1021,13 @@
 </div>
 
   
-  <h1>📦 CoWoS & Advanced Packaging</h1>
+  <h1>📦 <a href="#jargon-cowos" class="jargon">CoWoS</a> & Advanced Packaging</h1>
   <p class="subtitle">The hidden bottleneck between making chips and shipping them — where GPU dies meet HBM</p>
 
   <!-- ========== 1. WHERE COWOS SITS ========== -->
   <div class="big-picture">
-    <div class="section-title"><span class="emoji">🗺️</span> Where CoWoS Sits in the AI Value Chain</div>
-    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">CoWoS is the <strong style="color:#4ade80;">packaging step</strong> — it takes a finished GPU die (from the foundry) and finished HBM stacks (from memory makers) and combines them into one working chip package. Without it, you just have separate pieces that can't talk to each other.</p>
+    <div class="section-title"><span class="emoji">🗺️</span> Where <a href="#jargon-cowos" class="jargon">CoWoS</a> Sits in the AI Value Chain</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;"><a href="#jargon-cowos" class="jargon">CoWoS</a> is the <strong style="color:#4ade80;">packaging step</strong> — it takes a finished GPU die (from the foundry) and finished HBM stacks (from memory makers) and combines them into one working chip package. Without it, you just have separate pieces that can't talk to each other.</p>
     <div class="flow-row">
       <div class="flow-node dim"><div class="label">Layer 1-2</div><div class="name">Materials & Equipment</div></div>
       <div class="flow-arrow">→</div>
@@ -1013,7 +1048,7 @@
   <div class="anatomy-card">
     <h3>🔬 What CoWoS Actually Is — Cross-Section View</h3>
     <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">
-      <strong>C</strong>hip-<strong>o</strong>n-<strong>W</strong>afer-<strong>o</strong>n-<strong>S</strong>ubstrate. The GPU die and HBM stacks are placed on a silicon interposer, which acts as a "bridge" connecting them with ultra-dense wiring. The interposer then sits on an organic substrate (PCB).
+      <strong>C</strong>hip-<strong>o</strong>n-<strong>W</strong>afer-<strong>o</strong>n-<strong>S</strong>ubstrate. The GPU die and HBM stacks are placed on a <a href="#jargon-interposer" class="jargon">silicon interposer</a>, which acts as a "bridge" connecting them with ultra-dense wiring. The <a href="#jargon-interposer" class="jargon">interposer</a> then sits on an organic substrate (PCB).
     </p>
     
     <div class="cross-section">
@@ -1021,7 +1056,7 @@
       <div class="cs-top-row">
         <div style="display:flex;flex-direction:column;align-items:center;">
           <div class="cs-gpu">GPU Die</div>
-          <div style="font-size:9px;color:#f87171;margin-top:2px;">↕ Micro-bumps</div>
+          <div style="font-size:9px;color:#f87171;margin-top:2px;">↕ <a href="#jargon-micro-bumps" class="jargon">Micro-bumps</a></div>
         </div>
         
         <div style="display:flex;flex-direction:column;align-items:center;">
@@ -1146,11 +1181,11 @@
         <span class="bump"></span><span class="bump"></span><span class="bump"></span>
         <span class="bump"></span><span class="bump"></span><span class="bump"></span>
       </div>
-      <div style="text-align:center;font-size:9px;color:#a78bfa;font-weight:600;margin-bottom:3px;">↑ Micro-bumps (~25μm pitch) — connect dies to interposer</div>
+      <div style="text-align:center;font-size:9px;color:#a78bfa;font-weight:600;margin-bottom:3px;">↑ <a href="#jargon-micro-bumps" class="jargon">Micro-bumps</a> (~25μm pitch) — connect dies to <a href="#jargon-interposer" class="jargon">interposer</a></div>
       
       <!-- Interposer -->
-      <div class="cs-layer cs-interposer">Silicon Interposer (with TSVs passing through)</div>
-      <div style="text-align:center;font-size:9px;color:#22c55e;font-weight:600;margin:2px 0;">↕ Through-Silicon Vias (TSVs) — vertical connections through the interposer</div>
+      <div class="cs-layer cs-interposer">Silicon Interposer (with <a href="#jargon-tsv" class="jargon">TSVs</a> passing through)</div>
+      <div style="text-align:center;font-size:9px;color:#22c55e;font-weight:600;margin:2px 0;">↕ Through-Silicon Vias (<a href="#jargon-tsv" class="jargon">TSVs</a>) — vertical connections through the interposer</div>
       
       <!-- C4 bump row -->
       <div class="cs-bumps-c4">
@@ -1163,7 +1198,7 @@
         <span class="bump"></span><span class="bump"></span><span class="bump"></span>
         <span class="bump"></span><span class="bump"></span><span class="bump"></span>
       </div>
-      <div style="text-align:center;font-size:9px;color:#fbbf24;font-weight:600;margin-bottom:3px;">↑ C4 bumps (~100μm) — connect interposer to substrate</div>
+      <div style="text-align:center;font-size:9px;color:#fbbf24;font-weight:600;margin-bottom:3px;">↑ <a href="#jargon-c4-bumps" class="jargon">C4 bumps</a> (~100μm) — connect interposer to substrate</div>
       
       <!-- Substrate -->
       <div class="cs-layer cs-substrate">Organic Substrate / PCB</div>
@@ -1176,7 +1211,7 @@
       <div class="cs-legend-item"><div class="swatch" style="background:#7c3aed;"></div> HBM Logic Die</div>
       <div class="cs-legend-item"><div class="swatch" style="background:#16a34a;"></div> Silicon Interposer</div>
       <div class="cs-legend-item"><div class="swatch" style="background:#4a4a5a;"></div> Substrate/PCB</div>
-      <div class="cs-legend-item"><div class="swatch" style="background:#a78bfa;border-radius:50%;"></div> Micro-bumps</div>
+      <div class="cs-legend-item"><div class="swatch" style="background:#a78bfa;border-radius:50%;"></div> <a href="#jargon-micro-bumps" class="jargon">Micro-bumps</a></div>
       <div class="cs-legend-item"><div class="swatch" style="background:#fbbf24;border-radius:50%;"></div> C4 Bumps</div>
     </div>
   </div>
@@ -1265,7 +1300,7 @@
           </div>
           <div class="evo-interposer silicon" style="width:100px;">Si interposer</div>
         </div>
-        <div class="evo-desc">Silicon interposer, single reticle size (~~800mm²). Used for H100 and earlier GPUs. Limited by reticle — the interposer can only be as big as what the lithography machine can expose in one shot.</div>
+        <div class="evo-desc">Silicon interposer, single <a href="#jargon-reticle" class="jargon">reticle</a> size (~~800mm²). Used for H100 and earlier GPUs. Limited by <a href="#jargon-reticle" class="jargon">reticle</a> — the interposer can only be as big as what the lithography machine can expose in one shot.</div>
         <div class="evo-detail"><strong>Used in:</strong> Nvidia H100, A100<br><strong>Interposer:</strong> ~1,700mm²<br><strong>HBM stacks:</strong> Up to 6</div>
       </div>
       
@@ -1283,9 +1318,9 @@
             <div class="evo-hbm"></div>
             <div class="evo-hbm"></div>
           </div>
-          <div class="evo-interposer silicon" style="width:140px;">Large Si + LSI chips</div>
+          <div class="evo-interposer silicon" style="width:140px;">Large Si + <a href="#jargon-lsi" class="jargon">LSI</a> chips</div>
         </div>
-        <div class="evo-desc">Uses local silicon interconnect (LSI) chiplets to stitch together a <strong>larger-than-reticle</strong> interposer. Enables much bigger packages with more HBM and even multi-die GPUs.</div>
+        <div class="evo-desc">Uses local silicon interconnect (<a href="#jargon-lsi" class="jargon">LSI</a>) chiplets to stitch together a <strong>larger-than-<a href="#jargon-reticle" class="jargon">reticle</a></strong> interposer. Enables much bigger packages with more HBM and even multi-die GPUs.</div>
         <div class="evo-detail"><strong>Used in:</strong> Nvidia B200, B300<br><strong>Interposer:</strong> ~3,300mm²+<br><strong>HBM stacks:</strong> 8 or more<br><strong>Key change:</strong> 2× the area of CoWoS-S</div>
       </div>
       
@@ -1303,10 +1338,10 @@
             <div class="evo-hbm"></div>
             <div class="evo-hbm"></div>
           </div>
-          <div class="evo-interposer rdl" style="width:140px;">RDL interposer</div>
+          <div class="evo-interposer rdl" style="width:140px;"><a href="#jargon-rdl" class="jargon">RDL</a> interposer</div>
         </div>
-        <div class="evo-desc">Replaces the expensive silicon interposer with an <strong>organic RDL (Redistribution Layer)</strong>. Much cheaper and easier to scale, but slightly lower interconnect density. Likely for cost-optimized products.</div>
-        <div class="evo-detail"><strong>Used in:</strong> TBD (rumored mid-range AI chips)<br><strong>Interposer:</strong> Organic RDL<br><strong>Cost:</strong> Significantly cheaper<br><strong>Tradeoff:</strong> Lower density vs silicon</div>
+        <div class="evo-desc">Replaces the expensive silicon interposer with an <strong>organic <a href="#jargon-rdl" class="jargon">RDL</a> (Redistribution Layer)</strong>. Much cheaper and easier to scale, but slightly lower interconnect density. Likely for cost-optimized products.</div>
+        <div class="evo-detail"><strong>Used in:</strong> TBD (rumored mid-range AI chips)<br><strong>Interposer:</strong> Organic <a href="#jargon-rdl" class="jargon">RDL</a><br><strong>Cost:</strong> Significantly cheaper<br><strong>Tradeoff:</strong> Lower density vs silicon</div>
       </div>
     </div>
     
@@ -1333,7 +1368,7 @@
         </tr>
         <tr class="current">
           <td>CoWoS-L</td>
-          <td>Silicon + LSI chiplets</td>
+          <td>Silicon + <a href="#jargon-lsi" class="jargon">LSI</a> chiplets</td>
           <td>~3,300mm²+</td>
           <td>Very High</td>
           <td>High</td>
@@ -1372,7 +1407,7 @@
     </div>
     <div class="key-num">
       <div class="num">90%+</div>
-      <div class="desc">TSMC's share of advanced 2.5D/CoWoS packaging for AI chips</div>
+      <div class="desc">TSMC's share of advanced <a href="#jargon-2-5d-packaging" class="jargon">2.5D</a>/CoWoS packaging for AI chips</div>
     </div>
     <div class="key-num">
       <div class="num">18-24mo</div>
@@ -1457,7 +1492,7 @@
     <div class="comp-grid">
       <div class="comp-card leader">
         <div class="comp-co" style="color:#4ade80;">TSMC — CoWoS</div>
-        <div class="comp-tech">2.5D Silicon Interposer</div>
+        <div class="comp-tech"><a href="#jargon-2-5d-packaging" class="jargon">2.5D</a> Silicon Interposer</div>
         <div class="comp-desc">The gold standard. Highest density, best yield, most mature. Used by Nvidia, AMD, Google, and Amazon for their AI accelerators. Basically a monopoly on advanced AI chip packaging.</div>
       </div>
       <div class="comp-card">
@@ -1476,6 +1511,50 @@
   </div>
 
   <!-- ========== 7. WORTH KNOWING ========== -->
+  
+  <!-- JARGON DECODER -->
+  <div class="anatomy-card" style="margin-bottom:32px;">
+    <h3>📖 Jargon Decoder</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+        <div id="jargon-cowos" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">CoWoS (Chip-on-Wafer-on-Substrate)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">TSMC's advanced 2.5D packaging technology that places GPU dies and HBM memory stacks side-by-side on a silicon interposer, enabling ultra-fast communication between them.</p>
+        </div>
+        <div id="jargon-interposer" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Silicon Interposer</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A thin silicon layer with ultra-dense wiring that sits between the chips (GPU + HBM) and the organic substrate, acting as a high-speed "bridge" connecting them.</p>
+        </div>
+        <div id="jargon-micro-bumps" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Micro-bumps</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Tiny solder connections (~25μm pitch) that attach the GPU die and HBM stacks to the silicon interposer. Much smaller than traditional C4 bumps.</p>
+        </div>
+        <div id="jargon-c4-bumps" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">C4 Bumps</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Controlled Collapse Chip Connection bumps (~100μm pitch) that connect the interposer to the organic substrate below.</p>
+        </div>
+        <div id="jargon-tsv" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">TSV (Through-Silicon Via)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Vertical electrical connections that pass completely through a silicon wafer or die, enabling signals to travel between stacked layers.</p>
+        </div>
+        <div id="jargon-reticle" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Reticle Limit</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The maximum area a lithography machine can expose in a single shot (~800mm²). CoWoS-S interposers are limited to one reticle; CoWoS-L uses stitching to go beyond this.</p>
+        </div>
+        <div id="jargon-lsi" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">LSI (Local Silicon Interconnect)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Small silicon chiplets used in CoWoS-L to "stitch" together a larger-than-reticle interposer, enabling much bigger packages.</p>
+        </div>
+        <div id="jargon-rdl" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">RDL (Redistribution Layer)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">An organic wiring layer used in CoWoS-R as a cheaper alternative to silicon interposers. Lower density but much more cost-effective.</p>
+        </div>
+        <div id="jargon-2-5d-packaging" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">2.5D Packaging</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A packaging approach where multiple dies sit side-by-side on an interposer (not stacked on top of each other like true 3D). CoWoS is the leading 2.5D technology.</p>
+        </div>
+    </div>
+  </div>
+
   <div class="worth-knowing">
     <h3>📌 Worth Knowing</h3>
     <ul>

@@ -243,6 +243,41 @@
     .hero { padding: 20px; }
     .top-bar { flex-direction: column; align-items: flex-start; }
   }
+
+  /* Inline jargon links */
+  .jargon {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1.5px dotted var(--accent);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .jargon:hover {
+    color: var(--teal, var(--accent-light, #2dd4bf));
+    border-color: var(--teal, var(--accent-light, #2dd4bf));
+  }
+  .jargon-def {
+    scroll-margin-top: 24px;
+  }
+  .jargon-def:target {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 10px;
+    animation: jargon-flash 1.2s ease;
+  }
+  @keyframes jargon-flash {
+    0%, 100% { outline-color: transparent; }
+    20%, 80% { outline-color: var(--accent); }
+  }
+  .jargon-back {
+    font-size: 11px;
+    color: var(--muted, var(--text-muted, #9ca3af));
+    text-decoration: none;
+    margin-left: 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .jargon-back:hover { opacity: 1; color: var(--accent); }
 </style>
 </head>
 <body>
@@ -258,11 +293,11 @@
     </div>
 
     <div class="hero">
-      <span class="pill">L5.6 • CMOS Leverage</span>
-      <h1>Silicon Photonics II: CMOS Process Leverage & Economic Moat</h1>
+      <span class="pill">L5.6 • <a href="#jargon-cmos" class="jargon">CMOS</a> Leverage</span>
+      <h1>Silicon Photonics II: <a href="#jargon-cmos" class="jargon">CMOS</a> Process Leverage & Economic Moat</h1>
       <p>
         Lecture 2 is about the manufacturing secret: optical chips are cheap because they run on old, fully-depreciated
-        CMOS equipment — and the real moat is the process recipe, not the factory.
+        <a href="#jargon-cmos" class="jargon">CMOS</a> equipment — and the real moat is the process recipe, not the factory.
       </p>
     </div>
 
@@ -274,7 +309,7 @@
           <h3>Materials Stack → Light Highway</h3>
           <svg viewBox="0 0 220 140" width="100%" height="140" role="img" aria-label="Materials stack diagram">
             <rect x="18" y="20" width="184" height="26" rx="8" fill="rgba(96,165,250,0.2)" stroke="rgba(96,165,250,0.6)" />
-            <text x="110" y="38" text-anchor="middle" fill="#60a5fa" font-size="12" font-weight="700">SOI (core guide)</text>
+            <text x="110" y="38" text-anchor="middle" fill="#60a5fa" font-size="12" font-weight="700"><a href="#jargon-soi" class="jargon">SOI</a> (core guide)</text>
             <rect x="32" y="54" width="156" height="24" rx="8" fill="rgba(34,197,94,0.2)" stroke="rgba(34,197,94,0.6)" />
             <text x="110" y="70" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">SiN (low-loss)</text>
             <rect x="52" y="84" width="116" height="20" rx="8" fill="rgba(167,139,250,0.2)" stroke="rgba(167,139,250,0.6)" />
@@ -283,7 +318,7 @@
             <text x="110" y="124" text-anchor="middle" fill="#06b6d4" font-size="10" font-weight="700">Emerging III-V / Ge / Polymers</text>
           </svg>
           <div class="legend">
-            <span><span class="dot" style="background:#60a5fa;"></span>SOI</span>
+            <span><span class="dot" style="background:#60a5fa;"></span><a href="#jargon-soi" class="jargon">SOI</a></span>
             <span><span class="dot" style="background:#22c55e;"></span>SiN</span>
             <span><span class="dot" style="background:#a78bfa;"></span>InP/TFLN</span>
           </div>
@@ -345,7 +380,7 @@
     <div class="section-title">1) Materials Platform</div>
     <div class="grid">
       <div class="stack-item">
-        <h4>SOI (Baseline)</h4>
+        <h4><a href="#jargon-soi" class="jargon">SOI</a> (Baseline)</h4>
         <p>Silicon-on-Insulator is the standard canvas for guiding light with tight bends and CMOS compatibility.</p>
       </div>
       <div class="stack-item">
@@ -358,7 +393,7 @@
       </div>
       <div class="stack-item">
         <h4>Emerging Layers</h4>
-        <p>Germanium, III-V hybrids, and polymer waveguides improve detection, bandwidth, and packaging.</p>
+        <p>Germanium, III-V hybrids, and polymer <a href="#jargon-waveguide" class="jargon">waveguides</a> improve detection, bandwidth, and packaging.</p>
       </div>
     </div>
     <div class="callout" style="margin-top:12px;">
@@ -381,7 +416,7 @@
       </div>
     </div>
     <div class="callout" style="margin-top:12px;">
-      <p><strong>🐱 Simply explained:</strong> This is the single most important concept for investors. Light waves are physically BIGGER than electrons (400-500nm vs 3nm). You literally cannot shrink optical waveguides below a certain size — physics won't allow it. So the $350M EUV machines ASML sells? Useless here. A $5M DUV machine from 2005 does the job perfectly. It's like discovering that a bicycle works better than a Ferrari for your specific route.</p>
+      <p><strong>🐱 Simply explained:</strong> This is the single most important concept for investors. Light waves are physically BIGGER than electrons (400-500nm vs 3nm). You literally cannot shrink optical <a href="#jargon-waveguide" class="jargon">waveguides</a> below a certain size — physics won't allow it. So the $350M EUV machines ASML sells? Useless here. A $5M DUV machine from 2005 does the job perfectly. It's like discovering that a bicycle works better than a Ferrari for your specific route.</p>
     </div>
 
     <div class="section-title">3) Design Ecosystem</div>
@@ -438,7 +473,7 @@
       </div>
       <div class="fab-card">
         <h4>Intel</h4>
-        <p>The OG — 8M+ photonic chips shipped, 32M lasers. Sold the transceiver biz to focus on the core tech.</p>
+        <p>The OG — 8M+ photonic chips shipped, 32M lasers. Sold the <a href="#jargon-transceiver" class="jargon">transceiver</a> biz to focus on the core tech.</p>
       </div>
       <div class="fab-card">
         <h4>Samsung</h4>
@@ -479,7 +514,7 @@
           <p style="font-size:13px;"><strong style="color:var(--cyan);">InP</strong> — Indium Phosphide — the only way to make light on silicon (bonded on)</p>
         </div>
         <div class="card" style="padding:10px;background:var(--surface-2);">
-          <p style="font-size:13px;"><strong style="color:var(--cyan);">TFLN</strong> — Thin-Film Lithium Niobate — ultra-fast modulator material (1.6T era)</p>
+          <p style="font-size:13px;"><strong style="color:var(--cyan);">TFLN</strong> — Thin-Film Lithium Niobate — ultra-fast <a href="#jargon-modulator" class="jargon">modulator</a> material (1.6T era)</p>
         </div>
         <div class="card" style="padding:10px;background:var(--surface-2);">
           <p style="font-size:13px;"><strong style="color:var(--cyan);">DUV</strong> — Deep Ultraviolet lithography — the "old" equipment that's perfect for photonics</p>
@@ -506,7 +541,39 @@
       Source: <a href="https://x.com/PhotonCap/status/2017993693073125453" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:underline;">@PhotonCap on X — Lecture 2 (CMOS leverage)</a>
       · <a href="silicon-photonics.html" style="color:var(--cyan);text-decoration:underline;">Back to Lecture 1</a>
     </p>
+  
+  <!-- JARGON DECODER -->
+  <div class="anatomy-card" style="margin-bottom:32px;">
+    <h3>📖 Jargon Decoder</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+        <div id="jargon-cmos" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">CMOS (Complementary Metal-Oxide-Semiconductor)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The standard semiconductor manufacturing process used for most chips. Silicon photonics leverages existing CMOS fabs to reduce costs.</p>
+        </div>
+        <div id="jargon-soi" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">SOI (Silicon-on-Insulator)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A wafer structure with a thin silicon layer on top of an insulating oxide layer. Provides better optical waveguide properties for photonic circuits.</p>
+        </div>
+        <div id="jargon-waveguide" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Waveguide</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A structure that guides light signals along a defined path on a chip, similar to how copper traces guide electrical signals.</p>
+        </div>
+        <div id="jargon-modulator" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Modulator</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A device that encodes data onto a light beam by varying its intensity, phase, or other properties. Converts electrical signals to optical.</p>
+        </div>
+        <div id="jargon-photodetector" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Photodetector</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A device that converts incoming light signals back into electrical signals. The "receiver" end of an optical link.</p>
+        </div>
+        <div id="jargon-transceiver" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Transceiver</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A module that both transmits and receives optical signals, converting between electrical and optical domains.</p>
+        </div>
+    </div>
   </div>
+
+</div>
 <script>
 function toggleTheme() {
   const html = document.documentElement;

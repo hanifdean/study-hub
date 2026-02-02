@@ -557,6 +557,41 @@
     transition: border-color 0.2s, color 0.2s;
   }
   .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Inline jargon links */
+  .jargon {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1.5px dotted var(--accent);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .jargon:hover {
+    color: var(--teal, var(--accent-light, #2dd4bf));
+    border-color: var(--teal, var(--accent-light, #2dd4bf));
+  }
+  .jargon-def {
+    scroll-margin-top: 24px;
+  }
+  .jargon-def:target {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 10px;
+    animation: jargon-flash 1.2s ease;
+  }
+  @keyframes jargon-flash {
+    0%, 100% { outline-color: transparent; }
+    20%, 80% { outline-color: var(--accent); }
+  }
+  .jargon-back {
+    font-size: 11px;
+    color: var(--muted, var(--text-muted, #9ca3af));
+    text-decoration: none;
+    margin-left: 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .jargon-back:hover { opacity: 1; color: var(--accent); }
 </style>
 </head>
 <body>
@@ -601,27 +636,27 @@
         <div class="h-name">☁️ AWS</div>
         <div class="h-parent">Amazon Web Services</div>
         <div class="h-share">~31%</div>
-        <div class="h-desc">The market leader. Largest selection of GPU instances. Custom AI chips (Trainium, Inferentia). Most regions globally. The default choice for most enterprises.</div>
-        <div class="h-capex">💰 $75B+ capex planned 2025</div>
+        <div class="h-desc">The market leader. Largest selection of <a href="#jargon-gpu-instance" class="jargon">GPU instances</a>. Custom AI chips (Trainium, Inferentia). Most regions globally. The default choice for most enterprises.</div>
+        <div class="h-capex">💰 $75B+ <a href="#jargon-capex" class="jargon">capex</a> planned 2025</div>
       </div>
       <div class="hyper-card azure">
         <div class="h-name">🔷 Microsoft Azure</div>
         <div class="h-parent">Microsoft</div>
         <div class="h-share">~25%</div>
-        <div class="h-desc">OpenAI's exclusive cloud partner. Runs GPT-4/5 inference. Deepest AI integration with Copilot ecosystem. Fastest-growing of the Big 3 thanks to AI tailwinds.</div>
-        <div class="h-capex">💰 $80B+ capex planned 2025</div>
+        <div class="h-desc">OpenAI's exclusive cloud partner. Runs GPT-4/5 <a href="#jargon-inference" class="jargon">inference</a>. Deepest AI integration with Copilot ecosystem. Fastest-growing of the Big 3 thanks to AI tailwinds.</div>
+        <div class="h-capex">💰 $80B+ <a href="#jargon-capex" class="jargon">capex</a> planned 2025</div>
       </div>
       <div class="hyper-card gcp">
         <div class="h-name">🟢 Google Cloud</div>
         <div class="h-parent">Alphabet / Google</div>
         <div class="h-share">~11%</div>
         <div class="h-desc">Home of TPUs — Google's custom AI accelerators. Runs Gemini models internally. Strong in AI/ML tooling. Smaller market share but punching above weight in AI.</div>
-        <div class="h-capex">💰 $75B+ capex planned 2025</div>
+        <div class="h-capex">💰 $75B+ <a href="#jargon-capex" class="jargon">capex</a> planned 2025</div>
       </div>
     </div>
     
     <div style="margin-top:20px;">
-      <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--text);">Cloud Market Share (IaaS)</div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--text);">Cloud Market Share (<a href="#jargon-iaas" class="jargon">IaaS</a>)</div>
       <div class="market-bars">
         <div class="market-bar-row">
           <div class="bar-label">AWS</div>
@@ -664,7 +699,7 @@
       <div class="native-card">
         <div class="n-name">🤝 Together AI</div>
         <div class="n-focus">Open-Source Model Hosting</div>
-        <div class="n-desc">Specializes in hosting and fine-tuning open-source models (Llama, Mistral). Offers inference APIs that are often cheaper than OpenAI/Anthropic for open models. The go-to for open-source AI deployment.</div>
+        <div class="n-desc">Specializes in hosting and fine-tuning open-source models (Llama, Mistral). Offers <a href="#jargon-inference" class="jargon">inference</a> APIs that are often cheaper than OpenAI/Anthropic for open models. The go-to for open-source AI deployment.</div>
       </div>
       <div class="native-card">
         <div class="n-name">🌊 Crusoe Energy</div>
@@ -755,7 +790,7 @@
         <tr>
           <td>A100 80GB</td>
           <td>$1.50-2.50</td>
-          <td>Inference, fine-tuning, smaller training</td>
+          <td><a href="#jargon-inference" class="jargon">Inference</a>, fine-tuning, smaller <a href="#jargon-training" class="jargon">training</a></td>
           <td>Widely available</td>
         </tr>
         <tr class="highlight-row">
@@ -767,13 +802,13 @@
         <tr>
           <td>H200 141GB</td>
           <td>$3.50-4.50</td>
-          <td>Large model training, HBM3E advantage</td>
+          <td>Large model <a href="#jargon-training" class="jargon">training</a>, HBM3E advantage</td>
           <td>Limited supply</td>
         </tr>
         <tr>
           <td>B200 192GB <span class="price-badge premium">BLACKWELL</span></td>
           <td>$5-8+ (est.)</td>
-          <td>Next-gen training & inference</td>
+          <td>Next-gen <a href="#jargon-training" class="jargon">training</a> & inference</td>
           <td>Ramping 2025</td>
         </tr>
       </tbody>
@@ -814,6 +849,38 @@
   </div>
 
   <!-- ========== 7. WORTH KNOWING ========== -->
+  
+  <!-- JARGON DECODER -->
+  <div class="anatomy-card" style="margin-bottom:32px;">
+    <h3>📖 Jargon Decoder</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+        <div id="jargon-iaas" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">IaaS (Infrastructure as a Service)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Cloud computing model where providers rent raw compute, storage, and networking resources. AWS EC2, Azure VMs, and GCP Compute Engine are IaaS.</p>
+        </div>
+        <div id="jargon-gpu-instance" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">GPU Instance</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A cloud virtual machine equipped with one or more GPUs, rented by the hour for AI training or inference workloads.</p>
+        </div>
+        <div id="jargon-inference" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Inference</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Running a trained AI model to generate predictions/outputs (e.g., ChatGPT responding to your prompt). Requires less compute than training but at massive scale.</p>
+        </div>
+        <div id="jargon-training" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Training</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The process of teaching an AI model by feeding it data and adjusting its parameters. Requires enormous compute — frontier models cost $100M+ to train.</p>
+        </div>
+        <div id="jargon-capex" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">CapEx (Capital Expenditure)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Large upfront investments in physical assets like GPUs, servers, and data centers. Hyperscalers are spending $50-80B+ annually on AI infrastructure.</p>
+        </div>
+        <div id="jargon-spot-instance" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Spot Instance</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Discounted cloud compute that can be interrupted when demand rises. 60-90% cheaper than on-demand but no availability guarantees.</p>
+        </div>
+    </div>
+  </div>
+
   <div class="worth-knowing">
     <h3>📌 Worth Knowing</h3>
     <ul>

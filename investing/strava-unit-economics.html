@@ -464,6 +464,41 @@
     .ltv-hero .value { font-size: 40px; }
     body { padding: 24px 16px; }
   }
+
+  /* Inline jargon links */
+  .jargon {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1.5px dotted var(--accent);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .jargon:hover {
+    color: var(--teal, var(--accent-light, #2dd4bf));
+    border-color: var(--teal, var(--accent-light, #2dd4bf));
+  }
+  .jargon-def {
+    scroll-margin-top: 24px;
+  }
+  .jargon-def:target {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 10px;
+    animation: jargon-flash 1.2s ease;
+  }
+  @keyframes jargon-flash {
+    0%, 100% { outline-color: transparent; }
+    20%, 80% { outline-color: var(--accent); }
+  }
+  .jargon-back {
+    font-size: 11px;
+    color: var(--muted, var(--text-muted, #9ca3af));
+    text-decoration: none;
+    margin-left: 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .jargon-back:hover { opacity: 1; color: var(--accent); }
 </style>
 </head>
 <body>
@@ -491,7 +526,7 @@
       <div class="note">Blended avg of $6/mo + $59/yr plans</div>
     </div>
     <div class="metric-card">
-      <div class="label">Acquisition Cost (CAC)</div>
+      <div class="label">Acquisition Cost (<a href="#jargon-cac" class="jargon">CAC</a>)</div>
       <div class="value">$15</div>
       <div class="note">One-time cost to acquire a subscriber</div>
     </div>
@@ -503,13 +538,13 @@
     <div class="metric-card">
       <div class="label">Annual Renewal Rate</div>
       <div class="value">80%</div>
-      <div class="note">20% churn — 4 out of 5 renew each year</div>
+      <div class="note">20% <a href="#jargon-churn" class="jargon">churn</a> — 4 out of 5 renew each year</div>
     </div>
   </div>
 
   <!-- LTV Hero -->
   <div class="ltv-hero">
-    <div class="label">Customer Lifetime Value (LTV)</div>
+    <div class="label">Customer Lifetime Value (<a href="#jargon-ltv" class="jargon">LTV</a>)</div>
     <div class="value">$175</div>
     <div class="subtitle">Expected total profit per subscriber over their lifetime</div>
   </div>
@@ -517,7 +552,7 @@
   <!-- Ratio -->
   <div class="ratio-row">
     <div class="ratio-card">
-      <div class="label">LTV : CAC Ratio</div>
+      <div class="label"><a href="#jargon-ltv" class="jargon">LTV</a> : <a href="#jargon-cac" class="jargon">CAC</a> Ratio</div>
       <div class="value">11.7x</div>
     </div>
     <div class="ratio-card highlight">
@@ -529,11 +564,11 @@
 
   <!-- Calculation Breakdown -->
   <div class="breakdown">
-    <h2>How LTV is Calculated</h2>
-    <div class="desc">The lifetime value uses a perpetuity formula for recurring subscription revenue with churn.</div>
+    <h2>How <a href="#jargon-ltv" class="jargon">LTV</a> is Calculated</h2>
+    <div class="desc">The lifetime value uses a perpetuity formula for recurring subscription revenue with <a href="#jargon-churn" class="jargon">churn</a>.</div>
 
     <div class="formula-box">
-      LTV = (Revenue − Delivery Cost) ÷ (1 − Renewal Rate) − CAC<br>
+      LTV = (Revenue − Delivery Cost) ÷ (1 − Renewal Rate) − <a href="#jargon-cac" class="jargon">CAC</a><br>
       LTV = ($40 − $2) ÷ (1 − 0.80) − $15<br>
       LTV = $38 ÷ 0.20 − $15 = $190 − $15 = <strong>$175</strong>
     </div>
@@ -551,7 +586,7 @@
         <div class="step-num">2</div>
         <div class="step-content">
           <div class="step-title">Expected lifetime revenue (perpetuity)</div>
-          <div class="step-detail">With 80% renewal, the average customer stays ~5 years. Divide net revenue by churn rate (1 − renewal rate) to get lifetime gross value.</div>
+          <div class="step-detail">With 80% renewal, the average customer stays ~5 years. Divide net revenue by <a href="#jargon-churn" class="jargon">churn</a> rate (1 − renewal rate) to get lifetime gross value.</div>
           <div class="step-calc">$38 ÷ 0.20 = $190</div>
         </div>
       </li>
@@ -650,6 +685,38 @@
 
   <div class="footer">
     HBS Case 9-814-055 · Strava · FM476 · LSE 2026
+  </div>
+
+
+  <!-- JARGON DECODER -->
+  <div class="anatomy-card" style="margin-bottom:32px;">
+    <h3>📖 Jargon Decoder</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+        <div id="jargon-arpu" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">ARPU (Average Revenue Per User)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Total revenue divided by number of users. Measures how much revenue each user generates on average.</p>
+        </div>
+        <div id="jargon-ltv" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">LTV (Lifetime Value)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The total revenue a company expects from a single customer over their entire relationship. Higher LTV = more valuable customers.</p>
+        </div>
+        <div id="jargon-cac" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">CAC (Customer Acquisition Cost)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The cost of acquiring one new customer, including marketing and sales expenses. Healthy businesses have LTV >> CAC.</p>
+        </div>
+        <div id="jargon-churn" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Churn Rate</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The percentage of subscribers who cancel in a given period. Lower churn = stickier product = more predictable revenue.</p>
+        </div>
+        <div id="jargon-arr" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">ARR (Annual Recurring Revenue)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The annualized value of recurring subscription revenue. The key metric for SaaS/subscription businesses.</p>
+        </div>
+        <div id="jargon-gross-margin" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Gross Margin</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Revenue minus cost of goods sold, as a percentage of revenue. Shows how much profit is left after direct costs.</p>
+        </div>
+    </div>
   </div>
 
 </div>

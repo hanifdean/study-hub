@@ -703,6 +703,41 @@
     transition: border-color 0.2s, color 0.2s;
   }
   .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Inline jargon links */
+  .jargon {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1.5px dotted var(--accent);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .jargon:hover {
+    color: var(--teal, var(--accent-light, #2dd4bf));
+    border-color: var(--teal, var(--accent-light, #2dd4bf));
+  }
+  .jargon-def {
+    scroll-margin-top: 24px;
+  }
+  .jargon-def:target {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 10px;
+    animation: jargon-flash 1.2s ease;
+  }
+  @keyframes jargon-flash {
+    0%, 100% { outline-color: transparent; }
+    20%, 80% { outline-color: var(--accent); }
+  }
+  .jargon-back {
+    font-size: 11px;
+    color: var(--muted, var(--text-muted, #9ca3af));
+    text-decoration: none;
+    margin-left: 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .jargon-back:hover { opacity: 1; color: var(--accent); }
 </style>
 </head>
 <body>
@@ -715,8 +750,8 @@
 </div>
 
   
-  <h1>🧠 HBM & the Memory Layer</h1>
-  <p class="subtitle">Layer 4 of the AI Value Chain — where silicon meets bandwidth</p>
+  <h1>🧠 <a href="#jargon-hbm" class="jargon">HBM</a> & the Memory Layer</h1>
+  <p class="subtitle">Layer 4 of the AI Value Chain — where silicon meets <a href="#jargon-bandwidth" class="jargon">bandwidth</a></p>
 
   <!-- BIG PICTURE: Where Memory sits -->
   <div class="big-picture">
@@ -728,7 +763,7 @@
       <div class="flow-arrow">→</div>
       <div class="flow-node"><div class="label">Layer 3</div><div class="name">Foundries</div></div>
       <div class="flow-arrow">→</div>
-      <div class="flow-node highlight"><div class="label">Layer 4</div><div class="name">⚡ Memory & HBM</div></div>
+      <div class="flow-node highlight"><div class="label">Layer 4</div><div class="name">⚡ Memory & <a href="#jargon-hbm" class="jargon">HBM</a></div></div>
       <div class="flow-arrow">→</div>
       <div class="flow-node"><div class="label">Layer 5</div><div class="name">Processors</div></div>
       <div class="flow-arrow">→</div>
@@ -741,12 +776,12 @@
     
     <!-- Physical Structure -->
     <div class="anatomy-card">
-      <h3>🔬 What HBM Actually Is</h3>
-      <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">High Bandwidth Memory = DRAM dies stacked vertically like a tiny skyscraper, connected by thousands of tiny wires (TSVs) punched through each layer</p>
+      <h3>🔬 What <a href="#jargon-hbm" class="jargon">HBM</a> Actually Is</h3>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">High Bandwidth Memory = <a href="#jargon-dram" class="jargon">DRAM</a> dies stacked vertically like a tiny skyscraper, connected by thousands of tiny wires (<a href="#jargon-tsv" class="jargon">TSVs</a>) punched through each layer</p>
       
       <div class="hbm-stack">
-        <div class="hbm-die dram">DRAM Die 12</div>
-        <div class="hbm-die dram">DRAM Die 11</div>
+        <div class="hbm-die dram"><a href="#jargon-dram" class="jargon">DRAM</a> Die 12</div>
+        <div class="hbm-die dram"><a href="#jargon-dram" class="jargon">DRAM</a> Die 11</div>
         <div class="hbm-die dram">DRAM Die 10</div>
         <div class="hbm-die dram">DRAM Die 9</div>
         <div class="hbm-die dram">DRAM Die 8</div>
@@ -757,16 +792,16 @@
         <div class="hbm-die dram">DRAM Die 3</div>
         <div class="hbm-die dram">DRAM Die 2</div>
         <div class="hbm-die dram">DRAM Die 1</div>
-        <div class="hbm-die logic">Logic Die (Controller)</div>
+        <div class="hbm-die logic"><a href="#jargon-logic-die" class="jargon">Logic Die</a> (Controller)</div>
       </div>
-      <div class="stack-label">↑ HBM3E: 12 DRAM dies stacked + 1 logic die</div>
-      <div class="stack-label" style="color:#60a5fa;margin-top:6px;">Connected by ~10,000+ TSVs (Through-Silicon Vias)</div>
+      <div class="stack-label">↑ HBM3E: 12 DRAM dies stacked + 1 <a href="#jargon-logic-die" class="jargon">logic die</a></div>
+      <div class="stack-label" style="color:#60a5fa;margin-top:6px;">Connected by ~10,000+ <a href="#jargon-tsv" class="jargon">TSVs</a> (Through-Silicon Vias)</div>
     </div>
 
     <!-- How it connects to GPU -->
     <div class="anatomy-card">
       <h3>🔗 How HBM Connects to the GPU</h3>
-      <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">GPU and HBM stacks sit side-by-side on a silicon interposer (CoWoS packaging by TSMC)</p>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">GPU and HBM stacks sit side-by-side on a <a href="#jargon-interposer" class="jargon">silicon interposer</a> (<a href="#jargon-cowos" class="jargon">CoWoS</a> packaging by TSMC)</p>
       
       <div class="cowos-layout">
         <div class="cowos-element">
@@ -830,7 +865,7 @@
           <div class="cowos-label">HBM Stack 4</div>
         </div>
       </div>
-      <div class="cowos-base">Silicon Interposer (CoWoS by TSMC)</div>
+      <div class="cowos-base">Silicon Interposer (<a href="#jargon-cowos" class="jargon">CoWoS</a> by TSMC)</div>
       <p style="font-size:11px;color:var(--text-dim);margin-top:10px;text-align:center;">Nvidia H100 has 6 HBM stacks × 80GB = 80GB total · B200 has 8 stacks = 192GB</p>
     </div>
   </div>
@@ -839,11 +874,11 @@
   <div class="anatomy-card" style="margin-bottom:32px;">
     <h3>💡 Why HBM Exists — The Bandwidth Problem</h3>
     <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:16px;">
-      AI models need to move <strong>massive</strong> amounts of data to/from the GPU every second. Regular DDR5 RAM sits far away on the motherboard and connects through narrow pipes. HBM sits <em>right next to</em> the GPU with thousands of parallel connections.
+      AI models need to move <strong>massive</strong> amounts of data to/from the GPU every second. Regular <a href="#jargon-ddr5" class="jargon">DDR5</a> RAM sits far away on the motherboard and connects through narrow pipes. HBM sits <em>right next to</em> the GPU with thousands of parallel connections.
     </p>
     <div style="display:flex;gap:24px;flex-wrap:wrap;">
       <div style="flex:1;min-width:200px;background:var(--surface-alt);border-radius:10px;padding:16px;text-align:center;">
-        <div style="font-size:11px;color:var(--text-muted);font-weight:600;">DDR5 (Regular RAM)</div>
+        <div style="font-size:11px;color:var(--text-muted);font-weight:600;"><a href="#jargon-ddr5" class="jargon">DDR5</a> (Regular RAM)</div>
         <div style="font-size:24px;font-weight:800;color:var(--text-dim);margin:8px 0;">~50 GB/s</div>
         <div style="font-size:11px;color:var(--text-dim);">64-bit bus · Far from GPU</div>
       </div>
@@ -863,7 +898,7 @@
     
     <div class="wafer-split">
       <div class="wafer-side ddr">
-        <div class="side-label">DDR5 (Consumer)</div>
+        <div class="side-label"><a href="#jargon-ddr5" class="jargon">DDR5</a> (Consumer)</div>
         <div class="side-sub">PCs, phones, servers</div>
         <div class="side-margin">~$3/GB</div>
       </div>
@@ -934,7 +969,7 @@
         </tr>
       </tbody>
     </table>
-    <p style="font-size:11px;color:var(--text-dim);margin-top:8px;">Each generation = more layers stacked, wider bus, more bandwidth. The trend: models keep getting bigger → need more memory → need faster memory.</p>
+    <p style="font-size:11px;color:var(--text-dim);margin-top:8px;">Each generation = more layers stacked, wider bus, more <a href="#jargon-bandwidth" class="jargon">bandwidth</a>. The trend: models keep getting bigger → need more memory → need faster memory.</p>
   </div>
 
   <!-- MARKET SHARE -->
@@ -980,7 +1015,7 @@
     </div>
     <div class="key-num">
       <div class="num">100×</div>
-      <div class="desc">HBM bandwidth vs regular DDR5 RAM</div>
+      <div class="desc">HBM <a href="#jargon-bandwidth" class="jargon">bandwidth</a> vs regular DDR5 RAM</div>
     </div>
     <div class="key-num">
       <div class="num">3-5×</div>
@@ -989,6 +1024,46 @@
   </div>
 
   <!-- WORTH KNOWING -->
+  
+  <!-- JARGON DECODER -->
+  <div class="anatomy-card" style="margin-bottom:32px;">
+    <h3>📖 Jargon Decoder</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+        <div id="jargon-hbm" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">HBM (High Bandwidth Memory)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A type of memory where DRAM dies are stacked vertically and connected by thousands of TSVs, providing much higher bandwidth than traditional DDR memory.</p>
+        </div>
+        <div id="jargon-tsv" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">TSV (Through-Silicon Via)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Tiny vertical wires punched through each DRAM die to connect the stacked layers. Manufacturing these without defects is extremely hard and a competitive moat.</p>
+        </div>
+        <div id="jargon-dram" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">DRAM (Dynamic Random Access Memory)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The fundamental memory technology used in both HBM and regular DDR RAM. Each bit is stored as a charge in a tiny capacitor.</p>
+        </div>
+        <div id="jargon-cowos" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">CoWoS (Chip-on-Wafer-on-Substrate)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">TSMC's packaging technology that places GPU and HBM stacks side-by-side on a silicon interposer. The "glue" that connects memory to the processor.</p>
+        </div>
+        <div id="jargon-interposer" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Silicon Interposer</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A silicon bridge layer that sits under the GPU and HBM stacks, providing ultra-dense wiring between them.</p>
+        </div>
+        <div id="jargon-bandwidth" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Memory Bandwidth</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The rate at which data can be read from or written to memory, measured in GB/s or TB/s. HBM3E achieves ~4,800 GB/s vs DDR5's ~50 GB/s.</p>
+        </div>
+        <div id="jargon-logic-die" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Logic Die (Base Die)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The bottom die in an HBM stack that contains the memory controller and interfaces. It manages communication between the DRAM dies and the GPU.</p>
+        </div>
+        <div id="jargon-ddr5" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">DDR5</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The latest generation of standard desktop/server memory. Much cheaper than HBM but with far less bandwidth (~50 GB/s vs ~4,800 GB/s).</p>
+        </div>
+    </div>
+  </div>
+
   <div class="worth-knowing">
     <h3>📌 Worth Knowing</h3>
     <ul>

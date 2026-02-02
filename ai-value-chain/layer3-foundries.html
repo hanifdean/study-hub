@@ -640,6 +640,41 @@
     transition: border-color 0.2s, color 0.2s;
   }
   .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Inline jargon links */
+  .jargon {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1.5px dotted var(--accent);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .jargon:hover {
+    color: var(--teal, var(--accent-light, #2dd4bf));
+    border-color: var(--teal, var(--accent-light, #2dd4bf));
+  }
+  .jargon-def {
+    scroll-margin-top: 24px;
+  }
+  .jargon-def:target {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 10px;
+    animation: jargon-flash 1.2s ease;
+  }
+  @keyframes jargon-flash {
+    0%, 100% { outline-color: transparent; }
+    20%, 80% { outline-color: var(--accent); }
+  }
+  .jargon-back {
+    font-size: 11px;
+    color: var(--muted, var(--text-muted, #9ca3af));
+    text-decoration: none;
+    margin-left: 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .jargon-back:hover { opacity: 1; color: var(--accent); }
 </style>
 </head>
 <body>
@@ -652,19 +687,19 @@
 </div>
 
 
-  <h1>🏭 Layer 3: Foundries & Fabrication</h1>
+  <h1>🏭 Layer 3: <a href="#jargon-foundry" class="jargon">Foundries</a> & Fabrication</h1>
   <p class="subtitle">The factories that turn chip designs into physical silicon — the most complex manufacturing on Earth</p>
 
   <!-- ========== 1. WHERE THIS SITS ========== -->
   <div class="big-picture">
     <div class="section-title"><span class="emoji">🗺️</span> Where This Sits in the AI Value Chain</div>
-    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Layer 3 is <strong style="color:#34d399;">the factory floor</strong>. Chip designers (Layer 2 — Nvidia, AMD, Apple) send their blueprints here to be turned into physical silicon. Without foundries, every chip design is just a fancy PDF.</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Layer 3 is <strong style="color:#34d399;">the factory floor</strong>. Chip designers (Layer 2 — Nvidia, AMD, Apple) send their blueprints here to be turned into physical silicon. Without <a href="#jargon-foundry" class="jargon">foundries</a>, every chip design is just a fancy PDF.</p>
     <div class="flow-row">
       <div class="flow-node dim"><div class="label">Layer 1</div><div class="name">Raw Materials</div></div>
       <div class="flow-arrow">→</div>
       <div class="flow-node dim"><div class="label">Layer 2</div><div class="name">Chip Design</div></div>
       <div class="flow-arrow">→</div>
-      <div class="flow-node highlight"><div class="label">Layer 3</div><div class="name">🏭 Foundries & Fab</div></div>
+      <div class="flow-node highlight"><div class="label">Layer 3</div><div class="name">🏭 <a href="#jargon-foundry" class="jargon">Foundries</a> & <a href="#jargon-fab" class="jargon">Fab</a></div></div>
       <div class="flow-arrow">→</div>
       <div class="flow-node dim"><div class="label">Layer 4</div><div class="name">Memory & HBM</div></div>
       <div class="flow-arrow">→</div>
@@ -678,7 +713,7 @@
   <div class="anatomy-card">
     <h3>🔬 How Chip Fabrication Works — The Process</h3>
     <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">
-      A blank silicon wafer enters the fab and goes through <strong style="color:#fbbf24;">1,000+ process steps over 2-3 months</strong>. Each chip layer requires depositing material, printing patterns with light, and etching away what's not needed — repeated 80+ times.
+      A blank silicon wafer enters the <a href="#jargon-fab" class="jargon">fab</a> and goes through <strong style="color:#fbbf24;">1,000+ process steps over 2-3 months</strong>. Each chip layer requires depositing material, printing patterns with light, and etching away what's not needed — repeated 80+ times.
     </p>
     
     <div class="fab-flow">
@@ -740,7 +775,7 @@
     <p style="font-size:12px;color:#fbbf24;text-align:center;margin:12px 0 16px 0;font-weight:600;">A single advanced chip goes through 1,000+ process steps over 2-3 months</p>
     
     <!-- Cleanroom comparison -->
-    <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--text);">Cleanroom Requirements (particles per cubic meter)</div>
+    <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--text);"><a href="#jargon-cleanroom" class="jargon">Cleanroom</a> Requirements (particles per cubic meter)</div>
     <div class="cleanroom-compare">
       <div class="clean-side outdoor">
         <div class="cl-label">Outdoor Air</div>
@@ -753,23 +788,23 @@
         <div class="cl-desc">particles/m³</div>
       </div>
       <div class="clean-side fab-clean">
-        <div class="cl-label">Chip Fab</div>
+        <div class="cl-label">Chip <a href="#jargon-fab" class="jargon">Fab</a></div>
         <div class="cl-count">~35</div>
         <div class="cl-desc">particles/m³</div>
       </div>
     </div>
-    <p style="font-size:11px;color:var(--text-dim);text-align:center;margin-top:8px;">A chip fab cleanroom is <strong style="color:#34d399;">1,000× cleaner</strong> than a hospital operating room. A single speck of dust can destroy a chip worth thousands of dollars.</p>
+    <p style="font-size:11px;color:var(--text-dim);text-align:center;margin-top:8px;">A chip fab <a href="#jargon-cleanroom" class="jargon">cleanroom</a> is <strong style="color:#34d399;">1,000× cleaner</strong> than a hospital operating room. A single speck of dust can destroy a chip worth thousands of dollars.</p>
   </div>
 
   <!-- ========== 3. TSMC ========== -->
   <div class="anatomy-card">
     <h3>🏆 TSMC — The World's Most Important Company</h3>
     <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:16px;">
-      Taiwan Semiconductor Manufacturing Company manufactures <strong style="color:#34d399;">~92% of the world's most advanced chips</strong> (below 7nm). Every AI GPU, every iPhone chip, every cutting-edge processor flows through TSMC's fabs. No company in history has been this critical to the global technology supply chain.
+      Taiwan Semiconductor Manufacturing Company manufactures <strong style="color:#34d399;">~92% of the world's most advanced chips</strong> (below <a href="#jargon-process-node" class="jargon">7nm</a>). Every AI GPU, every iPhone chip, every cutting-edge processor flows through TSMC's fabs. No company in history has been this critical to the global technology supply chain.
     </p>
     
     <!-- Market share bars -->
-    <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--text);">Advanced Foundry Market Share (&lt;7nm)</div>
+    <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--text);">Advanced Foundry Market Share (&lt;<a href="#jargon-process-node" class="jargon">7nm</a>)</div>
     <div class="market-bars">
       <div class="market-bar-row">
         <div class="bar-label">TSMC</div>
@@ -839,7 +874,7 @@
       <div class="fab-location">
         <div class="fl-flag">🇹🇼</div>
         <div class="fl-name">Taiwan — Main Hubs</div>
-        <div class="fl-status">Hsinchu, Tainan, Kaohsiung. The overwhelming majority of TSMC's advanced fabs. Most 3nm and all 2nm production starts here.</div>
+        <div class="fl-status">Hsinchu, Tainan, Kaohsiung. The overwhelming majority of TSMC's advanced fabs. Most <a href="#jargon-process-node" class="jargon">3nm</a> and all 2nm production starts here.</div>
       </div>
       <div class="fab-location">
         <div class="fl-flag">🇺🇸</div>
@@ -933,7 +968,7 @@
         <div class="fc-subtitle">The Undisputed #1</div>
         <div class="fc-stat"><strong>Market share:</strong> ~62% total foundry, ~92% advanced</div>
         <div class="fc-stat"><strong>Best node:</strong> N3E (3nm) in production, N2 (2nm) ramping 2025</div>
-        <div class="fc-stat"><strong>Yield rates:</strong> Industry-leading. The secret weapon.</div>
+        <div class="fc-stat"><strong><a href="#jargon-yield" class="jargon">Yield</a> rates:</strong> Industry-leading. The secret weapon.</div>
         <div class="fc-stat"><strong>Revenue (2024):</strong> ~$90B</div>
         <div class="fc-stat"><strong>Key clients:</strong> Nvidia, Apple, AMD, Qualcomm, Google, Amazon</div>
         <div class="fc-stat"><strong>Moat:</strong> Decades of process expertise, best yields, deepest talent pool</div>
@@ -942,8 +977,8 @@
         <div class="fc-name">🇰🇷 Samsung Foundry</div>
         <div class="fc-subtitle">The Distant #2</div>
         <div class="fc-stat"><strong>Market share:</strong> ~11% total foundry, ~6% advanced</div>
-        <div class="fc-stat"><strong>Best node:</strong> 3nm GAA in production, but low yields</div>
-        <div class="fc-stat"><strong>Problem:</strong> Lost Nvidia & Qualcomm orders due to yield issues</div>
+        <div class="fc-stat"><strong>Best node:</strong> 3nm <a href="#jargon-gate-all-around" class="jargon">GAA</a> in production, but low yields</div>
+        <div class="fc-stat"><strong>Problem:</strong> Lost Nvidia & Qualcomm orders due to <a href="#jargon-yield" class="jargon">yield</a> issues</div>
         <div class="fc-stat"><strong>Revenue (2024):</strong> ~$14B (foundry division)</div>
         <div class="fc-stat"><strong>Investing:</strong> $230B over 20 years in chip manufacturing</div>
         <div class="fc-stat"><strong>Reality:</strong> Gap with TSMC widening, not closing</div>
@@ -1038,6 +1073,46 @@
   </div>
 
   <!-- ========== 9. WORTH KNOWING ========== -->
+  
+  <!-- JARGON DECODER -->
+  <div class="anatomy-card" style="margin-bottom:32px;">
+    <h3>📖 Jargon Decoder</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+        <div id="jargon-foundry" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Foundry</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A semiconductor fabrication facility that manufactures chips designed by other companies. TSMC is the world's largest pure-play foundry.</p>
+        </div>
+        <div id="jargon-process-node" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Process Node (nm)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A generation label for chip manufacturing technology (e.g., 3nm, 5nm). Smaller numbers generally mean more transistors, better performance, and lower power.</p>
+        </div>
+        <div id="jargon-yield" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Yield Rate</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The percentage of working chips produced from a wafer. Higher yield = lower cost per chip. TSMC's consistently high yields are a key competitive advantage.</p>
+        </div>
+        <div id="jargon-fab" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Fab (Fabrication Plant)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A semiconductor manufacturing facility containing cleanrooms and hundreds of specialized machines. Costs $20B+ to build a leading-edge fab.</p>
+        </div>
+        <div id="jargon-gate-all-around" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">GAA (Gate-All-Around)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The next-generation transistor architecture replacing FinFET, where the gate wraps completely around the channel for better control at 2nm and below.</p>
+        </div>
+        <div id="jargon-finfet" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">FinFET</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The current dominant 3D transistor design where the gate wraps around a fin-shaped channel. Used from 22nm to 3nm nodes.</p>
+        </div>
+        <div id="jargon-cleanroom" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Cleanroom</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">An ultra-controlled environment with 10,000× fewer particles than outside air. Even a speck of dust can ruin a wafer with billions of nanometer-scale features.</p>
+        </div>
+        <div id="jargon-tape-out" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Tape-out</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The final step in chip design where the completed design is sent to the foundry for manufacturing. Named after the historical practice of sending design data on magnetic tape.</p>
+        </div>
+    </div>
+  </div>
+
   <div class="worth-knowing">
     <h3>📌 Worth Knowing</h3>
     <ul>

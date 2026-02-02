@@ -681,6 +681,41 @@
     transition: border-color 0.2s, color 0.2s;
   }
   .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Inline jargon links */
+  .jargon {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1.5px dotted var(--accent);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .jargon:hover {
+    color: var(--teal, var(--accent-light, #2dd4bf));
+    border-color: var(--teal, var(--accent-light, #2dd4bf));
+  }
+  .jargon-def {
+    scroll-margin-top: 24px;
+  }
+  .jargon-def:target {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 10px;
+    animation: jargon-flash 1.2s ease;
+  }
+  @keyframes jargon-flash {
+    0%, 100% { outline-color: transparent; }
+    20%, 80% { outline-color: var(--accent); }
+  }
+  .jargon-back {
+    font-size: 11px;
+    color: var(--muted, var(--text-muted, #9ca3af));
+    text-decoration: none;
+    margin-left: 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .jargon-back:hover { opacity: 1; color: var(--accent); }
 </style>
 </head>
 <body>
@@ -784,7 +819,7 @@
     <div class="deals-grid">
       <div class="deal-card microsoft">
         <div class="deal-company">🔵 Microsoft</div>
-        <div class="deal-detail">Restarted <strong>Three Mile Island</strong> — yes, that Three Mile Island. 20-year PPA with Constellation Energy.</div>
+        <div class="deal-detail">Restarted <strong>Three Mile Island</strong> — yes, that Three Mile Island. 20-year <a href="#jargon-ppa" class="jargon">PPA</a> with Constellation Energy.</div>
         <div class="deal-highlight">835 MW secured</div>
       </div>
       <div class="deal-card meta">
@@ -799,8 +834,8 @@
       </div>
       <div class="deal-card google">
         <div class="deal-company">🟢 Google</div>
-        <div class="deal-detail">Partnered with <strong>Kairos Power</strong> for next-gen small modular reactors (SMRs).</div>
-        <div class="deal-highlight">SMR pathway</div>
+        <div class="deal-detail">Partnered with <strong>Kairos Power</strong> for next-gen small modular reactors (<a href="#jargon-smr" class="jargon">SMRs</a>).</div>
+        <div class="deal-highlight"><a href="#jargon-smr" class="jargon">SMR</a> pathway</div>
       </div>
       <div class="deal-card westinghouse" style="grid-column: 1 / -1;">
         <div class="deal-company">🟠 Westinghouse</div>
@@ -850,7 +885,7 @@
         <div class="en-icon">☢️</div>
         <div class="en-name">Nuclear</div>
         <div class="en-status">★ PREFERRED — CARBON-FREE + 24/7 + HIGH DENSITY</div>
-        <div class="en-desc">The only energy source that is simultaneously carbon-free, available 24/7, and energy-dense enough to power hyperscale facilities. This is why every major tech company is racing to secure nuclear PPAs.</div>
+        <div class="en-desc">The only energy source that is simultaneously carbon-free, available 24/7, and energy-dense enough to power hyperscale facilities. This is why every major tech company is racing to secure nuclear <a href="#jargon-ppa" class="jargon">PPAs</a>.</div>
       </div>
       <div class="energy-card geo">
         <div class="en-icon">🌋</div>
@@ -1018,6 +1053,38 @@
   </div>
 
   <!-- ========== 8. WORTH KNOWING ========== -->
+  
+  <!-- JARGON DECODER -->
+  <div class="anatomy-card" style="margin-bottom:32px;">
+    <h3>📖 Jargon Decoder</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+        <div id="jargon-pue" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">PUE (Power Usage Effectiveness)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A ratio measuring data center energy efficiency. PUE of 1.0 means all power goes to computing; typical modern DCs achieve 1.1-1.3. Lower is better.</p>
+        </div>
+        <div id="jargon-tdp" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">TDP (Thermal Design Power)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The maximum amount of heat a chip generates under load, measured in watts. Modern AI GPUs can draw 700W+ each.</p>
+        </div>
+        <div id="jargon-liquid-cooling" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Liquid Cooling</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Cooling technology that uses liquid (water or specialized coolant) instead of air to remove heat from chips. Essential for high-density AI GPU racks.</p>
+        </div>
+        <div id="jargon-smr" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">SMR (Small Modular Reactor)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Compact nuclear reactors that can be factory-built and deployed near data centers. Big Tech is investing heavily in SMRs for reliable, carbon-free power.</p>
+        </div>
+        <div id="jargon-ppa" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">PPA (Power Purchase Agreement)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A long-term contract to buy electricity directly from a power generator at a fixed price. Hyperscalers use PPAs to secure renewable energy for data centers.</p>
+        </div>
+        <div id="jargon-rack-density" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Rack Density</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The amount of power consumed per server rack, measured in kW. AI racks can draw 40-120kW, vs 5-10kW for traditional servers.</p>
+        </div>
+    </div>
+  </div>
+
   <div class="worth-knowing">
     <h3>📌 Worth Knowing</h3>
     <ul>

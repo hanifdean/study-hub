@@ -799,6 +799,41 @@
     transition: border-color 0.2s, color 0.2s;
   }
   .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Inline jargon links */
+  .jargon {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1.5px dotted var(--accent);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .jargon:hover {
+    color: var(--teal, var(--accent-light, #2dd4bf));
+    border-color: var(--teal, var(--accent-light, #2dd4bf));
+  }
+  .jargon-def {
+    scroll-margin-top: 24px;
+  }
+  .jargon-def:target {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 10px;
+    animation: jargon-flash 1.2s ease;
+  }
+  @keyframes jargon-flash {
+    0%, 100% { outline-color: transparent; }
+    20%, 80% { outline-color: var(--accent); }
+  }
+  .jargon-back {
+    font-size: 11px;
+    color: var(--muted, var(--text-muted, #9ca3af));
+    text-decoration: none;
+    margin-left: 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .jargon-back:hover { opacity: 1; color: var(--accent); }
 </style>
 </head>
 <body>
@@ -817,7 +852,7 @@
   <!-- ========== 1. WHERE THIS SITS ========== -->
   <div class="big-picture">
     <div class="section-title"><span class="emoji">🗺️</span> Where This Sits in the AI Value Chain</div>
-    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Layer 1 is the <strong style="color:#fbbf24;">absolute foundation</strong>. Without purified silicon, without lithography machines, without rare earth elements — nothing else in the AI value chain can exist. Every AI model, every GPU, every data center starts here.</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Layer 1 is the <strong style="color:#fbbf24;">absolute foundation</strong>. Without purified silicon, without lithography machines, without <a href="#jargon-rare-earth" class="jargon">rare earth</a> elements — nothing else in the AI value chain can exist. Every AI model, every GPU, every data center starts here.</p>
     <div class="flow-row">
       <div class="flow-node highlight"><div class="label">Layer 1</div><div class="name">⛏️ Raw Materials & Equipment</div></div>
       <div class="flow-arrow">→</div>
@@ -835,7 +870,7 @@
 
   <!-- ========== 2. SILICON: SAND TO WAFER ========== -->
   <div class="anatomy-card">
-    <h3>🏖️ Silicon — From Sand to Wafer</h3>
+    <h3>🏖️ Silicon — From Sand to <a href="#jargon-wafer" class="jargon">Wafer</a></h3>
     <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">
       Every chip starts as ordinary sand (silicon dioxide). Through an extraordinary process, this raw material is transformed into the purest substance commercially produced — 99.9999999% pure silicon (9N purity). Here's the journey:
     </p>
@@ -856,7 +891,7 @@
       <div class="process-step">
         <div class="step-icon ingot">🔩</div>
         <div class="step-name">Ingot</div>
-        <div class="step-desc">Czochralski process, crystal grown</div>
+        <div class="step-desc"><a href="#jargon-czochralski" class="jargon">Czochralski</a> process, crystal grown</div>
       </div>
       <div class="process-arrow">→</div>
       <div class="process-step">
@@ -868,12 +903,12 @@
       <div class="process-step">
         <div class="step-icon polish">✨</div>
         <div class="step-name">Polishing</div>
-        <div class="step-desc">Mirror-smooth CMP finish</div>
+        <div class="step-desc">Mirror-smooth <a href="#jargon-cmp" class="jargon">CMP</a> finish</div>
       </div>
       <div class="process-arrow">→</div>
       <div class="process-step">
         <div class="step-icon wafer">💿</div>
-        <div class="step-name">Wafer</div>
+        <div class="step-name"><a href="#jargon-wafer" class="jargon">Wafer</a></div>
         <div class="step-desc">300mm ready for fab</div>
       </div>
     </div>
@@ -899,7 +934,7 @@
       <div class="markup-stage s4">
         <div class="mu-label">FINISHED CHIPS</div>
         <div class="mu-value">$100K+</div>
-        <div class="mu-desc">total chip value per wafer</div>
+        <div class="mu-desc">total chip value per <a href="#jargon-wafer" class="jargon">wafer</a></div>
       </div>
     </div>
     <p style="font-size:11px;color:var(--text-dim);text-align:center;margin-top:8px;">A handful of sand → $100,000+ in AI chips. That's the magic of semiconductor manufacturing.</p>
@@ -940,29 +975,29 @@
   <div class="anatomy-card">
     <h3>🔦 ASML — The Most Important Company You've Never Heard Of</h3>
     <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:16px;">
-      ASML is a Dutch company with a <strong style="color:#fbbf24;">100% monopoly</strong> on EUV lithography machines — the only tool that can print transistors small enough for cutting-edge chips (5nm, 3nm, 2nm). Without ASML, there are no advanced AI chips. Period.
+      ASML is a Dutch company with a <strong style="color:#fbbf24;">100% monopoly</strong> on <a href="#jargon-euv" class="jargon">EUV</a> lithography machines — the only tool that can print transistors small enough for cutting-edge chips (5nm, 3nm, 2nm). Without ASML, there are no advanced AI chips. Period.
     </p>
     
     <!-- How EUV Works -->
-    <div style="text-align:center;font-size:14px;font-weight:700;margin-bottom:16px;color:#fbbf24;">How EUV Lithography Works</div>
+    <div style="text-align:center;font-size:14px;font-weight:700;margin-bottom:16px;color:#fbbf24;">How <a href="#jargon-euv" class="jargon">EUV</a> Lithography Works</div>
     
     <div class="litho-diagram">
-      <div class="litho-element litho-source">💥 EUV Light Source</div>
+      <div class="litho-element litho-source">💥 <a href="#jargon-euv" class="jargon">EUV</a> Light Source</div>
       <div class="litho-label">↓ 13.5nm light (extreme ultraviolet)</div>
       <div class="litho-beam"></div>
       <div class="litho-label">↓ reflected by mirrors</div>
       <div class="litho-element litho-mirrors">🪞 Multilayer Mirrors (reflective optics)</div>
       <div class="litho-label">↓ light shaped through pattern</div>
       <div class="litho-beam"></div>
-      <div class="litho-element litho-mask">🎭 Photomask (circuit pattern)</div>
+      <div class="litho-element litho-mask">🎭 <a href="#jargon-photomask" class="jargon">Photomask</a> (circuit pattern)</div>
       <div class="litho-label">↓ pattern reduced 4×</div>
       <div class="litho-beam"></div>
       <div class="litho-element litho-lens">🔍 Reduction Optics (4:1)</div>
       <div class="litho-label">↓ pattern projected onto wafer</div>
       <div class="litho-beam"></div>
-      <div class="litho-element litho-wafer">💿 Silicon Wafer (coated with photoresist)</div>
+      <div class="litho-element litho-wafer">💿 Silicon Wafer (coated with <a href="#jargon-photoresist" class="jargon">photoresist</a>)</div>
     </div>
-    <p style="font-size:11px;color:var(--text-dim);text-align:center;margin-top:12px;">The pattern on the mask is shrunk 4× and printed onto the wafer surface. Repeat for each layer of the chip (50-80+ layers for modern processors).</p>
+    <p style="font-size:11px;color:var(--text-dim);text-align:center;margin-top:12px;">The pattern on the <a href="#jargon-photomask" class="jargon">mask</a> is shrunk 4× and printed onto the wafer surface. Repeat for each layer of the chip (50-80+ layers for modern processors).</p>
   </div>
   
   <!-- The Insane Engineering -->
@@ -1050,13 +1085,13 @@
       </div>
       <div class="ec-event">
         <div class="ec-date">January 2024</div>
-        <div class="ec-title">Netherlands expands restrictions to DUV</div>
-        <div class="ec-desc">Now even ASML's older (but still advanced) DUV immersion lithography machines require export licenses for China.</div>
+        <div class="ec-title">Netherlands expands restrictions to <a href="#jargon-duv" class="jargon">DUV</a></div>
+        <div class="ec-desc">Now even ASML's older (but still advanced) <a href="#jargon-duv" class="jargon">DUV</a> immersion lithography machines require export licenses for China.</div>
       </div>
       <div class="ec-event">
         <div class="ec-date">2025</div>
         <div class="ec-title">China stuck at ~7nm without EUV</div>
-        <div class="ec-desc">China can manufacture 7nm chips using older DUV multi-patterning, but cannot reach 5nm/3nm without EUV. This fundamentally limits China's AI chip capabilities.</div>
+        <div class="ec-desc">China can manufacture 7nm chips using older <a href="#jargon-duv" class="jargon">DUV</a> multi-patterning, but cannot reach 5nm/3nm without EUV. This fundamentally limits China's AI chip capabilities.</div>
       </div>
     </div>
     
@@ -1091,7 +1126,7 @@
       <div class="equip-card">
         <div class="eq-name" style="color:#f97316;">🇯🇵 Tokyo Electron (TEL)</div>
         <div class="eq-role">Coater/Developer · ~15% market share</div>
-        <div class="eq-desc">Applies and develops photoresist (the light-sensitive coating used in lithography). Also makes etching and deposition tools. Japan's largest equipment maker.</div>
+        <div class="eq-desc">Applies and develops <a href="#jargon-photoresist" class="jargon">photoresist</a> (the light-sensitive coating used in lithography). Also makes etching and deposition tools. Japan's largest equipment maker.</div>
       </div>
       <div class="equip-card">
         <div class="eq-name" style="color:#a78bfa;">🇺🇸 KLA Corporation</div>
@@ -1139,11 +1174,11 @@
     
     <div class="chokepoint-diagram">
       <div class="choke-bar">
-        <div class="cb-label">Mining (rare earths)</div>
+        <div class="cb-label">Mining (<a href="#jargon-rare-earth" class="jargon">rare earths</a>)</div>
         <div class="cb-track"><div class="cb-fill china-fill" style="width:61%;">China 61%</div></div>
       </div>
       <div class="choke-bar">
-        <div class="cb-label">Refining (rare earths)</div>
+        <div class="cb-label">Refining (<a href="#jargon-rare-earth" class="jargon">rare earths</a>)</div>
         <div class="cb-track"><div class="cb-fill china-fill" style="width:90%;">China 90%+</div></div>
       </div>
       <div class="choke-bar">
@@ -1277,6 +1312,46 @@
   </div>
 
   <!-- ========== 7. WORTH KNOWING ========== -->
+  
+  <!-- JARGON DECODER -->
+  <div class="anatomy-card" style="margin-bottom:32px;">
+    <h3>📖 Jargon Decoder</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+        <div id="jargon-euv" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">EUV (Extreme Ultraviolet Lithography)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The cutting-edge lithography technology using 13.5nm light to print the smallest transistor features (5nm, 3nm, 2nm). ASML has a 100% monopoly on EUV machines.</p>
+        </div>
+        <div id="jargon-duv" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">DUV (Deep Ultraviolet Lithography)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The previous generation lithography using 193nm light. Can reach ~7nm with multi-patterning tricks, but cannot go smaller. Still widely used for non-cutting-edge chips.</p>
+        </div>
+        <div id="jargon-photoresist" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Photoresist</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">Light-sensitive chemical coatings applied to silicon wafers. When exposed to UV light through a mask, they create the circuit patterns. Japan controls ~90% of advanced photoresist production.</p>
+        </div>
+        <div id="jargon-wafer" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Silicon Wafer</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A thin, polished disc of ultra-pure silicon (300mm/12" diameter) used as the base substrate for manufacturing chips.</p>
+        </div>
+        <div id="jargon-photomask" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Photomask (Reticle)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A glass plate containing the circuit pattern that is projected onto the wafer during lithography. Like a stencil for chip patterns.</p>
+        </div>
+        <div id="jargon-czochralski" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Czochralski Process</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The method used to grow single-crystal silicon ingots by slowly pulling a seed crystal from a crucible of molten silicon.</p>
+        </div>
+        <div id="jargon-cmp" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">CMP (Chemical Mechanical Polishing)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A process that makes silicon wafers mirror-smooth using a combination of chemical slurry and mechanical abrasion.</p>
+        </div>
+        <div id="jargon-rare-earth" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">Rare Earth Elements</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A group of 17 metallic elements critical for semiconductors, magnets, and defense applications. China controls ~90% of global refining.</p>
+        </div>
+    </div>
+  </div>
+
   <div class="worth-knowing">
     <h3>📌 Worth Knowing</h3>
     <ul>
