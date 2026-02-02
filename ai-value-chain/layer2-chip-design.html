@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layer 2: Chip Design — AI Value Chain</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0a0a0f;
+    color: #e8e8ed;
+    padding: 40px 24px;
+    min-height: 100vh;
+  }
+  
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 36px;
+    font-weight: 500;
+  }
+  
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .emoji { font-size: 20px; }
+  
+  /* === BIG PICTURE === */
+  .big-picture {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
+    overflow-x: auto;
+  }
+  
+  .flow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: nowrap;
+    min-width: 900px;
+  }
+  
+  .flow-node {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-align: center;
+    min-width: 120px;
+    flex-shrink: 0;
+  }
+  .flow-node .label { font-size: 11px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .flow-node .name { font-size: 14px; font-weight: 700; margin-top: 4px; }
+  .flow-node.highlight {
+    border-color: #f59e0b;
+    background: #1a1a10;
+    box-shadow: 0 0 24px rgba(245, 158, 11, 0.15);
+  }
+  .flow-node.highlight .name { color: #fbbf24; }
+  .flow-node.dim { opacity: 0.5; }
+  
+  .flow-arrow {
+    font-size: 18px;
+    color: #4b5563;
+    padding: 0 6px;
+    flex-shrink: 0;
+  }
+  
+  /* === ANATOMY CARDS === */
+  .anatomy-card {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+  
+  .anatomy-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  
+  /* === FABLESS SPLIT VISUAL === */
+  .split-container {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 0;
+    margin: 20px 0;
+    align-items: center;
+  }
+  
+  .model-box {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .model-box.old { border-color: #4b5563; opacity: 0.7; }
+  .model-box.new { border-color: #f59e0b; background: #1a1a10; }
+  .model-box .model-label {
+    font-size: 11px;
+    color: #9ca3af;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+  .model-box .model-title {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+  .model-box.new .model-title { color: #fbbf24; }
+  .model-box .model-desc {
+    font-size: 12px;
+    color: #d1d5db;
+    line-height: 1.6;
+  }
+  .model-box .company-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin-top: 12px;
+  }
+  .company-tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: #1e1e2e;
+    color: #9ca3af;
+  }
+  .company-tag.design { background: #2a1a10; color: #fbbf24; }
+  .company-tag.foundry { background: #0f2a14; color: #4ade80; }
+  
+  .split-arrow {
+    text-align: center;
+    font-size: 28px;
+    color: #f59e0b;
+    font-weight: 800;
+  }
+  
+  /* === FABLESS FLOW DIAGRAM === */
+  .fabless-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+  .ff-node {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 10px;
+    padding: 12px 16px;
+    text-align: center;
+    min-width: 100px;
+  }
+  .ff-node.design { border-color: #f59e0b; background: #1a1a10; }
+  .ff-node.design .ff-name { color: #fbbf24; }
+  .ff-node.foundry { border-color: #22c55e; background: #0f1a14; }
+  .ff-node.foundry .ff-name { color: #4ade80; }
+  .ff-node .ff-label { font-size: 10px; color: #9ca3af; font-weight: 600; }
+  .ff-node .ff-name { font-size: 13px; font-weight: 700; margin-top: 2px; }
+  .ff-arrow { font-size: 16px; color: #4b5563; padding: 0 6px; }
+  
+  /* === GPU ARCHITECTURE VISUAL === */
+  .arch-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 20px 0;
+  }
+  
+  .arch-box {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .arch-box .arch-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  
+  .core-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    justify-content: center;
+    margin: 12px 0;
+  }
+  .core {
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7px;
+    font-weight: 700;
+  }
+  .core.cpu-core {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #1e3a5f, #2563eb);
+    border: 1px solid #3b82f6;
+  }
+  .core.gpu-core {
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(135deg, #3a2a0f, #f59e0b);
+    border: 0.5px solid #fbbf24;
+  }
+  
+  .arch-stat {
+    font-size: 20px;
+    font-weight: 800;
+    margin: 8px 0 4px;
+  }
+  .arch-desc {
+    font-size: 11px;
+    color: #9ca3af;
+    line-height: 1.4;
+  }
+  
+  /* === GPU EVOLUTION TIMELINE === */
+  .timeline {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 20px 0;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  .timeline-node {
+    flex: 1;
+    min-width: 140px;
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 10px;
+    padding: 16px 12px;
+    text-align: center;
+    position: relative;
+  }
+  .timeline-node.current { border-color: #f59e0b; background: #1a1a10; }
+  .timeline-node.future { border-color: #a78bfa; background: #1a1a28; }
+  .timeline-node .tl-name {
+    font-size: 15px;
+    font-weight: 800;
+    margin-bottom: 2px;
+  }
+  .timeline-node.current .tl-name { color: #fbbf24; }
+  .timeline-node.future .tl-name { color: #c4b5fd; }
+  .timeline-node .tl-year {
+    font-size: 10px;
+    color: #6b7280;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .timeline-node .tl-stat {
+    font-size: 11px;
+    color: #d1d5db;
+    line-height: 1.5;
+  }
+  .timeline-node .tl-stat strong { color: #e8e8ed; }
+  .timeline-arrow {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: #4b5563;
+    padding: 0 4px;
+    flex-shrink: 0;
+  }
+  
+  .gen-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+  .gen-badge.now { background: #92400e; color: #fde68a; }
+  .gen-badge.next { background: #3b1f5e; color: #c4b5fd; }
+  
+  /* === CUDA MOAT === */
+  .moat-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin: 20px 0;
+  }
+  .moat-ring {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 40px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .moat-ring.outer {
+    width: 100%;
+    max-width: 520px;
+    height: 52px;
+    background: linear-gradient(135deg, #1a1a3a, #2a1a4a);
+    border: 1.5px solid #7c3aed;
+    font-size: 12px;
+    color: #c4b5fd;
+  }
+  .moat-ring.mid {
+    width: 80%;
+    max-width: 420px;
+    height: 48px;
+    background: linear-gradient(135deg, #1a2a1a, #0f3a1a);
+    border: 1.5px solid #22c55e;
+    font-size: 12px;
+    color: #86efac;
+    margin-top: -4px;
+  }
+  .moat-ring.inner {
+    width: 60%;
+    max-width: 320px;
+    height: 44px;
+    background: linear-gradient(135deg, #2a1a0f, #7c2d12);
+    border: 1.5px solid #f59e0b;
+    font-size: 13px;
+    font-weight: 800;
+    color: #fbbf24;
+    margin-top: -4px;
+  }
+  .moat-label {
+    font-size: 11px;
+    color: #6b7280;
+    text-align: center;
+    margin-top: 8px;
+  }
+  
+  /* === AMD SECTION === */
+  .amd-chips {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 16px 0;
+  }
+  .amd-chip {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .amd-chip .chip-name { font-size: 15px; font-weight: 800; color: #ef4444; margin-bottom: 4px; }
+  .amd-chip .chip-year { font-size: 10px; color: #6b7280; font-weight: 600; margin-bottom: 8px; }
+  .amd-chip .chip-desc { font-size: 11px; color: #d1d5db; line-height: 1.5; }
+  .amd-chip.highlight { border-color: #ef4444; background: #1a1010; }
+  
+  /* === HYPERSCALER GRID === */
+  .hyper-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .hyper-card {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 18px;
+    position: relative;
+  }
+  .hyper-card .hyper-logo { font-size: 24px; margin-bottom: 6px; }
+  .hyper-card .hyper-co { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .hyper-card .hyper-chip { font-size: 12px; color: #60a5fa; font-weight: 600; margin-bottom: 8px; }
+  .hyper-card .hyper-desc { font-size: 12px; color: #d1d5db; line-height: 1.5; }
+  .hyper-card.google { border-color: #22c55e; }
+  .hyper-card.amazon { border-color: #f59e0b; }
+  .hyper-card.microsoft { border-color: #60a5fa; }
+  .hyper-card.apple { border-color: #a78bfa; }
+  
+  /* === DESIGN FLOW === */
+  .design-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+  .df-node {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+    min-width: 120px;
+  }
+  .df-node .df-icon { font-size: 20px; margin-bottom: 4px; }
+  .df-node .df-name { font-size: 12px; font-weight: 700; }
+  .df-node .df-sub { font-size: 10px; color: #9ca3af; margin-top: 2px; }
+  .df-node.eda { border-color: #a78bfa; background: #1a1a28; }
+  .df-node.eda .df-name { color: #c4b5fd; }
+  .df-node.arm { border-color: #60a5fa; background: #0f1a2a; }
+  .df-node.arm .df-name { color: #93c5fd; }
+  .df-node.tsmc { border-color: #22c55e; background: #0f1a14; }
+  .df-node.tsmc .df-name { color: #4ade80; }
+  .df-arrow { font-size: 16px; color: #4b5563; padding: 0 6px; }
+  
+  /* === ECOSYSTEM PLAYERS === */
+  .eco-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin: 16px 0;
+  }
+  .eco-card {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .eco-card .eco-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .eco-card .eco-role { font-size: 11px; color: #9ca3af; font-weight: 600; margin-bottom: 8px; }
+  .eco-card .eco-desc { font-size: 12px; color: #d1d5db; line-height: 1.5; }
+  
+  /* === ISA COMPARISON === */
+  .isa-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .isa-card {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+  }
+  .isa-card .isa-name { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+  .isa-card .isa-owners { font-size: 11px; color: #9ca3af; font-weight: 600; margin-bottom: 10px; }
+  .isa-card .isa-desc { font-size: 12px; color: #d1d5db; line-height: 1.5; text-align: left; }
+  .isa-card.x86 { border-color: #3b82f6; }
+  .isa-card.x86 .isa-name { color: #60a5fa; }
+  .isa-card.arm-isa { border-color: #22c55e; }
+  .isa-card.arm-isa .isa-name { color: #4ade80; }
+  .isa-card.riscv { border-color: #a78bfa; }
+  .isa-card.riscv .isa-name { color: #c4b5fd; }
+  
+  .isa-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0;
+  }
+  .isa-bar-label { font-size: 10px; color: #9ca3af; width: 60px; text-align: right; flex-shrink: 0; }
+  .isa-bar-track { flex: 1; height: 14px; background: #111118; border-radius: 4px; overflow: hidden; }
+  .isa-bar-fill { height: 100%; border-radius: 4px; }
+  
+  /* === KEY NUMBERS === */
+  .key-numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+  
+  .key-num {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .key-num .num {
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .key-num .desc {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+  
+  /* === WORTH KNOWING === */
+  .worth-knowing {
+    background: #111118;
+    border: 1px solid #2a2a4a;
+    border-left: 3px solid #a78bfa;
+    border-radius: 0 12px 12px 0;
+    padding: 24px;
+    margin-top: 32px;
+  }
+  
+  .worth-knowing h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #a78bfa;
+    margin-bottom: 12px;
+  }
+  
+  .worth-knowing ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .worth-knowing li {
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 6px 0;
+    border-bottom: 1px solid #1e1e2e;
+    color: #d1d5db;
+  }
+  .worth-knowing li:last-child { border-bottom: none; }
+  .worth-knowing li strong { color: #e8e8ed; }
+  
+  /* === MARKET BARS === */
+  .market-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .market-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .bar-label {
+    width: 90px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .bar-track {
+    flex: 1;
+    height: 32px;
+    background: #1a1a2e;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    transition: width 1s ease;
+  }
+  .bar-fill.nvidia { background: linear-gradient(90deg, #166534, #22c55e); }
+  .bar-fill.amd-bar { background: linear-gradient(90deg, #991b1b, #ef4444); }
+  .bar-fill.intel-bar { background: linear-gradient(90deg, #1e40af, #3b82f6); }
+  
+  /* === GEN TABLE === */
+  .gen-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+  .gen-table th {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 2px solid #2a2a4a;
+    color: #9ca3af;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .gen-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #1e1e2e;
+    font-weight: 500;
+  }
+  .gen-table tr.current { background: rgba(245, 158, 11, 0.08); }
+  .gen-table tr.current td { color: #fbbf24; font-weight: 600; }
+  
+  /* === MOBILE RESPONSIVE === */
+  @media (max-width: 600px) {
+    body { padding: 20px 12px; font-size: 15px; }
+    h1 { font-size: 22px; }
+    .subtitle { font-size: 13px; margin-bottom: 24px; }
+    .section-title { font-size: 16px; }
+    
+    .big-picture { padding: 20px 14px; overflow-x: visible; }
+    .flow-row {
+      min-width: auto;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+    .flow-node { min-width: auto; width: 100%; padding: 12px 14px; }
+    .flow-arrow { text-align: center; padding: 4px 0; font-size: 16px; transform: rotate(90deg); }
+    
+    .anatomy-card { padding: 20px 14px; }
+    .anatomy-card h3 { font-size: 15px; }
+    
+    .split-container { grid-template-columns: 1fr; gap: 0; }
+    .split-arrow { transform: rotate(90deg); padding: 8px 0; }
+    
+    .arch-compare { grid-template-columns: 1fr; gap: 16px; }
+    
+    .timeline { flex-direction: column; gap: 0; }
+    .timeline-node { min-width: auto; width: 100%; }
+    .timeline-arrow { justify-content: center; padding: 4px 0; transform: rotate(90deg); }
+    
+    .amd-chips { grid-template-columns: 1fr; gap: 12px; }
+    .hyper-grid { grid-template-columns: 1fr; gap: 12px; }
+    .eco-grid { grid-template-columns: 1fr; gap: 12px; }
+    .isa-grid { grid-template-columns: 1fr; gap: 12px; }
+    
+    .design-flow { flex-direction: column; align-items: stretch; gap: 0; }
+    .df-node { min-width: auto; width: 100%; }
+    .df-arrow { text-align: center; padding: 4px 0; transform: rotate(90deg); }
+    
+    .fabless-flow { flex-direction: column; align-items: stretch; gap: 0; }
+    .ff-node { min-width: auto; width: 100%; }
+    .ff-arrow { text-align: center; padding: 4px 0; transform: rotate(90deg); }
+    
+    .moat-ring.outer, .moat-ring.mid, .moat-ring.inner { width: 100%; max-width: 100%; font-size: 11px; }
+    
+    .key-numbers { grid-template-columns: 1fr; gap: 12px; }
+    .key-num .num { font-size: 24px; }
+    .key-num .desc { font-size: 12px; }
+    
+    .worth-knowing { padding: 20px 16px; }
+    .worth-knowing li { font-size: 14px; line-height: 1.7; padding: 8px 0; }
+    
+    .bar-label { width: 70px; font-size: 12px; }
+    .bar-fill { font-size: 11px; padding-left: 6px; }
+    
+    .gen-table { font-size: 12px; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .gen-table th { padding: 8px 10px; font-size: 10px; white-space: nowrap; }
+    .gen-table td { padding: 8px 10px; white-space: nowrap; }
+    
+    p { font-size: 14px; }
+  }
+  
+  @media (max-width: 360px) {
+    body { padding: 16px 8px; }
+    .big-picture { padding: 16px 10px; }
+    .anatomy-card { padding: 16px 10px; }
+    .key-num .num { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  
+  <h1>🏗️ Layer 2: Chip Design</h1>
+  <p class="subtitle">The architects who design AI chips but don't manufacture them — the fabless revolution</p>
+
+  <!-- ========== 1. WHERE THIS SITS ========== -->
+  <div class="big-picture">
+    <div class="section-title"><span class="emoji">🗺️</span> Where Chip Design Sits in the Stack</div>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Layer 2 companies are the <strong style="color:#fbbf24;">architects</strong> — they design the chips that power AI but rely on foundries (TSMC) to actually manufacture them. This is the "fabless" model that revolutionized the semiconductor industry.</p>
+    <div class="flow-row">
+      <div class="flow-node dim"><div class="label">Layer 1</div><div class="name">Raw Materials</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node highlight"><div class="label">Layer 2</div><div class="name">🏗️ Chip Design</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 3</div><div class="name">Foundries</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 4</div><div class="name">Memory & HBM</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Packaging</div><div class="name">CoWoS</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 5+</div><div class="name">Infra → AI</div></div>
+    </div>
+  </div>
+
+  <!-- ========== 2. THE FABLESS REVOLUTION ========== -->
+  <div class="anatomy-card">
+    <h3>⚡ The Fabless Revolution</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">The semiconductor industry split in two. Companies used to design AND manufacture chips. Now, the best chip designers don't own a single factory — they outsource manufacturing to foundries like TSMC.</p>
+    
+    <div class="split-container">
+      <div class="model-box old">
+        <div class="model-label">Old Model (1970s–2000s)</div>
+        <div class="model-title">Integrated (IDM)</div>
+        <div class="model-desc">One company does <strong>everything</strong>: design + manufacturing in their own fabs</div>
+        <div class="company-tags">
+          <span class="company-tag">Intel</span>
+          <span class="company-tag">TI</span>
+          <span class="company-tag">IBM</span>
+        </div>
+        <p style="font-size:11px;color:#6b7280;margin-top:10px;">❌ Billions to build fabs · Split focus · Slow innovation</p>
+      </div>
+      
+      <div class="split-arrow">→</div>
+      
+      <div class="model-box new">
+        <div class="model-label">New Model (2000s–Now)</div>
+        <div class="model-title">Fabless + Foundry</div>
+        <div class="model-desc">Design companies focus on <strong>innovation</strong>, foundries focus on <strong>manufacturing</strong></div>
+        <div class="company-tags">
+          <span class="company-tag design">Nvidia</span>
+          <span class="company-tag design">AMD</span>
+          <span class="company-tag design">Qualcomm</span>
+          <span class="company-tag foundry">TSMC</span>
+        </div>
+        <p style="font-size:11px;color:#4ade80;margin-top:10px;">✅ Focus on design · Faster iteration · Access best fabs</p>
+      </div>
+    </div>
+    
+    <div style="margin-top:20px;">
+      <p style="font-size:12px;color:#fbbf24;text-align:center;font-weight:600;">This is why Nvidia can be the most valuable company in the world without owning a single fab</p>
+    </div>
+    
+    <div class="fabless-flow" style="margin-top:20px;">
+      <div class="ff-node design"><div class="ff-label">DESIGN</div><div class="ff-name">Nvidia designs GPU</div></div>
+      <div class="ff-arrow">→</div>
+      <div class="ff-node"><div class="ff-label">EDA TOOLS</div><div class="ff-name">Synopsys / Cadence</div></div>
+      <div class="ff-arrow">→</div>
+      <div class="ff-node"><div class="ff-label">BLUEPRINT</div><div class="ff-name">GDSII file sent</div></div>
+      <div class="ff-arrow">→</div>
+      <div class="ff-node foundry"><div class="ff-label">MANUFACTURING</div><div class="ff-name">TSMC builds it</div></div>
+      <div class="ff-arrow">→</div>
+      <div class="ff-node"><div class="ff-label">RESULT</div><div class="ff-name">Finished chip 🎉</div></div>
+    </div>
+  </div>
+
+  <!-- ========== 3. NVIDIA — THE KING ========== -->
+  <div class="anatomy-card">
+    <h3>👑 Nvidia — The King of AI Chips</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Nvidia dominates AI compute with 94%+ discrete GPU market share. Their moat isn't just hardware — it's the entire CUDA software ecosystem built over 20+ years.</p>
+    
+    <!-- CPU vs GPU Architecture -->
+    <div style="font-size:14px;font-weight:700;margin-bottom:12px;">Why GPUs Work for AI — CPU vs GPU Architecture</div>
+    <div class="arch-compare">
+      <div class="arch-box">
+        <div class="arch-title" style="color:#60a5fa;">CPU Architecture</div>
+        <div class="core-grid">
+          <div class="core cpu-core">C1</div>
+          <div class="core cpu-core">C2</div>
+          <div class="core cpu-core">C3</div>
+          <div class="core cpu-core">C4</div>
+          <div class="core cpu-core">C5</div>
+          <div class="core cpu-core">C6</div>
+          <div class="core cpu-core">C7</div>
+          <div class="core cpu-core">C8</div>
+        </div>
+        <div class="arch-stat" style="color:#60a5fa;">8-64 cores</div>
+        <div class="arch-desc">Few powerful cores, optimized for <strong style="color:#e8e8ed;">sequential</strong> tasks. Like having 8 expert workers solving complex problems one at a time.</div>
+      </div>
+      <div class="arch-box" style="border-color:#f59e0b;">
+        <div class="arch-title" style="color:#fbbf24;">GPU Architecture</div>
+        <div class="core-grid">
+          <!-- 16 rows × 16 cols = 256 tiny cores (representing thousands) -->
+          <div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div>
+          <div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div>
+          <div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div>
+          <div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div>
+          <div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div>
+          <div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div>
+          <div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div>
+          <div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div>
+          <div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div>
+          <div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div><div class="core gpu-core"></div>
+        </div>
+        <div class="arch-stat" style="color:#fbbf24;">10,000+ cores</div>
+        <div class="arch-desc">Thousands of small cores doing <strong style="color:#e8e8ed;">parallel</strong> math. Like having 10,000 workers each doing simple calculations simultaneously. Perfect for AI's matrix multiplications.</div>
+      </div>
+    </div>
+    
+    <!-- GPU Evolution Timeline -->
+    <div style="font-size:14px;font-weight:700;margin:24px 0 12px;">Nvidia GPU Architecture Evolution</div>
+    <div class="timeline">
+      <div class="timeline-node">
+        <div class="tl-name">A100</div>
+        <div class="tl-year">2020 · Ampere</div>
+        <div class="tl-stat"><strong>6,912</strong> CUDA cores<br><strong>80GB</strong> HBM2e<br><strong>2 TB/s</strong> bandwidth</div>
+      </div>
+      <div class="timeline-arrow">→</div>
+      <div class="timeline-node">
+        <div class="tl-name">H100</div>
+        <div class="tl-year">2022 · Hopper</div>
+        <div class="tl-stat"><strong>16,896</strong> CUDA cores<br><strong>80GB</strong> HBM3<br><strong>3.4 TB/s</strong> bandwidth</div>
+      </div>
+      <div class="timeline-arrow">→</div>
+      <div class="timeline-node current">
+        <div class="tl-name">B200 <span class="gen-badge now">NOW</span></div>
+        <div class="tl-year">2024 · Blackwell</div>
+        <div class="tl-stat"><strong>18,432</strong> CUDA cores<br><strong>192GB</strong> HBM3e<br><strong>8 TB/s</strong> bandwidth</div>
+      </div>
+      <div class="timeline-arrow">→</div>
+      <div class="timeline-node current">
+        <div class="tl-name">GB300</div>
+        <div class="tl-year">2025 · Blackwell Ultra</div>
+        <div class="tl-stat"><strong>2 B200</strong> GPUs + Grace CPU<br><strong>384GB</strong> HBM3e<br>Rack-scale NVLink</div>
+      </div>
+      <div class="timeline-arrow">→</div>
+      <div class="timeline-node future">
+        <div class="tl-name">Rubin <span class="gen-badge next">2026</span></div>
+        <div class="tl-year">2026 · Next-gen</div>
+        <div class="tl-stat"><strong>HBM4</strong> memory<br><strong>3nm/2nm</strong> process<br>Massive leap expected</div>
+      </div>
+    </div>
+    
+    <!-- CUDA Moat -->
+    <div style="font-size:14px;font-weight:700;margin:24px 0 12px;">The CUDA Ecosystem Moat</div>
+    <p style="font-size:12px;color:#9ca3af;margin-bottom:16px;">Nvidia's real competitive advantage isn't the hardware — it's the software ecosystem that makes switching nearly impossible.</p>
+    
+    <div class="moat-visual">
+      <div class="moat-ring outer">🟣 Developer Community — Millions of CUDA-trained developers & researchers</div>
+      <div class="moat-ring mid">🟢 Libraries & Frameworks — cuDNN, TensorRT, NCCL, every ML framework optimized for CUDA</div>
+      <div class="moat-ring inner">🟠 CUDA Core — 20+ years of GPU computing platform</div>
+    </div>
+    <div class="moat-label">Each layer reinforces the others → nearly impossible to replicate</div>
+    
+    <!-- Nvidia GPU Market Share -->
+    <div style="font-size:14px;font-weight:700;margin:24px 0 12px;">Discrete GPU Market Share (AI/Data Center)</div>
+    <div class="market-bars">
+      <div class="market-bar-row">
+        <div class="bar-label">Nvidia</div>
+        <div class="bar-track"><div class="bar-fill nvidia" style="width:94%;">94%+</div></div>
+      </div>
+      <div class="market-bar-row">
+        <div class="bar-label">AMD</div>
+        <div class="bar-track"><div class="bar-fill amd-bar" style="width:5%;">~5%</div></div>
+      </div>
+      <div class="market-bar-row">
+        <div class="bar-label">Intel</div>
+        <div class="bar-track"><div class="bar-fill intel-bar" style="width:1%;">~1%</div></div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:#fbbf24;text-align:center;font-weight:600;margin-top:8px;">Data center revenue: ~$51.2B in fiscal Q3 2026. Nvidia is the toll booth of the AI revolution.</p>
+  </div>
+
+  <!-- ========== 4. AMD — THE CHALLENGER ========== -->
+  <div class="anatomy-card">
+    <h3>🥊 AMD — The Challenger</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">AMD is the only serious competitor to Nvidia in AI GPUs. Still a distant #2, but growing fast with major partnerships and an improving software stack.</p>
+    
+    <div class="amd-chips">
+      <div class="amd-chip">
+        <div class="chip-name">MI300X</div>
+        <div class="chip-year">2023 · CDNA 3</div>
+        <div class="chip-desc"><strong>192GB</strong> HBM3<br><strong>5.3 TB/s</strong> bandwidth<br>First real competitor to H100. Adopted by Microsoft, Meta.</div>
+      </div>
+      <div class="amd-chip highlight">
+        <div class="chip-name">MI350</div>
+        <div class="chip-year">2025 · CDNA 4</div>
+        <div class="chip-desc"><strong>288GB</strong> HBM3e<br>Major architecture refresh<br>Targeting Blackwell performance tier.</div>
+      </div>
+      <div class="amd-chip" style="border-color:#a78bfa;">
+        <div class="chip-name" style="color:#c4b5fd;">MI450</div>
+        <div class="chip-year">2026 · Next-gen</div>
+        <div class="chip-desc"><strong>HBM4</strong> memory<br>OpenAI's 1GW deployment<br>AMD's biggest chip bet yet.</div>
+      </div>
+    </div>
+    
+    <div style="background:#1a1a2e;border-radius:10px;padding:16px;margin-top:16px;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:8px;">Key AMD developments:</div>
+      <div style="font-size:12px;color:#d1d5db;line-height:1.8;">
+        • <strong style="color:#ef4444;">OpenAI partnership</strong> — deploying 1GW worth of MI450 chips (massive vote of confidence)<br>
+        • <strong style="color:#ef4444;">ROCm software stack</strong> — AMD's answer to CUDA. Improving rapidly but still years behind in ecosystem depth<br>
+        • <strong style="color:#ef4444;">Growing market share</strong> — from nearly 0% to ~5% in AI GPUs, but the gap to Nvidia's 94%+ remains enormous<br>
+        • <strong style="color:#ef4444;">Price advantage</strong> — often 20-30% cheaper than Nvidia equivalents, attracting cost-conscious buyers
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 5. CUSTOM SILICON ========== -->
+  <div class="anatomy-card">
+    <h3>🏢 Custom Silicon — The Hyperscaler Push</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">The biggest cloud companies are designing their own AI chips to reduce Nvidia dependence, optimize for their specific workloads, and control costs. None of them manufacture — they all go through TSMC.</p>
+    
+    <div class="hyper-grid">
+      <div class="hyper-card google">
+        <div class="hyper-logo">🔵</div>
+        <div class="hyper-co">Google — TPU v6 (Trillium)</div>
+        <div class="hyper-chip">Tensor Processing Unit · 6th generation</div>
+        <div class="hyper-desc">The original custom AI chip (since 2016). Optimized for TensorFlow/JAX workloads. Powers Google Search, Gemini, YouTube recommendations. <strong>Not sold externally</strong> — only available via Google Cloud.</div>
+      </div>
+      <div class="hyper-card amazon">
+        <div class="hyper-logo">🟠</div>
+        <div class="hyper-co">Amazon — Trainium2 / Inferentia</div>
+        <div class="hyper-chip">Training + Inference chips</div>
+        <div class="hyper-desc"><strong>Trainium2</strong> for training large models, <strong>Inferentia</strong> for cost-efficient inference. Up to 40% cheaper than GPU instances. Designed by Annapurna Labs (acquired 2015).</div>
+      </div>
+      <div class="hyper-card microsoft">
+        <div class="hyper-logo">🔷</div>
+        <div class="hyper-co">Microsoft — Azure Maia 100</div>
+        <div class="hyper-chip">Custom AI accelerator · 5nm</div>
+        <div class="hyper-desc">Microsoft's first custom AI chip. Designed to power Azure AI services and Copilot workloads. Paired with custom Cobalt ARM CPU. Still early — Nvidia GPUs remain primary.</div>
+      </div>
+      <div class="hyper-card apple">
+        <div class="hyper-logo">🍎</div>
+        <div class="hyper-co">Apple — M-series / Neural Engine</div>
+        <div class="hyper-chip">Unified memory architecture</div>
+        <div class="hyper-desc">Different market (consumer devices) but relevant architecture. Unified memory approach, custom ARM cores, dedicated Neural Engine. Proves custom silicon can beat general-purpose chips for specific workloads.</div>
+      </div>
+    </div>
+    
+    <div style="background:#1a1a2e;border-radius:10px;padding:16px;margin-top:16px;text-align:center;">
+      <div style="font-size:13px;font-weight:700;color:#fbbf24;margin-bottom:6px;">Why are they all building custom chips?</div>
+      <div style="font-size:12px;color:#d1d5db;line-height:1.7;">
+        💰 <strong>Cost control</strong> — avoid paying Nvidia's premium margins<br>
+        🎯 <strong>Optimization</strong> — tailor silicon to their specific AI workloads<br>
+        🔓 <strong>Independence</strong> — reduce dependency on a single supplier<br>
+        📊 <strong>Scale</strong> — at their volume, even small per-chip savings = billions saved
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 6. THE DESIGN ECOSYSTEM ========== -->
+  <div class="anatomy-card">
+    <h3>🔧 The Chip Design Ecosystem</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Designing a chip isn't just one company's work. It's an entire ecosystem of IP providers, design tools, and services that enable the fabless model.</p>
+    
+    <!-- Design Flow -->
+    <div style="font-size:14px;font-weight:700;margin-bottom:12px;">How a Chip Goes from Idea to Silicon</div>
+    <div class="design-flow">
+      <div class="df-node">
+        <div class="df-icon">💡</div>
+        <div class="df-name">Idea / Spec</div>
+        <div class="df-sub">What the chip needs to do</div>
+      </div>
+      <div class="df-arrow">→</div>
+      <div class="df-node arm">
+        <div class="df-icon">📐</div>
+        <div class="df-name">ARM IP License</div>
+        <div class="df-sub">Base architecture</div>
+      </div>
+      <div class="df-arrow">→</div>
+      <div class="df-node eda">
+        <div class="df-icon">💻</div>
+        <div class="df-name">EDA Tools</div>
+        <div class="df-sub">Synopsys / Cadence</div>
+      </div>
+      <div class="df-arrow">→</div>
+      <div class="df-node">
+        <div class="df-icon">📋</div>
+        <div class="df-name">Design Complete</div>
+        <div class="df-sub">GDSII blueprint</div>
+      </div>
+      <div class="df-arrow">→</div>
+      <div class="df-node tsmc">
+        <div class="df-icon">🏭</div>
+        <div class="df-name">TSMC Manufactures</div>
+        <div class="df-sub">Turns design into silicon</div>
+      </div>
+      <div class="df-arrow">→</div>
+      <div class="df-node">
+        <div class="df-icon">✅</div>
+        <div class="df-name">Finished Chip</div>
+        <div class="df-sub">Ready to ship</div>
+      </div>
+    </div>
+    
+    <!-- Key Players -->
+    <div style="font-size:14px;font-weight:700;margin:24px 0 12px;">Key Ecosystem Players</div>
+    <div class="eco-grid">
+      <div class="eco-card" style="border-color:#60a5fa;">
+        <div class="eco-name" style="color:#93c5fd;">ARM Holdings</div>
+        <div class="eco-role">Instruction Set Architecture (ISA) Licensor</div>
+        <div class="eco-desc">ARM doesn't make chips — they license the <strong>instruction set architecture</strong> that ~95% of mobile chips use. Apple, Qualcomm, Google, Amazon all build on ARM's designs. Collects royalties on every chip sold.</div>
+      </div>
+      <div class="eco-card" style="border-color:#a78bfa;">
+        <div class="eco-name" style="color:#c4b5fd;">Synopsys & Cadence</div>
+        <div class="eco-role">EDA Tools — Duopoly</div>
+        <div class="eco-desc">The software used to design chips. <strong>Every single advanced chip</strong> in the world is designed using their tools. Combined ~70% market share. No chip gets made without them — it's like Adobe for chip design.</div>
+      </div>
+      <div class="eco-card" style="border-color:#f59e0b;">
+        <div class="eco-name" style="color:#fbbf24;">Broadcom</div>
+        <div class="eco-role">Custom Silicon & Networking</div>
+        <div class="eco-desc">Designs custom AI chips for Google (TPU), Meta, and others. Also makes the networking chips that connect GPUs together. $14B+ custom silicon revenue. The "design services" powerhouse.</div>
+      </div>
+      <div class="eco-card" style="border-color:#22c55e;">
+        <div class="eco-name" style="color:#4ade80;">Marvell</div>
+        <div class="eco-role">Custom Silicon & Data Infrastructure</div>
+        <div class="eco-desc">Partners with Amazon (Trainium), Microsoft, and others on custom chip design. Also makes networking/storage controllers essential for AI data centers. Growing fast in custom silicon.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 7. ISAs EXPLAINED ========== -->
+  <div class="anatomy-card">
+    <h3>🗣️ Instruction Set Architectures (ISAs) — The "Language" Chips Speak</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">An ISA is the fundamental "language" that software uses to communicate with a chip. Different ISAs = different ecosystems of software, tools, and developers. Think of it like human languages — switching is expensive and disruptive.</p>
+    
+    <div class="isa-grid">
+      <div class="isa-card x86">
+        <div class="isa-name">x86</div>
+        <div class="isa-owners">Intel & AMD</div>
+        <div class="isa-desc">
+          The dominant ISA for PCs and servers since the 1980s. Complex instruction set (CISC). Powers almost every laptop, desktop, and traditional data center.
+        </div>
+        <div style="margin-top:12px;">
+          <div class="isa-bar-row">
+            <div class="isa-bar-label">PCs</div>
+            <div class="isa-bar-track"><div class="isa-bar-fill" style="width:90%;background:#3b82f6;"></div></div>
+          </div>
+          <div class="isa-bar-row">
+            <div class="isa-bar-label">Servers</div>
+            <div class="isa-bar-track"><div class="isa-bar-fill" style="width:80%;background:#3b82f6;"></div></div>
+          </div>
+          <div class="isa-bar-row">
+            <div class="isa-bar-label">Mobile</div>
+            <div class="isa-bar-track"><div class="isa-bar-fill" style="width:2%;background:#3b82f6;"></div></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="isa-card arm-isa">
+        <div class="isa-name">ARM</div>
+        <div class="isa-owners">ARM Holdings (licenses)</div>
+        <div class="isa-desc">
+          Reduced instruction set (RISC). Dominates mobile, rapidly growing in servers and AI. Apple Silicon, AWS Graviton, and Nvidia Grace all use ARM.
+        </div>
+        <div style="margin-top:12px;">
+          <div class="isa-bar-row">
+            <div class="isa-bar-label">Mobile</div>
+            <div class="isa-bar-track"><div class="isa-bar-fill" style="width:95%;background:#22c55e;"></div></div>
+          </div>
+          <div class="isa-bar-row">
+            <div class="isa-bar-label">Servers</div>
+            <div class="isa-bar-track"><div class="isa-bar-fill" style="width:15%;background:#22c55e;"></div></div>
+          </div>
+          <div class="isa-bar-row">
+            <div class="isa-bar-label">PCs</div>
+            <div class="isa-bar-track"><div class="isa-bar-fill" style="width:12%;background:#22c55e;"></div></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="isa-card riscv">
+        <div class="isa-name">RISC-V</div>
+        <div class="isa-owners">Open Source (no license fees)</div>
+        <div class="isa-desc">
+          The open-source challenger. No royalties, anyone can use it. China is investing heavily. Still early for AI/servers, but growing fast in embedded and IoT.
+        </div>
+        <div style="margin-top:12px;">
+          <div class="isa-bar-row">
+            <div class="isa-bar-label">IoT</div>
+            <div class="isa-bar-track"><div class="isa-bar-fill" style="width:20%;background:#a78bfa;"></div></div>
+          </div>
+          <div class="isa-bar-row">
+            <div class="isa-bar-label">Servers</div>
+            <div class="isa-bar-track"><div class="isa-bar-fill" style="width:2%;background:#a78bfa;"></div></div>
+          </div>
+          <div class="isa-bar-row">
+            <div class="isa-bar-label">PCs</div>
+            <div class="isa-bar-track"><div class="isa-bar-fill" style="width:1%;background:#a78bfa;"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:#9ca3af;text-align:center;margin-top:8px;">The ISA determines what software can run on a chip. Switching ISA = rewriting/recompiling everything. That's why x86 and ARM dominance persists.</p>
+  </div>
+
+  <!-- ========== 8. KEY NUMBERS ========== -->
+  <div class="section-title"><span class="emoji">🔢</span> Key Numbers to Remember</div>
+  <div class="key-numbers">
+    <div class="key-num">
+      <div class="num">94%+</div>
+      <div class="desc">Nvidia's share of discrete GPU market for AI/data center</div>
+    </div>
+    <div class="key-num">
+      <div class="num">$51.2B</div>
+      <div class="desc">Nvidia data center revenue in fiscal Q3 2026</div>
+    </div>
+    <div class="key-num">
+      <div class="num">$1B+</div>
+      <div class="desc">Cost to design a cutting-edge chip from scratch</div>
+    </div>
+    <div class="key-num">
+      <div class="num">2</div>
+      <div class="desc">Companies (Synopsys + Cadence) control EDA design tools</div>
+    </div>
+    <div class="key-num">
+      <div class="num">20+ yrs</div>
+      <div class="desc">Of CUDA ecosystem investment — Nvidia's deepest moat</div>
+    </div>
+    <div class="key-num">
+      <div class="num">1 GW</div>
+      <div class="desc">AMD MI450 deployment planned by OpenAI</div>
+    </div>
+  </div>
+
+  <!-- ========== 9. WORTH KNOWING ========== -->
+  <div class="worth-knowing">
+    <h3>📌 Worth Knowing</h3>
+    <ul>
+      <li><strong>Why is CUDA so hard to unseat?</strong> — It's not just software. It's 20+ years of libraries (cuDNN, TensorRT, NCCL), frameworks (PyTorch/TensorFlow optimized for CUDA), millions of trained developers, university courses, research papers, and corporate codebases. Switching away means retraining people, rewriting code, and accepting worse performance during the transition. The ecosystem is the moat, not the API.</li>
+      <li><strong>Nvidia's software moat may be more valuable than its hardware.</strong> — Hardware specs can be matched (AMD's MI300X competes on paper). But the software ecosystem is nearly impossible to replicate. Even if AMD's chips were 2× faster, most companies wouldn't switch because their entire stack is CUDA-dependent. Nvidia knows this — it's why they invest billions in software R&D.</li>
+      <li><strong>China's chip design capabilities are advancing rapidly.</strong> — Huawei's Ascend 910C is a competitive AI chip designed entirely in China. Despite US export controls blocking advanced manufacturing equipment, Chinese companies are innovating around constraints — using older process nodes more creatively, chiplet designs, and massive engineering teams. The design talent exists; the manufacturing bottleneck (TSMC) is the real constraint.</li>
+      <li><strong>Why chip design costs have exploded.</strong> — Designing at the leading edge (3nm, 2nm) requires thousands of engineers, billions in R&D, years of development, and $100M+ in EDA tool licenses alone. The mask set for a 3nm chip can cost $30M. This is why fewer and fewer companies can afford to design cutting-edge chips, and why Broadcom/Marvell's design services business is booming — they amortize costs across multiple customers.</li>
+      <li><strong>The AI chip startup graveyard.</strong> — Dozens of startups (Graphcore, Cerebras, SambaNova, Habana) have tried to challenge Nvidia with novel architectures. Most have struggled or pivoted. The problem isn't building a good chip — it's building the software ecosystem around it. Customers won't adopt a chip without robust software support, and developers won't build for a chip without customers. Classic chicken-and-egg problem that Nvidia solved over 20 years.</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>

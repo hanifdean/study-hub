@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HBM & Memory Layer — AI Value Chain</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0a0a0f;
+    color: #e8e8ed;
+    padding: 40px 24px;
+    min-height: 100vh;
+  }
+  
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 36px;
+    font-weight: 500;
+  }
+  
+  /* === SECTION HEADERS === */
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .emoji { font-size: 20px; }
+  
+  /* === THE BIG PICTURE DIAGRAM === */
+  .big-picture {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
+    overflow-x: auto;
+  }
+  
+  .flow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: nowrap;
+    min-width: 900px;
+  }
+  
+  .flow-node {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-align: center;
+    min-width: 120px;
+    flex-shrink: 0;
+  }
+  .flow-node .label { font-size: 11px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .flow-node .name { font-size: 14px; font-weight: 700; margin-top: 4px; }
+  .flow-node.highlight {
+    border-color: #f59e0b;
+    background: #1a1a10;
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
+  }
+  .flow-node.highlight .name { color: #fbbf24; }
+  
+  .flow-arrow {
+    font-size: 18px;
+    color: #4b5563;
+    padding: 0 6px;
+    flex-shrink: 0;
+  }
+  
+  /* === HBM ANATOMY === */
+  .hbm-anatomy {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  
+  .anatomy-card {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 28px;
+  }
+  
+  .anatomy-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  
+  /* HBM Stack Visual */
+  .hbm-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin: 16px 0;
+  }
+  
+  .hbm-die {
+    width: 180px;
+    height: 28px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    position: relative;
+  }
+  
+  .hbm-die.dram {
+    background: linear-gradient(135deg, #1e3a5f, #2563eb);
+    border: 1px solid #3b82f6;
+    margin-bottom: 2px;
+  }
+  
+  .hbm-die.logic {
+    background: linear-gradient(135deg, #3b1f5e, #7c3aed);
+    border: 1px solid #8b5cf6;
+    margin-bottom: 4px;
+  }
+  
+  .hbm-die.interposer {
+    background: linear-gradient(135deg, #1a3a1a, #16a34a);
+    border: 1px solid #22c55e;
+    width: 260px;
+    height: 32px;
+    margin-top: 4px;
+  }
+  
+  .hbm-die.gpu {
+    background: linear-gradient(135deg, #5a1a1a, #dc2626);
+    border: 1px solid #ef4444;
+    width: 140px;
+    height: 50px;
+    margin-top: -36px;
+    margin-left: -160px;
+    align-self: flex-start;
+    margin-bottom: 4px;
+    font-size: 12px;
+  }
+  
+  .stack-label {
+    font-size: 10px;
+    color: #9ca3af;
+    text-align: center;
+    margin-top: 2px;
+    font-weight: 500;
+  }
+  
+  .bracket-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0 4px 0;
+    font-size: 11px;
+    color: #fbbf24;
+    font-weight: 600;
+  }
+  
+  /* GPU + HBM side by side */
+  .cowos-layout {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 16px;
+    margin: 20px 0 8px 0;
+    position: relative;
+  }
+  
+  .cowos-element {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  
+  .cowos-base {
+    width: 360px;
+    height: 28px;
+    background: linear-gradient(135deg, #1a3a1a, #16a34a);
+    border: 1px solid #22c55e;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    margin-top: 6px;
+  }
+  
+  .gpu-die {
+    width: 100px;
+    height: 60px;
+    background: linear-gradient(135deg, #5a1a1a, #dc2626);
+    border: 1px solid #ef4444;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  
+  .hbm-mini-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+  }
+  
+  .hbm-mini-die {
+    width: 44px;
+    height: 7px;
+    background: linear-gradient(135deg, #1e3a5f, #2563eb);
+    border: 0.5px solid #3b82f6;
+    border-radius: 2px;
+  }
+  .hbm-mini-die.base {
+    background: linear-gradient(135deg, #3b1f5e, #7c3aed);
+    border-color: #8b5cf6;
+  }
+  
+  .cowos-label {
+    font-size: 10px;
+    color: #9ca3af;
+    font-weight: 500;
+    margin-top: 2px;
+  }
+  
+  /* === TRADEOFF SECTION === */
+  .tradeoff {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+  
+  .wafer-split {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 20px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 120px;
+  }
+  
+  .wafer-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    transition: flex 0.3s;
+  }
+  
+  .wafer-side.ddr {
+    background: linear-gradient(135deg, #1a2a1a, #166534);
+    border: 1px solid #22c55e;
+  }
+  
+  .wafer-side.hbm {
+    background: linear-gradient(135deg, #1a1a3a, #1e40af);
+    border: 1px solid #3b82f6;
+    flex: 1.8;
+  }
+  
+  .wafer-side .side-label { font-size: 13px; font-weight: 700; }
+  .wafer-side .side-sub { font-size: 11px; opacity: 0.7; margin-top: 4px; }
+  .wafer-side .side-margin { font-size: 20px; font-weight: 800; margin-top: 6px; }
+  
+  .vs-divider {
+    width: 40px;
+    background: #1e1e2e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    color: #6b7280;
+  }
+  
+  .arrow-label {
+    text-align: center;
+    margin: 12px 0 0 0;
+    font-size: 13px;
+    color: #f59e0b;
+    font-weight: 600;
+  }
+  
+  .consequence-chain {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 20px 0 8px 0;
+    flex-wrap: wrap;
+  }
+  
+  .consequence-node {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    max-width: 160px;
+  }
+  .consequence-node.bad {
+    border-color: #991b1b;
+    background: #1a1010;
+    color: #fca5a5;
+  }
+  .consequence-node.good {
+    border-color: #166534;
+    background: #101a10;
+    color: #86efac;
+  }
+  
+  .c-arrow {
+    font-size: 16px;
+    color: #4b5563;
+    padding: 0 6px;
+  }
+  
+  /* === HBM GENERATIONS === */
+  .gen-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+  
+  .gen-table th {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 2px solid #2a2a4a;
+    color: #9ca3af;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .gen-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #1e1e2e;
+    font-weight: 500;
+  }
+  
+  .gen-table tr.current {
+    background: rgba(245, 158, 11, 0.08);
+  }
+  .gen-table tr.current td { color: #fbbf24; font-weight: 600; }
+  
+  .gen-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .gen-badge.now { background: #166534; color: #86efac; }
+  .gen-badge.next { background: #92400e; color: #fde68a; }
+  
+  /* === MARKET SHARE === */
+  .market-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  
+  .market-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .bar-label {
+    width: 90px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  
+  .bar-track {
+    flex: 1;
+    height: 32px;
+    background: #1a1a2e;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    transition: width 1s ease;
+  }
+  
+  .bar-fill.hynix { background: linear-gradient(90deg, #1e40af, #3b82f6); width: 62%; }
+  .bar-fill.micron { background: linear-gradient(90deg, #166534, #22c55e); width: 21%; }
+  .bar-fill.samsung { background: linear-gradient(90deg, #7c2d12, #f97316); width: 17%; }
+  
+  .bar-flag {
+    font-size: 10px;
+    color: #6b7280;
+    margin-left: 8px;
+  }
+  
+  /* === KEY NUMBERS === */
+  .key-numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+  
+  .key-num {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .key-num .num {
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .key-num .desc {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+  
+  /* === WORTH KNOWING === */
+  .worth-knowing {
+    background: #111118;
+    border: 1px solid #2a2a4a;
+    border-left: 3px solid #a78bfa;
+    border-radius: 0 12px 12px 0;
+    padding: 24px;
+    margin-top: 32px;
+  }
+  
+  .worth-knowing h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #a78bfa;
+    margin-bottom: 12px;
+  }
+  
+  .worth-knowing ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .worth-knowing li {
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 6px 0;
+    border-bottom: 1px solid #1e1e2e;
+    color: #d1d5db;
+  }
+  .worth-knowing li:last-child { border-bottom: none; }
+  .worth-knowing li strong { color: #e8e8ed; }
+  
+  /* === MOBILE RESPONSIVE === */
+  @media (max-width: 600px) {
+    body { padding: 20px 12px; font-size: 15px; }
+    
+    h1 { font-size: 22px; }
+    .subtitle { font-size: 13px; margin-bottom: 24px; }
+    .section-title { font-size: 16px; }
+    
+    /* Big picture flow — stack vertically */
+    .big-picture { padding: 20px 14px; overflow-x: visible; }
+    .flow-row {
+      min-width: auto;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+    .flow-node {
+      min-width: auto;
+      width: 100%;
+      padding: 12px 14px;
+    }
+    .flow-node .name { font-size: 14px; }
+    .flow-arrow {
+      text-align: center;
+      padding: 4px 0;
+      font-size: 16px;
+      transform: rotate(90deg);
+    }
+    
+    /* Anatomy grid — single column */
+    .hbm-anatomy { grid-template-columns: 1fr; gap: 16px; }
+    .anatomy-card { padding: 20px 16px; }
+    .anatomy-card h3 { font-size: 15px; }
+    
+    /* HBM stack visual — scale down */
+    .hbm-die { width: 140px; height: 22px; font-size: 9px; }
+    .hbm-die.interposer { width: 200px; height: 26px; }
+    .hbm-die.gpu { width: 110px; height: 40px; margin-left: -125px; font-size: 10px; }
+    
+    /* CoWoS layout — scale and wrap */
+    .cowos-layout { gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .cowos-base { width: 100%; max-width: 320px; }
+    .gpu-die { width: 70px; height: 45px; font-size: 10px; }
+    .hbm-mini-die { width: 30px; }
+    
+    /* Bandwidth comparison boxes */
+    .anatomy-card div[style*="display:flex"][style*="gap:24px"] {
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    /* Tradeoff section */
+    .tradeoff { padding: 20px 14px; }
+    .wafer-split { flex-direction: column; height: auto; }
+    .wafer-side { padding: 14px; }
+    .wafer-side .side-margin { font-size: 18px; }
+    .vs-divider {
+      width: 100%;
+      height: 32px;
+    }
+    
+    /* Consequence chain — stack vertically */
+    .consequence-chain {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+    .consequence-node {
+      max-width: none;
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 13px;
+    }
+    .c-arrow {
+      text-align: center;
+      padding: 4px 0;
+      transform: rotate(90deg);
+    }
+    
+    /* Table — horizontal scroll */
+    .anatomy-card:has(.gen-table) { padding: 20px 0; }
+    .anatomy-card:has(.gen-table) > h3,
+    .anatomy-card:has(.gen-table) > p { padding: 0 16px; }
+    .gen-table { font-size: 12px; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .gen-table th { padding: 8px 10px; font-size: 10px; white-space: nowrap; }
+    .gen-table td { padding: 8px 10px; white-space: nowrap; }
+    
+    /* Market bars */
+    .bar-label { width: 70px; font-size: 12px; }
+    .bar-track { height: 36px; }
+    .bar-fill { font-size: 11px; padding-left: 8px; min-height: 44px; }
+    
+    /* Key numbers — single column */
+    .key-numbers { grid-template-columns: 1fr; gap: 12px; }
+    .key-num { padding: 16px; }
+    .key-num .num { font-size: 24px; }
+    .key-num .desc { font-size: 12px; }
+    
+    /* Worth knowing */
+    .worth-knowing { padding: 20px 16px; }
+    .worth-knowing li { font-size: 14px; line-height: 1.7; padding: 8px 0; }
+    
+    /* General text readability */
+    p { font-size: 14px; }
+    .stack-label { font-size: 11px; }
+  }
+  
+  /* Small phones */
+  @media (max-width: 360px) {
+    body { padding: 16px 8px; }
+    .big-picture { padding: 16px 10px; }
+    .anatomy-card { padding: 16px 12px; }
+    .hbm-die { width: 120px; }
+    .hbm-die.interposer { width: 170px; }
+    .hbm-die.gpu { width: 95px; margin-left: -105px; }
+    .cowos-base { max-width: 280px; }
+    .key-num .num { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  
+  <h1>🧠 HBM & the Memory Layer</h1>
+  <p class="subtitle">Layer 4 of the AI Value Chain — where silicon meets bandwidth</p>
+
+  <!-- BIG PICTURE: Where Memory sits -->
+  <div class="big-picture">
+    <div class="section-title"><span class="emoji">🗺️</span> Where Memory Sits in the Stack</div>
+    <div class="flow-row">
+      <div class="flow-node"><div class="label">Layer 1</div><div class="name">Raw Materials</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="label">Layer 2</div><div class="name">Equipment</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="label">Layer 3</div><div class="name">Foundries</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node highlight"><div class="label">Layer 4</div><div class="name">⚡ Memory & HBM</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="label">Layer 5</div><div class="name">Processors</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="label">Layer 6-9</div><div class="name">Infra → AI</div></div>
+    </div>
+  </div>
+
+  <!-- WHAT IS HBM -->
+  <div class="hbm-anatomy">
+    
+    <!-- Physical Structure -->
+    <div class="anatomy-card">
+      <h3>🔬 What HBM Actually Is</h3>
+      <p style="font-size:13px;color:#9ca3af;margin-bottom:12px;">High Bandwidth Memory = DRAM dies stacked vertically like a tiny skyscraper, connected by thousands of tiny wires (TSVs) punched through each layer</p>
+      
+      <div class="hbm-stack">
+        <div class="hbm-die dram">DRAM Die 12</div>
+        <div class="hbm-die dram">DRAM Die 11</div>
+        <div class="hbm-die dram">DRAM Die 10</div>
+        <div class="hbm-die dram">DRAM Die 9</div>
+        <div class="hbm-die dram">DRAM Die 8</div>
+        <div class="hbm-die dram">DRAM Die 7</div>
+        <div class="hbm-die dram">DRAM Die 6</div>
+        <div class="hbm-die dram">DRAM Die 5</div>
+        <div class="hbm-die dram">DRAM Die 4</div>
+        <div class="hbm-die dram">DRAM Die 3</div>
+        <div class="hbm-die dram">DRAM Die 2</div>
+        <div class="hbm-die dram">DRAM Die 1</div>
+        <div class="hbm-die logic">Logic Die (Controller)</div>
+      </div>
+      <div class="stack-label">↑ HBM3E: 12 DRAM dies stacked + 1 logic die</div>
+      <div class="stack-label" style="color:#60a5fa;margin-top:6px;">Connected by ~10,000+ TSVs (Through-Silicon Vias)</div>
+    </div>
+
+    <!-- How it connects to GPU -->
+    <div class="anatomy-card">
+      <h3>🔗 How HBM Connects to the GPU</h3>
+      <p style="font-size:13px;color:#9ca3af;margin-bottom:8px;">GPU and HBM stacks sit side-by-side on a silicon interposer (CoWoS packaging by TSMC)</p>
+      
+      <div class="cowos-layout">
+        <div class="cowos-element">
+          <div class="gpu-die">GPU Die</div>
+          <div class="cowos-label">Processor</div>
+        </div>
+        <div class="cowos-element">
+          <div class="hbm-mini-stack">
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die base"></div>
+          </div>
+          <div class="cowos-label">HBM Stack 1</div>
+        </div>
+        <div class="cowos-element">
+          <div class="hbm-mini-stack">
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die base"></div>
+          </div>
+          <div class="cowos-label">HBM Stack 2</div>
+        </div>
+        <div class="cowos-element">
+          <div class="hbm-mini-stack">
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die base"></div>
+          </div>
+          <div class="cowos-label">HBM Stack 3</div>
+        </div>
+        <div class="cowos-element">
+          <div class="hbm-mini-stack">
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die"></div>
+            <div class="hbm-mini-die base"></div>
+          </div>
+          <div class="cowos-label">HBM Stack 4</div>
+        </div>
+      </div>
+      <div class="cowos-base">Silicon Interposer (CoWoS by TSMC)</div>
+      <p style="font-size:11px;color:#6b7280;margin-top:10px;text-align:center;">Nvidia H100 has 6 HBM stacks × 80GB = 80GB total · B200 has 8 stacks = 192GB</p>
+    </div>
+  </div>
+
+  <!-- WHY HBM EXISTS -->
+  <div class="anatomy-card" style="margin-bottom:32px;">
+    <h3>💡 Why HBM Exists — The Bandwidth Problem</h3>
+    <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:16px;">
+      AI models need to move <strong>massive</strong> amounts of data to/from the GPU every second. Regular DDR5 RAM sits far away on the motherboard and connects through narrow pipes. HBM sits <em>right next to</em> the GPU with thousands of parallel connections.
+    </p>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:200px;background:#1a1a2e;border-radius:10px;padding:16px;text-align:center;">
+        <div style="font-size:11px;color:#9ca3af;font-weight:600;">DDR5 (Regular RAM)</div>
+        <div style="font-size:24px;font-weight:800;color:#6b7280;margin:8px 0;">~50 GB/s</div>
+        <div style="font-size:11px;color:#6b7280;">64-bit bus · Far from GPU</div>
+      </div>
+      <div style="flex:1;min-width:200px;background:#1a1a3a;border:1px solid #3b82f6;border-radius:10px;padding:16px;text-align:center;">
+        <div style="font-size:11px;color:#60a5fa;font-weight:600;">HBM3E</div>
+        <div style="font-size:24px;font-weight:800;color:#60a5fa;margin:8px 0;">~4,800 GB/s</div>
+        <div style="font-size:11px;color:#60a5fa;">1024-bit bus × 8 stacks · Adjacent to GPU</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:#fbbf24;text-align:center;margin-top:12px;font-weight:600;">HBM is ~100x faster than regular RAM. That's why AI chips need it.</p>
+  </div>
+
+  <!-- THE TRADEOFF -->
+  <div class="tradeoff">
+    <div class="section-title"><span class="emoji">⚖️</span> The HBM vs Consumer RAM Tradeoff</div>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:4px;">Same DRAM wafers, two very different products. Manufacturers must choose how to allocate limited fab capacity:</p>
+    
+    <div class="wafer-split">
+      <div class="wafer-side ddr">
+        <div class="side-label">DDR5 (Consumer)</div>
+        <div class="side-sub">PCs, phones, servers</div>
+        <div class="side-margin">~$3/GB</div>
+      </div>
+      <div class="vs-divider">VS</div>
+      <div class="wafer-side hbm">
+        <div class="side-label">HBM3E (AI)</div>
+        <div class="side-sub">GPU accelerators</div>
+        <div class="side-margin">~$15/GB</div>
+        <div class="side-sub" style="color:#fbbf24;">← 3-5x more profitable</div>
+      </div>
+    </div>
+    
+    <div class="arrow-label">↓ So what happens?</div>
+    
+    <div class="consequence-chain">
+      <div class="consequence-node good">AI demand for HBM explodes 📈</div>
+      <div class="c-arrow">→</div>
+      <div class="consequence-node">Fabs shift wafers to HBM (higher margin)</div>
+      <div class="c-arrow">→</div>
+      <div class="consequence-node bad">Less DDR5 supply for consumers</div>
+      <div class="c-arrow">→</div>
+      <div class="consequence-node bad">PC/phone RAM prices rise 📈</div>
+    </div>
+    <p style="font-size:12px;color:#6b7280;text-align:center;margin-top:12px;">This is the "memory shortage" you're seeing in the news. It's not that we can't make RAM — it's that the economics of AI are pulling production away from consumers.</p>
+  </div>
+
+  <!-- HBM GENERATIONS -->
+  <div class="anatomy-card" style="margin-bottom:32px;">
+    <h3>📊 HBM Generations — The Evolution</h3>
+    <table class="gen-table">
+      <thead>
+        <tr>
+          <th>Generation</th>
+          <th>Bandwidth</th>
+          <th>Capacity/Stack</th>
+          <th>Layers</th>
+          <th>Used In</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>HBM2e</td>
+          <td>460 GB/s</td>
+          <td>16 GB</td>
+          <td>8 dies</td>
+          <td>A100</td>
+        </tr>
+        <tr>
+          <td>HBM3</td>
+          <td>819 GB/s</td>
+          <td>24 GB</td>
+          <td>8 dies</td>
+          <td>H100</td>
+        </tr>
+        <tr class="current">
+          <td>HBM3E <span class="gen-badge now">NOW</span></td>
+          <td>1,200 GB/s</td>
+          <td>36 GB</td>
+          <td>12 dies</td>
+          <td>B200, MI300X</td>
+        </tr>
+        <tr>
+          <td>HBM4 <span class="gen-badge next">2026</span></td>
+          <td>1,800+ GB/s</td>
+          <td>48 GB</td>
+          <td>16 dies</td>
+          <td>Nvidia Rubin, AMD MI450</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px;color:#6b7280;margin-top:8px;">Each generation = more layers stacked, wider bus, more bandwidth. The trend: models keep getting bigger → need more memory → need faster memory.</p>
+  </div>
+
+  <!-- MARKET SHARE -->
+  <div class="anatomy-card" style="margin-bottom:32px;">
+    <h3>🏢 Who Makes HBM — Market Share</h3>
+    <div class="market-bars">
+      <div class="market-bar-row">
+        <div class="bar-label">SK Hynix</div>
+        <div class="bar-track"><div class="bar-fill hynix">62% <span class="bar-flag">🇰🇷</span></div></div>
+      </div>
+      <div class="market-bar-row">
+        <div class="bar-label">Micron</div>
+        <div class="bar-track"><div class="bar-fill micron">21% <span class="bar-flag">🇺🇸</span></div></div>
+      </div>
+      <div class="market-bar-row">
+        <div class="bar-label">Samsung</div>
+        <div class="bar-track"><div class="bar-fill samsung">17% <span class="bar-flag">🇰🇷</span></div></div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:#d1d5db;margin-top:8px;line-height:1.6;">
+      <strong>Key insight:</strong> 79% of HBM production is in South Korea. Micron is the <em>only</em> US-based supplier — which is why it's getting $13.7B in CHIPS Act funding. All three producers are <strong>sold out through end of 2026</strong>.
+    </p>
+  </div>
+
+  <!-- KEY NUMBERS -->
+  <div class="section-title"><span class="emoji">🔢</span> Key Numbers to Remember</div>
+  <div class="key-numbers">
+    <div class="key-num">
+      <div class="num">34×</div>
+      <div class="desc">More HBM per AI server vs previous generation</div>
+    </div>
+    <div class="key-num">
+      <div class="num">21.7 TB</div>
+      <div class="desc">HBM in Nvidia's GB300 rack (up from 640GB in DGX H100)</div>
+    </div>
+    <div class="key-num">
+      <div class="num">$200B</div>
+      <div class="desc">Micron's planned US investment in memory fabs</div>
+    </div>
+    <div class="key-num">
+      <div class="num">239%</div>
+      <div class="desc">Micron stock return in 2025</div>
+    </div>
+    <div class="key-num">
+      <div class="num">100×</div>
+      <div class="desc">HBM bandwidth vs regular DDR5 RAM</div>
+    </div>
+    <div class="key-num">
+      <div class="num">3-5×</div>
+      <div class="desc">HBM profit margin vs commodity DRAM</div>
+    </div>
+  </div>
+
+  <!-- WORTH KNOWING -->
+  <div class="worth-knowing">
+    <h3>📌 Worth Knowing</h3>
+    <ul>
+      <li><strong>TSVs (Through-Silicon Vias)</strong> — the tiny vertical wires punched through each DRAM die to connect the stacked layers. Manufacturing these without defects is extremely hard, which is why HBM yield rates are a competitive moat.</li>
+      <li><strong>CoWoS bottleneck</strong> — TSMC's Chip-on-Wafer-on-Substrate packaging is needed to put HBM + GPU together on one interposer. CoWoS capacity was a major bottleneck in 2024-2025 and TSMC has been aggressively expanding it.</li>
+      <li><strong>Why SK Hynix leads</strong> — they partnered with Nvidia early (2018) on HBM optimization. First to market with HBM3E. Samsung struggled with yield issues and only recently got Nvidia qualification.</li>
+      <li><strong>Memory is no longer a commodity</strong> — historically DRAM was a cyclical boom-bust commodity. HBM has transformed it into a strategic, high-margin product. Micron's CEO: "Memory is now essential to AI's cognitive functions."</li>
+      <li><strong>The heat problem</strong> — stacking 12 DRAM dies creates serious thermal challenges. HBM4 will need new thermal solutions, which is partly why it's being designed with a fundamentally different architecture.</li>
+      <li><strong>Why not just use more regular RAM?</strong> — It's about bandwidth, not just capacity. AI models need to read billions of parameters every inference. The data bus on regular RAM is simply too narrow — like trying to fill a swimming pool through a garden hose vs a fire hydrant.</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>

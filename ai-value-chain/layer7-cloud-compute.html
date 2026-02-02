@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layer 7: Cloud & Compute Providers — AI Value Chain</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0a0a0f;
+    color: #e8e8ed;
+    padding: 40px 24px;
+    min-height: 100vh;
+  }
+  
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 36px;
+    font-weight: 500;
+  }
+  
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .emoji { font-size: 20px; }
+  
+  /* === BIG PICTURE === */
+  .big-picture {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
+    overflow-x: auto;
+  }
+  
+  .flow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: nowrap;
+    min-width: 900px;
+  }
+  
+  .flow-node {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-align: center;
+    min-width: 120px;
+    flex-shrink: 0;
+  }
+  .flow-node .label { font-size: 11px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .flow-node .name { font-size: 14px; font-weight: 700; margin-top: 4px; }
+  .flow-node.highlight {
+    border-color: #38bdf8;
+    background: #0f1a2a;
+    box-shadow: 0 0 24px rgba(56, 189, 248, 0.2);
+  }
+  .flow-node.highlight .name { color: #7dd3fc; }
+  .flow-node.dim { opacity: 0.5; }
+  
+  .flow-arrow {
+    font-size: 18px;
+    color: #4b5563;
+    padding: 0 6px;
+    flex-shrink: 0;
+  }
+  
+  /* === ANATOMY CARDS === */
+  .anatomy-card {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+  
+  .anatomy-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  
+  /* === HYPERSCALER CARDS === */
+  .hyper-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 16px 0;
+  }
+  
+  .hyper-card {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+  }
+  .hyper-card .h-name {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .hyper-card .h-parent {
+    font-size: 11px;
+    color: #9ca3af;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .hyper-card .h-desc {
+    font-size: 12px;
+    color: #d1d5db;
+    line-height: 1.5;
+  }
+  .hyper-card .h-share {
+    font-size: 28px;
+    font-weight: 800;
+    margin: 8px 0;
+  }
+  .hyper-card .h-capex {
+    font-size: 11px;
+    color: #fbbf24;
+    font-weight: 600;
+    margin-top: 8px;
+  }
+  
+  .hyper-card.aws { border-color: #f59e0b; }
+  .hyper-card.aws .h-name { color: #fbbf24; }
+  .hyper-card.aws .h-share { color: #fbbf24; }
+  
+  .hyper-card.azure { border-color: #3b82f6; }
+  .hyper-card.azure .h-name { color: #60a5fa; }
+  .hyper-card.azure .h-share { color: #60a5fa; }
+  
+  .hyper-card.gcp { border-color: #22c55e; }
+  .hyper-card.gcp .h-name { color: #4ade80; }
+  .hyper-card.gcp .h-share { color: #4ade80; }
+  
+  /* === AI-NATIVE PROVIDERS === */
+  .native-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin: 16px 0;
+  }
+  
+  .native-card {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .native-card .n-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #e8e8ed;
+    margin-bottom: 2px;
+  }
+  .native-card .n-focus {
+    font-size: 11px;
+    color: #9ca3af;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .native-card .n-desc {
+    font-size: 12px;
+    color: #d1d5db;
+    line-height: 1.5;
+  }
+  .native-card.featured {
+    border-color: #a78bfa;
+    background: #1a1a30;
+    grid-column: 1 / -1;
+  }
+  .native-card.featured .n-name { color: #c4b5fd; }
+  
+  /* === SOVEREIGN AI === */
+  .sovereign-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  
+  .sovereign-card {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+  }
+  .sovereign-card .sv-flag { font-size: 28px; }
+  .sovereign-card .sv-name { font-size: 12px; font-weight: 700; margin-top: 6px; color: #e8e8ed; }
+  .sovereign-card .sv-detail { font-size: 10px; color: #9ca3af; margin-top: 4px; line-height: 1.3; }
+  
+  /* === PRICING TABLE === */
+  .pricing-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+  
+  .pricing-table th {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 2px solid #2a2a4a;
+    color: #9ca3af;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .pricing-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #1e1e2e;
+    font-weight: 500;
+  }
+  
+  .pricing-table tr.highlight-row {
+    background: rgba(56, 189, 248, 0.08);
+  }
+  .pricing-table tr.highlight-row td { color: #7dd3fc; font-weight: 600; }
+  
+  .price-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .price-badge.popular { background: #166534; color: #86efac; }
+  .price-badge.premium { background: #92400e; color: #fde68a; }
+  
+  /* === MARKET SHARE BARS === */
+  .market-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  
+  .market-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .bar-label {
+    width: 110px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  
+  .bar-track {
+    flex: 1;
+    height: 32px;
+    background: #1a1a2e;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    transition: width 1s ease;
+  }
+  
+  .bar-flag {
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    margin-left: 8px;
+  }
+  
+  /* === PRICING COMPARISON === */
+  .pricing-visual {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 20px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 120px;
+  }
+  
+  .pricing-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  
+  .pricing-side.spot {
+    background: linear-gradient(135deg, #1a2a1a, #166534);
+    border: 1px solid #22c55e;
+  }
+  
+  .pricing-side.reserved {
+    background: linear-gradient(135deg, #1a1a3a, #1e40af);
+    border: 1px solid #3b82f6;
+  }
+  
+  .pricing-side.on-demand {
+    background: linear-gradient(135deg, #2a1a10, #92400e);
+    border: 1px solid #f59e0b;
+  }
+  
+  .pricing-side .side-label { font-size: 13px; font-weight: 700; }
+  .pricing-side .side-sub { font-size: 11px; opacity: 0.7; margin-top: 4px; }
+  .pricing-side .side-price { font-size: 22px; font-weight: 800; margin-top: 6px; }
+  
+  .vs-divider {
+    width: 3px;
+    background: #1e1e2e;
+    flex-shrink: 0;
+  }
+  
+  /* === KEY NUMBERS === */
+  .key-numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+  
+  .key-num {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .key-num .num {
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .key-num .desc {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+  
+  /* === WORTH KNOWING === */
+  .worth-knowing {
+    background: #111118;
+    border: 1px solid #2a2a4a;
+    border-left: 3px solid #a78bfa;
+    border-radius: 0 12px 12px 0;
+    padding: 24px;
+    margin-top: 32px;
+  }
+  
+  .worth-knowing h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #a78bfa;
+    margin-bottom: 12px;
+  }
+  
+  .worth-knowing ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .worth-knowing li {
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 6px 0;
+    border-bottom: 1px solid #1e1e2e;
+    color: #d1d5db;
+  }
+  .worth-knowing li:last-child { border-bottom: none; }
+  .worth-knowing li strong { color: #e8e8ed; }
+  
+  /* === MOBILE RESPONSIVE === */
+  @media (max-width: 600px) {
+    body { padding: 20px 12px; font-size: 15px; }
+    h1 { font-size: 22px; }
+    .subtitle { font-size: 13px; margin-bottom: 24px; }
+    .section-title { font-size: 16px; }
+    
+    .big-picture { padding: 20px 14px; overflow-x: visible; }
+    .flow-row {
+      min-width: auto;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+    .flow-node { min-width: auto; width: 100%; padding: 12px 14px; }
+    .flow-node .name { font-size: 14px; }
+    .flow-arrow {
+      text-align: center;
+      padding: 4px 0;
+      font-size: 16px;
+      transform: rotate(90deg);
+    }
+    
+    .anatomy-card { padding: 20px 14px; }
+    .anatomy-card h3 { font-size: 15px; }
+    
+    .hyper-grid { grid-template-columns: 1fr; }
+    .hyper-card .h-share { font-size: 24px; }
+    
+    .native-grid { grid-template-columns: 1fr; }
+    .native-card.featured { grid-column: auto; }
+    
+    .sovereign-grid { grid-template-columns: repeat(2, 1fr); }
+    
+    .pricing-table { font-size: 12px; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .pricing-table th { padding: 8px 10px; font-size: 10px; white-space: nowrap; }
+    .pricing-table td { padding: 8px 10px; white-space: nowrap; }
+    
+    .pricing-visual { flex-direction: column; height: auto; }
+    .pricing-side { padding: 14px; }
+    .pricing-side .side-price { font-size: 18px; }
+    .vs-divider { width: 100%; height: 3px; }
+    
+    .bar-label { width: 80px; font-size: 12px; }
+    .bar-track { height: 36px; }
+    .bar-fill { font-size: 11px; padding-left: 6px; min-height: 44px; }
+    
+    .key-numbers { grid-template-columns: 1fr; gap: 12px; }
+    .key-num { padding: 16px; }
+    .key-num .num { font-size: 24px; }
+    .key-num .desc { font-size: 12px; }
+    
+    .worth-knowing { padding: 20px 16px; }
+    .worth-knowing li { font-size: 14px; line-height: 1.7; padding: 8px 0; }
+    
+    p { font-size: 14px; }
+  }
+  
+  @media (max-width: 360px) {
+    body { padding: 16px 8px; }
+    .big-picture { padding: 16px 10px; }
+    .anatomy-card { padding: 16px 10px; }
+    .sovereign-grid { grid-template-columns: 1fr; }
+    .key-num .num { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>☁️ Layer 7: Cloud & Compute Providers</h1>
+  <p class="subtitle">The companies that buy GPUs and servers, then rent compute to the world</p>
+
+  <!-- ========== 1. WHERE THIS SITS ========== -->
+  <div class="big-picture">
+    <div class="section-title"><span class="emoji">🗺️</span> Where This Sits in the AI Value Chain</div>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Layer 7 is where <strong style="color:#7dd3fc;">hardware becomes a service</strong>. These companies spend tens of billions buying GPUs, networking gear, and servers — then rent that compute to AI labs, startups, and enterprises by the hour. They're the bridge between physical infrastructure and the AI models that run on top.</p>
+    <div class="flow-row">
+      <div class="flow-node dim"><div class="label">Layer 1-3</div><div class="name">Materials → Fab</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 4</div><div class="name">Memory</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 5</div><div class="name">Processors</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 6</div><div class="name">Servers & Infra</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node highlight"><div class="label">Layer 7</div><div class="name">☁️ Cloud & Compute</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 8-9</div><div class="name">AI Labs → Apps</div></div>
+    </div>
+  </div>
+
+  <!-- ========== 2. HYPERSCALER BIG 3 ========== -->
+  <div class="anatomy-card">
+    <h3>🏢 The Hyperscaler Big 3</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Three companies dominate global cloud infrastructure. Together they control ~67% of the market — and each is spending $50-80B+ per year building out AI compute capacity.</p>
+    
+    <div class="hyper-grid">
+      <div class="hyper-card aws">
+        <div class="h-name">☁️ AWS</div>
+        <div class="h-parent">Amazon Web Services</div>
+        <div class="h-share">~31%</div>
+        <div class="h-desc">The market leader. Largest selection of GPU instances. Custom AI chips (Trainium, Inferentia). Most regions globally. The default choice for most enterprises.</div>
+        <div class="h-capex">💰 $75B+ capex planned 2025</div>
+      </div>
+      <div class="hyper-card azure">
+        <div class="h-name">🔷 Microsoft Azure</div>
+        <div class="h-parent">Microsoft</div>
+        <div class="h-share">~25%</div>
+        <div class="h-desc">OpenAI's exclusive cloud partner. Runs GPT-4/5 inference. Deepest AI integration with Copilot ecosystem. Fastest-growing of the Big 3 thanks to AI tailwinds.</div>
+        <div class="h-capex">💰 $80B+ capex planned 2025</div>
+      </div>
+      <div class="hyper-card gcp">
+        <div class="h-name">🟢 Google Cloud</div>
+        <div class="h-parent">Alphabet / Google</div>
+        <div class="h-share">~11%</div>
+        <div class="h-desc">Home of TPUs — Google's custom AI accelerators. Runs Gemini models internally. Strong in AI/ML tooling. Smaller market share but punching above weight in AI.</div>
+        <div class="h-capex">💰 $75B+ capex planned 2025</div>
+      </div>
+    </div>
+    
+    <div style="margin-top:20px;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:#e8e8ed;">Cloud Market Share (IaaS)</div>
+      <div class="market-bars">
+        <div class="market-bar-row">
+          <div class="bar-label">AWS</div>
+          <div class="bar-track"><div class="bar-fill" style="width:31%;background:linear-gradient(90deg,#92400e,#f59e0b);">~31%</div></div>
+        </div>
+        <div class="market-bar-row">
+          <div class="bar-label">Azure</div>
+          <div class="bar-track"><div class="bar-fill" style="width:25%;background:linear-gradient(90deg,#1e40af,#3b82f6);">~25%</div></div>
+        </div>
+        <div class="market-bar-row">
+          <div class="bar-label">Google Cloud</div>
+          <div class="bar-track"><div class="bar-fill" style="width:11%;background:linear-gradient(90deg,#166534,#22c55e);">~11%</div></div>
+        </div>
+        <div class="market-bar-row">
+          <div class="bar-label">Others</div>
+          <div class="bar-track"><div class="bar-fill" style="width:33%;background:linear-gradient(90deg,#374151,#6b7280);">~33%</div></div>
+        </div>
+      </div>
+    </div>
+    
+    <p style="font-size:12px;color:#fbbf24;text-align:center;margin-top:16px;font-weight:600;">Combined 2025 capex: ~$230B+ — the biggest infrastructure buildout in human history</p>
+  </div>
+
+  <!-- ========== 3. AI-NATIVE CLOUD PROVIDERS ========== -->
+  <div class="anatomy-card">
+    <h3>🚀 AI-Native Cloud Providers</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">The hyperscalers can't satisfy demand alone. A new wave of GPU-focused cloud providers has emerged, purpose-built for AI workloads. They're leaner, faster to deploy GPU clusters, and often cheaper for pure AI compute.</p>
+    
+    <div class="native-grid">
+      <div class="native-card featured">
+        <div class="n-name">⚡ CoreWeave</div>
+        <div class="n-focus">GPU-Focused Cloud · Valued at $35B+</div>
+        <div class="n-desc">The poster child of the AI compute boom. Started as a crypto mining operation, pivoted to GPU cloud. Now one of Nvidia's largest customers. Went public in 2025. Key customers include Microsoft and AI labs that need massive GPU clusters fast. Revenue grew from ~$30M (2022) to $1.9B+ (2024).</div>
+      </div>
+      <div class="native-card">
+        <div class="n-name">🔬 Lambda Labs</div>
+        <div class="n-focus">AI Training Infrastructure</div>
+        <div class="n-desc">GPU cloud built by ML engineers, for ML engineers. Focus on simplicity — spin up a cluster of H100s in minutes. Popular with AI researchers and startups who want GPU access without enterprise complexity.</div>
+      </div>
+      <div class="native-card">
+        <div class="n-name">🤝 Together AI</div>
+        <div class="n-focus">Open-Source Model Hosting</div>
+        <div class="n-desc">Specializes in hosting and fine-tuning open-source models (Llama, Mistral). Offers inference APIs that are often cheaper than OpenAI/Anthropic for open models. The go-to for open-source AI deployment.</div>
+      </div>
+      <div class="native-card">
+        <div class="n-name">🌊 Crusoe Energy</div>
+        <div class="n-focus">Clean Energy AI Compute</div>
+        <div class="n-desc">Uses stranded natural gas and renewable energy to power GPU data centers. Pitches sustainability as a differentiator. Raised $600M+ in funding. Building one of the largest AI-focused data centers in the US.</div>
+      </div>
+    </div>
+    
+    <p style="font-size:12px;color:#d1d5db;margin-top:12px;line-height:1.6;text-align:center;">
+      <strong>Why they exist:</strong> Hyperscalers allocate GPUs across all customers. AI-native providers give you dedicated, bare-metal GPU access — like renting a private jet vs booking a seat on a commercial flight.
+    </p>
+  </div>
+
+  <!-- ========== 4. SOVEREIGN AI ========== -->
+  <div class="anatomy-card">
+    <h3>🏳️ Sovereign AI — Nations Building Their Own Compute</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Countries are realizing that <strong style="color:#fbbf24;">AI compute is a strategic resource</strong> — like oil, water, or electricity. Nations that depend on US cloud providers for AI could find their access cut off due to geopolitics, export controls, or sanctions. So they're building their own.</p>
+    
+    <div class="sovereign-grid">
+      <div class="sovereign-card">
+        <div class="sv-flag">🇸🇦</div>
+        <div class="sv-name">Saudi Arabia</div>
+        <div class="sv-detail">Massive GPU orders through Aramco. Building AI mega-clusters. Part of Vision 2030 diversification.</div>
+      </div>
+      <div class="sovereign-card">
+        <div class="sv-flag">🇦🇪</div>
+        <div class="sv-name">UAE</div>
+        <div class="sv-detail">G42 partnership with Microsoft. Falcon LLM. Aiming to be the AI hub of the Middle East.</div>
+      </div>
+      <div class="sovereign-card">
+        <div class="sv-flag">🇯🇵</div>
+        <div class="sv-name">Japan</div>
+        <div class="sv-detail">$13B+ AI investment plan. Building sovereign GPU clusters. Sakana AI leading domestic labs.</div>
+      </div>
+      <div class="sovereign-card">
+        <div class="sv-flag">🇮🇳</div>
+        <div class="sv-name">India</div>
+        <div class="sv-detail">IndiaAI Mission. Building national AI compute infrastructure. Yotta & Jio data centers.</div>
+      </div>
+      <div class="sovereign-card">
+        <div class="sv-flag">🇫🇷</div>
+        <div class="sv-name">France</div>
+        <div class="sv-detail">Mistral AI (homegrown lab). Government-backed AI compute. EU sovereignty push.</div>
+      </div>
+    </div>
+    
+    <p style="font-size:12px;color:#d1d5db;margin-top:16px;line-height:1.6;text-align:center;">
+      <strong>The logic:</strong> If your country's AI runs on someone else's GPUs in someone else's country, you have zero control. One policy change and your AI capabilities could evaporate overnight.
+    </p>
+  </div>
+
+  <!-- ========== 5. GPU RENTAL MARKET ========== -->
+  <div class="anatomy-card">
+    <h3>💰 The GPU Rental Market — How Pricing Works</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">GPU compute is sold like cloud instances — by the hour, with different tiers depending on commitment level. The pricing reflects the insane demand-supply imbalance for AI accelerators.</p>
+    
+    <div class="pricing-visual">
+      <div class="pricing-side spot">
+        <div class="side-label" style="color:#4ade80;">Spot / Interruptible</div>
+        <div class="side-sub" style="color:#86efac;">Can be preempted anytime</div>
+        <div class="side-price" style="color:#4ade80;">$1.50-2/hr</div>
+      </div>
+      <div class="vs-divider"></div>
+      <div class="pricing-side reserved">
+        <div class="side-label" style="color:#60a5fa;">Reserved (1-3 year)</div>
+        <div class="side-sub" style="color:#93c5fd;">Committed capacity, big discount</div>
+        <div class="side-price" style="color:#60a5fa;">$2-2.50/hr</div>
+      </div>
+      <div class="vs-divider"></div>
+      <div class="pricing-side on-demand">
+        <div class="side-label" style="color:#fbbf24;">On-Demand</div>
+        <div class="side-sub" style="color:#fde68a;">Flexible, pay as you go</div>
+        <div class="side-price" style="color:#fbbf24;">$2.50-3.50/hr</div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:#6b7280;text-align:center;margin-top:8px;">Approximate pricing per H100 GPU · Prices vary significantly by provider and region</p>
+    
+    <table class="pricing-table" style="margin-top:20px;">
+      <thead>
+        <tr>
+          <th>GPU</th>
+          <th>On-Demand $/hr</th>
+          <th>Use Case</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>A100 80GB</td>
+          <td>$1.50-2.50</td>
+          <td>Inference, fine-tuning, smaller training</td>
+          <td>Widely available</td>
+        </tr>
+        <tr class="highlight-row">
+          <td>H100 80GB <span class="price-badge popular">MOST POPULAR</span></td>
+          <td>$2.50-3.50</td>
+          <td>Training & inference workhorse</td>
+          <td>High demand</td>
+        </tr>
+        <tr>
+          <td>H200 141GB</td>
+          <td>$3.50-4.50</td>
+          <td>Large model training, HBM3E advantage</td>
+          <td>Limited supply</td>
+        </tr>
+        <tr>
+          <td>B200 192GB <span class="price-badge premium">BLACKWELL</span></td>
+          <td>$5-8+ (est.)</td>
+          <td>Next-gen training & inference</td>
+          <td>Ramping 2025</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p style="font-size:12px;color:#fbbf24;text-align:center;margin-top:16px;font-weight:600;">
+      Context: A single frontier model training run needs 10,000-30,000+ H100s for months → $100M-$1B+ in compute costs
+    </p>
+  </div>
+
+  <!-- ========== 6. KEY NUMBERS ========== -->
+  <div class="section-title"><span class="emoji">🔢</span> Key Numbers to Remember</div>
+  <div class="key-numbers">
+    <div class="key-num">
+      <div class="num">$230B+</div>
+      <div class="desc">Combined hyperscaler capex in 2025 — mostly going to AI infrastructure</div>
+    </div>
+    <div class="key-num">
+      <div class="num">~67%</div>
+      <div class="desc">Cloud market share held by AWS + Azure + GCP combined</div>
+    </div>
+    <div class="key-num">
+      <div class="num">$35B+</div>
+      <div class="desc">CoreWeave's valuation — from crypto mining to AI cloud giant in 3 years</div>
+    </div>
+    <div class="key-num">
+      <div class="num">$2-3/hr</div>
+      <div class="desc">Cost to rent a single H100 GPU — the currency of AI compute</div>
+    </div>
+    <div class="key-num">
+      <div class="num">60×</div>
+      <div class="desc">CoreWeave revenue growth (2022→2024): $30M to $1.9B</div>
+    </div>
+    <div class="key-num">
+      <div class="num">1M+</div>
+      <div class="desc">Estimated Nvidia GPUs deployed across hyperscaler data centers</div>
+    </div>
+  </div>
+
+  <!-- ========== 7. WORTH KNOWING ========== -->
+  <div class="worth-knowing">
+    <h3>📌 Worth Knowing</h3>
+    <ul>
+      <li><strong>GPU allocation is geopolitical</strong> — the US government now controls who gets access to advanced AI chips (H100, B200) through export controls. Countries like Saudi Arabia and UAE can only get GPUs with US approval. Nvidia has even designed "export-compliant" chips (H20) with reduced capabilities for China. Whoever controls GPU allocation controls the pace of AI development globally.</li>
+      <li><strong>The CoreWeave phenomenon</strong> — CoreWeave went from a small crypto mining company to a $35B+ GPU cloud provider in ~3 years. They secured massive Nvidia GPU allocations early, signed long-term contracts with Microsoft and AI labs, then went public. Their story illustrates the explosive demand for dedicated AI compute that hyperscalers couldn't satisfy fast enough.</li>
+      <li><strong>The hyperscaler capex arms race</strong> — Meta, Microsoft, Google, and Amazon are each spending $50-80B+ per year on data centers, mostly for AI. This is unprecedented — it exceeds what was spent building the entire US interstate highway system (inflation-adjusted). The bet: AI will be as fundamental as electricity, and whoever has the most compute wins.</li>
+      <li><strong>Why not just buy your own GPUs?</strong> — Building and operating your own GPU cluster requires expertise in power, cooling, networking, and software. A single rack of 8 H100s costs ~$300K+ just for the hardware, plus massive ongoing costs. Cloud providers handle all of this complexity — you just rent by the hour. Only the largest AI labs (OpenAI, Google, Meta) operate significant owned infrastructure.</li>
+      <li><strong>The power problem</strong> — AI data centers are incredibly power-hungry. A single Nvidia GB200 NVL72 rack draws ~120kW. Hyperscalers are now the largest buyers of nuclear power, natural gas, and renewable energy. Microsoft restarted Three Mile Island. Amazon bought a nuclear-powered data center campus. Power availability is becoming the real bottleneck, not GPU supply.</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>

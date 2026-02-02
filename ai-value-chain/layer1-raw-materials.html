@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layer 1: Raw Materials & Equipment — AI Value Chain</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0a0a0f;
+    color: #e8e8ed;
+    padding: 40px 24px;
+    min-height: 100vh;
+  }
+  
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 36px;
+    font-weight: 500;
+  }
+  
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .emoji { font-size: 20px; }
+  
+  /* === BIG PICTURE === */
+  .big-picture {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
+    overflow-x: auto;
+  }
+  
+  .flow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: nowrap;
+    min-width: 900px;
+  }
+  
+  .flow-node {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-align: center;
+    min-width: 120px;
+    flex-shrink: 0;
+  }
+  .flow-node .label { font-size: 11px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .flow-node .name { font-size: 14px; font-weight: 700; margin-top: 4px; }
+  .flow-node.highlight {
+    border-color: #f59e0b;
+    background: #1a1a10;
+    box-shadow: 0 0 24px rgba(245, 158, 11, 0.2);
+  }
+  .flow-node.highlight .name { color: #fbbf24; }
+  .flow-node.dim { opacity: 0.5; }
+  
+  .flow-arrow {
+    font-size: 18px;
+    color: #4b5563;
+    padding: 0 6px;
+    flex-shrink: 0;
+  }
+  
+  /* === ANATOMY CARDS === */
+  .anatomy-card {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+  
+  .anatomy-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  
+  /* === PROCESS FLOW (Sand to Wafer) === */
+  .process-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 24px 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    min-width: 0;
+    padding-bottom: 8px;
+  }
+  
+  .process-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 90px;
+    flex-shrink: 0;
+  }
+  
+  .step-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    position: relative;
+  }
+  
+  .step-icon.sand { background: linear-gradient(135deg, #92400e, #d97706); border: 1.5px solid #f59e0b; }
+  .step-icon.purify { background: linear-gradient(135deg, #1a2a3a, #3b82f6); border: 1.5px solid #60a5fa; }
+  .step-icon.ingot { background: linear-gradient(135deg, #374151, #6b7280); border: 1.5px solid #9ca3af; }
+  .step-icon.slice { background: linear-gradient(135deg, #3b1f5e, #7c3aed); border: 1.5px solid #a78bfa; }
+  .step-icon.polish { background: linear-gradient(135deg, #1a3a2a, #059669); border: 1.5px solid #34d399; }
+  .step-icon.wafer { background: linear-gradient(135deg, #1a1a3a, #2563eb); border: 1.5px solid #3b82f6; }
+  
+  .step-name {
+    font-size: 11px;
+    font-weight: 700;
+    color: #e8e8ed;
+    text-align: center;
+  }
+  .step-desc {
+    font-size: 9px;
+    color: #6b7280;
+    text-align: center;
+    max-width: 80px;
+    line-height: 1.3;
+  }
+  
+  .process-arrow {
+    font-size: 18px;
+    color: #4b5563;
+    padding: 0 4px;
+    flex-shrink: 0;
+    margin-bottom: 20px;
+  }
+  
+  /* === MARKUP CHAIN === */
+  .markup-chain {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 20px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 100px;
+  }
+  
+  .markup-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 8px;
+    text-align: center;
+    position: relative;
+  }
+  
+  .markup-stage .mu-label { font-size: 10px; font-weight: 600; opacity: 0.8; }
+  .markup-stage .mu-value { font-size: 20px; font-weight: 800; margin: 4px 0; }
+  .markup-stage .mu-desc { font-size: 9px; opacity: 0.6; }
+  
+  .markup-stage.s1 { background: linear-gradient(135deg, #92400e, #b45309); flex: 0.5; color: #fde68a; }
+  .markup-stage.s2 { background: linear-gradient(135deg, #1e3a5f, #2563eb); flex: 1; color: #bfdbfe; }
+  .markup-stage.s3 { background: linear-gradient(135deg, #166534, #22c55e); flex: 2; color: #bbf7d0; }
+  .markup-stage.s4 { background: linear-gradient(135deg, #7c2d12, #dc2626); flex: 4; color: #fecaca; }
+  
+  .markup-arrow {
+    width: 0;
+    height: 0;
+    border-top: 50px solid transparent;
+    border-bottom: 50px solid transparent;
+    border-left: 12px solid;
+    flex-shrink: 0;
+  }
+  
+  /* === LITHO DIAGRAM === */
+  .litho-diagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin: 24px auto;
+    max-width: 400px;
+    position: relative;
+  }
+  
+  .litho-element {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 6px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .litho-source {
+    width: 120px;
+    height: 48px;
+    background: linear-gradient(135deg, #7c2d12, #f59e0b);
+    border: 1.5px solid #fbbf24;
+    color: #fef3c7;
+  }
+  
+  .litho-beam {
+    width: 4px;
+    height: 30px;
+    background: linear-gradient(180deg, #fbbf24, #a855f7);
+    margin: 0;
+    position: relative;
+  }
+  .litho-beam::after {
+    content: '';
+    position: absolute;
+    left: -6px;
+    right: -6px;
+    top: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(251,191,36,0.3), rgba(168,85,247,0.3));
+    border-radius: 4px;
+  }
+  
+  .litho-mirrors {
+    width: 200px;
+    height: 36px;
+    background: linear-gradient(135deg, #1a1a3a, #4338ca);
+    border: 1.5px solid #6366f1;
+    color: #c7d2fe;
+    font-size: 11px;
+  }
+  
+  .litho-mask {
+    width: 240px;
+    height: 40px;
+    background: #1a1a2e;
+    border: 1.5px solid #a78bfa;
+    color: #c4b5fd;
+    position: relative;
+  }
+  .litho-mask::before {
+    content: '□ □ □ □ □ □ □';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8px;
+    color: #a78bfa;
+    letter-spacing: 2px;
+  }
+  
+  .litho-lens {
+    width: 160px;
+    height: 32px;
+    background: linear-gradient(135deg, #0f3a2a, #059669);
+    border: 1.5px solid #34d399;
+    color: #a7f3d0;
+    border-radius: 16px;
+    font-size: 11px;
+  }
+  
+  .litho-wafer {
+    width: 280px;
+    height: 44px;
+    background: linear-gradient(135deg, #1e3a5f, #2563eb);
+    border: 1.5px solid #3b82f6;
+    color: #bfdbfe;
+    border-radius: 4px;
+  }
+  
+  .litho-label {
+    font-size: 10px;
+    color: #6b7280;
+    margin: 2px 0;
+    font-weight: 500;
+  }
+  
+  /* === EUV SPECS GRID === */
+  .euv-specs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  
+  .euv-spec {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+  }
+  .euv-spec .spec-num {
+    font-size: 20px;
+    font-weight: 800;
+    color: #fbbf24;
+  }
+  .euv-spec .spec-label {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 4px;
+    line-height: 1.3;
+  }
+  
+  /* === TIN DROPLET ANIMATION === */
+  .tin-process {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+  
+  .tin-step {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+    min-width: 120px;
+    max-width: 150px;
+  }
+  .tin-step .tin-icon { font-size: 24px; margin-bottom: 6px; }
+  .tin-step .tin-label { font-size: 11px; font-weight: 600; color: #e8e8ed; }
+  .tin-step .tin-detail { font-size: 9px; color: #6b7280; margin-top: 4px; line-height: 1.3; }
+  .tin-step.highlight-tin { border-color: #f59e0b; background: #1a1a10; }
+  
+  .tin-arrow {
+    font-size: 18px;
+    color: #4b5563;
+    padding: 0 6px;
+    flex-shrink: 0;
+  }
+  
+  /* === MARKET SHARE BARS === */
+  .market-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  
+  .market-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .bar-label {
+    width: 110px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  
+  .bar-track {
+    flex: 1;
+    height: 32px;
+    background: #1a1a2e;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    transition: width 1s ease;
+  }
+  
+  .bar-flag {
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    margin-left: 8px;
+  }
+  
+  /* === EQUIPMENT CARDS === */
+  .equip-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin: 16px 0;
+  }
+  
+  .equip-card {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .equip-card .eq-name {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .equip-card .eq-role {
+    font-size: 11px;
+    color: #9ca3af;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .equip-card .eq-desc {
+    font-size: 12px;
+    color: #d1d5db;
+    line-height: 1.5;
+  }
+  .equip-card.asml {
+    border-color: #f59e0b;
+    background: #1a1a10;
+    grid-column: 1 / -1;
+  }
+  
+  /* === GEOPOLITICAL CHOKEPOINT === */
+  .chokepoint-diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 20px 0;
+  }
+  
+  .choke-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .choke-node {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 10px;
+    padding: 12px 16px;
+    text-align: center;
+    min-width: 100px;
+    max-width: 180px;
+  }
+  .choke-node .ch-flag { font-size: 20px; }
+  .choke-node .ch-label { font-size: 12px; font-weight: 700; margin-top: 4px; }
+  .choke-node .ch-detail { font-size: 10px; color: #9ca3af; margin-top: 2px; line-height: 1.3; }
+  
+  .choke-node.china { border-color: #ef4444; background: #1a1010; }
+  .choke-node.china .ch-label { color: #fca5a5; }
+  .choke-node.west { border-color: #3b82f6; background: #101a2a; }
+  .choke-node.west .ch-label { color: #93c5fd; }
+  .choke-node.alt { border-color: #22c55e; background: #0f1a14; }
+  .choke-node.alt .ch-label { color: #86efac; }
+  
+  .choke-arrow {
+    font-size: 18px;
+    color: #4b5563;
+    padding: 0 6px;
+    flex-shrink: 0;
+  }
+  
+  .choke-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 8px 0;
+  }
+  .choke-bar .cb-label {
+    width: 140px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: right;
+    flex-shrink: 0;
+    color: #d1d5db;
+  }
+  .choke-bar .cb-track {
+    flex: 1;
+    height: 24px;
+    background: #1a1a2e;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .choke-bar .cb-fill {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .choke-bar .cb-fill.china-fill { background: linear-gradient(90deg, #991b1b, #ef4444); color: #fecaca; }
+  .choke-bar .cb-fill.other-fill { background: linear-gradient(90deg, #1e3a5f, #3b82f6); color: #bfdbfe; }
+  
+  /* === KEY NUMBERS === */
+  .key-numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+  
+  .key-num {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .key-num .num {
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .key-num .desc {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+  
+  /* === WORTH KNOWING === */
+  .worth-knowing {
+    background: #111118;
+    border: 1px solid #2a2a4a;
+    border-left: 3px solid #a78bfa;
+    border-radius: 0 12px 12px 0;
+    padding: 24px;
+    margin-top: 32px;
+  }
+  
+  .worth-knowing h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #a78bfa;
+    margin-bottom: 12px;
+  }
+  
+  .worth-knowing ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .worth-knowing li {
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 6px 0;
+    border-bottom: 1px solid #1e1e2e;
+    color: #d1d5db;
+  }
+  .worth-knowing li:last-child { border-bottom: none; }
+  .worth-knowing li strong { color: #e8e8ed; }
+  
+  /* === WAFER PLAYERS GRID === */
+  .players-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .player-card {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+  }
+  .player-card .pl-name { font-size: 13px; font-weight: 700; color: #e8e8ed; }
+  .player-card .pl-country { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+  .player-card .pl-share { font-size: 11px; color: #60a5fa; margin-top: 4px; font-weight: 600; }
+  
+  /* === EXPORT CONTROL TIMELINE === */
+  .export-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 20px 0;
+    border-left: 2px solid #ef4444;
+    padding-left: 20px;
+  }
+  
+  .ec-event {
+    position: relative;
+    padding: 12px 0;
+  }
+  .ec-event::before {
+    content: '';
+    position: absolute;
+    left: -25px;
+    top: 18px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ef4444;
+    border: 2px solid #0a0a0f;
+  }
+  .ec-event .ec-date { font-size: 11px; font-weight: 700; color: #f87171; }
+  .ec-event .ec-title { font-size: 13px; font-weight: 600; color: #e8e8ed; margin-top: 2px; }
+  .ec-event .ec-desc { font-size: 12px; color: #9ca3af; margin-top: 4px; line-height: 1.5; }
+  
+  /* === MOBILE RESPONSIVE === */
+  @media (max-width: 600px) {
+    body { padding: 20px 12px; font-size: 15px; }
+    h1 { font-size: 22px; }
+    .subtitle { font-size: 13px; margin-bottom: 24px; }
+    .section-title { font-size: 16px; }
+    
+    .big-picture { padding: 20px 14px; overflow-x: visible; }
+    .flow-row {
+      min-width: auto;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+    .flow-node { min-width: auto; width: 100%; padding: 12px 14px; }
+    .flow-node .name { font-size: 14px; }
+    .flow-arrow {
+      text-align: center;
+      padding: 4px 0;
+      font-size: 16px;
+      transform: rotate(90deg);
+    }
+    
+    .anatomy-card { padding: 20px 14px; }
+    .anatomy-card h3 { font-size: 15px; }
+    
+    .process-flow {
+      flex-direction: column;
+      align-items: center;
+      min-width: auto;
+      overflow-x: visible;
+    }
+    .process-step { min-width: auto; }
+    .process-arrow { transform: rotate(90deg); padding: 4px 0; }
+    
+    .markup-chain { flex-direction: column; height: auto; }
+    .markup-stage { padding: 14px; }
+    .markup-stage .mu-value { font-size: 18px; }
+    
+    .litho-diagram { max-width: 100%; }
+    .litho-source { width: 100px; height: 40px; font-size: 10px; }
+    .litho-mirrors { width: 160px; height: 30px; }
+    .litho-mask { width: 200px; height: 34px; font-size: 10px; }
+    .litho-lens { width: 130px; height: 28px; }
+    .litho-wafer { width: 240px; height: 38px; font-size: 10px; }
+    
+    .euv-specs { grid-template-columns: 1fr; }
+    
+    .tin-process { flex-direction: column; align-items: center; }
+    .tin-step { max-width: none; width: 100%; }
+    .tin-arrow { transform: rotate(90deg); padding: 4px 0; }
+    
+    .equip-grid { grid-template-columns: 1fr; }
+    .equip-card.asml { grid-column: auto; }
+    
+    .players-grid { grid-template-columns: repeat(2, 1fr); }
+    
+    .bar-label { width: 80px; font-size: 12px; }
+    .bar-track { height: 36px; }
+    .bar-fill { font-size: 11px; padding-left: 6px; min-height: 44px; }
+    
+    .choke-row { flex-direction: column; align-items: stretch; }
+    .choke-node { max-width: none; width: 100%; }
+    .choke-arrow { transform: rotate(90deg); padding: 4px 0; text-align: center; }
+    
+    .choke-bar .cb-label { width: 100px; font-size: 11px; }
+    
+    .key-numbers { grid-template-columns: 1fr; gap: 12px; }
+    .key-num { padding: 16px; }
+    .key-num .num { font-size: 24px; }
+    .key-num .desc { font-size: 12px; }
+    
+    .worth-knowing { padding: 20px 16px; }
+    .worth-knowing li { font-size: 14px; line-height: 1.7; padding: 8px 0; }
+    
+    p { font-size: 14px; }
+  }
+  
+  @media (max-width: 360px) {
+    body { padding: 16px 8px; }
+    .big-picture { padding: 16px 10px; }
+    .anatomy-card { padding: 16px 10px; }
+    .players-grid { grid-template-columns: 1fr; }
+    .key-num .num { font-size: 22px; }
+    .step-icon { width: 52px; height: 52px; font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>⛏️ Layer 1: Raw Materials & Equipment</h1>
+  <p class="subtitle">The foundation of everything — from sand to the most complex machines ever built by humans</p>
+
+  <!-- ========== 1. WHERE THIS SITS ========== -->
+  <div class="big-picture">
+    <div class="section-title"><span class="emoji">🗺️</span> Where This Sits in the AI Value Chain</div>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Layer 1 is the <strong style="color:#fbbf24;">absolute foundation</strong>. Without purified silicon, without lithography machines, without rare earth elements — nothing else in the AI value chain can exist. Every AI model, every GPU, every data center starts here.</p>
+    <div class="flow-row">
+      <div class="flow-node highlight"><div class="label">Layer 1</div><div class="name">⛏️ Raw Materials & Equipment</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 2</div><div class="name">Foundries</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 3</div><div class="name">Packaging</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 4</div><div class="name">Memory & HBM</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 5</div><div class="name">Processors</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 6-9</div><div class="name">Infra → AI</div></div>
+    </div>
+  </div>
+
+  <!-- ========== 2. SILICON: SAND TO WAFER ========== -->
+  <div class="anatomy-card">
+    <h3>🏖️ Silicon — From Sand to Wafer</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:8px;">
+      Every chip starts as ordinary sand (silicon dioxide). Through an extraordinary process, this raw material is transformed into the purest substance commercially produced — 99.9999999% pure silicon (9N purity). Here's the journey:
+    </p>
+    
+    <div class="process-flow">
+      <div class="process-step">
+        <div class="step-icon sand">🏖️</div>
+        <div class="step-name">Sand</div>
+        <div class="step-desc">Quartz sand (SiO₂)</div>
+      </div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">
+        <div class="step-icon purify">🧪</div>
+        <div class="step-name">Purification</div>
+        <div class="step-desc">Chemical refining to 9N purity</div>
+      </div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">
+        <div class="step-icon ingot">🔩</div>
+        <div class="step-name">Ingot</div>
+        <div class="step-desc">Czochralski process, crystal grown</div>
+      </div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">
+        <div class="step-icon slice">🔪</div>
+        <div class="step-name">Slicing</div>
+        <div class="step-desc">Diamond wire saw into thin discs</div>
+      </div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">
+        <div class="step-icon polish">✨</div>
+        <div class="step-name">Polishing</div>
+        <div class="step-desc">Mirror-smooth CMP finish</div>
+      </div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">
+        <div class="step-icon wafer">💿</div>
+        <div class="step-name">Wafer</div>
+        <div class="step-desc">300mm ready for fab</div>
+      </div>
+    </div>
+    
+    <p style="font-size:12px;color:#fbbf24;text-align:center;margin:12px 0 4px 0;font-weight:600;">The incredible value multiplication:</p>
+    
+    <div class="markup-chain">
+      <div class="markup-stage s1">
+        <div class="mu-label">RAW SAND</div>
+        <div class="mu-value">~$0.01</div>
+        <div class="mu-desc">per kg</div>
+      </div>
+      <div class="markup-stage s2">
+        <div class="mu-label">BLANK WAFER</div>
+        <div class="mu-value">$100-150</div>
+        <div class="mu-desc">300mm polished</div>
+      </div>
+      <div class="markup-stage s3">
+        <div class="mu-label">PROCESSED WAFER</div>
+        <div class="mu-value">$10-20K</div>
+        <div class="mu-desc">after fab steps</div>
+      </div>
+      <div class="markup-stage s4">
+        <div class="mu-label">FINISHED CHIPS</div>
+        <div class="mu-value">$100K+</div>
+        <div class="mu-desc">total chip value per wafer</div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:#6b7280;text-align:center;margin-top:8px;">A handful of sand → $100,000+ in AI chips. That's the magic of semiconductor manufacturing.</p>
+  </div>
+  
+  <!-- Wafer Key Players -->
+  <div class="anatomy-card">
+    <h3>🏢 Who Makes Silicon Wafers</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:12px;">Only a handful of companies can produce the ultra-pure 300mm wafers that modern fabs require:</p>
+    <div class="players-grid">
+      <div class="player-card">
+        <div class="pl-name">Shin-Etsu</div>
+        <div class="pl-country">🇯🇵 Japan</div>
+        <div class="pl-share">~30% share</div>
+      </div>
+      <div class="player-card">
+        <div class="pl-name">SUMCO</div>
+        <div class="pl-country">🇯🇵 Japan</div>
+        <div class="pl-share">~24% share</div>
+      </div>
+      <div class="player-card">
+        <div class="pl-name">Siltronic</div>
+        <div class="pl-country">🇩🇪 Germany</div>
+        <div class="pl-share">~13% share</div>
+      </div>
+      <div class="player-card">
+        <div class="pl-name">SK Siltron</div>
+        <div class="pl-country">🇰🇷 South Korea</div>
+        <div class="pl-share">~12% share</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:#d1d5db;margin-top:8px;line-height:1.6;">
+      <strong>Key insight:</strong> Japan alone controls ~54% of global silicon wafer production. This is another strategic chokepoint — if Japan restricted wafer exports, the entire global chip supply would seize up.
+    </p>
+  </div>
+
+  <!-- ========== 3. ASML — THE MOST IMPORTANT COMPANY ========== -->
+  <div class="anatomy-card">
+    <h3>🔦 ASML — The Most Important Company You've Never Heard Of</h3>
+    <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:16px;">
+      ASML is a Dutch company with a <strong style="color:#fbbf24;">100% monopoly</strong> on EUV lithography machines — the only tool that can print transistors small enough for cutting-edge chips (5nm, 3nm, 2nm). Without ASML, there are no advanced AI chips. Period.
+    </p>
+    
+    <!-- How EUV Works -->
+    <div style="text-align:center;font-size:14px;font-weight:700;margin-bottom:16px;color:#fbbf24;">How EUV Lithography Works</div>
+    
+    <div class="litho-diagram">
+      <div class="litho-element litho-source">💥 EUV Light Source</div>
+      <div class="litho-label">↓ 13.5nm light (extreme ultraviolet)</div>
+      <div class="litho-beam"></div>
+      <div class="litho-label">↓ reflected by mirrors</div>
+      <div class="litho-element litho-mirrors">🪞 Multilayer Mirrors (reflective optics)</div>
+      <div class="litho-label">↓ light shaped through pattern</div>
+      <div class="litho-beam"></div>
+      <div class="litho-element litho-mask">🎭 Photomask (circuit pattern)</div>
+      <div class="litho-label">↓ pattern reduced 4×</div>
+      <div class="litho-beam"></div>
+      <div class="litho-element litho-lens">🔍 Reduction Optics (4:1)</div>
+      <div class="litho-label">↓ pattern projected onto wafer</div>
+      <div class="litho-beam"></div>
+      <div class="litho-element litho-wafer">💿 Silicon Wafer (coated with photoresist)</div>
+    </div>
+    <p style="font-size:11px;color:#6b7280;text-align:center;margin-top:12px;">The pattern on the mask is shrunk 4× and printed onto the wafer surface. Repeat for each layer of the chip (50-80+ layers for modern processors).</p>
+  </div>
+  
+  <!-- The Insane Engineering -->
+  <div class="anatomy-card">
+    <h3>🤯 The Insane Engineering Inside EUV</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:12px;">
+      Generating EUV light is arguably the hardest engineering challenge ever solved commercially. Here's how it works:
+    </p>
+    
+    <div class="tin-process">
+      <div class="tin-step">
+        <div class="tin-icon">💧</div>
+        <div class="tin-label">Tin Droplets</div>
+        <div class="tin-detail">Tiny molten tin drops released</div>
+      </div>
+      <div class="tin-arrow">→</div>
+      <div class="tin-step highlight-tin">
+        <div class="tin-icon">⚡</div>
+        <div class="tin-label">50kW Laser</div>
+        <div class="tin-detail">Hits each droplet 50,000×/sec</div>
+      </div>
+      <div class="tin-arrow">→</div>
+      <div class="tin-step">
+        <div class="tin-icon">💥</div>
+        <div class="tin-label">Plasma</div>
+        <div class="tin-detail">Tin vaporizes into hot plasma</div>
+      </div>
+      <div class="tin-arrow">→</div>
+      <div class="tin-step highlight-tin">
+        <div class="tin-icon">✨</div>
+        <div class="tin-label">13.5nm Light</div>
+        <div class="tin-detail">EUV photons emitted</div>
+      </div>
+    </div>
+    
+    <div class="euv-specs">
+      <div class="euv-spec">
+        <div class="spec-num">$200-350M</div>
+        <div class="spec-label">Price per EUV machine</div>
+      </div>
+      <div class="euv-spec">
+        <div class="spec-num">180 tons</div>
+        <div class="spec-label">Weight of a single machine</div>
+      </div>
+      <div class="euv-spec">
+        <div class="spec-num">40</div>
+        <div class="spec-label">Freight containers to ship one</div>
+      </div>
+      <div class="euv-spec">
+        <div class="spec-num">~50-60/yr</div>
+        <div class="spec-label">Total EUV systems shipped globally</div>
+      </div>
+      <div class="euv-spec">
+        <div class="spec-num">100,000+</div>
+        <div class="spec-label">Components from 800+ suppliers</div>
+      </div>
+      <div class="euv-spec">
+        <div class="spec-num">Months</div>
+        <div class="spec-label">To install and calibrate on-site</div>
+      </div>
+    </div>
+    
+    <p style="font-size:12px;color:#d1d5db;text-align:center;margin-top:12px;line-height:1.6;">
+      The newest <strong style="color:#fbbf24;">High-NA EUV</strong> machine (the NXE:3800E) costs ~$350M+ and can print features at 2nm and below. There are currently fewer than 10 in existence.
+    </p>
+  </div>
+  
+  <!-- Dutch Export Ban -->
+  <div class="anatomy-card">
+    <h3>🚫 The Dutch Export Ban — Weaponizing Lithography</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:12px;">
+      Because ASML is the <em>only</em> EUV manufacturer on Earth, controlling who gets these machines is arguably the most consequential export control in modern history:
+    </p>
+    
+    <div class="export-controls">
+      <div class="ec-event">
+        <div class="ec-date">2019</div>
+        <div class="ec-title">Netherlands blocks EUV sale to China</div>
+        <div class="ec-desc">Under US pressure, Dutch government quietly blocks ASML from shipping EUV machines to Chinese customers.</div>
+      </div>
+      <div class="ec-event">
+        <div class="ec-date">October 2022</div>
+        <div class="ec-title">US expands chip export controls</div>
+        <div class="ec-desc">Biden administration imposes sweeping semiconductor restrictions on China, targeting advanced chips and equipment.</div>
+      </div>
+      <div class="ec-event">
+        <div class="ec-date">January 2024</div>
+        <div class="ec-title">Netherlands expands restrictions to DUV</div>
+        <div class="ec-desc">Now even ASML's older (but still advanced) DUV immersion lithography machines require export licenses for China.</div>
+      </div>
+      <div class="ec-event">
+        <div class="ec-date">2025</div>
+        <div class="ec-title">China stuck at ~7nm without EUV</div>
+        <div class="ec-desc">China can manufacture 7nm chips using older DUV multi-patterning, but cannot reach 5nm/3nm without EUV. This fundamentally limits China's AI chip capabilities.</div>
+      </div>
+    </div>
+    
+    <p style="font-size:12px;color:#f87171;text-align:center;margin-top:12px;font-weight:600;">
+      One Dutch company's export license = the single biggest chokepoint on China's AI ambitions
+    </p>
+  </div>
+
+  <!-- ========== 4. OTHER EQUIPMENT MAKERS ========== -->
+  <div class="anatomy-card">
+    <h3>🏭 Other Critical Equipment Makers</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:12px;">
+      ASML gets the headlines, but chip manufacturing requires dozens of different machines. These companies control critical steps in the process:
+    </p>
+    
+    <div class="equip-grid">
+      <div class="equip-card asml">
+        <div class="eq-name" style="color:#fbbf24;">🇳🇱 ASML — Lithography</div>
+        <div class="eq-role">100% EUV monopoly · ~80% advanced lithography</div>
+        <div class="eq-desc">Prints circuit patterns onto wafers using light. The most critical and irreplaceable machine in the entire fab. No competition at the cutting edge.</div>
+      </div>
+      <div class="equip-card">
+        <div class="eq-name" style="color:#60a5fa;">🇺🇸 Applied Materials</div>
+        <div class="eq-role">Deposition & Etching · ~20% market share</div>
+        <div class="eq-desc">The largest semiconductor equipment maker by revenue. Deposits thin films and etches patterns into wafer surfaces. Critical for building up chip layers.</div>
+      </div>
+      <div class="equip-card">
+        <div class="eq-name" style="color:#34d399;">🇺🇸 Lam Research</div>
+        <div class="eq-role">Etching & Deposition · ~18% market share</div>
+        <div class="eq-desc">Specializes in plasma etching — carving out the 3D structures in chips. Dominant in memory chip manufacturing (NAND etching). Critical for 3D chip architectures.</div>
+      </div>
+      <div class="equip-card">
+        <div class="eq-name" style="color:#f97316;">🇯🇵 Tokyo Electron (TEL)</div>
+        <div class="eq-role">Coater/Developer · ~15% market share</div>
+        <div class="eq-desc">Applies and develops photoresist (the light-sensitive coating used in lithography). Also makes etching and deposition tools. Japan's largest equipment maker.</div>
+      </div>
+      <div class="equip-card">
+        <div class="eq-name" style="color:#a78bfa;">🇺🇸 KLA Corporation</div>
+        <div class="eq-role">Inspection & Metrology · ~8% market share</div>
+        <div class="eq-desc">The "quality control" of chipmaking. Their machines inspect wafers for defects at the atomic level. Without KLA, fabs couldn't maintain yield rates.</div>
+      </div>
+    </div>
+    
+    <div style="margin-top:20px;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:#e8e8ed;">Semiconductor Equipment Market Share</div>
+      <div class="market-bars">
+        <div class="market-bar-row">
+          <div class="bar-label">Applied Materials</div>
+          <div class="bar-track"><div class="bar-fill" style="width:20%;background:linear-gradient(90deg,#1e40af,#3b82f6);">~20% <span class="bar-flag">🇺🇸</span></div></div>
+        </div>
+        <div class="market-bar-row">
+          <div class="bar-label">ASML</div>
+          <div class="bar-track"><div class="bar-fill" style="width:19%;background:linear-gradient(90deg,#92400e,#f59e0b);">~19% <span class="bar-flag">🇳🇱</span></div></div>
+        </div>
+        <div class="market-bar-row">
+          <div class="bar-label">Lam Research</div>
+          <div class="bar-track"><div class="bar-fill" style="width:18%;background:linear-gradient(90deg,#166534,#22c55e);">~18% <span class="bar-flag">🇺🇸</span></div></div>
+        </div>
+        <div class="market-bar-row">
+          <div class="bar-label">Tokyo Electron</div>
+          <div class="bar-track"><div class="bar-fill" style="width:15%;background:linear-gradient(90deg,#7c2d12,#f97316);">~15% <span class="bar-flag">🇯🇵</span></div></div>
+        </div>
+        <div class="market-bar-row">
+          <div class="bar-label">KLA</div>
+          <div class="bar-track"><div class="bar-fill" style="width:8%;background:linear-gradient(90deg,#3b1f5e,#7c3aed);">~8% <span class="bar-flag">🇺🇸</span></div></div>
+        </div>
+      </div>
+      <p style="font-size:11px;color:#6b7280;text-align:center;margin-top:8px;">US + Netherlands + Japan control ~80% of the global semiconductor equipment market. All three are part of the export control alliance against China.</p>
+    </div>
+  </div>
+
+  <!-- ========== 5. RARE EARTH ELEMENTS ========== -->
+  <div class="anatomy-card">
+    <h3>🌍 Rare Earth Elements & Critical Materials</h3>
+    <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:16px;">
+      Semiconductors require more than just silicon. They need a cocktail of rare and exotic materials — many of which have highly concentrated supply chains. <strong style="color:#f87171;">China dominates this space.</strong>
+    </p>
+    
+    <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:#f87171;">China's Dominance of Critical Materials</div>
+    
+    <div class="chokepoint-diagram">
+      <div class="choke-bar">
+        <div class="cb-label">Mining (rare earths)</div>
+        <div class="cb-track"><div class="cb-fill china-fill" style="width:61%;">China 61%</div></div>
+      </div>
+      <div class="choke-bar">
+        <div class="cb-label">Refining (rare earths)</div>
+        <div class="cb-track"><div class="cb-fill china-fill" style="width:90%;">China 90%+</div></div>
+      </div>
+      <div class="choke-bar">
+        <div class="cb-label">Permanent magnets</div>
+        <div class="cb-track"><div class="cb-fill china-fill" style="width:94%;">China 94%</div></div>
+      </div>
+      <div class="choke-bar">
+        <div class="cb-label">Gallium production</div>
+        <div class="cb-track"><div class="cb-fill china-fill" style="width:98%;">China 98%</div></div>
+      </div>
+      <div class="choke-bar">
+        <div class="cb-label">Germanium production</div>
+        <div class="cb-track"><div class="cb-fill china-fill" style="width:60%;">China 60%</div></div>
+      </div>
+    </div>
+    
+    <!-- Key elements grid -->
+    <div style="margin:24px 0 16px 0;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:#e8e8ed;">Key Elements & Why They Matter</div>
+      <div class="equip-grid">
+        <div class="equip-card">
+          <div class="eq-name" style="color:#60a5fa;">Gallium</div>
+          <div class="eq-role">GaN power semiconductors</div>
+          <div class="eq-desc">Essential for high-power, high-frequency chips used in 5G, radar, and power electronics. China produces 98% globally.</div>
+        </div>
+        <div class="equip-card">
+          <div class="eq-name" style="color:#a78bfa;">Germanium</div>
+          <div class="eq-role">Fiber optics & IR sensors</div>
+          <div class="eq-desc">Used in fiber optic cables, infrared optics, and advanced semiconductor substrates. Critical for telecom infrastructure.</div>
+        </div>
+        <div class="equip-card">
+          <div class="eq-name" style="color:#34d399;">Neon Gas</div>
+          <div class="eq-role">DUV lithography laser gas</div>
+          <div class="eq-desc">High-purity neon powers the excimer lasers in DUV lithography machines. Ukraine produced ~50% of semiconductor-grade neon before 2022.</div>
+        </div>
+        <div class="equip-card">
+          <div class="eq-name" style="color:#f87171;">Fluorine Gases</div>
+          <div class="eq-role">Etching & chamber cleaning</div>
+          <div class="eq-desc">Specialty gases (SF₆, NF₃, CF₄) used in plasma etching and CVD chamber cleaning. Critical at every stage of fabrication.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- China's Export Controls & Geopolitics -->
+  <div class="anatomy-card">
+    <h3>🔒 Geopolitical Chokepoint — The Material Weapon</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">
+      The semiconductor supply chain is now a geopolitical battleground. The West controls equipment (ASML, Applied Materials). China controls materials. Both sides are weaponizing their leverage.
+    </p>
+    
+    <div class="choke-row" style="margin-bottom:20px;">
+      <div class="choke-node west">
+        <div class="ch-flag">🇺🇸🇳🇱🇯🇵</div>
+        <div class="ch-label">West Controls</div>
+        <div class="ch-detail">Equipment (ASML, Applied, Lam, TEL, KLA) · Chip design (Nvidia, AMD) · EDA software</div>
+      </div>
+      <div class="choke-arrow">⚔️</div>
+      <div class="choke-node china">
+        <div class="ch-flag">🇨🇳</div>
+        <div class="ch-label">China Controls</div>
+        <div class="ch-detail">Rare earths (mining + refining) · Gallium · Germanium · Some specialty chemicals</div>
+      </div>
+    </div>
+    
+    <div class="export-controls" style="margin:16px 0;">
+      <div class="ec-event">
+        <div class="ec-date">July 2023</div>
+        <div class="ec-title">China restricts gallium & germanium exports</div>
+        <div class="ec-desc">Retaliation for Western chip export controls. Export licenses now required, giving China discretion over supply.</div>
+      </div>
+      <div class="ec-event">
+        <div class="ec-date">April 2025</div>
+        <div class="ec-title">China restricts 7 rare earth elements</div>
+        <div class="ec-desc">New export controls on samarium, gadolinium, terbium, dysprosium, lutetium, scandium, and yttrium. Major escalation targeting magnets and defense applications.</div>
+      </div>
+    </div>
+    
+    <div style="margin-top:20px;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:#86efac;">Diversification Efforts — Alternative Sources</div>
+      <div class="choke-row">
+        <div class="choke-node alt">
+          <div class="ch-flag">🇺🇸</div>
+          <div class="ch-label">US — MP Materials</div>
+          <div class="ch-detail">Mountain Pass mine reopened. Only major rare earth mine in the US.</div>
+        </div>
+        <div class="choke-arrow">+</div>
+        <div class="choke-node alt">
+          <div class="ch-flag">🇦🇺</div>
+          <div class="ch-label">Australia — Lynas</div>
+          <div class="ch-detail">Largest non-Chinese rare earth producer. Processing plant in Malaysia.</div>
+        </div>
+        <div class="choke-arrow">+</div>
+        <div class="choke-node alt">
+          <div class="ch-flag">🇨🇦</div>
+          <div class="ch-label">Canada</div>
+          <div class="ch-detail">Significant deposits under development. Part of US-allied supply chain push.</div>
+        </div>
+      </div>
+      <p style="font-size:12px;color:#6b7280;text-align:center;margin-top:12px;">Even with diversification, these alternatives are years away from replacing China's refining dominance. The chokepoint remains.</p>
+    </div>
+  </div>
+
+  <!-- ========== 6. KEY NUMBERS ========== -->
+  <div class="section-title"><span class="emoji">🔢</span> Key Numbers to Remember</div>
+  <div class="key-numbers">
+    <div class="key-num">
+      <div class="num">$200-350M</div>
+      <div class="desc">Price of a single ASML EUV lithography machine</div>
+    </div>
+    <div class="key-num">
+      <div class="num">100%</div>
+      <div class="desc">ASML's monopoly on EUV — no one else can build these machines</div>
+    </div>
+    <div class="key-num">
+      <div class="num">90%+</div>
+      <div class="desc">China's share of global rare earth refining capacity</div>
+    </div>
+    <div class="key-num">
+      <div class="num">~50-60</div>
+      <div class="desc">Total EUV systems shipped per year, globally</div>
+    </div>
+    <div class="key-num">
+      <div class="num">300mm</div>
+      <div class="desc">Standard silicon wafer diameter (~12 inches) used in leading-edge fabs</div>
+    </div>
+    <div class="key-num">
+      <div class="num">180 tons</div>
+      <div class="desc">Weight of a single EUV machine — shipped in 40 freight containers</div>
+    </div>
+  </div>
+
+  <!-- ========== 7. WORTH KNOWING ========== -->
+  <div class="worth-knowing">
+    <h3>📌 Worth Knowing</h3>
+    <ul>
+      <li><strong>Why can't anyone else build EUV?</strong> — ASML spent 20+ years and invested over $10 billion developing EUV technology. The machine requires components from ~800 suppliers across multiple countries (Zeiss for optics, Cymer/TRUMPF for the light source). No single country, let alone company, could replicate this from scratch. China has been trying — and is still decades behind.</li>
+      <li><strong>The neon gas crisis</strong> — Ukraine produced ~50% of the world's semiconductor-grade neon (purified from Russian industrial output). When the Russia-Ukraine war started in 2022, prices spiked 10×. Chip companies have since diversified, but it showed how fragile the supply chain is for materials most people have never heard of.</li>
+      <li><strong>Photoresists — Japan's hidden leverage</strong> — Japan controls ~90% of advanced photoresist production (the light-sensitive coatings used in lithography). Companies like JSR, TOK, and Shin-Etsu Chemical are essentially irreplaceable. Japan briefly restricted exports to South Korea in 2019, showing this isn't just theoretical leverage.</li>
+      <li><strong>The "weaponization" of the supply chain</strong> — Every major player in the semiconductor supply chain is now thinking about how their products can be used as geopolitical leverage. The US restricts chips & equipment → China restricts rare earths → Japan has photoresist leverage → Taiwan (TSMC) controls manufacturing. It's a multipolar standoff where everyone has something to threaten with.</li>
+      <li><strong>Why smaller nodes need EUV</strong> — Older DUV (deep ultraviolet) machines use 193nm light. To print patterns smaller than that wavelength, you need tricks like multi-patterning (printing multiple times and overlapping). This works down to ~7nm but becomes impossibly complex and expensive beyond that. EUV's 13.5nm wavelength can print these features in a single pass — it's not just better, it's necessary.</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>

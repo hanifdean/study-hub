@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layer 6: Energy & Data Centers — AI Value Chain</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0a0a0f;
+    color: #e8e8ed;
+    padding: 40px 24px;
+    min-height: 100vh;
+  }
+  
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #22c55e, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 36px;
+    font-weight: 500;
+  }
+  
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .emoji { font-size: 20px; }
+  
+  /* === BIG PICTURE === */
+  .big-picture {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
+    overflow-x: auto;
+  }
+  
+  .flow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: nowrap;
+    min-width: 900px;
+  }
+  
+  .flow-node {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-align: center;
+    min-width: 120px;
+    flex-shrink: 0;
+  }
+  .flow-node .label { font-size: 11px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .flow-node .name { font-size: 14px; font-weight: 700; margin-top: 4px; }
+  .flow-node.highlight {
+    border-color: #22c55e;
+    background: #0f1a14;
+    box-shadow: 0 0 24px rgba(34, 197, 94, 0.2);
+  }
+  .flow-node.highlight .name { color: #4ade80; }
+  .flow-node.dim { opacity: 0.5; }
+  
+  .flow-arrow {
+    font-size: 18px;
+    color: #4b5563;
+    padding: 0 6px;
+    flex-shrink: 0;
+  }
+  
+  /* === ANATOMY CARDS === */
+  .anatomy-card {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+  
+  .anatomy-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  
+  /* === POWER COMPARISON VISUAL === */
+  .power-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 20px 0;
+  }
+  
+  .power-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .pb-label {
+    width: 160px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: right;
+    flex-shrink: 0;
+    color: #d1d5db;
+    line-height: 1.3;
+  }
+  
+  .pb-track {
+    flex: 1;
+    height: 32px;
+    background: #1a1a2e;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .pb-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    transition: width 1s ease;
+    white-space: nowrap;
+  }
+  
+  /* === GROWTH VISUAL === */
+  .growth-visual {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 32px;
+    margin: 24px 0;
+    padding: 20px 0;
+  }
+  
+  .growth-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .growth-bar {
+    width: 80px;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 12px;
+    font-size: 18px;
+    font-weight: 800;
+    position: relative;
+  }
+  
+  .growth-year {
+    font-size: 12px;
+    font-weight: 700;
+    color: #9ca3af;
+  }
+  
+  .growth-label {
+    font-size: 10px;
+    color: #6b7280;
+    text-align: center;
+    max-width: 90px;
+  }
+  
+  /* === NUCLEAR DEALS GRID === */
+  .deals-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin: 20px 0;
+  }
+  
+  .deal-card {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .deal-company {
+    font-size: 14px;
+    font-weight: 700;
+  }
+  
+  .deal-detail {
+    font-size: 12px;
+    color: #9ca3af;
+    line-height: 1.5;
+  }
+  
+  .deal-highlight {
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+  
+  .deal-card.microsoft { border-color: #3b82f6; }
+  .deal-card.microsoft .deal-company { color: #60a5fa; }
+  .deal-card.microsoft .deal-highlight { color: #60a5fa; }
+  
+  .deal-card.meta { border-color: #6366f1; }
+  .deal-card.meta .deal-company { color: #818cf8; }
+  .deal-card.meta .deal-highlight { color: #818cf8; }
+  
+  .deal-card.amazon { border-color: #f59e0b; }
+  .deal-card.amazon .deal-company { color: #fbbf24; }
+  .deal-card.amazon .deal-highlight { color: #fbbf24; }
+  
+  .deal-card.google { border-color: #22c55e; }
+  .deal-card.google .deal-company { color: #4ade80; }
+  .deal-card.google .deal-highlight { color: #4ade80; }
+  
+  .deal-card.westinghouse { border-color: #f97316; }
+  .deal-card.westinghouse .deal-company { color: #fb923c; }
+  .deal-card.westinghouse .deal-highlight { color: #fb923c; }
+  
+  /* === ENERGY SOURCES COMPARISON === */
+  .energy-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin: 20px 0;
+  }
+  
+  .energy-card {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 18px;
+  }
+  
+  .energy-card .en-icon { font-size: 24px; margin-bottom: 8px; }
+  .energy-card .en-name { font-size: 14px; font-weight: 700; color: #e8e8ed; margin-bottom: 4px; }
+  .energy-card .en-status { font-size: 11px; font-weight: 600; margin-bottom: 6px; }
+  .energy-card .en-desc { font-size: 12px; color: #9ca3af; line-height: 1.5; }
+  
+  .energy-card.gas { border-color: #f97316; }
+  .energy-card.gas .en-status { color: #fb923c; }
+  
+  .energy-card.solar { border-color: #eab308; }
+  .energy-card.solar .en-status { color: #facc15; }
+  
+  .energy-card.nuclear { border-color: #22c55e; border-width: 2px; background: #0f1a14; }
+  .energy-card.nuclear .en-status { color: #4ade80; }
+  
+  .energy-card.geo { border-color: #ef4444; }
+  .energy-card.geo .en-status { color: #f87171; }
+  
+  /* === DATA CENTER MAP === */
+  .dc-map {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+  }
+  
+  .dc-hub {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  
+  .dc-hub .hub-icon { font-size: 20px; margin-bottom: 6px; }
+  .dc-hub .hub-name { font-size: 13px; font-weight: 700; color: #e8e8ed; }
+  .dc-hub .hub-detail { font-size: 11px; color: #9ca3af; margin-top: 4px; line-height: 1.4; }
+  
+  .dc-hub.top { border-color: #22c55e; background: #0f1a14; }
+  .dc-hub.top .hub-name { color: #4ade80; }
+  
+  .dc-hub.growing { border-color: #f59e0b; }
+  .dc-hub.growing .hub-name { color: #fbbf24; }
+  
+  .dc-hub.constrained { border-color: #ef4444; }
+  .dc-hub.constrained .hub-name { color: #fca5a5; }
+  
+  /* === SUPPLY CHAIN CARDS === */
+  .supply-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin: 20px 0;
+  }
+  
+  .supply-card {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 18px;
+  }
+  
+  .supply-card .sc-icon { font-size: 24px; margin-bottom: 8px; }
+  .supply-card .sc-name { font-size: 14px; font-weight: 700; color: #e8e8ed; margin-bottom: 4px; }
+  .supply-card .sc-bottleneck { font-size: 11px; font-weight: 700; color: #f87171; margin-bottom: 6px; }
+  .supply-card .sc-desc { font-size: 12px; color: #9ca3af; line-height: 1.5; }
+  
+  /* === KEY NUMBERS === */
+  .key-numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+  
+  .key-num {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .key-num .num {
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #22c55e, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .key-num .desc {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+  
+  /* === WORTH KNOWING === */
+  .worth-knowing {
+    background: #111118;
+    border: 1px solid #2a2a4a;
+    border-left: 3px solid #22c55e;
+    border-radius: 0 12px 12px 0;
+    padding: 24px;
+    margin-top: 32px;
+  }
+  
+  .worth-knowing h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #4ade80;
+    margin-bottom: 12px;
+  }
+  
+  .worth-knowing ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .worth-knowing li {
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 6px 0;
+    border-bottom: 1px solid #1e1e2e;
+    color: #d1d5db;
+  }
+  .worth-knowing li:last-child { border-bottom: none; }
+  .worth-knowing li strong { color: #e8e8ed; }
+  
+  /* === HYPERSCALE VISUAL === */
+  .hyperscale-box {
+    background: #1a1a2e;
+    border: 2px solid #22c55e;
+    border-radius: 16px;
+    padding: 24px;
+    margin: 20px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .hyperscale-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(34,197,94,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  
+  .hs-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #4ade80;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  
+  .hs-specs {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  
+  .hs-spec {
+    text-align: center;
+  }
+  
+  .hs-spec .hs-val {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fbbf24;
+  }
+  
+  .hs-spec .hs-label {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 4px;
+  }
+  
+  /* === CONSEQUENCE CHAIN === */
+  .consequence-chain {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 20px 0 8px 0;
+    flex-wrap: wrap;
+  }
+  
+  .consequence-node {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    max-width: 180px;
+  }
+  .consequence-node.bad {
+    border-color: #991b1b;
+    background: #1a1010;
+    color: #fca5a5;
+  }
+  .consequence-node.good {
+    border-color: #166534;
+    background: #101a10;
+    color: #86efac;
+  }
+  .consequence-node.warn {
+    border-color: #92400e;
+    background: #1a1a10;
+    color: #fde68a;
+  }
+  
+  .c-arrow {
+    font-size: 16px;
+    color: #4b5563;
+    padding: 0 6px;
+  }
+  
+  /* === URANIUM PRICE === */
+  .uranium-price {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 20px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 100px;
+  }
+  
+  .uranium-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  
+  .uranium-side.before {
+    background: linear-gradient(135deg, #1a1a2e, #374151);
+    border: 1px solid #4b5563;
+  }
+  
+  .uranium-side.after {
+    background: linear-gradient(135deg, #1a2a10, #22c55e);
+    border: 1px solid #4ade80;
+    flex: 1.5;
+  }
+  
+  .uranium-side .ur-label { font-size: 11px; font-weight: 600; opacity: 0.8; }
+  .uranium-side .ur-value { font-size: 24px; font-weight: 800; margin: 4px 0; }
+  .uranium-side .ur-sub { font-size: 10px; opacity: 0.7; }
+  
+  .vs-divider {
+    width: 40px;
+    background: #1e1e2e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: #fbbf24;
+  }
+  
+  /* === MOBILE RESPONSIVE === */
+  @media (max-width: 600px) {
+    body { padding: 20px 12px; font-size: 15px; }
+    h1 { font-size: 22px; }
+    .subtitle { font-size: 13px; margin-bottom: 24px; }
+    .section-title { font-size: 16px; }
+    
+    .big-picture { padding: 20px 14px; overflow-x: visible; }
+    .flow-row {
+      min-width: auto;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+    .flow-node { min-width: auto; width: 100%; padding: 12px 14px; }
+    .flow-node .name { font-size: 14px; }
+    .flow-arrow {
+      text-align: center;
+      padding: 4px 0;
+      font-size: 16px;
+      transform: rotate(90deg);
+    }
+    
+    .anatomy-card { padding: 20px 14px; }
+    .anatomy-card h3 { font-size: 15px; }
+    
+    .pb-label { width: 100px; font-size: 11px; }
+    .pb-track { height: 36px; }
+    .pb-fill { font-size: 11px; padding-left: 6px; min-height: 44px; }
+    
+    .growth-visual { gap: 16px; }
+    .growth-bar { width: 60px; }
+    
+    .deals-grid { grid-template-columns: 1fr; }
+    .energy-grid { grid-template-columns: 1fr; }
+    .dc-map { grid-template-columns: 1fr; }
+    .supply-grid { grid-template-columns: 1fr; }
+    
+    .key-numbers { grid-template-columns: 1fr; gap: 12px; }
+    .key-num { padding: 16px; }
+    .key-num .num { font-size: 24px; }
+    .key-num .desc { font-size: 12px; }
+    
+    .worth-knowing { padding: 20px 16px; }
+    .worth-knowing li { font-size: 14px; line-height: 1.7; padding: 8px 0; }
+    
+    .consequence-chain {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+    .consequence-node { max-width: none; width: 100%; padding: 12px 14px; font-size: 13px; }
+    .c-arrow { text-align: center; padding: 4px 0; transform: rotate(90deg); }
+    
+    .uranium-price { flex-direction: column; height: auto; }
+    .uranium-side { padding: 14px; }
+    .vs-divider { width: 100%; height: 32px; }
+    
+    .hs-specs { gap: 16px; }
+    .hs-spec .hs-val { font-size: 18px; }
+    
+    .hyperscale-box { padding: 20px 14px; }
+    
+    p { font-size: 14px; }
+  }
+  
+  @media (max-width: 360px) {
+    body { padding: 16px 8px; }
+    .big-picture { padding: 16px 10px; }
+    .anatomy-card { padding: 16px 10px; }
+    .key-num .num { font-size: 22px; }
+    .growth-bar { width: 48px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>⚡ Layer 6: Energy & Data Centers</h1>
+  <p class="subtitle">The power and physical infrastructure that houses all AI compute — the most expensive layer in the stack</p>
+
+  <!-- ========== 1. WHERE THIS SITS ========== -->
+  <div class="big-picture">
+    <div class="section-title"><span class="emoji">🗺️</span> Where This Sits in the AI Value Chain</div>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Layer 6 is the <strong style="color:#4ade80;">physical foundation of AI compute</strong>. You can design the best chips, manufacture them perfectly, and stack them with the fastest memory — but without power and a building to run them in, none of it matters. This is where silicon meets concrete, copper, and megawatts.</p>
+    <div class="flow-row">
+      <div class="flow-node dim"><div class="label">Layer 1</div><div class="name">Raw Materials</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 2</div><div class="name">Chip Design</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 3</div><div class="name">Foundries</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 4</div><div class="name">Memory & HBM</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 5</div><div class="name">Processors</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node highlight"><div class="label">Layer 6</div><div class="name">⚡ Energy & Data Centers</div></div>
+    </div>
+  </div>
+
+  <!-- ========== 2. THE ENERGY CRISIS IN AI ========== -->
+  <div class="anatomy-card">
+    <h3>🔥 The Energy Crisis in AI</h3>
+    <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:16px;">
+      AI is triggering the biggest surge in electricity demand in a generation. After <strong>25 years of flat US electricity consumption</strong>, demand is growing at <strong style="color:#fbbf24;">2.5% annually</strong> — almost entirely driven by data centers. A single frontier AI training run can consume as much electricity as a <strong>small city</strong> uses in a year.
+    </p>
+    
+    <!-- Growth bars: 2024 vs 2035 -->
+    <div style="text-align:center;font-size:14px;font-weight:700;margin-bottom:16px;color:#fbbf24;">US Data Center Power Demand</div>
+    
+    <div class="growth-visual">
+      <div class="growth-col">
+        <div class="growth-bar" style="height:80px;background:linear-gradient(180deg,#1e3a5f,#3b82f6);color:#bfdbfe;">33</div>
+        <div class="growth-year">2024</div>
+        <div class="growth-label">33 GW</div>
+      </div>
+      <div class="growth-col">
+        <div style="font-size:32px;font-weight:800;color:#fbbf24;margin-bottom:20px;">→</div>
+        <div style="font-size:14px;font-weight:800;color:#fbbf24;">5.3×</div>
+      </div>
+      <div class="growth-col">
+        <div class="growth-bar" style="height:220px;background:linear-gradient(180deg,#166534,#22c55e);color:#bbf7d0;">176</div>
+        <div class="growth-year">2035</div>
+        <div class="growth-label">176 GW (projected)</div>
+      </div>
+    </div>
+    
+    <div style="text-align:center;font-size:14px;font-weight:700;margin:24px 0 16px 0;color:#e8e8ed;">⚡ Power Consumption Comparison</div>
+    
+    <div class="power-bars">
+      <div class="power-bar-row">
+        <div class="pb-label">Single AI Training Run</div>
+        <div class="pb-track"><div class="pb-fill" style="width:8%;background:linear-gradient(90deg,#7c2d12,#f59e0b);color:#fef3c7;">~50 MW</div></div>
+      </div>
+      <div class="power-bar-row">
+        <div class="pb-label">Hyperscale Data Center</div>
+        <div class="pb-track"><div class="pb-fill" style="width:14%;background:linear-gradient(90deg,#1e40af,#3b82f6);color:#bfdbfe;">100-300 MW</div></div>
+      </div>
+      <div class="power-bar-row">
+        <div class="pb-label">Small City (~100K people)</div>
+        <div class="pb-track"><div class="pb-fill" style="width:16%;background:linear-gradient(90deg,#374151,#6b7280);color:#d1d5db;">~200 MW</div></div>
+      </div>
+      <div class="power-bar-row">
+        <div class="pb-label">US Data Centers (2024)</div>
+        <div class="pb-track"><div class="pb-fill" style="width:40%;background:linear-gradient(90deg,#166534,#22c55e);color:#bbf7d0;">33 GW (33,000 MW)</div></div>
+      </div>
+      <div class="power-bar-row">
+        <div class="pb-label">US Data Centers (2035)</div>
+        <div class="pb-track"><div class="pb-fill" style="width:95%;background:linear-gradient(90deg,#92400e,#f59e0b);color:#fef3c7;">176 GW (176,000 MW)</div></div>
+      </div>
+      <div class="power-bar-row">
+        <div class="pb-label">Entire Country (Netherlands)</div>
+        <div class="pb-track"><div class="pb-fill" style="width:18%;background:linear-gradient(90deg,#3b1f5e,#7c3aed);color:#c4b5fd;">~20 GW peak</div></div>
+      </div>
+    </div>
+    
+    <p style="font-size:12px;color:#f87171;text-align:center;margin-top:12px;font-weight:600;">By 2035, US data centers alone will consume more power than many entire countries.</p>
+  </div>
+
+  <!-- ========== 3. THE NUCLEAR RENAISSANCE ========== -->
+  <div class="anatomy-card">
+    <h3>☢️ The Nuclear Renaissance</h3>
+    <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:16px;">
+      Big Tech companies have concluded that nuclear is the <strong>only viable path</strong> to carbon-free, 24/7 baseload power at the scale AI demands. The result: a wave of nuclear deals that would have been unthinkable 5 years ago.
+    </p>
+    
+    <div class="deals-grid">
+      <div class="deal-card microsoft">
+        <div class="deal-company">🔵 Microsoft</div>
+        <div class="deal-detail">Restarted <strong>Three Mile Island</strong> — yes, that Three Mile Island. 20-year PPA with Constellation Energy.</div>
+        <div class="deal-highlight">835 MW secured</div>
+      </div>
+      <div class="deal-card meta">
+        <div class="deal-company">🟣 Meta</div>
+        <div class="deal-detail">Signed for power from the <strong>Clinton nuclear plant</strong> in Illinois.</div>
+        <div class="deal-highlight">1.1 GW contracted</div>
+      </div>
+      <div class="deal-card amazon">
+        <div class="deal-company">🟡 Amazon</div>
+        <div class="deal-detail">Secured power from <strong>Susquehanna</strong> nuclear station in Pennsylvania.</div>
+        <div class="deal-highlight">2 GW secured</div>
+      </div>
+      <div class="deal-card google">
+        <div class="deal-company">🟢 Google</div>
+        <div class="deal-detail">Partnered with <strong>Kairos Power</strong> for next-gen small modular reactors (SMRs).</div>
+        <div class="deal-highlight">SMR pathway</div>
+      </div>
+      <div class="deal-card westinghouse" style="grid-column: 1 / -1;">
+        <div class="deal-company">🟠 Westinghouse</div>
+        <div class="deal-detail">Massive <strong>$80 billion contract</strong> for large-scale reactor construction — the biggest nuclear deal in decades.</div>
+        <div class="deal-highlight">$80B contract for new large-scale reactors</div>
+      </div>
+    </div>
+    
+    <!-- Uranium price -->
+    <div style="text-align:center;font-size:14px;font-weight:700;margin:24px 0 12px 0;color:#e8e8ed;">Enriched Uranium Price (SWU)</div>
+    
+    <div class="uranium-price">
+      <div class="uranium-side before">
+        <div class="ur-label">3 YEARS AGO</div>
+        <div class="ur-value" style="color:#9ca3af;">$56</div>
+        <div class="ur-sub">per SWU</div>
+      </div>
+      <div class="vs-divider">3.4×</div>
+      <div class="uranium-side after">
+        <div class="ur-label">TODAY</div>
+        <div class="ur-value" style="color:#4ade80;">$190</div>
+        <div class="ur-sub">per SWU</div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:#6b7280;text-align:center;margin-top:8px;">SWU = Separative Work Unit, the measure of enrichment effort. The price surge reflects the sudden demand from tech companies racing to secure nuclear power.</p>
+  </div>
+
+  <!-- ========== 4. OTHER ENERGY SOURCES ========== -->
+  <div class="anatomy-card">
+    <h3>🔋 Energy Sources for Data Centers</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">AI needs 24/7, always-on (baseload) power. Not all energy sources are equal:</p>
+    
+    <div class="energy-grid">
+      <div class="energy-card gas">
+        <div class="en-icon">🔥</div>
+        <div class="en-name">Natural Gas</div>
+        <div class="en-status">PRIMARY TODAY</div>
+        <div class="en-desc">Still powers most data centers. Reliable and dispatchable. But produces CO₂ emissions — a growing problem as ESG commitments tighten.</div>
+      </div>
+      <div class="energy-card solar">
+        <div class="en-icon">☀️</div>
+        <div class="en-name">Solar & Wind</div>
+        <div class="en-status">GROWING BUT INTERMITTENT</div>
+        <div class="en-desc">Cost per MWh keeps dropping, but the sun doesn't always shine and the wind doesn't always blow. AI needs 24/7 baseload — intermittency is a deal-breaker without massive battery storage.</div>
+      </div>
+      <div class="energy-card nuclear">
+        <div class="en-icon">☢️</div>
+        <div class="en-name">Nuclear</div>
+        <div class="en-status">★ PREFERRED — CARBON-FREE + 24/7 + HIGH DENSITY</div>
+        <div class="en-desc">The only energy source that is simultaneously carbon-free, available 24/7, and energy-dense enough to power hyperscale facilities. This is why every major tech company is racing to secure nuclear PPAs.</div>
+      </div>
+      <div class="energy-card geo">
+        <div class="en-icon">🌋</div>
+        <div class="en-name">Geothermal</div>
+        <div class="en-status">EMERGING</div>
+        <div class="en-desc">Fervo Energy + Google partnership exploring enhanced geothermal. Carbon-free and 24/7, but limited geographic availability and still nascent at data-center scale.</div>
+      </div>
+    </div>
+    
+    <div class="consequence-chain" style="margin-top:24px;">
+      <div class="consequence-node good">Need: Carbon-free ✓</div>
+      <div class="c-arrow">+</div>
+      <div class="consequence-node good">Need: 24/7 reliability ✓</div>
+      <div class="c-arrow">+</div>
+      <div class="consequence-node good">Need: High density ✓</div>
+      <div class="c-arrow">=</div>
+      <div class="consequence-node" style="border-color:#22c55e;background:#0f1a14;color:#4ade80;font-size:14px;">☢️ Nuclear wins</div>
+    </div>
+  </div>
+
+  <!-- ========== 5. DATA CENTER GEOGRAPHY & SCALE ========== -->
+  <div class="anatomy-card">
+    <h3>🌍 Data Center Geography & Scale</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Data centers cluster where power is cheap, land is available, and fiber connectivity is strong. Here are the key hubs:</p>
+    
+    <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:#4ade80;">🇺🇸 US Markets</div>
+    <div class="dc-map">
+      <div class="dc-hub top">
+        <div class="hub-icon">🏛️</div>
+        <div class="hub-name">Northern Virginia</div>
+        <div class="hub-detail">Largest data center market in the world. ~70% of global internet traffic routes through here.</div>
+      </div>
+      <div class="dc-hub growing">
+        <div class="hub-icon">🤠</div>
+        <div class="hub-name">Dallas-Fort Worth</div>
+        <div class="hub-detail">Fast-growing. Cheap power, abundant land, business-friendly regulation.</div>
+      </div>
+      <div class="dc-hub growing">
+        <div class="hub-icon">🌵</div>
+        <div class="hub-name">Phoenix</div>
+        <div class="hub-detail">Booming market. TSMC fabs nearby. But water scarcity is a growing concern.</div>
+      </div>
+      <div class="dc-hub growing">
+        <div class="hub-icon">🏭</div>
+        <div class="hub-name">Columbus, OH</div>
+        <div class="hub-detail">Emerging hub. AWS, Google, Meta all building massive campuses here.</div>
+      </div>
+    </div>
+    
+    <div style="font-size:13px;font-weight:700;margin:20px 0 10px 0;color:#fca5a5;">🌏 International — Facing Constraints</div>
+    <div class="dc-map">
+      <div class="dc-hub constrained">
+        <div class="hub-icon">🇸🇬</div>
+        <div class="hub-name">Singapore</div>
+        <div class="hub-detail">Moratorium on new data centers (2019-2022). Limited land & power.</div>
+      </div>
+      <div class="dc-hub constrained">
+        <div class="hub-icon">🇮🇪</div>
+        <div class="hub-name">Ireland</div>
+        <div class="hub-detail">Data centers now use ~20% of national electricity. Grid strain forcing limits.</div>
+      </div>
+      <div class="dc-hub constrained">
+        <div class="hub-icon">🇳🇱</div>
+        <div class="hub-name">Netherlands</div>
+        <div class="hub-detail">Restrictions on new builds. Amsterdam halted new connections in some areas.</div>
+      </div>
+    </div>
+    
+    <!-- Hyperscale box -->
+    <div class="hyperscale-box">
+      <div class="hs-title">📦 What is a Hyperscale Data Center?</div>
+      <div class="hs-specs">
+        <div class="hs-spec">
+          <div class="hs-val">100+ MW</div>
+          <div class="hs-label">Power capacity</div>
+        </div>
+        <div class="hs-spec">
+          <div class="hs-val">$1-5B+</div>
+          <div class="hs-label">Construction cost</div>
+        </div>
+        <div class="hs-spec">
+          <div class="hs-val">100K+</div>
+          <div class="hs-label">Servers</div>
+        </div>
+        <div class="hs-spec">
+          <div class="hs-val">2-4 yrs</div>
+          <div class="hs-label">Build time</div>
+        </div>
+      </div>
+      <p style="font-size:11px;color:#6b7280;margin-top:14px;position:relative;">Operated by hyperscalers: AWS, Azure, Google Cloud, Meta, Oracle. The newest GW-scale campuses are essentially small power plants with servers attached.</p>
+    </div>
+  </div>
+
+  <!-- ========== 6. THE SUPPLY CHAIN OF POWER ========== -->
+  <div class="anatomy-card">
+    <h3>🔗 The Supply Chain of Power</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Building and powering a data center requires more than just electricity. There's a chain of physical infrastructure that's already strained to breaking point:</p>
+    
+    <div class="supply-grid">
+      <div class="supply-card">
+        <div class="sc-icon">🔌</div>
+        <div class="sc-name">Power Transformers</div>
+        <div class="sc-bottleneck">⚠️ 2-3 YEAR BACKLOG GLOBALLY</div>
+        <div class="sc-desc">These are <em>electrical</em> transformers — not AI ones. They step voltage down from transmission lines to data center levels. Only a few manufacturers worldwide. Lead times have tripled since 2020.</div>
+      </div>
+      <div class="supply-card">
+        <div class="sc-icon">🥇</div>
+        <div class="sc-name">Copper Wiring</div>
+        <div class="sc-bottleneck">⚠️ RECORD PRICES, SHORTAGE PROJECTED</div>
+        <div class="sc-desc">Every data center needs massive amounts of copper for power distribution and networking. Prices at all-time highs. Mining can't keep up with demand from data centers + EVs + grid upgrades.</div>
+      </div>
+      <div class="supply-card">
+        <div class="sc-icon">💧</div>
+        <div class="sc-name">Cooling & Water</div>
+        <div class="sc-bottleneck">⚠️ MILLIONS OF GALLONS/DAY</div>
+        <div class="sc-desc">A large data center can use millions of gallons of water per day for cooling. This creates direct competition with agriculture and communities — a growing political flashpoint.</div>
+      </div>
+      <div class="supply-card">
+        <div class="sc-icon">🏗️</div>
+        <div class="sc-name">Land & Location</div>
+        <div class="sc-bottleneck">⚠️ PROXIMITY REQUIREMENTS</div>
+        <div class="sc-desc">Data centers must be near power substations and fiber optic trunk lines. Prime locations are increasingly scarce and expensive, especially in Northern Virginia and other established hubs.</div>
+      </div>
+    </div>
+    
+    <div class="consequence-chain">
+      <div class="consequence-node warn">Transformer backlog 📈</div>
+      <div class="c-arrow">+</div>
+      <div class="consequence-node warn">Copper shortage 📈</div>
+      <div class="c-arrow">+</div>
+      <div class="consequence-node warn">Water constraints 💧</div>
+      <div class="c-arrow">=</div>
+      <div class="consequence-node bad">Data center buildout delays → AI compute bottleneck</div>
+    </div>
+    <p style="font-size:12px;color:#6b7280;text-align:center;margin-top:12px;">The bottleneck is shifting from "can we make the chips?" to "can we power and cool them?"</p>
+  </div>
+
+  <!-- ========== 7. KEY NUMBERS ========== -->
+  <div class="section-title"><span class="emoji">🔢</span> Key Numbers to Remember</div>
+  <div class="key-numbers">
+    <div class="key-num">
+      <div class="num">176 GW</div>
+      <div class="desc">Projected US data center power demand by 2035</div>
+    </div>
+    <div class="key-num">
+      <div class="num">$190/SWU</div>
+      <div class="desc">Enriched uranium price (up from $56 three years ago)</div>
+    </div>
+    <div class="key-num">
+      <div class="num">$1-5B+</div>
+      <div class="desc">Cost to build a single hyperscale data center</div>
+    </div>
+    <div class="key-num">
+      <div class="num">2-3 yrs</div>
+      <div class="desc">Global backlog for power transformers</div>
+    </div>
+    <div class="key-num">
+      <div class="num">100+ MW</div>
+      <div class="desc">Power requirement per hyperscale data center</div>
+    </div>
+    <div class="key-num">
+      <div class="num">5.3×</div>
+      <div class="desc">Projected increase in US data center power demand (2024→2035)</div>
+    </div>
+  </div>
+
+  <!-- ========== 8. WORTH KNOWING ========== -->
+  <div class="worth-knowing">
+    <h3>📌 Worth Knowing</h3>
+    <ul>
+      <li><strong>Why Big Tech is going nuclear</strong> — It's the only carbon-free energy source that provides 24/7 baseload power at the scale AI demands. Solar and wind are intermittent. Natural gas has emissions. Geothermal is geographically limited. Nuclear checks every box — which is why companies that once avoided the word "nuclear" are now signing multi-billion-dollar deals.</li>
+      <li><strong>The water controversy</strong> — Data centers are competing directly with agriculture and local communities for water. In drought-prone areas like Phoenix and parts of Texas, this is becoming a major political issue. Some companies are shifting to air cooling or closed-loop systems, but these are less efficient and more expensive.</li>
+      <li><strong>Stranded gas</strong> — Some companies are building data centers directly next to natural gas wells in remote areas — using "stranded" gas that would otherwise be flared (burned off as waste). This is controversial but pragmatic: it provides cheap power in locations with no grid constraints.</li>
+      <li><strong>The transformer bottleneck</strong> — Yes, "transformer" in this context means the electrical power transformer, not the AI architecture. These massive devices (some weigh 400+ tons) step down high-voltage transmission line power to usable levels. Only a handful of manufacturers exist worldwide, and the backlog is 2-3 years. This is one of the most underappreciated bottlenecks in AI infrastructure.</li>
+      <li><strong>Energy costs = AI geography</strong> — Wherever electricity is cheapest and most abundant, that's where AI compute will concentrate. This is why the Middle East (cheap natural gas), Nordics (cheap hydro), and nuclear-powered US sites are all racing to attract data center investment. Energy costs may ultimately determine where AI development happens — and which countries lead.</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CoWoS Packaging — AI Value Chain Bottleneck</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0a0a0f;
+    color: #e8e8ed;
+    padding: 40px 24px;
+    min-height: 100vh;
+  }
+  
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #34d399, #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 36px;
+    font-weight: 500;
+  }
+  
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .emoji { font-size: 20px; }
+  
+  /* === BIG PICTURE === */
+  .big-picture {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
+    overflow-x: auto;
+  }
+  
+  .flow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: nowrap;
+    min-width: 900px;
+  }
+  
+  .flow-node {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-align: center;
+    min-width: 120px;
+    flex-shrink: 0;
+  }
+  .flow-node .label { font-size: 11px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .flow-node .name { font-size: 14px; font-weight: 700; margin-top: 4px; }
+  .flow-node.highlight {
+    border-color: #22c55e;
+    background: #0f1a14;
+    box-shadow: 0 0 24px rgba(34, 197, 94, 0.15);
+  }
+  .flow-node.highlight .name { color: #4ade80; }
+  .flow-node.dim { opacity: 0.5; }
+  
+  .flow-arrow {
+    font-size: 18px;
+    color: #4b5563;
+    padding: 0 6px;
+    flex-shrink: 0;
+  }
+  
+  .merge-note {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 12px;
+    color: #4ade80;
+    font-weight: 600;
+  }
+  
+  /* === ANATOMY CARDS === */
+  .anatomy-card {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+  
+  .anatomy-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  
+  /* === CROSS SECTION DIAGRAM === */
+  .cross-section {
+    position: relative;
+    margin: 24px auto;
+    max-width: 620px;
+  }
+  
+  .cs-layer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    position: relative;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+    border-radius: 4px;
+    z-index: 1;
+  }
+  
+  .cs-substrate {
+    width: 560px;
+    height: 40px;
+    background: linear-gradient(135deg, #2a2a3a, #4a4a5a);
+    border: 1px solid #6b7280;
+    margin-bottom: 4px;
+  }
+  
+  .cs-bumps-c4 {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin: 4px 0;
+  }
+  .cs-bumps-c4 .bump {
+    width: 8px;
+    height: 8px;
+    background: #fbbf24;
+    border-radius: 50%;
+  }
+  
+  .cs-interposer {
+    width: 520px;
+    height: 36px;
+    background: linear-gradient(135deg, #0f3a1a, #16a34a);
+    border: 1px solid #22c55e;
+    margin-bottom: 0;
+  }
+  
+  .cs-bumps-micro {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin: 3px 0;
+  }
+  .cs-bumps-micro .bump {
+    width: 5px;
+    height: 5px;
+    background: #a78bfa;
+    border-radius: 50%;
+  }
+  
+  .cs-top-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 0;
+  }
+  
+  .cs-gpu {
+    width: 140px;
+    height: 70px;
+    background: linear-gradient(135deg, #5a1a1a, #dc2626);
+    border: 1.5px solid #ef4444;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  
+  .cs-hbm-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+  }
+  .cs-hbm-die {
+    width: 50px;
+    height: 7px;
+    background: linear-gradient(135deg, #1e3a5f, #2563eb);
+    border: 0.5px solid #3b82f6;
+    border-radius: 2px;
+  }
+  .cs-hbm-die.base-die {
+    background: linear-gradient(135deg, #3b1f5e, #7c3aed);
+    border-color: #8b5cf6;
+  }
+  .cs-hbm-label {
+    font-size: 9px;
+    color: #9ca3af;
+    font-weight: 500;
+    margin-top: 2px;
+  }
+  
+  /* TSV annotations */
+  .cs-annotations {
+    position: relative;
+    max-width: 620px;
+    margin: 0 auto;
+    height: 0;
+  }
+  
+  .annotation {
+    position: absolute;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 10;
+  }
+  
+  /* === LABELS ROW === */
+  .cs-legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .cs-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #9ca3af;
+    font-weight: 500;
+  }
+  .cs-legend-item .swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+  }
+  
+  /* === BOTTLENECK FUNNEL === */
+  .funnel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin: 24px 0;
+    position: relative;
+  }
+  
+  .funnel-inputs {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .funnel-input-box {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 10px;
+    padding: 14px 20px;
+    text-align: center;
+    min-width: 140px;
+  }
+  .funnel-input-box .fi-num {
+    font-size: 22px;
+    font-weight: 800;
+    color: #60a5fa;
+  }
+  .funnel-input-box .fi-label {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+  .funnel-input-box.red .fi-num { color: #f87171; }
+  .funnel-input-box.blue .fi-num { color: #60a5fa; }
+  
+  .funnel-arrows-down {
+    font-size: 24px;
+    color: #4b5563;
+    margin: 4px 0;
+  }
+  
+  .funnel-neck {
+    position: relative;
+    margin: 8px 0;
+  }
+  
+  .funnel-shape {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .funnel-wide {
+    width: 340px;
+    height: 0;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    border-top: 40px solid #1a2e1a;
+    position: relative;
+  }
+  
+  .funnel-narrow-box {
+    background: linear-gradient(135deg, #0f2a14, #166534);
+    border: 2px solid #22c55e;
+    border-radius: 10px;
+    padding: 16px 28px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(34, 197, 94, 0.2);
+    position: relative;
+  }
+  .funnel-narrow-box .fn-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #4ade80;
+  }
+  .funnel-narrow-box .fn-sub {
+    font-size: 11px;
+    color: #86efac;
+    margin-top: 4px;
+  }
+  
+  .funnel-constraint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 6px 0;
+  }
+  .funnel-constraint .bar {
+    width: 80px;
+    height: 3px;
+    background: #ef4444;
+    border-radius: 2px;
+  }
+  .funnel-constraint .text {
+    font-size: 11px;
+    color: #f87171;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .funnel-output-box {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 10px;
+    padding: 14px 20px;
+    text-align: center;
+    margin-top: 8px;
+  }
+  .funnel-output-box .fo-num {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fbbf24;
+  }
+  .funnel-output-box .fo-label {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+  
+  /* === EVOLUTION COMPARISON === */
+  .evo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 16px 0;
+  }
+  
+  .evo-card {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .evo-card:hover { border-color: #4a4a6a; }
+  .evo-card.current { border-color: #22c55e; background: #0f1a14; }
+  .evo-card.future { border-color: #f59e0b; background: #1a1810; }
+  
+  .evo-card .evo-name {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .evo-card .evo-era {
+    font-size: 11px;
+    color: #9ca3af;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  .evo-card .evo-desc {
+    font-size: 12px;
+    color: #d1d5db;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .evo-card .evo-detail {
+    font-size: 11px;
+    color: #9ca3af;
+    line-height: 1.5;
+    padding-top: 10px;
+    border-top: 1px solid #2a2a4a;
+  }
+  .evo-card .evo-detail strong { color: #e8e8ed; }
+  
+  .evo-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .evo-badge.now { background: #166534; color: #86efac; }
+  .evo-badge.next { background: #92400e; color: #fde68a; }
+  
+  /* interposer visual in evo cards */
+  .evo-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 12px 0;
+    gap: 2px;
+  }
+  .evo-chip-row {
+    display: flex;
+    gap: 3px;
+    align-items: flex-end;
+  }
+  .evo-gpu {
+    width: 24px;
+    height: 20px;
+    background: linear-gradient(135deg, #5a1a1a, #dc2626);
+    border: 1px solid #ef4444;
+    border-radius: 2px;
+  }
+  .evo-hbm {
+    width: 10px;
+    height: 16px;
+    background: linear-gradient(135deg, #1e3a5f, #2563eb);
+    border: 0.5px solid #3b82f6;
+    border-radius: 1px;
+  }
+  .evo-interposer {
+    height: 8px;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7px;
+    font-weight: 600;
+  }
+  .evo-interposer.silicon {
+    background: linear-gradient(135deg, #0f3a1a, #16a34a);
+    border: 1px solid #22c55e;
+  }
+  .evo-interposer.rdl {
+    background: linear-gradient(135deg, #3a2a0f, #d97706);
+    border: 1px solid #f59e0b;
+  }
+  
+  /* === KEY NUMBERS === */
+  .key-numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+  
+  .key-num {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .key-num .num {
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #34d399, #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .key-num .desc {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+  
+  /* === MARKET BARS === */
+  .market-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  
+  .market-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .bar-label {
+    width: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  
+  .bar-track {
+    flex: 1;
+    height: 32px;
+    background: #1a1a2e;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    transition: width 1s ease;
+  }
+  
+  .bar-fill.tsmc { background: linear-gradient(90deg, #166534, #22c55e); }
+  .bar-fill.samsung-bar { background: linear-gradient(90deg, #1e40af, #3b82f6); }
+  .bar-fill.intel-bar { background: linear-gradient(90deg, #7c2d12, #f97316); }
+  .bar-fill.others-bar { background: linear-gradient(90deg, #3a3a4a, #6b7280); }
+  
+  .bar-flag {
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    margin-left: 8px;
+  }
+  
+  /* === COMPETITIVE CARDS === */
+  .comp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 16px 0;
+  }
+  
+  .comp-card {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .comp-card .comp-co {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .comp-card .comp-tech {
+    font-size: 11px;
+    color: #9ca3af;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .comp-card .comp-desc {
+    font-size: 12px;
+    color: #d1d5db;
+    line-height: 1.5;
+  }
+  .comp-card.leader {
+    border-color: #22c55e;
+    background: #0f1a14;
+  }
+  
+  /* === SUPPLY CHAIN FLOW === */
+  .supply-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+  
+  .sf-node {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    max-width: 170px;
+  }
+  .sf-node.bottleneck {
+    border-color: #ef4444;
+    background: #1a1010;
+    color: #fca5a5;
+    box-shadow: 0 0 16px rgba(239, 68, 68, 0.15);
+  }
+  .sf-node.result {
+    border-color: #f59e0b;
+    background: #1a1a10;
+    color: #fde68a;
+  }
+  
+  .sf-arrow {
+    font-size: 16px;
+    color: #4b5563;
+    padding: 0 6px;
+  }
+  
+  /* === WORTH KNOWING === */
+  .worth-knowing {
+    background: #111118;
+    border: 1px solid #2a2a4a;
+    border-left: 3px solid #a78bfa;
+    border-radius: 0 12px 12px 0;
+    padding: 24px;
+    margin-top: 32px;
+  }
+  
+  .worth-knowing h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #a78bfa;
+    margin-bottom: 12px;
+  }
+  
+  .worth-knowing ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .worth-knowing li {
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 6px 0;
+    border-bottom: 1px solid #1e1e2e;
+    color: #d1d5db;
+  }
+  .worth-knowing li:last-child { border-bottom: none; }
+  .worth-knowing li strong { color: #e8e8ed; }
+  
+  /* === GEN TABLE === */
+  .gen-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+  
+  .gen-table th {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 2px solid #2a2a4a;
+    color: #9ca3af;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .gen-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #1e1e2e;
+    font-weight: 500;
+  }
+  
+  .gen-table tr.current {
+    background: rgba(34, 197, 94, 0.08);
+  }
+  .gen-table tr.current td { color: #4ade80; font-weight: 600; }
+  
+  /* === CAPACITY CHART === */
+  .cap-chart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 32px;
+    margin: 24px 0;
+    height: 180px;
+  }
+  
+  .cap-bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .cap-bar-wrapper {
+    display: flex;
+    align-items: flex-end;
+    height: 140px;
+  }
+  
+  .cap-bar {
+    width: 56px;
+    border-radius: 6px 6px 0 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    transition: height 1s ease;
+  }
+  
+  .cap-year {
+    font-size: 12px;
+    font-weight: 600;
+    color: #9ca3af;
+  }
+  
+  .cap-label {
+    font-size: 10px;
+    color: #6b7280;
+    margin-top: 2px;
+  }
+  
+  /* demand line */
+  .cap-demand-note {
+    text-align: center;
+    font-size: 12px;
+    color: #f87171;
+    font-weight: 600;
+    margin-top: 8px;
+  }
+  
+  /* === MOBILE RESPONSIVE === */
+  @media (max-width: 600px) {
+    body { padding: 20px 12px; font-size: 15px; }
+    
+    h1 { font-size: 22px; }
+    .subtitle { font-size: 13px; margin-bottom: 24px; }
+    .section-title { font-size: 16px; }
+    
+    /* Big picture flow — stack vertically */
+    .big-picture { padding: 20px 14px; overflow-x: visible; }
+    .flow-row {
+      min-width: auto;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+    .flow-node {
+      min-width: auto;
+      width: 100%;
+      padding: 12px 14px;
+    }
+    .flow-node .name { font-size: 14px; }
+    .flow-arrow {
+      text-align: center;
+      padding: 4px 0;
+      font-size: 16px;
+      transform: rotate(90deg);
+    }
+    .merge-note { font-size: 11px; line-height: 1.5; }
+    
+    /* Anatomy cards */
+    .anatomy-card { padding: 20px 14px; }
+    .anatomy-card h3 { font-size: 15px; }
+    
+    /* Cross-section diagram — scale to fit */
+    .cross-section { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
+    .cs-substrate { width: 100%; min-width: 340px; height: 34px; font-size: 10px; }
+    .cs-interposer { width: 100%; min-width: 320px; height: 30px; font-size: 10px; }
+    .cs-top-row {
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+    .cs-gpu { width: 100px; height: 50px; font-size: 11px; }
+    .cs-hbm-die { width: 34px; height: 6px; }
+    .cs-hbm-label { font-size: 8px; }
+    .cs-legend { gap: 10px; }
+    .cs-legend-item { font-size: 10px; }
+    
+    /* Supply chain flow — stack vertically */
+    .supply-flow {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+    .sf-node {
+      max-width: none;
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 13px;
+    }
+    .sf-arrow {
+      text-align: center;
+      padding: 4px 0;
+      transform: rotate(90deg);
+    }
+    
+    /* Funnel — scale down */
+    .funnel-inputs {
+      flex-direction: column;
+      gap: 12px;
+      align-items: stretch;
+    }
+    .funnel-input-box { min-width: auto; width: 100%; padding: 12px 16px; }
+    .funnel-input-box .fi-num { font-size: 18px; }
+    .funnel-narrow-box { padding: 14px 16px; }
+    .funnel-output-box { width: 100%; }
+    .funnel-output-box .fo-num { font-size: 18px; }
+    
+    /* Evolution grid — single column */
+    .evo-grid { grid-template-columns: 1fr; gap: 14px; }
+    .evo-card { padding: 18px 16px; }
+    .evo-card .evo-name { font-size: 15px; }
+    .evo-card .evo-desc { font-size: 13px; }
+    .evo-card .evo-detail { font-size: 12px; }
+    
+    /* Competitive grid — single column */
+    .comp-grid { grid-template-columns: 1fr; gap: 14px; }
+    .comp-card { padding: 16px; }
+    .comp-card .comp-desc { font-size: 13px; }
+    
+    /* Table — horizontal scroll */
+    .gen-table { font-size: 12px; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .gen-table th { padding: 8px 10px; font-size: 10px; white-space: nowrap; }
+    .gen-table td { padding: 8px 10px; white-space: nowrap; }
+    
+    /* Market bars */
+    .bar-label { width: 70px; font-size: 12px; }
+    .bar-track { height: 36px; }
+    .bar-fill { font-size: 11px; padding-left: 6px; min-height: 44px; }
+    
+    /* Key numbers — single column */
+    .key-numbers { grid-template-columns: 1fr; gap: 12px; }
+    .key-num { padding: 16px; }
+    .key-num .num { font-size: 24px; }
+    .key-num .desc { font-size: 12px; }
+    
+    /* Capacity chart — scale bars */
+    .cap-chart { gap: 8px; height: auto; flex-wrap: wrap; justify-content: center; }
+    .cap-bar-group { margin-left: 0 !important; }
+    .cap-bar { width: 40px; font-size: 10px; padding-top: 6px; }
+    .cap-year { font-size: 11px; }
+    .cap-demand-note { font-size: 11px; line-height: 1.5; }
+    
+    /* Worth knowing */
+    .worth-knowing { padding: 20px 16px; }
+    .worth-knowing li { font-size: 14px; line-height: 1.7; padding: 8px 0; }
+    
+    /* General text readability */
+    p { font-size: 14px; }
+  }
+  
+  /* Small phones */
+  @media (max-width: 360px) {
+    body { padding: 16px 8px; }
+    .big-picture { padding: 16px 10px; }
+    .anatomy-card { padding: 16px 10px; }
+    .cs-gpu { width: 80px; height: 40px; font-size: 10px; }
+    .cs-hbm-die { width: 28px; height: 5px; }
+    .cap-bar { width: 32px; font-size: 9px; }
+    .key-num .num { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  
+  <h1>📦 CoWoS & Advanced Packaging</h1>
+  <p class="subtitle">The hidden bottleneck between making chips and shipping them — where GPU dies meet HBM</p>
+
+  <!-- ========== 1. WHERE COWOS SITS ========== -->
+  <div class="big-picture">
+    <div class="section-title"><span class="emoji">🗺️</span> Where CoWoS Sits in the AI Value Chain</div>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">CoWoS is the <strong style="color:#4ade80;">packaging step</strong> — it takes a finished GPU die (from the foundry) and finished HBM stacks (from memory makers) and combines them into one working chip package. Without it, you just have separate pieces that can't talk to each other.</p>
+    <div class="flow-row">
+      <div class="flow-node dim"><div class="label">Layer 1-2</div><div class="name">Materials & Equipment</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="label">Layer 3</div><div class="name">🏭 Foundries</div></div>
+      <div class="flow-arrow" style="color:#4ade80;font-weight:700;">→</div>
+      <div class="flow-node highlight"><div class="label">Packaging</div><div class="name">📦 CoWoS</div></div>
+      <div class="flow-arrow" style="color:#60a5fa;font-weight:700;">←</div>
+      <div class="flow-node"><div class="label">Layer 4</div><div class="name">🧠 Memory / HBM</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="label">Layer 5</div><div class="name">Processors (GPU)</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 6-9</div><div class="name">Infra → AI</div></div>
+    </div>
+    <div class="merge-note">↑ CoWoS merges the GPU die (Layer 3) + HBM stacks (Layer 4) into one package → Layer 5</div>
+  </div>
+
+  <!-- ========== 2. CROSS-SECTION DIAGRAM ========== -->
+  <div class="anatomy-card">
+    <h3>🔬 What CoWoS Actually Is — Cross-Section View</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:8px;">
+      <strong>C</strong>hip-<strong>o</strong>n-<strong>W</strong>afer-<strong>o</strong>n-<strong>S</strong>ubstrate. The GPU die and HBM stacks are placed on a silicon interposer, which acts as a "bridge" connecting them with ultra-dense wiring. The interposer then sits on an organic substrate (PCB).
+    </p>
+    
+    <div class="cross-section">
+      <!-- Top row: GPU + HBM stacks -->
+      <div class="cs-top-row">
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <div class="cs-gpu">GPU Die</div>
+          <div style="font-size:9px;color:#f87171;margin-top:2px;">↕ Micro-bumps</div>
+        </div>
+        
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <div class="cs-hbm-stack">
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die base-die"></div>
+          </div>
+          <div class="cs-hbm-label">HBM 1</div>
+        </div>
+        
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <div class="cs-hbm-stack">
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die base-die"></div>
+          </div>
+          <div class="cs-hbm-label">HBM 2</div>
+        </div>
+        
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <div class="cs-hbm-stack">
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die base-die"></div>
+          </div>
+          <div class="cs-hbm-label">HBM 3</div>
+        </div>
+        
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <div class="cs-hbm-stack">
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die base-die"></div>
+          </div>
+          <div class="cs-hbm-label">HBM 4</div>
+        </div>
+        
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <div class="cs-hbm-stack">
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die base-die"></div>
+          </div>
+          <div class="cs-hbm-label">HBM 5</div>
+        </div>
+        
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <div class="cs-hbm-stack">
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die"></div>
+            <div class="cs-hbm-die base-die"></div>
+          </div>
+          <div class="cs-hbm-label">HBM 6</div>
+        </div>
+      </div>
+      
+      <!-- Micro-bump row -->
+      <div class="cs-bumps-micro">
+        <span class="bump"></span><span class="bump"></span><span class="bump"></span>
+        <span class="bump"></span><span class="bump"></span><span class="bump"></span>
+        <span class="bump"></span><span class="bump"></span><span class="bump"></span>
+        <span class="bump"></span><span class="bump"></span><span class="bump"></span>
+        <span class="bump"></span><span class="bump"></span><span class="bump"></span>
+        <span class="bump"></span><span class="bump"></span><span class="bump"></span>
+        <span class="bump"></span><span class="bump"></span><span class="bump"></span>
+        <span class="bump"></span><span class="bump"></span><span class="bump"></span>
+        <span class="bump"></span><span class="bump"></span><span class="bump"></span>
+        <span class="bump"></span><span class="bump"></span><span class="bump"></span>
+      </div>
+      <div style="text-align:center;font-size:9px;color:#a78bfa;font-weight:600;margin-bottom:3px;">↑ Micro-bumps (~25μm pitch) — connect dies to interposer</div>
+      
+      <!-- Interposer -->
+      <div class="cs-layer cs-interposer">Silicon Interposer (with TSVs passing through)</div>
+      <div style="text-align:center;font-size:9px;color:#22c55e;font-weight:600;margin:2px 0;">↕ Through-Silicon Vias (TSVs) — vertical connections through the interposer</div>
+      
+      <!-- C4 bump row -->
+      <div class="cs-bumps-c4">
+        <span class="bump"></span><span class="bump"></span><span class="bump"></span>
+        <span class="bump"></span><span class="bump"></span><span class="bump"></span>
+        <span class="bump"></span><span class="bump"></span><span class="bump"></span>
+        <span class="bump"></span><span class="bump"></span><span class="bump"></span>
+        <span class="bump"></span><span class="bump"></span><span class="bump"></span>
+        <span class="bump"></span><span class="bump"></span><span class="bump"></span>
+        <span class="bump"></span><span class="bump"></span><span class="bump"></span>
+        <span class="bump"></span><span class="bump"></span><span class="bump"></span>
+      </div>
+      <div style="text-align:center;font-size:9px;color:#fbbf24;font-weight:600;margin-bottom:3px;">↑ C4 bumps (~100μm) — connect interposer to substrate</div>
+      
+      <!-- Substrate -->
+      <div class="cs-layer cs-substrate">Organic Substrate / PCB</div>
+    </div>
+    
+    <!-- Legend -->
+    <div class="cs-legend">
+      <div class="cs-legend-item"><div class="swatch" style="background:#dc2626;"></div> GPU Die</div>
+      <div class="cs-legend-item"><div class="swatch" style="background:#2563eb;"></div> HBM DRAM Dies</div>
+      <div class="cs-legend-item"><div class="swatch" style="background:#7c3aed;"></div> HBM Logic Die</div>
+      <div class="cs-legend-item"><div class="swatch" style="background:#16a34a;"></div> Silicon Interposer</div>
+      <div class="cs-legend-item"><div class="swatch" style="background:#4a4a5a;"></div> Substrate/PCB</div>
+      <div class="cs-legend-item"><div class="swatch" style="background:#a78bfa;border-radius:50%;"></div> Micro-bumps</div>
+      <div class="cs-legend-item"><div class="swatch" style="background:#fbbf24;border-radius:50%;"></div> C4 Bumps</div>
+    </div>
+  </div>
+
+  <!-- ========== 3. WHY IT'S A BOTTLENECK ========== -->
+  <div class="anatomy-card">
+    <h3>🚧 Why CoWoS Is the Bottleneck</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:8px;">
+      TSMC is essentially the <strong style="color:#e8e8ed;">only company on Earth</strong> that can do advanced CoWoS packaging at the scale needed for AI chips. No matter how many GPU dies Nvidia designs or how many HBM stacks SK Hynix makes — they all have to pass through TSMC's CoWoS lines. It's a literal bottleneck.
+    </p>
+    
+    <!-- Supply chain flow -->
+    <div class="supply-flow" style="margin-bottom:20px;">
+      <div class="sf-node">Nvidia designs GPU ✅</div>
+      <div class="sf-arrow">→</div>
+      <div class="sf-node">TSMC fabs GPU dies ✅</div>
+      <div class="sf-arrow">→</div>
+      <div class="sf-node bottleneck">⚠️ TSMC CoWoS packaging<br><span style="font-size:10px;">Limited capacity!</span></div>
+      <div class="sf-arrow">←</div>
+      <div class="sf-node">SK Hynix makes HBM ✅</div>
+    </div>
+    <div class="supply-flow">
+      <div class="sf-node bottleneck" style="border-color:#f59e0b;background:#1a1810;color:#fde68a;box-shadow:0 0 16px rgba(245,158,11,0.15);">CoWoS capacity is the limit<br><span style="font-size:10px;">Everything else waits</span></div>
+      <div class="sf-arrow">→</div>
+      <div class="sf-node result">Fewer GPUs shipped<br><span style="font-size:10px;">than demand requires</span></div>
+      <div class="sf-arrow">→</div>
+      <div class="sf-node result">GPU prices stay sky high 💰</div>
+    </div>
+    
+    <!-- Funnel diagram -->
+    <div style="margin-top:28px;">
+      <div style="text-align:center;font-size:14px;font-weight:700;margin-bottom:16px;color:#e8e8ed;">The Bottleneck Funnel</div>
+      <div class="funnel-container">
+        <div class="funnel-inputs">
+          <div class="funnel-input-box red">
+            <div class="fi-num">✅ Abundant</div>
+            <div class="fi-label">GPU Dies Available<br>(TSMC fab capacity OK)</div>
+          </div>
+          <div class="funnel-input-box blue">
+            <div class="fi-num">✅ Abundant</div>
+            <div class="fi-label">HBM Stacks Available<br>(SK Hynix ramped up)</div>
+          </div>
+        </div>
+        
+        <div class="funnel-arrows-down">↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓</div>
+        
+        <div class="funnel-narrow-box">
+          <div class="fn-title">🏭 TSMC CoWoS Packaging Lines</div>
+          <div class="fn-sub">Limited equipment · Long lead times · Complex process</div>
+        </div>
+        
+        <div class="funnel-constraint">
+          <div class="bar"></div>
+          <div class="text">⚡ Capacity constraint</div>
+          <div class="bar"></div>
+        </div>
+        
+        <div class="funnel-arrows-down" style="font-size:16px;">↓ ↓ ↓</div>
+        
+        <div class="funnel-output-box">
+          <div class="fo-num">❌ Not Enough</div>
+          <div class="fo-label">Final GPU Packages Shipped<br>(limited by CoWoS, not by design or components)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 4. COWOS EVOLUTION ========== -->
+  <div class="anatomy-card">
+    <h3>📈 CoWoS Evolution — Getting Bigger and Bigger</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">
+      As AI chips grow larger and need more HBM, the interposer must grow too. Each generation pushes the boundaries of what's physically possible in packaging.
+    </p>
+    
+    <div class="evo-grid">
+      <div class="evo-card">
+        <div class="evo-name">CoWoS-S</div>
+        <div class="evo-era">2012 → present (original)</div>
+        <div class="evo-visual">
+          <div class="evo-chip-row">
+            <div class="evo-gpu"></div>
+            <div class="evo-hbm"></div>
+            <div class="evo-hbm"></div>
+            <div class="evo-hbm"></div>
+            <div class="evo-hbm"></div>
+          </div>
+          <div class="evo-interposer silicon" style="width:100px;">Si interposer</div>
+        </div>
+        <div class="evo-desc">Silicon interposer, single reticle size (~~800mm²). Used for H100 and earlier GPUs. Limited by reticle — the interposer can only be as big as what the lithography machine can expose in one shot.</div>
+        <div class="evo-detail"><strong>Used in:</strong> Nvidia H100, A100<br><strong>Interposer:</strong> ~1,700mm²<br><strong>HBM stacks:</strong> Up to 6</div>
+      </div>
+      
+      <div class="evo-card current">
+        <div class="evo-name">CoWoS-L <span class="evo-badge now">NOW</span></div>
+        <div class="evo-era">2024 → present (larger)</div>
+        <div class="evo-visual">
+          <div class="evo-chip-row">
+            <div class="evo-gpu"></div>
+            <div class="evo-gpu"></div>
+            <div class="evo-hbm"></div>
+            <div class="evo-hbm"></div>
+            <div class="evo-hbm"></div>
+            <div class="evo-hbm"></div>
+            <div class="evo-hbm"></div>
+            <div class="evo-hbm"></div>
+          </div>
+          <div class="evo-interposer silicon" style="width:140px;">Large Si + LSI chips</div>
+        </div>
+        <div class="evo-desc">Uses local silicon interconnect (LSI) chiplets to stitch together a <strong>larger-than-reticle</strong> interposer. Enables much bigger packages with more HBM and even multi-die GPUs.</div>
+        <div class="evo-detail"><strong>Used in:</strong> Nvidia B200, B300<br><strong>Interposer:</strong> ~3,300mm²+<br><strong>HBM stacks:</strong> 8 or more<br><strong>Key change:</strong> 2× the area of CoWoS-S</div>
+      </div>
+      
+      <div class="evo-card future">
+        <div class="evo-name">CoWoS-R <span class="evo-badge next">FUTURE</span></div>
+        <div class="evo-era">~2026+ (next-gen)</div>
+        <div class="evo-visual">
+          <div class="evo-chip-row">
+            <div class="evo-gpu"></div>
+            <div class="evo-gpu"></div>
+            <div class="evo-hbm"></div>
+            <div class="evo-hbm"></div>
+            <div class="evo-hbm"></div>
+            <div class="evo-hbm"></div>
+            <div class="evo-hbm"></div>
+            <div class="evo-hbm"></div>
+          </div>
+          <div class="evo-interposer rdl" style="width:140px;">RDL interposer</div>
+        </div>
+        <div class="evo-desc">Replaces the expensive silicon interposer with an <strong>organic RDL (Redistribution Layer)</strong>. Much cheaper and easier to scale, but slightly lower interconnect density. Likely for cost-optimized products.</div>
+        <div class="evo-detail"><strong>Used in:</strong> TBD (rumored mid-range AI chips)<br><strong>Interposer:</strong> Organic RDL<br><strong>Cost:</strong> Significantly cheaper<br><strong>Tradeoff:</strong> Lower density vs silicon</div>
+      </div>
+    </div>
+    
+    <!-- Comparison table -->
+    <table class="gen-table" style="margin-top:16px;">
+      <thead>
+        <tr>
+          <th>Variant</th>
+          <th>Interposer Type</th>
+          <th>Max Area</th>
+          <th>Cost</th>
+          <th>Density</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>CoWoS-S</td>
+          <td>Silicon (single reticle)</td>
+          <td>~1,700mm²</td>
+          <td>High</td>
+          <td>Highest</td>
+          <td>Mature</td>
+        </tr>
+        <tr class="current">
+          <td>CoWoS-L</td>
+          <td>Silicon + LSI chiplets</td>
+          <td>~3,300mm²+</td>
+          <td>Very High</td>
+          <td>High</td>
+          <td>Ramping</td>
+        </tr>
+        <tr>
+          <td>CoWoS-R</td>
+          <td>Organic RDL</td>
+          <td>Flexible</td>
+          <td>Lower</td>
+          <td>Medium</td>
+          <td>Development</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ========== 5. KEY NUMBERS ========== -->
+  <div class="section-title"><span class="emoji">🔢</span> Key Numbers to Remember</div>
+  <div class="key-numbers">
+    <div class="key-num">
+      <div class="num">2×</div>
+      <div class="desc">TSMC CoWoS capacity roughly doubled in 2025 — still not enough to meet demand</div>
+    </div>
+    <div class="key-num">
+      <div class="num">$1-2K</div>
+      <div class="desc">Estimated cost CoWoS adds to each GPU package (on top of die + HBM costs)</div>
+    </div>
+    <div class="key-num">
+      <div class="num">~2×</div>
+      <div class="desc">B200 interposer is ~2× the area of H100's — uses more CoWoS capacity per chip</div>
+    </div>
+    <div class="key-num">
+      <div class="num">$B+</div>
+      <div class="desc">TSMC has invested billions in new CoWoS production lines in Taiwan & Japan</div>
+    </div>
+    <div class="key-num">
+      <div class="num">90%+</div>
+      <div class="desc">TSMC's share of advanced 2.5D/CoWoS packaging for AI chips</div>
+    </div>
+    <div class="key-num">
+      <div class="num">18-24mo</div>
+      <div class="desc">Lead time to build a new CoWoS production line from scratch</div>
+    </div>
+  </div>
+  
+  <!-- Capacity visual -->
+  <div class="anatomy-card">
+    <h3>📊 CoWoS Capacity vs Demand (Illustrative)</h3>
+    <p style="font-size:12px;color:#9ca3af;margin-bottom:8px;">Capacity has grown aggressively, but demand keeps outpacing it — especially as each new GPU generation uses a bigger interposer.</p>
+    <div class="cap-chart">
+      <div class="cap-bar-group">
+        <div class="cap-bar-wrapper">
+          <div class="cap-bar" style="height:40px;background:linear-gradient(180deg,#166534,#22c55e);">1×</div>
+        </div>
+        <div class="cap-year">2023</div>
+        <div class="cap-label">Capacity</div>
+      </div>
+      <div class="cap-bar-group">
+        <div class="cap-bar-wrapper">
+          <div class="cap-bar" style="height:60px;background:linear-gradient(180deg,#991b1b,#ef4444);">1.6×</div>
+        </div>
+        <div class="cap-year">2023</div>
+        <div class="cap-label" style="color:#f87171;">Demand</div>
+      </div>
+      <div class="cap-bar-group" style="margin-left:16px;">
+        <div class="cap-bar-wrapper">
+          <div class="cap-bar" style="height:70px;background:linear-gradient(180deg,#166534,#22c55e);">1.6×</div>
+        </div>
+        <div class="cap-year">2024</div>
+        <div class="cap-label">Capacity</div>
+      </div>
+      <div class="cap-bar-group">
+        <div class="cap-bar-wrapper">
+          <div class="cap-bar" style="height:100px;background:linear-gradient(180deg,#991b1b,#ef4444);">2.5×</div>
+        </div>
+        <div class="cap-year">2024</div>
+        <div class="cap-label" style="color:#f87171;">Demand</div>
+      </div>
+      <div class="cap-bar-group" style="margin-left:16px;">
+        <div class="cap-bar-wrapper">
+          <div class="cap-bar" style="height:100px;background:linear-gradient(180deg,#166534,#22c55e);">2×</div>
+        </div>
+        <div class="cap-year">2025</div>
+        <div class="cap-label">Capacity</div>
+      </div>
+      <div class="cap-bar-group">
+        <div class="cap-bar-wrapper">
+          <div class="cap-bar" style="height:140px;background:linear-gradient(180deg,#991b1b,#ef4444);">3.5×</div>
+        </div>
+        <div class="cap-year">2025</div>
+        <div class="cap-label" style="color:#f87171;">Demand</div>
+      </div>
+    </div>
+    <div class="cap-demand-note">🔴 Demand consistently outpaces capacity — the gap is GROWING because each B200 uses ~2× the CoWoS area of an H100</div>
+  </div>
+
+  <!-- ========== 6. COMPETITIVE LANDSCAPE ========== -->
+  <div class="anatomy-card">
+    <h3>🏢 Competitive Landscape — Who Else Can Package?</h3>
+    
+    <div class="market-bars" style="margin-bottom:24px;">
+      <div class="market-bar-row">
+        <div class="bar-label">TSMC</div>
+        <div class="bar-track"><div class="bar-fill tsmc" style="width:92%;">~92% <span class="bar-flag">🇹🇼</span></div></div>
+      </div>
+      <div class="market-bar-row">
+        <div class="bar-label">Samsung</div>
+        <div class="bar-track"><div class="bar-fill samsung-bar" style="width:5%;">~5% <span class="bar-flag">🇰🇷</span></div></div>
+      </div>
+      <div class="market-bar-row">
+        <div class="bar-label">Intel</div>
+        <div class="bar-track"><div class="bar-fill intel-bar" style="width:2%;">~2% <span class="bar-flag">🇺🇸</span></div></div>
+      </div>
+      <div class="market-bar-row">
+        <div class="bar-label">Others</div>
+        <div class="bar-track"><div class="bar-fill others-bar" style="width:1%;">~1%</div></div>
+      </div>
+    </div>
+    
+    <div class="comp-grid">
+      <div class="comp-card leader">
+        <div class="comp-co" style="color:#4ade80;">TSMC — CoWoS</div>
+        <div class="comp-tech">2.5D Silicon Interposer</div>
+        <div class="comp-desc">The gold standard. Highest density, best yield, most mature. Used by Nvidia, AMD, Google, and Amazon for their AI accelerators. Basically a monopoly on advanced AI chip packaging.</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-co" style="color:#60a5fa;">Samsung — FOPLP</div>
+        <div class="comp-tech">Fan-Out Panel Level Packaging</div>
+        <div class="comp-desc">Uses large rectangular panels instead of round wafers — potentially much cheaper at scale. But still early stage, lower density, and limited customer adoption. <strong>Not yet proven for AI chips.</strong></div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-co" style="color:#f97316;">Intel — EMIB</div>
+        <div class="comp-tech">Embedded Multi-die Interconnect Bridge</div>
+        <div class="comp-desc">Uses small silicon bridges embedded in the substrate (instead of a full interposer). Used in Intel's own Ponte Vecchio and Gaudi chips. <strong>Not available as a foundry service at TSMC-scale.</strong></div>
+      </div>
+    </div>
+    
+    <p style="font-size:12px;color:#fbbf24;text-align:center;margin-top:16px;font-weight:600;">Bottom line: if you want to build a state-of-the-art AI GPU today, you're going through TSMC's CoWoS. There is no alternative at scale.</p>
+  </div>
+
+  <!-- ========== 7. WORTH KNOWING ========== -->
+  <div class="worth-knowing">
+    <h3>📌 Worth Knowing</h3>
+    <ul>
+      <li><strong>Why can't they just build more CoWoS lines faster?</strong> — CoWoS packaging requires extremely specialized equipment (e.g., thermocompression bonders, advanced lithography for interposers). The supply chain for this equipment is itself constrained, and each new line takes 18-24 months to build, qualify, and ramp. You can't throw money at it and get instant capacity.</li>
+      <li><strong>The interposer size problem</strong> — as chips get bigger (B200 → B300 → Rubin), the silicon interposer must grow too. But larger interposers are exponentially harder to manufacture with good yield. A single defect across that huge silicon area can kill the whole package. This is why CoWoS-L uses "stitched" chiplets — it's an engineering workaround to the reticle limit.</li>
+      <li><strong>How this affects GPU pricing</strong> — the CoWoS bottleneck is a key reason Nvidia can charge $30,000-$40,000 per GPU. Even if die costs fell, the limited CoWoS capacity creates artificial scarcity. Cloud providers are willing to pay any price because the revenue from AI services far exceeds the GPU cost.</li>
+      <li><strong>Connection to the HBM layer</strong> — CoWoS is literally the glue between the GPU die and HBM stacks. No CoWoS = you can't physically attach HBM to the GPU. Even if SK Hynix doubles HBM production, those stacks are useless without CoWoS to integrate them. This makes CoWoS the critical dependency for both the foundry and memory layers.</li>
+      <li><strong>TSMC's strategic leverage</strong> — TSMC doesn't just make the GPU dies (foundry) — they also do the packaging (CoWoS). This gives them incredible leverage over the entire AI chip supply chain. Nvidia, AMD, Google, and Amazon are all dependent on a single company in Taiwan for both fabrication AND packaging.</li>
+      <li><strong>The cost breakdown of an AI GPU</strong> — roughly: GPU die (~$2,000-3,000) + HBM stacks (~$2,000-4,000) + CoWoS packaging (~$1,000-2,000) + testing & other (~$500-1,000) = $6,000-10,000 manufacturing cost on a chip that sells for $30,000-40,000. Packaging is a significant chunk of the total.</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>

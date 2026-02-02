@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layer 5: Systems, Servers & Networking — AI Value Chain</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0a0a0f;
+    color: #e8e8ed;
+    padding: 40px 24px;
+    min-height: 100vh;
+  }
+  
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #34d399, #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 36px;
+    font-weight: 500;
+  }
+  
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .emoji { font-size: 20px; }
+  
+  /* === BIG PICTURE === */
+  .big-picture {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
+    overflow-x: auto;
+  }
+  
+  .flow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: nowrap;
+    min-width: 900px;
+  }
+  
+  .flow-node {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-align: center;
+    min-width: 120px;
+    flex-shrink: 0;
+  }
+  .flow-node .label { font-size: 11px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .flow-node .name { font-size: 14px; font-weight: 700; margin-top: 4px; }
+  .flow-node.highlight {
+    border-color: #34d399;
+    background: #0f1a14;
+    box-shadow: 0 0 24px rgba(52, 211, 153, 0.2);
+  }
+  .flow-node.highlight .name { color: #34d399; }
+  .flow-node.dim { opacity: 0.5; }
+  
+  .flow-arrow {
+    font-size: 18px;
+    color: #4b5563;
+    padding: 0 6px;
+    flex-shrink: 0;
+  }
+  
+  /* === ANATOMY CARDS === */
+  .anatomy-card {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+  
+  .anatomy-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  
+  /* === SERVER DIAGRAM === */
+  .server-diagram {
+    background: #0d0d14;
+    border: 1.5px solid #1e1e2e;
+    border-radius: 14px;
+    padding: 24px;
+    margin: 20px 0;
+  }
+  
+  .server-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #34d399;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  
+  .gpu-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin: 12px auto;
+    max-width: 480px;
+  }
+  
+  .gpu-unit {
+    background: linear-gradient(135deg, #1a2a1a, #166534);
+    border: 1.5px solid #22c55e;
+    border-radius: 8px;
+    padding: 10px 6px;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: #86efac;
+    position: relative;
+  }
+  .gpu-unit .gpu-label { font-size: 12px; font-weight: 800; }
+  .gpu-unit .gpu-sub { font-size: 9px; color: #6ee7b7; margin-top: 2px; }
+  
+  .nvlink-bar {
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    height: 4px;
+    border-radius: 2px;
+    margin: 6px auto;
+    max-width: 480px;
+    position: relative;
+  }
+  .nvlink-bar-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #fbbf24;
+    text-align: center;
+    margin: 4px 0;
+  }
+  
+  .server-component-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 12px 0;
+    flex-wrap: wrap;
+  }
+  
+  .server-comp {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 8px;
+    padding: 10px 16px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: #d1d5db;
+  }
+  .server-comp.cpu { border-color: #3b82f6; color: #93c5fd; }
+  .server-comp.net { border-color: #a78bfa; color: #c4b5fd; }
+  .server-comp.nvswitch { border-color: #f59e0b; color: #fde68a; background: #1a1a10; }
+  
+  /* === COMPARISON TABLE === */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+  
+  .compare-card {
+    background: #0d0d14;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 14px;
+    padding: 24px;
+    text-align: center;
+  }
+  .compare-card.featured {
+    border-color: #34d399;
+    box-shadow: 0 0 20px rgba(52, 211, 153, 0.1);
+  }
+  .compare-card .cc-name {
+    font-size: 15px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .compare-card .cc-sub {
+    font-size: 11px;
+    color: #6b7280;
+    margin-bottom: 16px;
+  }
+  .compare-card .cc-stat {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 2px;
+  }
+  .compare-card .cc-stat-label {
+    font-size: 10px;
+    color: #9ca3af;
+    margin-bottom: 12px;
+  }
+  
+  /* === OEM GRID === */
+  .oem-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .oem-card {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+  }
+  .oem-card .oem-name { font-size: 13px; font-weight: 700; color: #e8e8ed; }
+  .oem-card .oem-role { font-size: 10px; color: #9ca3af; margin-top: 4px; line-height: 1.3; }
+  
+  /* === NETWORK HIERARCHY === */
+  .net-hierarchy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin: 24px auto;
+    max-width: 600px;
+  }
+  
+  .net-level {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+  }
+  
+  .net-box {
+    border-radius: 10px;
+    padding: 14px 20px;
+    text-align: center;
+    font-weight: 600;
+    position: relative;
+    flex: 1;
+    max-width: 260px;
+  }
+  
+  .net-box.gpu-level {
+    background: linear-gradient(135deg, #1a2a1a, #166534);
+    border: 1.5px solid #22c55e;
+    color: #86efac;
+    font-size: 12px;
+  }
+  .net-box.nvlink-level {
+    background: linear-gradient(135deg, #1a1a10, #92400e);
+    border: 1.5px solid #f59e0b;
+    color: #fde68a;
+    font-size: 12px;
+  }
+  .net-box.nvswitch-level {
+    background: linear-gradient(135deg, #1a1a3a, #4338ca);
+    border: 1.5px solid #6366f1;
+    color: #c7d2fe;
+    font-size: 12px;
+  }
+  .net-box.ib-level {
+    background: linear-gradient(135deg, #2a1a2a, #7c2d12);
+    border: 1.5px solid #f97316;
+    color: #fed7aa;
+    font-size: 12px;
+  }
+  .net-box.spine-level {
+    background: linear-gradient(135deg, #1a1a2e, #991b1b);
+    border: 1.5px solid #ef4444;
+    color: #fca5a5;
+    font-size: 12px;
+  }
+  
+  .net-connector {
+    font-size: 14px;
+    color: #4b5563;
+    padding: 4px 0;
+    text-align: center;
+  }
+  
+  .net-speed {
+    font-size: 10px;
+    font-weight: 700;
+    color: #9ca3af;
+    background: #111118;
+    border: 1px solid #2a2a4a;
+    border-radius: 4px;
+    padding: 2px 8px;
+    position: absolute;
+    right: -90px;
+    white-space: nowrap;
+  }
+  
+  /* === MARKET SHARE BARS === */
+  .market-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  
+  .market-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .bar-label {
+    width: 120px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  
+  .bar-track {
+    flex: 1;
+    height: 32px;
+    background: #1a1a2e;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    transition: width 1s ease;
+  }
+  
+  .bar-flag {
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    margin-left: 8px;
+  }
+  
+  /* === BOTTLENECK VIS === */
+  .bottleneck-vis {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 20px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 100px;
+  }
+  
+  .bn-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  
+  .bn-side.compute {
+    background: linear-gradient(135deg, #1a2a1a, #166534);
+    border: 1px solid #22c55e;
+  }
+  .bn-side.network {
+    background: linear-gradient(135deg, #2a1a1a, #991b1b);
+    border: 1px solid #ef4444;
+    flex: 1.6;
+  }
+  
+  .bn-side .bn-label { font-size: 13px; font-weight: 700; }
+  .bn-side .bn-sub { font-size: 11px; opacity: 0.7; margin-top: 4px; text-align: center; }
+  
+  .bn-divider {
+    width: 40px;
+    background: #1e1e2e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    color: #6b7280;
+  }
+  
+  /* === COOLING DIAGRAM === */
+  .cooling-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+  
+  .cool-card {
+    background: #0d0d14;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    border: 1.5px solid #2a2a4a;
+  }
+  .cool-card.old { border-color: #6b7280; }
+  .cool-card.new { border-color: #3b82f6; box-shadow: 0 0 16px rgba(59, 130, 246, 0.1); }
+  
+  .cool-card .cool-icon { font-size: 36px; margin-bottom: 8px; }
+  .cool-card .cool-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .cool-card .cool-cap { font-size: 11px; color: #9ca3af; }
+  .cool-card .cool-stat { font-size: 22px; font-weight: 800; margin: 8px 0; }
+  .cool-card .cool-verdict { font-size: 11px; font-weight: 600; }
+  .cool-card.old .cool-stat { color: #6b7280; }
+  .cool-card.old .cool-verdict { color: #f87171; }
+  .cool-card.new .cool-stat { color: #60a5fa; }
+  .cool-card.new .cool-verdict { color: #34d399; }
+  
+  .cooling-players {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .cool-player {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+  }
+  .cool-player .cp-name { font-size: 13px; font-weight: 700; }
+  .cool-player .cp-role { font-size: 10px; color: #9ca3af; margin-top: 4px; line-height: 1.3; }
+  
+  /* === KEY NUMBERS === */
+  .key-numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+  
+  .key-num {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .key-num .num {
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #34d399, #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .key-num .desc {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+  
+  /* === WORTH KNOWING === */
+  .worth-knowing {
+    background: #111118;
+    border: 1px solid #2a2a4a;
+    border-left: 3px solid #a78bfa;
+    border-radius: 0 12px 12px 0;
+    padding: 24px;
+    margin-top: 32px;
+  }
+  
+  .worth-knowing h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #a78bfa;
+    margin-bottom: 12px;
+  }
+  
+  .worth-knowing ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .worth-knowing li {
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 6px 0;
+    border-bottom: 1px solid #1e1e2e;
+    color: #d1d5db;
+  }
+  .worth-knowing li:last-child { border-bottom: none; }
+  .worth-knowing li strong { color: #e8e8ed; }
+  
+  /* === PLAYER CARDS === */
+  .player-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin: 16px 0;
+  }
+  
+  .player-card {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .player-card.dominant {
+    border-color: #f59e0b;
+    background: #1a1a10;
+    grid-column: 1 / -1;
+  }
+  .player-card .pl-name {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .player-card .pl-role {
+    font-size: 11px;
+    color: #9ca3af;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .player-card .pl-desc {
+    font-size: 12px;
+    color: #d1d5db;
+    line-height: 1.5;
+  }
+  
+  /* === MOBILE RESPONSIVE === */
+  @media (max-width: 600px) {
+    body { padding: 20px 12px; font-size: 15px; }
+    h1 { font-size: 22px; }
+    .subtitle { font-size: 13px; margin-bottom: 24px; }
+    .section-title { font-size: 16px; }
+    
+    .big-picture { padding: 20px 14px; overflow-x: visible; }
+    .flow-row {
+      min-width: auto;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+    .flow-node { min-width: auto; width: 100%; padding: 12px 14px; }
+    .flow-node .name { font-size: 14px; }
+    .flow-arrow {
+      text-align: center;
+      padding: 4px 0;
+      font-size: 16px;
+      transform: rotate(90deg);
+    }
+    
+    .anatomy-card { padding: 20px 14px; }
+    .anatomy-card h3 { font-size: 15px; }
+    
+    .gpu-grid { grid-template-columns: repeat(2, 1fr); max-width: 100%; }
+    .nvlink-bar { max-width: 100%; }
+    
+    .compare-grid { grid-template-columns: 1fr; }
+    .oem-grid { grid-template-columns: repeat(2, 1fr); }
+    
+    .net-hierarchy { max-width: 100%; }
+    .net-box { padding: 10px 14px; font-size: 11px; }
+    .net-speed { position: static; display: block; margin: 2px auto 0; }
+    
+    .bar-label { width: 90px; font-size: 12px; }
+    .bar-track { height: 36px; }
+    .bar-fill { font-size: 11px; padding-left: 6px; min-height: 44px; }
+    
+    .bottleneck-vis { flex-direction: column; height: auto; }
+    .bn-side { padding: 14px; }
+    .bn-divider { width: 100%; height: 32px; }
+    
+    .cooling-compare { grid-template-columns: 1fr; }
+    .cooling-players { grid-template-columns: 1fr; }
+    
+    .player-grid { grid-template-columns: 1fr; }
+    .player-card.dominant { grid-column: auto; }
+    
+    .key-numbers { grid-template-columns: 1fr; gap: 12px; }
+    .key-num { padding: 16px; }
+    .key-num .num { font-size: 24px; }
+    .key-num .desc { font-size: 12px; }
+    
+    .worth-knowing { padding: 20px 16px; }
+    .worth-knowing li { font-size: 14px; line-height: 1.7; padding: 8px 0; }
+    
+    p { font-size: 14px; }
+  }
+  
+  @media (max-width: 360px) {
+    body { padding: 16px 8px; }
+    .big-picture { padding: 16px 10px; }
+    .anatomy-card { padding: 16px 10px; }
+    .gpu-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
+    .oem-grid { grid-template-columns: 1fr; }
+    .key-num .num { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>🖥️ Layer 5: Systems, Servers & Networking</h1>
+  <p class="subtitle">Assembling GPUs, HBM, and networking into the supercomputers that train AI</p>
+
+  <!-- ========== 1. WHERE THIS SITS ========== -->
+  <div class="big-picture">
+    <div class="section-title"><span class="emoji">🗺️</span> Where This Sits in the AI Value Chain</div>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Layer 5 is where all the previous layers converge — GPUs from chip design, HBM from the memory layer, advanced packaging from TSMC — assembled into <strong style="color:#34d399;">complete AI server systems</strong> connected by high-speed networking. This is where compute becomes infrastructure.</p>
+    <div class="flow-row">
+      <div class="flow-node dim"><div class="label">Layer 1</div><div class="name">Raw Materials</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 2</div><div class="name">Chip Design</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 3</div><div class="name">Foundries</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 4</div><div class="name">Memory & HBM</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node highlight"><div class="label">Layer 5</div><div class="name">🖥️ Systems & Networking</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 6-9</div><div class="name">Cloud → AI</div></div>
+    </div>
+  </div>
+
+  <!-- ========== 2. WHAT AN AI SERVER LOOKS LIKE ========== -->
+  <div class="anatomy-card">
+    <h3>🔬 What an AI Server Actually Looks Like</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:8px;">
+      An AI server isn't just a beefy PC. It's a purpose-built system packing multiple GPUs, each with its own HBM, all connected by ultra-fast interconnects. Here's the inside of an Nvidia DGX system:
+    </p>
+    
+    <div class="server-diagram">
+      <div class="server-label">Nvidia DGX H100 — Inside the Box</div>
+      
+      <div class="gpu-grid">
+        <div class="gpu-unit"><div class="gpu-label">H100</div><div class="gpu-sub">80GB HBM3</div></div>
+        <div class="gpu-unit"><div class="gpu-label">H100</div><div class="gpu-sub">80GB HBM3</div></div>
+        <div class="gpu-unit"><div class="gpu-label">H100</div><div class="gpu-sub">80GB HBM3</div></div>
+        <div class="gpu-unit"><div class="gpu-label">H100</div><div class="gpu-sub">80GB HBM3</div></div>
+        <div class="gpu-unit"><div class="gpu-label">H100</div><div class="gpu-sub">80GB HBM3</div></div>
+        <div class="gpu-unit"><div class="gpu-label">H100</div><div class="gpu-sub">80GB HBM3</div></div>
+        <div class="gpu-unit"><div class="gpu-label">H100</div><div class="gpu-sub">80GB HBM3</div></div>
+        <div class="gpu-unit"><div class="gpu-label">H100</div><div class="gpu-sub">80GB HBM3</div></div>
+      </div>
+      
+      <div class="nvlink-bar"></div>
+      <div class="nvlink-bar-label">⚡ NVLink + NVSwitch — 900 GB/s all-to-all GPU interconnect</div>
+      
+      <div class="server-component-row">
+        <div class="server-comp nvswitch">🔀 NVSwitch × 4</div>
+        <div class="server-comp cpu">🧠 CPU Host (2× Intel Xeon / AMD EPYC)</div>
+        <div class="server-comp net">🌐 ConnectX-7 NICs (InfiniBand / Ethernet)</div>
+      </div>
+      
+      <p style="font-size:11px;color:#6b7280;text-align:center;margin-top:12px;">8 GPUs × 80GB = 640GB total HBM · ~$300K+ per system · 10.2kW power draw</p>
+    </div>
+  </div>
+
+  <!-- DGX H100 vs DGX GB200 NVL72 -->
+  <div class="anatomy-card">
+    <h3>📊 DGX H100 vs DGX GB200 NVL72 — The Scale Jump</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:12px;">Nvidia keeps packing more GPUs into tighter, faster-connected systems. The jump from H100 to GB200 is massive:</p>
+    
+    <div class="compare-grid">
+      <div class="compare-card">
+        <div class="cc-name">DGX H100</div>
+        <div class="cc-sub">Current generation server</div>
+        <div class="cc-stat" style="color:#60a5fa;">8 GPUs</div>
+        <div class="cc-stat-label">H100 GPUs per system</div>
+        <div class="cc-stat" style="color:#60a5fa;">640 GB</div>
+        <div class="cc-stat-label">Total HBM</div>
+        <div class="cc-stat" style="color:#60a5fa;">~$300K</div>
+        <div class="cc-stat-label">Starting price</div>
+        <div class="cc-stat" style="color:#60a5fa;">10.2 kW</div>
+        <div class="cc-stat-label">Power draw</div>
+      </div>
+      <div class="compare-card featured">
+        <div class="cc-name" style="color:#34d399;">DGX GB200 NVL72</div>
+        <div class="cc-sub">Next-gen rack-scale system</div>
+        <div class="cc-stat" style="color:#34d399;">72 GPUs</div>
+        <div class="cc-stat-label">B200 GPUs in a single rack</div>
+        <div class="cc-stat" style="color:#34d399;">13.5 TB</div>
+        <div class="cc-stat-label">Total HBM</div>
+        <div class="cc-stat" style="color:#34d399;">~$3M+</div>
+        <div class="cc-stat-label">Estimated price</div>
+        <div class="cc-stat" style="color:#34d399;">120 kW</div>
+        <div class="cc-stat-label">Power draw</div>
+      </div>
+    </div>
+    
+    <p style="font-size:12px;color:#fbbf24;text-align:center;margin-top:12px;font-weight:600;">9× more GPUs, 21× more memory, ~10× the cost — and 12× the heat. That's why liquid cooling is now mandatory.</p>
+  </div>
+  
+  <!-- Server OEMs -->
+  <div class="anatomy-card">
+    <h3>🏢 Who Builds AI Servers — The OEMs</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:12px;">Nvidia designs the reference platform (DGX/HGX), but most AI servers are built by OEM partners using Nvidia's baseboard designs:</p>
+    
+    <div class="oem-grid">
+      <div class="oem-card">
+        <div class="oem-name" style="color:#34d399;">Supermicro</div>
+        <div class="oem-role">Fastest to market with new GPU platforms. Huge market share in AI servers.</div>
+      </div>
+      <div class="oem-card">
+        <div class="oem-name" style="color:#60a5fa;">Dell</div>
+        <div class="oem-role">Enterprise-grade AI servers. PowerEdge XE series for GPU workloads.</div>
+      </div>
+      <div class="oem-card">
+        <div class="oem-name" style="color:#a78bfa;">HPE</div>
+        <div class="oem-role">Cray-based AI supercomputers. ProLiant + Cray EX for large clusters.</div>
+      </div>
+      <div class="oem-card">
+        <div class="oem-name" style="color:#f97316;">Lenovo</div>
+        <div class="oem-role">ThinkSystem SR675 V3. Growing share in enterprise AI deployments.</div>
+      </div>
+    </div>
+    
+    <p style="font-size:12px;color:#d1d5db;margin-top:12px;line-height:1.6;">
+      <strong>Key insight:</strong> Supermicro's stock rose ~300% in 2024 largely because of AI server demand. These OEMs don't design the GPU — they design everything around it (power delivery, cooling, chassis, management software).
+    </p>
+  </div>
+
+  <!-- ========== 3. GPU-TO-GPU COMMUNICATION ========== -->
+  <div class="anatomy-card">
+    <h3>🔗 GPU-to-GPU Communication — Why Networking Matters</h3>
+    <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:16px;">
+      Training an AI model isn't done on one GPU — it requires <strong>thousands</strong> of GPUs working in perfect sync. Each GPU computes part of the model, then they must exchange results. The speed of this communication directly determines training speed.
+    </p>
+    
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">There's a hierarchy of connections — getting faster as GPUs get closer together:</p>
+    
+    <div class="net-hierarchy">
+      <!-- Level 1: GPUs -->
+      <div class="net-level">
+        <div class="net-box gpu-level">
+          🟢 GPU ↔ GPU<br><span style="font-size:10px;opacity:0.8;">Inside a single server</span>
+          <span class="net-speed" style="color:#22c55e;">900 GB/s</span>
+        </div>
+      </div>
+      <div class="net-connector">↕ NVLink</div>
+      
+      <!-- Level 2: NVSwitch -->
+      <div class="net-level">
+        <div class="net-box nvlink-level">
+          🟡 NVSwitch<br><span style="font-size:10px;opacity:0.8;">All-to-all within a node</span>
+          <span class="net-speed" style="color:#f59e0b;">900 GB/s bisection</span>
+        </div>
+      </div>
+      <div class="net-connector">↕ NVLink across trays</div>
+      
+      <!-- Level 3: Rack -->
+      <div class="net-level">
+        <div class="net-box nvswitch-level">
+          🟣 Rack-Level (NVL72)<br><span style="font-size:10px;opacity:0.8;">72 GPUs fully connected</span>
+          <span class="net-speed" style="color:#6366f1;">130 TB/s total</span>
+        </div>
+      </div>
+      <div class="net-connector">↕ InfiniBand / Ethernet</div>
+      
+      <!-- Level 4: Cross-rack -->
+      <div class="net-level">
+        <div class="net-box ib-level">
+          🟠 Cross-Rack (InfiniBand)<br><span style="font-size:10px;opacity:0.8;">Rack-to-rack in a cluster</span>
+          <span class="net-speed" style="color:#f97316;">400-800 Gb/s per link</span>
+        </div>
+      </div>
+      <div class="net-connector">↕ Spine switches</div>
+      
+      <!-- Level 5: Data center -->
+      <div class="net-level">
+        <div class="net-box spine-level">
+          🔴 Data Center Fabric<br><span style="font-size:10px;opacity:0.8;">Entire cluster of 10,000+ GPUs</span>
+          <span class="net-speed" style="color:#ef4444;">Multi-Tb/s aggregate</span>
+        </div>
+      </div>
+    </div>
+    
+    <p style="font-size:12px;color:#fbbf24;text-align:center;margin-top:16px;font-weight:600;">The further apart GPUs are, the slower the communication. That's why packing more GPUs into a single rack (NVL72) is so valuable.</p>
+  </div>
+  
+  <!-- InfiniBand vs Ethernet -->
+  <div class="anatomy-card">
+    <h3>⚔️ InfiniBand vs Ethernet — The Network Protocol War</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Two competing technologies for connecting AI racks. InfiniBand dominates today, but Ethernet is fighting back:</p>
+    
+    <div class="compare-grid">
+      <div class="compare-card featured" style="border-color:#f59e0b;box-shadow:0 0 20px rgba(245,158,11,0.1);">
+        <div class="cc-name" style="color:#fbbf24;">InfiniBand</div>
+        <div class="cc-sub">Nvidia/Mellanox · Purpose-built for HPC</div>
+        <div class="cc-stat" style="color:#fbbf24;">~80%</div>
+        <div class="cc-stat-label">of AI cluster networking today</div>
+        <div style="font-size:11px;color:#d1d5db;line-height:1.5;text-align:left;margin-top:8px;">
+          ✅ Ultra-low latency<br>
+          ✅ RDMA — bypasses CPU entirely<br>
+          ✅ Purpose-built for GPU workloads<br>
+          ❌ Nvidia proprietary ecosystem<br>
+          ❌ More expensive per port
+        </div>
+      </div>
+      <div class="compare-card">
+        <div class="cc-name" style="color:#60a5fa;">Ethernet (RoCE)</div>
+        <div class="cc-sub">Broadcom, Arista · Industry standard</div>
+        <div class="cc-stat" style="color:#60a5fa;">~20%</div>
+        <div class="cc-stat-label">and growing — backed by hyperscalers</div>
+        <div style="font-size:11px;color:#d1d5db;line-height:1.5;text-align:left;margin-top:8px;">
+          ✅ Open standard, multi-vendor<br>
+          ✅ Existing data center investment<br>
+          ✅ Ultra Ethernet Consortium push<br>
+          ❌ Higher latency (improving)<br>
+          ❌ More complex congestion management
+        </div>
+      </div>
+    </div>
+    
+    <p style="font-size:12px;color:#9ca3af;text-align:center;margin-top:12px;line-height:1.5;">
+      <strong style="color:#e8e8ed;">Ultra Ethernet Consortium</strong> — AMD, Broadcom, Cisco, Google, Meta, Microsoft all pushing to make Ethernet viable for AI training. The goal: break Nvidia's lock-in on networking too.
+    </p>
+  </div>
+
+  <!-- ========== 4. THE NETWORKING BOTTLENECK ========== -->
+  <div class="anatomy-card">
+    <h3>🚧 The Networking Bottleneck</h3>
+    <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:16px;">
+      Here's a counterintuitive truth: for frontier AI training, <strong style="color:#f87171;">the network is often the bottleneck, not the GPUs</strong>. You can have 100,000 of the fastest GPUs in the world — but if they can't exchange data fast enough, most of them sit idle waiting.
+    </p>
+    
+    <div class="bottleneck-vis">
+      <div class="bn-side compute">
+        <div class="bn-label" style="color:#86efac;">🟢 GPU Compute</div>
+        <div class="bn-sub" style="color:#86efac;">Scales linearly with more GPUs</div>
+      </div>
+      <div class="bn-divider">VS</div>
+      <div class="bn-side network">
+        <div class="bn-label" style="color:#fca5a5;">🔴 Network Bandwidth</div>
+        <div class="bn-sub" style="color:#fca5a5;">Becomes the wall — synchronization overhead grows with scale</div>
+      </div>
+    </div>
+    
+    <div style="margin:20px 0;">
+      <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:12px;">At scale, the math is brutal:</p>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:200px;background:#1a1a2e;border-radius:10px;padding:16px;text-align:center;">
+          <div style="font-size:11px;color:#9ca3af;font-weight:600;">TRAINING GPT-4 CLASS</div>
+          <div style="font-size:22px;font-weight:800;color:#f87171;margin:8px 0;">25,000+ GPUs</div>
+          <div style="font-size:11px;color:#6b7280;">All must sync gradients every step</div>
+        </div>
+        <div style="flex:1;min-width:200px;background:#1a1a2e;border-radius:10px;padding:16px;text-align:center;">
+          <div style="font-size:11px;color:#9ca3af;font-weight:600;">FRONTIER MODELS (2025)</div>
+          <div style="font-size:22px;font-weight:800;color:#f87171;margin:8px 0;">100,000+ GPUs</div>
+          <div style="font-size:11px;color:#6b7280;">Network complexity grows quadratically</div>
+        </div>
+      </div>
+    </div>
+    
+    <p style="font-size:12px;color:#fbbf24;text-align:center;margin-top:16px;font-weight:600;">
+      This is why Nvidia's $7B acquisition of Mellanox was genius — they now control both the compute (GPUs) AND the networking (InfiniBand). One throat to choke.
+    </p>
+  </div>
+
+  <!-- ========== 5. KEY PLAYERS IN AI NETWORKING ========== -->
+  <div class="anatomy-card">
+    <h3>🏢 Key Players in AI Networking</h3>
+    
+    <div class="player-grid">
+      <div class="player-card dominant">
+        <div class="pl-name" style="color:#fbbf24;">🟢 Nvidia / Mellanox — InfiniBand</div>
+        <div class="pl-role">~80% of AI cluster networking · Acquired Mellanox for $7B in 2020</div>
+        <div class="pl-desc">Dominates AI networking with InfiniBand. ConnectX NICs + Quantum switches. The vertical integration play: Nvidia GPUs + Nvidia networking = lock-in. Customers who buy H100/B200 GPUs almost always buy Nvidia networking too.</div>
+      </div>
+      <div class="player-card">
+        <div class="pl-name" style="color:#60a5fa;">Broadcom</div>
+        <div class="pl-role">Leading Ethernet switch silicon · Tomahawk / Jericho</div>
+        <div class="pl-desc">Makes the actual switch chips inside most Ethernet switches (including Arista's). The Tomahawk 5 supports 51.2 Tb/s. Leading the Ethernet-for-AI push.</div>
+      </div>
+      <div class="player-card">
+        <div class="pl-name" style="color:#34d399;">Arista Networks</div>
+        <div class="pl-role">Data center switches · Used by hyperscalers</div>
+        <div class="pl-desc">Builds the high-performance Ethernet switches used by Meta, Microsoft, and others. Their 7800R series targets AI clusters specifically. The Ethernet alternative to InfiniBand.</div>
+      </div>
+      <div class="player-card">
+        <div class="pl-name" style="color:#a78bfa;">Juniper Networks</div>
+        <div class="pl-role">Acquired by HPE for $14B · Data center + AI networking</div>
+        <div class="pl-desc">HPE's acquisition gives them a full-stack AI offering: HPE/Cray servers + Juniper networking. Competing against Nvidia's vertical integration strategy.</div>
+      </div>
+    </div>
+    
+    <div style="margin-top:20px;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:#e8e8ed;">AI Cluster Networking Market Share</div>
+      <div class="market-bars">
+        <div class="market-bar-row">
+          <div class="bar-label">Nvidia/Mellanox</div>
+          <div class="bar-track"><div class="bar-fill" style="width:80%;background:linear-gradient(90deg,#166534,#22c55e);">~80% (InfiniBand)</div></div>
+        </div>
+        <div class="market-bar-row">
+          <div class="bar-label">Broadcom</div>
+          <div class="bar-track"><div class="bar-fill" style="width:12%;background:linear-gradient(90deg,#1e40af,#3b82f6);">~12%</div></div>
+        </div>
+        <div class="market-bar-row">
+          <div class="bar-label">Arista</div>
+          <div class="bar-track"><div class="bar-fill" style="width:5%;background:linear-gradient(90deg,#065f46,#34d399);">~5%</div></div>
+        </div>
+        <div class="market-bar-row">
+          <div class="bar-label">Others</div>
+          <div class="bar-track"><div class="bar-fill" style="width:3%;background:linear-gradient(90deg,#374151,#6b7280);">~3%</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 6. LIQUID COOLING ========== -->
+  <div class="anatomy-card">
+    <h3>🌊 Liquid Cooling — The Heat Problem</h3>
+    <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:16px;">
+      AI servers generate so much heat that traditional air cooling simply can't keep up. A single DGX GB200 NVL72 rack puts out <strong style="color:#f87171;">120kW of heat</strong> — that's like running 120 space heaters in a single rack. You can't blow enough air past that.
+    </p>
+    
+    <div class="cooling-compare">
+      <div class="cool-card old">
+        <div class="cool-icon">💨</div>
+        <div class="cool-name">Air Cooling</div>
+        <div class="cool-cap">Traditional data center approach</div>
+        <div class="cool-stat">~30-40 kW</div>
+        <div style="font-size:11px;color:#9ca3af;">Max per rack</div>
+        <div class="cool-verdict">❌ Not enough for AI racks</div>
+      </div>
+      <div class="cool-card new">
+        <div class="cool-icon">💧</div>
+        <div class="cool-name">Direct Liquid Cooling</div>
+        <div class="cool-cap">Cold plates on GPUs + liquid circulation</div>
+        <div class="cool-stat">120+ kW</div>
+        <div style="font-size:11px;color:#9ca3af;">Per rack capacity</div>
+        <div class="cool-verdict">✅ Required for GB200 and beyond</div>
+      </div>
+    </div>
+    
+    <p style="font-size:13px;color:#9ca3af;margin:16px 0 12px 0;font-weight:600;">Key players in AI cooling:</p>
+    
+    <div class="cooling-players">
+      <div class="cool-player">
+        <div class="cp-name" style="color:#60a5fa;">CoolIT Systems</div>
+        <div class="cp-role">Direct liquid cooling for AI servers. Partners with Nvidia, Dell, HPE.</div>
+      </div>
+      <div class="cool-player">
+        <div class="cp-name" style="color:#34d399;">Vertiv</div>
+        <div class="cp-role">Thermal management & power infrastructure. CDU (Coolant Distribution Units).</div>
+      </div>
+      <div class="cool-player">
+        <div class="cp-name" style="color:#a78bfa;">Schneider Electric</div>
+        <div class="cp-role">Data center cooling infrastructure. Rack-level and facility-level solutions.</div>
+      </div>
+    </div>
+    
+    <p style="font-size:12px;color:#fbbf24;text-align:center;margin-top:12px;font-weight:600;">
+      Every new AI data center being built in 2025+ is designed for liquid cooling from day one. It's no longer optional.
+    </p>
+  </div>
+
+  <!-- ========== 7. KEY NUMBERS ========== -->
+  <div class="section-title"><span class="emoji">🔢</span> Key Numbers to Remember</div>
+  <div class="key-numbers">
+    <div class="key-num">
+      <div class="num">72 GPUs</div>
+      <div class="desc">In a single DGX GB200 NVL72 rack — a whole AI supercomputer in one rack</div>
+    </div>
+    <div class="key-num">
+      <div class="num">$300K-$3M+</div>
+      <div class="desc">Cost per AI server rack, depending on configuration</div>
+    </div>
+    <div class="key-num">
+      <div class="num">900 GB/s</div>
+      <div class="desc">NVLink bandwidth — GPU-to-GPU inside a server</div>
+    </div>
+    <div class="key-num">
+      <div class="num">120 kW</div>
+      <div class="desc">Heat output of a single GB200 rack — requires liquid cooling</div>
+    </div>
+    <div class="key-num">
+      <div class="num">100K+</div>
+      <div class="desc">GPUs needed for training frontier models like GPT-5 class</div>
+    </div>
+    <div class="key-num">
+      <div class="num">$7B</div>
+      <div class="desc">What Nvidia paid for Mellanox — now controls compute + networking</div>
+    </div>
+  </div>
+
+  <!-- ========== 8. WORTH KNOWING ========== -->
+  <div class="worth-knowing">
+    <h3>📌 Worth Knowing</h3>
+    <ul>
+      <li><strong>Why Nvidia buying Mellanox was genius</strong> — For $7B in 2020, Nvidia got the company that makes ~80% of AI cluster networking. Now they sell the GPU, the NVLink, the NVSwitch, AND the InfiniBand networking. Customers who choose Nvidia GPUs are locked into Nvidia networking. This vertical integration is the real moat — it's not just about having the best GPU, it's about owning the entire compute fabric.</li>
+      <li><strong>The "GPU poor" problem</strong> — There's a two-tier AI ecosystem emerging. A handful of hyperscalers (Microsoft, Google, Meta, Amazon) and well-funded labs (OpenAI, Anthropic, xAI) have access to 10,000-100,000+ GPU clusters. Most startups and universities can barely get a few hundred. The result: only a few players can train frontier models, while everyone else is limited to fine-tuning or inference. This concentration of compute is shaping who can do AI research.</li>
+      <li><strong>Custom networking by hyperscalers</strong> — The biggest players don't rely entirely on Nvidia's networking. Google built its own <strong>Jupiter fabric</strong> for connecting TPU pods. Meta designed <strong>Grand Teton</strong> — its own custom AI server platform. These companies have the engineering talent and scale to build bespoke infrastructure, further reducing Nvidia's leverage at the top of the market.</li>
+      <li><strong>The double bottleneck</strong> — Even if you secure enough GPUs, you still need matching networking gear. InfiniBand switches, ConnectX NICs, fiber optics, and cooling infrastructure all have their own supply chains and lead times. Companies have reported waiting 6-12 months for networking equipment even after receiving their GPUs. The server is useless without the network.</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>

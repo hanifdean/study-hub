@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layer 3: Foundries & Fabrication — AI Value Chain</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0a0a0f;
+    color: #e8e8ed;
+    padding: 40px 24px;
+    min-height: 100vh;
+  }
+  
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #34d399, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 36px;
+    font-weight: 500;
+  }
+  
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .emoji { font-size: 20px; }
+  
+  /* === BIG PICTURE === */
+  .big-picture {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
+    overflow-x: auto;
+  }
+  
+  .flow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: nowrap;
+    min-width: 900px;
+  }
+  
+  .flow-node {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-align: center;
+    min-width: 120px;
+    flex-shrink: 0;
+  }
+  .flow-node .label { font-size: 11px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .flow-node .name { font-size: 14px; font-weight: 700; margin-top: 4px; }
+  .flow-node.highlight {
+    border-color: #34d399;
+    background: #0f1a14;
+    box-shadow: 0 0 24px rgba(52, 211, 153, 0.2);
+  }
+  .flow-node.highlight .name { color: #34d399; }
+  .flow-node.dim { opacity: 0.5; }
+  
+  .flow-arrow {
+    font-size: 18px;
+    color: #4b5563;
+    padding: 0 6px;
+    flex-shrink: 0;
+  }
+  
+  /* === ANATOMY CARDS === */
+  .anatomy-card {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+  
+  .anatomy-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  
+  /* === FAB PROCESS FLOW === */
+  .fab-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 24px 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  
+  .fab-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 80px;
+    flex-shrink: 0;
+  }
+  
+  .fab-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+  
+  .fab-icon.wafer-in { background: linear-gradient(135deg, #1e3a5f, #2563eb); border: 1.5px solid #3b82f6; }
+  .fab-icon.deposition { background: linear-gradient(135deg, #3b1f5e, #7c3aed); border: 1.5px solid #a78bfa; }
+  .fab-icon.litho { background: linear-gradient(135deg, #92400e, #f59e0b); border: 1.5px solid #fbbf24; }
+  .fab-icon.etch { background: linear-gradient(135deg, #7c2d12, #dc2626); border: 1.5px solid #ef4444; }
+  .fab-icon.implant { background: linear-gradient(135deg, #166534, #22c55e); border: 1.5px solid #34d399; }
+  .fab-icon.repeat { background: linear-gradient(135deg, #374151, #6b7280); border: 1.5px solid #9ca3af; }
+  .fab-icon.test { background: linear-gradient(135deg, #0f3a2a, #059669); border: 1.5px solid #34d399; }
+  .fab-icon.dice { background: linear-gradient(135deg, #1a1a3a, #4338ca); border: 1.5px solid #6366f1; }
+  .fab-icon.chip-out { background: linear-gradient(135deg, #34d399, #059669); border: 1.5px solid #34d399; }
+  
+  .fab-name {
+    font-size: 10px;
+    font-weight: 700;
+    color: #e8e8ed;
+    text-align: center;
+  }
+  .fab-desc {
+    font-size: 8px;
+    color: #6b7280;
+    text-align: center;
+    max-width: 70px;
+    line-height: 1.3;
+  }
+  
+  .fab-arrow {
+    font-size: 16px;
+    color: #4b5563;
+    padding: 0 3px;
+    flex-shrink: 0;
+    margin-bottom: 20px;
+  }
+  
+  /* === CLEANROOM VISUAL === */
+  .cleanroom-compare {
+    display: flex;
+    gap: 0;
+    margin: 20px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 100px;
+  }
+  
+  .clean-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 16px;
+    text-align: center;
+  }
+  .clean-side .cl-label { font-size: 11px; font-weight: 600; }
+  .clean-side .cl-count { font-size: 22px; font-weight: 800; margin: 4px 0; }
+  .clean-side .cl-desc { font-size: 9px; opacity: 0.7; }
+  
+  .clean-side.outdoor { background: linear-gradient(135deg, #92400e, #b45309); flex: 5; color: #fde68a; }
+  .clean-side.hospital { background: linear-gradient(135deg, #1e40af, #3b82f6); flex: 2; color: #bfdbfe; }
+  .clean-side.fab-clean { background: linear-gradient(135deg, #166534, #059669); flex: 0.3; color: #a7f3d0; }
+  
+  /* === TSMC DOMINANCE BAR === */
+  .market-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  
+  .market-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .bar-label {
+    width: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  
+  .bar-track {
+    flex: 1;
+    height: 32px;
+    background: #1a1a2e;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    transition: width 1s ease;
+  }
+  
+  .bar-flag {
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    margin-left: 8px;
+  }
+  
+  /* === CLIENT LOGOS === */
+  .client-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .client-card {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+  }
+  .client-card .cl-icon { font-size: 24px; margin-bottom: 4px; }
+  .client-card .cl-name { font-size: 12px; font-weight: 700; color: #e8e8ed; }
+  .client-card .cl-chip { font-size: 10px; color: #9ca3af; margin-top: 2px; }
+  
+  /* === FAB MAP === */
+  .fab-map {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  
+  .fab-location {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .fab-location .fl-flag { font-size: 20px; }
+  .fab-location .fl-name { font-size: 13px; font-weight: 700; margin-top: 4px; }
+  .fab-location .fl-status { font-size: 11px; color: #9ca3af; margin-top: 2px; line-height: 1.4; }
+  .fab-location.taiwan-risk {
+    border-color: #ef4444;
+    background: #1a1010;
+    grid-column: 1 / -1;
+  }
+  .fab-location.taiwan-risk .fl-name { color: #fca5a5; }
+  
+  /* === NODE PROGRESSION === */
+  .node-timeline {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 16px;
+    margin: 24px 0;
+    min-height: 200px;
+    padding-top: 20px;
+  }
+  
+  .node-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .node-tower {
+    width: 60px;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 8px 4px;
+    position: relative;
+  }
+  
+  .node-tower .nt-density {
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+  }
+  
+  .node-tower .nt-label {
+    font-size: 9px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 2px;
+  }
+  
+  .node-name {
+    font-size: 13px;
+    font-weight: 800;
+    color: #e8e8ed;
+  }
+  
+  .node-year {
+    font-size: 10px;
+    color: #6b7280;
+  }
+  
+  /* === FOUNDRY COMPARISON === */
+  .foundry-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 16px 0;
+  }
+  
+  .foundry-card {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .foundry-card .fc-name {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 2px;
+  }
+  .foundry-card .fc-subtitle {
+    font-size: 11px;
+    color: #9ca3af;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .foundry-card .fc-stat {
+    font-size: 12px;
+    color: #d1d5db;
+    line-height: 1.6;
+    padding: 4px 0;
+    border-bottom: 1px solid #1e1e2e;
+  }
+  .foundry-card .fc-stat:last-child { border-bottom: none; }
+  .foundry-card .fc-stat strong { color: #e8e8ed; }
+  
+  .foundry-card.tsmc {
+    border-color: #34d399;
+    background: #0f1a14;
+  }
+  .foundry-card.tsmc .fc-name { color: #34d399; }
+  
+  .foundry-card.samsung {
+    border-color: #3b82f6;
+    background: #101a2a;
+  }
+  .foundry-card.samsung .fc-name { color: #60a5fa; }
+  
+  .foundry-card.intel {
+    border-color: #a78bfa;
+    background: #1a1028;
+  }
+  .foundry-card.intel .fc-name { color: #a78bfa; }
+  
+  /* === CHIPS ACT === */
+  .chips-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  
+  .chips-card {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .chips-card .cc-flag { font-size: 20px; }
+  .chips-card .cc-name { font-size: 14px; font-weight: 700; margin-top: 4px; }
+  .chips-card .cc-amount {
+    font-size: 22px;
+    font-weight: 800;
+    margin: 6px 0;
+  }
+  .chips-card .cc-desc { font-size: 11px; color: #9ca3af; line-height: 1.5; }
+  
+  .chips-card.us { border-color: #3b82f6; }
+  .chips-card.us .cc-amount { color: #60a5fa; }
+  .chips-card.eu { border-color: #fbbf24; }
+  .chips-card.eu .cc-amount { color: #fbbf24; }
+  .chips-card.japan { border-color: #ef4444; }
+  .chips-card.japan .cc-amount { color: #f87171; }
+  .chips-card.challenge { border-color: #6b7280; grid-column: 1 / -1; }
+  .chips-card.challenge .cc-amount { color: #9ca3af; font-size: 16px; }
+  
+  /* === KEY NUMBERS === */
+  .key-numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+  
+  .key-num {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .key-num .num {
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #34d399, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .key-num .desc {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+  
+  /* === WORTH KNOWING === */
+  .worth-knowing {
+    background: #111118;
+    border: 1px solid #2a2a4a;
+    border-left: 3px solid #a78bfa;
+    border-radius: 0 12px 12px 0;
+    padding: 24px;
+    margin-top: 32px;
+  }
+  
+  .worth-knowing h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #a78bfa;
+    margin-bottom: 12px;
+  }
+  
+  .worth-knowing ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .worth-knowing li {
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 6px 0;
+    border-bottom: 1px solid #1e1e2e;
+    color: #d1d5db;
+  }
+  .worth-knowing li:last-child { border-bottom: none; }
+  .worth-knowing li strong { color: #e8e8ed; }
+  
+  /* === MOBILE RESPONSIVE === */
+  @media (max-width: 600px) {
+    body { padding: 20px 12px; font-size: 15px; }
+    h1 { font-size: 22px; }
+    .subtitle { font-size: 13px; margin-bottom: 24px; }
+    .section-title { font-size: 16px; }
+    
+    .big-picture { padding: 20px 14px; overflow-x: visible; }
+    .flow-row {
+      min-width: auto;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+    .flow-node { min-width: auto; width: 100%; padding: 12px 14px; }
+    .flow-node .name { font-size: 14px; }
+    .flow-arrow {
+      text-align: center;
+      padding: 4px 0;
+      font-size: 16px;
+      transform: rotate(90deg);
+    }
+    
+    .anatomy-card { padding: 20px 14px; }
+    .anatomy-card h3 { font-size: 15px; }
+    
+    .fab-flow {
+      flex-direction: column;
+      align-items: center;
+      overflow-x: visible;
+    }
+    .fab-step { min-width: auto; }
+    .fab-arrow { transform: rotate(90deg); padding: 4px 0; }
+    
+    .cleanroom-compare { flex-direction: column; height: auto; }
+    .clean-side { padding: 14px; }
+    .clean-side .cl-count { font-size: 18px; }
+    
+    .client-grid { grid-template-columns: repeat(2, 1fr); }
+    .fab-map { grid-template-columns: 1fr; }
+    .fab-location.taiwan-risk { grid-column: auto; }
+    
+    .node-timeline {
+      flex-wrap: wrap;
+      gap: 12px;
+      min-height: auto;
+      justify-content: center;
+    }
+    .node-tower { width: 48px; }
+    .node-name { font-size: 11px; }
+    
+    .foundry-grid { grid-template-columns: 1fr; }
+    
+    .chips-grid { grid-template-columns: 1fr; }
+    .chips-card.challenge { grid-column: auto; }
+    
+    .bar-label { width: 80px; font-size: 12px; }
+    .bar-track { height: 36px; }
+    .bar-fill { font-size: 11px; padding-left: 6px; min-height: 44px; }
+    
+    .key-numbers { grid-template-columns: 1fr; gap: 12px; }
+    .key-num { padding: 16px; }
+    .key-num .num { font-size: 24px; }
+    .key-num .desc { font-size: 12px; }
+    
+    .worth-knowing { padding: 20px 16px; }
+    .worth-knowing li { font-size: 14px; line-height: 1.7; padding: 8px 0; }
+    
+    p { font-size: 14px; }
+  }
+  
+  @media (max-width: 360px) {
+    body { padding: 16px 8px; }
+    .big-picture { padding: 16px 10px; }
+    .anatomy-card { padding: 16px 10px; }
+    .client-grid { grid-template-columns: 1fr; }
+    .key-num .num { font-size: 22px; }
+    .fab-icon { width: 48px; height: 48px; font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>🏭 Layer 3: Foundries & Fabrication</h1>
+  <p class="subtitle">The factories that turn chip designs into physical silicon — the most complex manufacturing on Earth</p>
+
+  <!-- ========== 1. WHERE THIS SITS ========== -->
+  <div class="big-picture">
+    <div class="section-title"><span class="emoji">🗺️</span> Where This Sits in the AI Value Chain</div>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Layer 3 is <strong style="color:#34d399;">the factory floor</strong>. Chip designers (Layer 2 — Nvidia, AMD, Apple) send their blueprints here to be turned into physical silicon. Without foundries, every chip design is just a fancy PDF.</p>
+    <div class="flow-row">
+      <div class="flow-node dim"><div class="label">Layer 1</div><div class="name">Raw Materials</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 2</div><div class="name">Chip Design</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node highlight"><div class="label">Layer 3</div><div class="name">🏭 Foundries & Fab</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 4</div><div class="name">Memory & HBM</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 5</div><div class="name">Processors</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node dim"><div class="label">Layer 6-9</div><div class="name">Infra → AI</div></div>
+    </div>
+  </div>
+
+  <!-- ========== 2. HOW CHIP FABRICATION WORKS ========== -->
+  <div class="anatomy-card">
+    <h3>🔬 How Chip Fabrication Works — The Process</h3>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:8px;">
+      A blank silicon wafer enters the fab and goes through <strong style="color:#fbbf24;">1,000+ process steps over 2-3 months</strong>. Each chip layer requires depositing material, printing patterns with light, and etching away what's not needed — repeated 80+ times.
+    </p>
+    
+    <div class="fab-flow">
+      <div class="fab-step">
+        <div class="fab-icon wafer-in">💿</div>
+        <div class="fab-name">Wafer In</div>
+        <div class="fab-desc">Blank 300mm silicon</div>
+      </div>
+      <div class="fab-arrow">→</div>
+      <div class="fab-step">
+        <div class="fab-icon deposition">🧪</div>
+        <div class="fab-name">Deposition</div>
+        <div class="fab-desc">Thin film layers added</div>
+      </div>
+      <div class="fab-arrow">→</div>
+      <div class="fab-step">
+        <div class="fab-icon litho">🔦</div>
+        <div class="fab-name">Lithography</div>
+        <div class="fab-desc">EUV prints patterns</div>
+      </div>
+      <div class="fab-arrow">→</div>
+      <div class="fab-step">
+        <div class="fab-icon etch">⚡</div>
+        <div class="fab-name">Etching</div>
+        <div class="fab-desc">Remove unwanted material</div>
+      </div>
+      <div class="fab-arrow">→</div>
+      <div class="fab-step">
+        <div class="fab-icon implant">💉</div>
+        <div class="fab-name">Ion Implant</div>
+        <div class="fab-desc">Dope silicon electrically</div>
+      </div>
+      <div class="fab-arrow">→</div>
+      <div class="fab-step">
+        <div class="fab-icon repeat">🔄</div>
+        <div class="fab-name">Repeat 80×</div>
+        <div class="fab-desc">Layer by layer buildup</div>
+      </div>
+      <div class="fab-arrow">→</div>
+      <div class="fab-step">
+        <div class="fab-icon test">✅</div>
+        <div class="fab-name">Testing</div>
+        <div class="fab-desc">Each die probed</div>
+      </div>
+      <div class="fab-arrow">→</div>
+      <div class="fab-step">
+        <div class="fab-icon dice">🔪</div>
+        <div class="fab-name">Dicing</div>
+        <div class="fab-desc">Cut wafer into dies</div>
+      </div>
+      <div class="fab-arrow">→</div>
+      <div class="fab-step">
+        <div class="fab-icon chip-out">🟩</div>
+        <div class="fab-name">Chips Out</div>
+        <div class="fab-desc">Individual processors</div>
+      </div>
+    </div>
+    
+    <p style="font-size:12px;color:#fbbf24;text-align:center;margin:12px 0 16px 0;font-weight:600;">A single advanced chip goes through 1,000+ process steps over 2-3 months</p>
+    
+    <!-- Cleanroom comparison -->
+    <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:#e8e8ed;">Cleanroom Requirements (particles per cubic meter)</div>
+    <div class="cleanroom-compare">
+      <div class="clean-side outdoor">
+        <div class="cl-label">Outdoor Air</div>
+        <div class="cl-count">35M</div>
+        <div class="cl-desc">particles/m³</div>
+      </div>
+      <div class="clean-side hospital">
+        <div class="cl-label">Operating Room</div>
+        <div class="cl-count">35,000</div>
+        <div class="cl-desc">particles/m³</div>
+      </div>
+      <div class="clean-side fab-clean">
+        <div class="cl-label">Chip Fab</div>
+        <div class="cl-count">~35</div>
+        <div class="cl-desc">particles/m³</div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:#6b7280;text-align:center;margin-top:8px;">A chip fab cleanroom is <strong style="color:#34d399;">1,000× cleaner</strong> than a hospital operating room. A single speck of dust can destroy a chip worth thousands of dollars.</p>
+  </div>
+
+  <!-- ========== 3. TSMC ========== -->
+  <div class="anatomy-card">
+    <h3>🏆 TSMC — The World's Most Important Company</h3>
+    <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:16px;">
+      Taiwan Semiconductor Manufacturing Company manufactures <strong style="color:#34d399;">~92% of the world's most advanced chips</strong> (below 7nm). Every AI GPU, every iPhone chip, every cutting-edge processor flows through TSMC's fabs. No company in history has been this critical to the global technology supply chain.
+    </p>
+    
+    <!-- Market share bars -->
+    <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:#e8e8ed;">Advanced Foundry Market Share (&lt;7nm)</div>
+    <div class="market-bars">
+      <div class="market-bar-row">
+        <div class="bar-label">TSMC</div>
+        <div class="bar-track"><div class="bar-fill" style="width:92%;background:linear-gradient(90deg,#166534,#34d399);">~92% <span class="bar-flag">🇹🇼</span></div></div>
+      </div>
+      <div class="market-bar-row">
+        <div class="bar-label">Samsung</div>
+        <div class="bar-track"><div class="bar-fill" style="width:6%;background:linear-gradient(90deg,#1e40af,#3b82f6);">~6% <span class="bar-flag">🇰🇷</span></div></div>
+      </div>
+      <div class="market-bar-row">
+        <div class="bar-label">Intel</div>
+        <div class="bar-track"><div class="bar-fill" style="width:2%;background:linear-gradient(90deg,#3b1f5e,#7c3aed);">~2% <span class="bar-flag">🇺🇸</span></div></div>
+      </div>
+    </div>
+    
+    <!-- Clients -->
+    <div style="font-size:13px;font-weight:700;margin:24px 0 12px 0;color:#e8e8ed;">Who TSMC Makes Chips For</div>
+    <div class="client-grid">
+      <div class="client-card">
+        <div class="cl-icon">💚</div>
+        <div class="cl-name">Nvidia</div>
+        <div class="cl-chip">H100, B200, GB200</div>
+      </div>
+      <div class="client-card">
+        <div class="cl-icon">🍎</div>
+        <div class="cl-name">Apple</div>
+        <div class="cl-chip">M4, A18 Pro</div>
+      </div>
+      <div class="client-card">
+        <div class="cl-icon">🔴</div>
+        <div class="cl-name">AMD</div>
+        <div class="cl-chip">MI300X, EPYC</div>
+      </div>
+      <div class="client-card">
+        <div class="cl-icon">☁️</div>
+        <div class="cl-name">Amazon</div>
+        <div class="cl-chip">Graviton, Trainium</div>
+      </div>
+      <div class="client-card">
+        <div class="cl-icon">🔵</div>
+        <div class="cl-name">Qualcomm</div>
+        <div class="cl-chip">Snapdragon X</div>
+      </div>
+      <div class="client-card">
+        <div class="cl-icon">🌐</div>
+        <div class="cl-name">Google</div>
+        <div class="cl-chip">TPU, Tensor</div>
+      </div>
+      <div class="client-card">
+        <div class="cl-icon">📱</div>
+        <div class="cl-name">MediaTek</div>
+        <div class="cl-chip">Dimensity</div>
+      </div>
+      <div class="client-card">
+        <div class="cl-icon">🧩</div>
+        <div class="cl-name">Broadcom</div>
+        <div class="cl-chip">Custom AI ASICs</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:#34d399;text-align:center;margin:12px 0 4px 0;font-weight:600;">If TSMC stopped shipping, the entire AI industry — and most of tech — grinds to a halt overnight.</p>
+  </div>
+  
+  <!-- TSMC Fab Locations & Taiwan Risk -->
+  <div class="anatomy-card">
+    <h3>📍 TSMC Fab Locations</h3>
+    <div class="fab-map">
+      <div class="fab-location">
+        <div class="fl-flag">🇹🇼</div>
+        <div class="fl-name">Taiwan — Main Hubs</div>
+        <div class="fl-status">Hsinchu, Tainan, Kaohsiung. The overwhelming majority of TSMC's advanced fabs. Most 3nm and all 2nm production starts here.</div>
+      </div>
+      <div class="fab-location">
+        <div class="fl-flag">🇺🇸</div>
+        <div class="fl-name">Arizona, USA (New)</div>
+        <div class="fl-status">$40B+ investment. First fab online 2025 (4nm). Second fab 2028 (3nm/2nm). Plagued by cost overruns, worker shortages, cultural clashes.</div>
+      </div>
+      <div class="fab-location">
+        <div class="fl-flag">🇯🇵</div>
+        <div class="fl-name">Kumamoto, Japan (New)</div>
+        <div class="fl-status">JASM joint venture. Fastest TSMC buildout outside Taiwan. First fab operational 2024. Making mature-node chips (12nm-28nm).</div>
+      </div>
+      <div class="fab-location">
+        <div class="fl-flag">🇩🇪</div>
+        <div class="fl-name">Dresden, Germany (Planned)</div>
+        <div class="fl-status">€10B investment with EU subsidies. 28nm and 12nm for automotive chips. Expected operational 2027-2028.</div>
+      </div>
+      <div class="fab-location taiwan-risk">
+        <div class="fl-flag">⚠️</div>
+        <div class="fl-name">The Taiwan Risk — 100 Miles from Mainland China</div>
+        <div class="fl-status">Taiwan sits just 100 miles from mainland China. ~92% of the world's most advanced chip production is concentrated on this island. Any conflict, blockade, or even an earthquake could cripple the global technology supply chain. This is the single biggest geopolitical risk in technology today.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 4. PROCESS NODES EXPLAINED ========== -->
+  <div class="anatomy-card">
+    <h3>📏 Process Nodes Explained Simply</h3>
+    <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:8px;">
+      <strong>"nm"</strong> (nanometer) used to measure the size of transistor features. Smaller = more transistors packed in = more performance, less power consumption. But modern node names are <strong style="color:#fbbf24;">mostly marketing</strong> — "3nm" doesn't mean anything is actually 3 nanometers.
+    </p>
+    <p style="font-size:12px;color:#9ca3af;line-height:1.6;margin-bottom:20px;">
+      What matters is the <strong>transistor density</strong> — how many transistors fit per square millimeter. Each new node packs roughly 1.5-2× more transistors.
+    </p>
+    
+    <!-- Node tower visualization -->
+    <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:#e8e8ed;text-align:center;">Transistor Density by Node (million transistors/mm²)</div>
+    <div class="node-timeline">
+      <div class="node-bar">
+        <div class="node-tower" style="height:60px;background:linear-gradient(180deg,#1e40af,#3b82f6);">
+          <div class="nt-density">~100M</div>
+        </div>
+        <div class="node-name">7nm</div>
+        <div class="node-year">2018</div>
+      </div>
+      <div class="node-bar">
+        <div class="node-tower" style="height:95px;background:linear-gradient(180deg,#166534,#22c55e);">
+          <div class="nt-density">~175M</div>
+        </div>
+        <div class="node-name">5nm</div>
+        <div class="node-year">2020</div>
+      </div>
+      <div class="node-bar">
+        <div class="node-tower" style="height:135px;background:linear-gradient(180deg,#92400e,#f59e0b);">
+          <div class="nt-density">~290M</div>
+        </div>
+        <div class="node-name" style="color:#fbbf24;">3nm</div>
+        <div class="node-year" style="color:#fbbf24;">2022 ★</div>
+      </div>
+      <div class="node-bar">
+        <div class="node-tower" style="height:180px;background:linear-gradient(180deg,#7c2d12,#dc2626);">
+          <div class="nt-density">~490M</div>
+          <div class="nt-label">est.</div>
+        </div>
+        <div class="node-name">2nm</div>
+        <div class="node-year">2025-26</div>
+      </div>
+      <div class="node-bar">
+        <div class="node-tower" style="height:210px;background:linear-gradient(180deg,#3b1f5e,#7c3aed);">
+          <div class="nt-density">~700M</div>
+          <div class="nt-label">target</div>
+        </div>
+        <div class="node-name">1.4nm</div>
+        <div class="node-year">2027-28</div>
+      </div>
+    </div>
+    
+    <div style="background:#1a1a2e;border:1px solid #2a2a4a;border-radius:10px;padding:16px;margin-top:16px;">
+      <div style="font-size:12px;font-weight:700;color:#fbbf24;margin-bottom:8px;">⚠️ Why Node Names Are Mostly Marketing</div>
+      <p style="font-size:12px;color:#d1d5db;line-height:1.6;">
+        In the 1990s, "nm" actually measured the gate length of a transistor. Today, <strong>nothing on a "3nm" chip is 3 nanometers</strong>. The number is a commercial label that roughly indicates the generation. Intel's "Intel 7" is roughly equivalent to TSMC's "5nm." Samsung's "3nm" has fewer transistors/mm² than TSMC's "3nm." The only thing that matters: transistor density, power efficiency, and performance.
+      </p>
+    </div>
+  </div>
+
+  <!-- ========== 5 & 6. FOUNDRY COMPARISON ========== -->
+  <div class="anatomy-card">
+    <h3>🏢 The Foundry Landscape — TSMC vs Samsung vs Intel</h3>
+    <div class="foundry-grid">
+      <div class="foundry-card tsmc">
+        <div class="fc-name">🇹🇼 TSMC</div>
+        <div class="fc-subtitle">The Undisputed #1</div>
+        <div class="fc-stat"><strong>Market share:</strong> ~62% total foundry, ~92% advanced</div>
+        <div class="fc-stat"><strong>Best node:</strong> N3E (3nm) in production, N2 (2nm) ramping 2025</div>
+        <div class="fc-stat"><strong>Yield rates:</strong> Industry-leading. The secret weapon.</div>
+        <div class="fc-stat"><strong>Revenue (2024):</strong> ~$90B</div>
+        <div class="fc-stat"><strong>Key clients:</strong> Nvidia, Apple, AMD, Qualcomm, Google, Amazon</div>
+        <div class="fc-stat"><strong>Moat:</strong> Decades of process expertise, best yields, deepest talent pool</div>
+      </div>
+      <div class="foundry-card samsung">
+        <div class="fc-name">🇰🇷 Samsung Foundry</div>
+        <div class="fc-subtitle">The Distant #2</div>
+        <div class="fc-stat"><strong>Market share:</strong> ~11% total foundry, ~6% advanced</div>
+        <div class="fc-stat"><strong>Best node:</strong> 3nm GAA in production, but low yields</div>
+        <div class="fc-stat"><strong>Problem:</strong> Lost Nvidia & Qualcomm orders due to yield issues</div>
+        <div class="fc-stat"><strong>Revenue (2024):</strong> ~$14B (foundry division)</div>
+        <div class="fc-stat"><strong>Investing:</strong> $230B over 20 years in chip manufacturing</div>
+        <div class="fc-stat"><strong>Reality:</strong> Gap with TSMC widening, not closing</div>
+      </div>
+      <div class="foundry-card intel">
+        <div class="fc-name">🇺🇸 Intel Foundry</div>
+        <div class="fc-subtitle">The Comeback Attempt</div>
+        <div class="fc-stat"><strong>Market share:</strong> ~2% foundry (mostly internal chips)</div>
+        <div class="fc-stat"><strong>Best node:</strong> Intel 18A (≈TSMC 2nm) — late 2025</div>
+        <div class="fc-stat"><strong>CHIPS Act:</strong> $8.5B in direct grants from US government</div>
+        <div class="fc-stat"><strong>Challenge:</strong> Fell behind by not going fabless in 2010s</div>
+        <div class="fc-stat"><strong>Goal:</strong> Become a major third-party foundry by 2030</div>
+        <div class="fc-stat"><strong>Outlook:</strong> Most analysts skeptical. Execution risk is high.</div>
+      </div>
+    </div>
+    
+    <div style="background:#1a1a2e;border:1px solid #2a2a4a;border-radius:10px;padding:16px;margin-top:16px;">
+      <p style="font-size:12px;color:#d1d5db;line-height:1.6;">
+        <strong style="color:#34d399;">Why Intel fell behind:</strong> Intel was the dominant chipmaker for decades, designing <em>and</em> manufacturing its own chips. But it got complacent, missed the mobile revolution, and stumbled on the transition from 14nm to 10nm (which took 5+ years instead of 2). Meanwhile, TSMC perfected the pure-foundry model, attracting the world's best chip designers. Now Intel is trying to pivot to be both a chip designer and a contract foundry — a massive organizational challenge.
+      </p>
+    </div>
+  </div>
+
+  <!-- ========== 7. CHIPS ACT ========== -->
+  <div class="anatomy-card">
+    <h3>🏛️ The CHIPS Act & Reshoring — Bringing Fabs Home</h3>
+    <p style="font-size:13px;color:#d1d5db;line-height:1.7;margin-bottom:16px;">
+      Governments realized that concentrating ~92% of advanced chip production in Taiwan is a catastrophic strategic risk. The result: the biggest industrial policy push in decades.
+    </p>
+    
+    <div class="chips-grid">
+      <div class="chips-card us">
+        <div class="cc-flag">🇺🇸</div>
+        <div class="cc-name">US CHIPS Act</div>
+        <div class="cc-amount">$52B</div>
+        <div class="cc-desc">$39B in manufacturing incentives + $13B for R&D. Key recipients: Intel ($8.5B), TSMC ($6.6B), Samsung ($6.4B), Micron ($6.1B). Goal: 20% of world's advanced chips made in USA by 2030.</div>
+      </div>
+      <div class="chips-card eu">
+        <div class="cc-flag">🇪🇺</div>
+        <div class="cc-name">Europe CHIPS Act</div>
+        <div class="cc-amount">€43B</div>
+        <div class="cc-desc">Public + private investment. Focus on automotive and industrial chips. TSMC Dresden fab, Intel Magdeburg fab (paused). Goal: 20% global chip production by 2030.</div>
+      </div>
+      <div class="chips-card japan">
+        <div class="cc-flag">🇯🇵</div>
+        <div class="cc-name">Japan Subsidies</div>
+        <div class="cc-amount">¥3.9T+</div>
+        <div class="cc-desc">~$26B+ in subsidies. TSMC Kumamoto fab = fastest buildout globally. Rapidus targeting 2nm by 2027. Leveraging Japan's existing material/equipment strengths.</div>
+      </div>
+      <div class="chips-card challenge">
+        <div class="cc-flag">⚠️</div>
+        <div class="cc-name">Why Reshoring Is So Hard</div>
+        <div class="cc-amount">It takes more than money</div>
+        <div class="cc-desc">
+          <strong>Talent gap:</strong> TSMC Taiwan has 50,000+ experienced fab engineers. You can't train that overnight.<br>
+          <strong>Cost:</strong> Building a fab in the US costs 30-50% more than in Taiwan or South Korea.<br>
+          <strong>Supply chain:</strong> Chemicals, gases, photoresists — the entire ecosystem needs to follow.<br>
+          <strong>Culture clash:</strong> TSMC Arizona has struggled with the work culture difference (12-hour shifts, weekend work standard in Taiwan).<br>
+          <strong>Timeline:</strong> A new fab takes 3-5 years from groundbreaking to first chips.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 8. KEY NUMBERS ========== -->
+  <div class="section-title"><span class="emoji">🔢</span> Key Numbers to Remember</div>
+  <div class="key-numbers">
+    <div class="key-num">
+      <div class="num">92%</div>
+      <div class="desc">TSMC's share of advanced chip manufacturing (&lt;7nm)</div>
+    </div>
+    <div class="key-num">
+      <div class="num">1,000+</div>
+      <div class="desc">Process steps per chip — over 2-3 months of fabrication</div>
+    </div>
+    <div class="key-num">
+      <div class="num">$20B+</div>
+      <div class="desc">Cost to build a single leading-edge fab</div>
+    </div>
+    <div class="key-num">
+      <div class="num">2-3 mo</div>
+      <div class="desc">Time from blank wafer to finished chips</div>
+    </div>
+    <div class="key-num">
+      <div class="num">$52B</div>
+      <div class="desc">US CHIPS Act investment to bring manufacturing home</div>
+    </div>
+    <div class="key-num">
+      <div class="num">100 mi</div>
+      <div class="desc">Distance from Taiwan to mainland China — the geopolitical risk</div>
+    </div>
+  </div>
+
+  <!-- ========== 9. WORTH KNOWING ========== -->
+  <div class="worth-knowing">
+    <h3>📌 Worth Knowing</h3>
+    <ul>
+      <li><strong>Yield rates are everything</strong> — Yield = the percentage of chips on a wafer that actually work. TSMC consistently achieves 80%+ yields on new nodes while Samsung struggles to break 50%. This means TSMC gets more working chips per wafer, making them cheaper and more profitable. It's TSMC's deepest competitive moat — built over decades of institutional knowledge.</li>
+      <li><strong>Why you can't just build fabs overnight</strong> — A leading-edge fab takes 3-5 years from empty lot to first chips. It needs thousands of specialized engineers (process, equipment, yield, integration) who typically require 5-10 years of experience. You also need the entire ecosystem: chemical suppliers, gas suppliers, ultra-pure water systems, waste treatment — all built to semiconductor-grade standards.</li>
+      <li><strong>The water problem</strong> — A single advanced fab uses 10+ million gallons of ultra-pure water <em>per day</em>. This water must be purified to a level where it has fewer than 1 part per billion of impurities. Taiwan has faced drought scares that threatened TSMC's production. TSMC now recycles 90%+ of its water.</li>
+      <li><strong>TSMC's "silicon shield" theory</strong> — Some strategists argue that Taiwan is "too important to invade" because China also depends on TSMC chips. If China attacked, the fabs would be destroyed or unusable, hurting China too. Critics counter that China might calculate the cost is worth it, or that as China builds domestic capacity, the shield weakens.</li>
+      <li><strong>A single event could cripple global tech</strong> — Taiwan sits on the Pacific Ring of Fire (earthquake zone). A magnitude 7.4 earthquake hit Taiwan in April 2024, temporarily halting TSMC production. A larger quake, a Chinese blockade, or even a prolonged power outage could disrupt chips for Nvidia, Apple, AMD, and every major tech company simultaneously.</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>
