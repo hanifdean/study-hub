@@ -202,6 +202,41 @@
     margin-top: 26px; font-size: 12px; color: var(--muted);
   }
 
+  /* Inline jargon links */
+  .jargon {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1.5px dotted var(--accent);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .jargon:hover {
+    color: var(--teal);
+    border-color: var(--teal);
+  }
+  .jargon-def {
+    scroll-margin-top: 24px;
+  }
+  .jargon-def:target {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 10px;
+    animation: jargon-flash 1.2s ease;
+  }
+  @keyframes jargon-flash {
+    0%, 100% { outline-color: transparent; }
+    20%, 80% { outline-color: var(--accent); }
+  }
+  .jargon-back {
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    margin-left: 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .jargon-back:hover { opacity: 1; color: var(--accent); }
+
   .top-bar {
     display: flex;
     align-items: center;
@@ -283,7 +318,7 @@
         <div class="arrow">→</div>
         <div class="node">
           <div class="label">Light / Photons</div>
-          <div class="value">Bosons coexist → WDM bandwidth</div>
+          <div class="value">Bosons coexist → <a href="#jargon-wdm" class="jargon">WDM</a> bandwidth</div>
           <div class="badge">Perfect for transmission</div>
         </div>
       </div>
@@ -298,7 +333,7 @@
       <div class="card" style="border-left:3px solid var(--accent);border-radius:0 14px 14px 0;">
         <p style="font-size:13px;color:var(--accent);font-weight:600;margin-bottom:6px;">🐱 Simply put</p>
         <p style="font-size:13px;color:var(--muted);">
-          <strong>Electrons vs Photons</strong> = think of it as "balls vs ghosts." Electrons are like billiard balls — they crash into each other, create friction, generate heat. The faster you push them through copper, the worse it gets. Photons (light particles) are like ghosts — they pass right through each other. You can send millions of light signals through the same wire simultaneously (that's WDM), and they don't interfere or heat up. That's why fiber optic internet is so much faster than old copper DSL — same principle, now being applied <em>inside</em> the chip itself.
+          <strong>Electrons vs Photons</strong> = think of it as "balls vs ghosts." Electrons are like billiard balls — they crash into each other, create friction, generate heat. The faster you push them through copper, the worse it gets. Photons (light particles) are like ghosts — they pass right through each other. You can send millions of light signals through the same wire simultaneously (that's <a href="#jargon-wdm" class="jargon">WDM</a>), and they don't interfere or heat up. That's why fiber optic internet is so much faster than old copper DSL — same principle, now being applied <em>inside</em> the chip itself.
         </p>
       </div>
     </div>
@@ -307,7 +342,7 @@
     <details open>
       <summary>Second Fabless Revolution: From Physics to Architecture</summary>
       <p>
-        Optical design once demanded Maxwell-level physics expertise. Today, PDKs abstract the nanometer complexity
+        Optical design once demanded Maxwell-level physics expertise. Today, <a href="#jargon-pdk" class="jargon">PDKs</a> abstract the nanometer complexity
         and EPDA tools merge electronics + photonics. The center of gravity shifts to system architects who design
         scalable optical platforms.
       </p>
@@ -336,24 +371,24 @@
     <details>
       <summary>Key Jargon Decoded</summary>
       <div style="margin-top:10px;display:grid;gap:10px;">
-        <div style="padding:10px;background:var(--surface-2);border-radius:10px;">
-          <p style="font-size:13px;"><strong style="color:var(--accent);">WDM (Wavelength Division Multiplexing)</strong></p>
+        <div id="jargon-wdm" class="jargon-def" style="padding:10px;background:var(--surface-2);border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">WDM (Wavelength Division Multiplexing)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
           <p style="font-size:12px;color:var(--muted);">Sending multiple colors of light through one fiber simultaneously. Each color = a separate data channel. Like having 80 radio stations on one antenna — but with light.</p>
         </div>
-        <div style="padding:10px;background:var(--surface-2);border-radius:10px;">
-          <p style="font-size:13px;"><strong style="color:var(--accent);">CPO (Co-Packaged Optics)</strong></p>
+        <div id="jargon-cpo" class="jargon-def" style="padding:10px;background:var(--surface-2);border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">CPO (Co-Packaged Optics)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
           <p style="font-size:12px;color:var(--muted);">Instead of plugging optical modules into a switch externally, you put the optics directly <em>on</em> the chip package. Less distance = less power = less heat. This is what Broadcom's Bailly platform does with Tomahawk switches.</p>
         </div>
-        <div style="padding:10px;background:var(--surface-2);border-radius:10px;">
-          <p style="font-size:13px;"><strong style="color:var(--accent);">PAM4 DSP</strong></p>
+        <div id="jargon-pam4" class="jargon-def" style="padding:10px;background:var(--surface-2);border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">PAM4 DSP</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
           <p style="font-size:12px;color:var(--muted);">A way to encode 2 bits per symbol instead of 1 (so double the data rate). The DSP (Digital Signal Processor) cleans up the signal after it gets noisy traveling through fiber. Marvell's Inphi acquisition was all about this — it's the "brain" that makes high-speed optical links actually work cleanly.</p>
         </div>
-        <div style="padding:10px;background:var(--surface-2);border-radius:10px;">
-          <p style="font-size:13px;"><strong style="color:var(--accent);">ELS (External Light Source)</strong></p>
+        <div id="jargon-els" class="jargon-def" style="padding:10px;background:var(--surface-2);border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">ELS (External Light Source)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
           <p style="font-size:12px;color:var(--muted);">Silicon is great at guiding light but terrible at <em>generating</em> it. So you need a separate laser (usually made from indium phosphide) to create the light beam. Coherent and Lumentum dominate this — they're the "light suppliers" for the whole ecosystem.</p>
         </div>
-        <div style="padding:10px;background:var(--surface-2);border-radius:10px;">
-          <p style="font-size:13px;"><strong style="color:var(--accent);">PDK (Process Design Kit)</strong></p>
+        <div id="jargon-pdk" class="jargon-def" style="padding:10px;background:var(--surface-2);border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">PDK (Process Design Kit)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
           <p style="font-size:12px;color:var(--muted);">A toolkit from the foundry that tells designers "here are the building blocks you can use." Like a Lego instruction manual — you don't need to know how plastic is made, just how to snap pieces together. This is what makes the fabless model possible.</p>
         </div>
       </div>
@@ -379,7 +414,7 @@
     <div class="card" style="border-left:3px solid var(--accent);border-radius:0 14px 14px 0;margin-bottom:16px;">
       <p style="font-size:13px;color:var(--accent);font-weight:600;margin-bottom:4px;">🐱 How to read this map</p>
       <p style="font-size:13px;color:var(--muted);">
-        Think of it like building a house. You need <strong style="color:#60a5fa;">architects & blueprints</strong> (EDA/Design), <strong style="color:#22c55e;">construction crews & land</strong> (foundries), <strong style="color:#60a5fa;">the electrical system</strong> (platform/chip companies that route the light), <strong style="color:#a78bfa;">the power company</strong> (light source suppliers — without them, nothing lights up), and <strong style="color:#2dd4bf;">the building inspectors</strong> (testing & packaging — they make sure it actually works). No single company does everything — that's why mapping the ecosystem matters for investing.
+        Think of it like building a house. You need <strong style="color:#60a5fa;">architects & blueprints</strong> (EDA/Design), <strong style="color:#22c55e;">construction crews & land</strong> (foundries), <strong style="color:#60a5fa;">the electrical system</strong> (platform/chip companies that route the light via <a href="#jargon-cpo" class="jargon">CPO</a>), <strong style="color:#a78bfa;">the power company</strong> (<a href="#jargon-els" class="jargon" style="color:#a78bfa;border-color:#a78bfa;">ELS</a> suppliers — without them, nothing lights up), and <strong style="color:#2dd4bf;">the building inspectors</strong> (testing & packaging — they make sure it actually works). No single company does everything — that's why mapping the ecosystem matters for investing.
       </p>
     </div>
     <div class="value-chain">
@@ -399,12 +434,12 @@
         </div>
       </div>
       <div class="layer">
-        <div class="layer-label design">Platform & Chip Leaders (CPO + Interconnects)</div>
+        <div class="layer-label design">Platform & Chip Leaders (<a href="#jargon-cpo" class="jargon" style="color:inherit;border-color:var(--blue);">CPO</a> + Interconnects)</div>
         <div class="companies">
           <div class="company design"><span class="logo">IN</span> Intel (INTC) - 800G/1.6T leader</div>
           <div class="company design"><span class="logo">NV</span> Nvidia (NVDA)</div>
           <div class="company design"><span class="logo">AV</span> Broadcom (AVGO) - Bailly + Tomahawk</div>
-          <div class="company design"><span class="logo">MR</span> Marvell (MRVL) - PAM4 + photonic fabric</div>
+          <div class="company design"><span class="logo">MR</span> Marvell (MRVL) - <a href="#jargon-pam4" class="jargon" style="color:inherit;border-color:var(--blue);">PAM4</a> + photonic fabric</div>
         </div>
       </div>
       <div class="layer">
@@ -439,7 +474,7 @@
       </div>
       <div class="insight">
         <h4>Laser light sources = bottleneck moats</h4>
-        <p>Coherent and Lumentum hold quasi-monopoly positions for external light sources (ELS).</p>
+        <p>Coherent and Lumentum hold quasi-monopoly positions for external light sources (<a href="#jargon-els" class="jargon">ELS</a>).</p>
       </div>
       <div class="insight">
         <h4>Picks & shovels stability</h4>
