@@ -218,33 +218,6 @@
     gap: 18px;
   }
 
-  .bars {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .bar-row { display: flex; align-items: center; gap: 10px; }
-  .bar-label { width: 90px; font-size: 12px; color: var(--text-muted); }
-  .bar-track {
-    flex: 1;
-    height: 28px;
-    border-radius: 8px;
-    background: var(--surface-alt);
-    overflow: hidden;
-  }
-  .bar-fill {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding-left: 10px;
-    font-size: 12px;
-    font-weight: 700;
-    color: #111;
-  }
-  .bar-fill.micron { width: 26%; background: linear-gradient(90deg, #fbbf24, #f59e0b); }
-  .bar-fill.hynix { width: 33%; background: linear-gradient(90deg, #60a5fa, #2563eb); color: #eaf2ff; }
-  .bar-fill.samsung { width: 33%; background: linear-gradient(90deg, #f97316, #ea580c); color: #fff3e7; }
-
   .list {
     display: grid;
     gap: 10px;
@@ -397,7 +370,7 @@
       </div>
 
       <h1>Micron (MU) — Company Deep Dive</h1>
-      <p class="subtitle">HBM-led memory supercycle, oligopoly pricing, and the AI data center demand shock.</p>
+      <p class="subtitle">HBM-driven memory supercycle, oligopoly pricing discipline, and an AI data center demand shock.</p>
 
       <div class="stats-grid">
         <div class="stat-card">
@@ -412,13 +385,13 @@
         </div>
         <div class="stat-card">
           <div class="label">FY25 Revenue</div>
-          <div class="value">$37.4B</div>
+          <div class="value">$37.38B</div>
           <div class="note">+49% YoY</div>
         </div>
         <div class="stat-card">
-          <div class="label">FY26 Q2 Guide</div>
-          <div class="value">$18.7B</div>
-          <div class="note">68% gross margin</div>
+          <div class="label">Q2 FY26 Guide</div>
+          <div class="value">$18.70B</div>
+          <div class="note">68% GM midpoint</div>
         </div>
       </div>
 
@@ -426,26 +399,72 @@
         <h2>🏢 Company Overview</h2>
         <div class="card">
           <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
-            Micron is the only US-headquartered memory manufacturer, producing <a href="#jargon-dram" class="jargon">DRAM</a>, <a href="#jargon-nand" class="jargon">NAND</a>, and <a href="#jargon-hbm" class="jargon">HBM</a>. The Cloud Memory BU (HBM + server DRAM) is now the largest and highest-margin segment, reflecting the AI infrastructure boom.
+            Micron Technology is the <strong>only U.S.-headquartered memory and storage manufacturer</strong>, founded in 1978 and based in Boise, Idaho. It employs ~53,000 people with fabs across the U.S. (Idaho, Virginia, New York), Japan, Singapore, Taiwan, China, Malaysia, and India. Micron designs and sells <a href="#jargon-dram" class="jargon">DRAM</a>, <a href="#jargon-nand" class="jargon">NAND</a>, <a href="#jargon-hbm" class="jargon">HBM</a>, and NOR flash. The Cloud Memory Business Unit (HBM + server DRAM) has become the single largest and highest-margin segment, reflecting the AI infrastructure shift.
           </p>
           <div class="pill-row">
             <span class="pill">Founded 1978</span>
             <span class="pill">HQ: Boise, Idaho</span>
-            <span class="pill">53k employees</span>
-            <span class="pill">Global fabs (US/Japan/Singapore)</span>
+            <span class="pill">~53k employees</span>
+            <span class="pill">Fabs: US, Japan, Singapore</span>
+            <span class="pill">CHIPS Act award: $6.1B</span>
           </div>
+        </div>
+        <div class="table-wrap" style="margin-top:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Business Unit (Q1 FY26)</th>
+                <th class="num">Revenue</th>
+                <th class="num">YoY Growth</th>
+                <th class="num">Gross Margin</th>
+                <th class="num">Operating Margin</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Cloud Memory (CMBU)</td>
+                <td class="num">$5.28B</td>
+                <td class="num">+100%</td>
+                <td class="num">66%</td>
+                <td class="num">55%</td>
+              </tr>
+              <tr>
+                <td>Core Data Center (CDCBU)</td>
+                <td class="num">$2.38B</td>
+                <td class="num">+4%</td>
+                <td class="num">51%</td>
+                <td class="num">37%</td>
+              </tr>
+              <tr>
+                <td>Mobile & Client (MCBU)</td>
+                <td class="num">$4.26B</td>
+                <td class="num">+63%</td>
+                <td class="num">54%</td>
+                <td class="num">47%</td>
+              </tr>
+              <tr>
+                <td>Automotive & Embedded (AEBU)</td>
+                <td class="num">$1.72B</td>
+                <td class="num">+49%</td>
+                <td class="num">45%</td>
+                <td class="num">36%</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
       <section class="section" id="recent-financials">
         <h2>📊 Recent Financials</h2>
-        <div class="table-wrap">
+        <div class="table-wrap" style="margin-bottom:16px;">
           <table>
             <thead>
               <tr>
-                <th>Metric</th>
+                <th>Q1 FY2026 (Nov 27, 2025)</th>
                 <th class="num">Q1 FY26</th>
+                <th class="num">Q4 FY25</th>
                 <th class="num">Q1 FY25</th>
+                <th class="num">QoQ</th>
                 <th class="num">YoY</th>
               </tr>
             </thead>
@@ -453,26 +472,175 @@
               <tr>
                 <td>Revenue</td>
                 <td class="num">$13.64B</td>
+                <td class="num">$11.32B</td>
                 <td class="num">$8.71B</td>
+                <td class="num">+21%</td>
                 <td class="num">+57%</td>
               </tr>
               <tr>
-                <td>Non-GAAP GM</td>
+                <td>GAAP Gross Margin</td>
+                <td class="num">56.0%</td>
+                <td class="num">44.7%</td>
+                <td class="num">38.4%</td>
+                <td class="num">+1,130 bps</td>
+                <td class="num">+1,760 bps</td>
+              </tr>
+              <tr>
+                <td>Non-GAAP Gross Margin</td>
                 <td class="num">56.8%</td>
+                <td class="num">45.7%</td>
                 <td class="num">39.5%</td>
+                <td class="num">+1,110 bps</td>
                 <td class="num">+1,730 bps</td>
+              </tr>
+              <tr>
+                <td>Non-GAAP Operating Margin</td>
+                <td class="num">47.0%</td>
+                <td class="num">35.0%</td>
+                <td class="num">27.5%</td>
+                <td class="num">+1,200 bps</td>
+                <td class="num">+1,950 bps</td>
+              </tr>
+              <tr>
+                <td>GAAP Net Income</td>
+                <td class="num">$5.24B</td>
+                <td class="num">$3.20B</td>
+                <td class="num">$1.87B</td>
+                <td class="num">+64%</td>
+                <td class="num">+180%</td>
               </tr>
               <tr>
                 <td>Non-GAAP EPS</td>
                 <td class="num">$4.78</td>
+                <td class="num">$3.03</td>
                 <td class="num">$1.79</td>
+                <td class="num">+58%</td>
                 <td class="num">+167%</td>
               </tr>
-              <tr class="highlight">
-                <td>Q2 FY26 Guide</td>
-                <td class="num">$18.7B</td>
+              <tr>
+                <td>Operating Cash Flow</td>
+                <td class="num">$8.41B</td>
+                <td class="num">$5.73B</td>
+                <td class="num">$3.24B</td>
+                <td class="num">+47%</td>
+                <td class="num">+160%</td>
+              </tr>
+              <tr>
+                <td>Adjusted Free Cash Flow</td>
+                <td class="num">$3.9B</td>
+                <td class="num">$0.8B</td>
                 <td class="num">—</td>
-                <td class="num">68% GM</td>
+                <td class="num">—</td>
+                <td class="num">—</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:10px;">Revenue beat consensus ($13.0B) by $640M. Every business unit hit record revenue and margins.</p>
+        </div>
+
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>FY2025 (Ended Aug 28, 2025)</th>
+                <th class="num">FY2025</th>
+                <th class="num">FY2024</th>
+                <th class="num">YoY</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Revenue</td>
+                <td class="num">$37.38B</td>
+                <td class="num">$25.11B</td>
+                <td class="num">+49%</td>
+              </tr>
+              <tr>
+                <td>Non-GAAP Gross Margin</td>
+                <td class="num">40.9%</td>
+                <td class="num">23.7%</td>
+                <td class="num">+1,720 bps</td>
+              </tr>
+              <tr>
+                <td>Non-GAAP Operating Income</td>
+                <td class="num">$10.85B</td>
+                <td class="num">$1.94B</td>
+                <td class="num">+459%</td>
+              </tr>
+              <tr>
+                <td>Non-GAAP Net Income</td>
+                <td class="num">$9.47B</td>
+                <td class="num">$1.47B</td>
+                <td class="num">+544%</td>
+              </tr>
+              <tr>
+                <td>Non-GAAP EPS</td>
+                <td class="num">$8.29</td>
+                <td class="num">$1.30</td>
+                <td class="num">+538%</td>
+              </tr>
+              <tr>
+                <td>CapEx (net)</td>
+                <td class="num">$13.8B</td>
+                <td class="num">—</td>
+                <td class="num">—</td>
+              </tr>
+              <tr>
+                <td>Operating Cash Flow</td>
+                <td class="num">$17.5B</td>
+                <td class="num">$8.5B</td>
+                <td class="num">+106%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Q2 FY26 Guidance</th>
+                <th class="num">Metric</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td>Revenue</td>
+                <td class="num">$18.70B ± $0.40B</td>
+              </tr>
+              <tr class="highlight">
+                <td>Non-GAAP Gross Margin</td>
+                <td class="num">68.0% ± 1.0%</td>
+              </tr>
+              <tr class="highlight">
+                <td>Non-GAAP EPS</td>
+                <td class="num">$8.42 ± $0.20</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:10px;">Implies +37% sequential revenue growth and gross margins approaching 70% — a historic level for memory.</p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Balance Sheet Snapshot (Nov 27, 2025)</th>
+                <th class="num">Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Cash & Investments</td>
+                <td class="num">$12.0B</td>
+              </tr>
+              <tr>
+                <td>Total Debt / Equity</td>
+                <td class="num">21.2%</td>
+              </tr>
+              <tr>
+                <td>FY26 Planned CapEx</td>
+                <td class="num">~$20B</td>
               </tr>
             </tbody>
           </table>
@@ -483,43 +651,170 @@
         <h2>🛡️ Competitive Position</h2>
         <div class="two-col">
           <div class="card">
-            <h3 style="font-size:14px;margin-bottom:10px;">DRAM Oligopoly (Q3 2025)</h3>
-            <div class="bars">
-              <div class="bar-row">
-                <div class="bar-label">SK Hynix</div>
-                <div class="bar-track"><div class="bar-fill hynix">33%</div></div>
-              </div>
-              <div class="bar-row">
-                <div class="bar-label">Samsung</div>
-                <div class="bar-track"><div class="bar-fill samsung">33%</div></div>
-              </div>
-              <div class="bar-row">
-                <div class="bar-label">Micron</div>
-                <div class="bar-track"><div class="bar-fill micron">26%</div></div>
-              </div>
+            <h3 style="font-size:14px;margin-bottom:10px;">DRAM Market Share (Q3 CY2025, TrendForce)</h3>
+            <div class="table-wrap" style="padding:12px;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Company</th>
+                    <th class="num">Revenue</th>
+                    <th class="num">Share</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>SK Hynix</td>
+                    <td class="num">$13.75B</td>
+                    <td class="num">33.2%</td>
+                  </tr>
+                  <tr>
+                    <td>Samsung</td>
+                    <td class="num">$13.50B</td>
+                    <td class="num">32.6%</td>
+                  </tr>
+                  <tr class="highlight">
+                    <td>Micron</td>
+                    <td class="num">$10.65B</td>
+                    <td class="num">25.7%</td>
+                  </tr>
+                  <tr>
+                    <td>Others</td>
+                    <td class="num">~$3.5B</td>
+                    <td class="num">~8.5%</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <p style="font-size:12px;color:var(--text-muted);margin-top:10px;line-height:1.6;">Micron is the only US supplier, benefiting from CHIPS Act support and strategic preference in AI supply chains.</p>
+            <p style="font-size:12px;color:var(--text-muted);margin-top:10px;line-height:1.6;">Micron gained 3.7 pts QoQ in Q3 2025 — the largest share gain among the Big Three.</p>
           </div>
           <div class="card">
-            <h3 style="font-size:14px;margin-bottom:10px;">Moats</h3>
-            <div class="list">
-              <div><strong>HBM execution:</strong> #2 player with 25–28% share and full 2026 allocation.</div>
-              <div><strong>1γ DRAM leadership:</strong> ~15% power advantage vs peers.</div>
-              <div><strong>Pricing discipline:</strong> 3-player oligopoly controls >90% DRAM.</div>
-              <div><strong>US-based supply:</strong> geopolitical & defense tailwinds.</div>
+            <h3 style="font-size:14px;margin-bottom:10px;">HBM Market Share (late 2025)</h3>
+            <div class="table-wrap" style="padding:12px;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Company</th>
+                    <th class="num">Estimated Share</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>SK Hynix</td>
+                    <td class="num">~62%</td>
+                  </tr>
+                  <tr>
+                    <td>Samsung</td>
+                    <td class="num">~8–10%</td>
+                  </tr>
+                  <tr class="highlight">
+                    <td>Micron</td>
+                    <td class="num">~25–28%</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+            <p style="font-size:12px;color:var(--text-muted);margin-top:10px;line-height:1.6;">Micron targets 30% HBM4 share by late 2026. HBM supply is fully allocated for CY2026.</p>
+          </div>
+        </div>
+        <div class="table-wrap" style="margin-top:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>NAND Market Share (2025)</th>
+                <th class="num">Share</th>
+                <th class="num">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Samsung</td>
+                <td class="num">~33–35%</td>
+                <td class="num">Market leader</td>
+              </tr>
+              <tr>
+                <td>SK Hynix + Solidigm</td>
+                <td class="num">~18–20%</td>
+                <td class="num">#2</td>
+              </tr>
+              <tr>
+                <td>Kioxia + WD</td>
+                <td class="num">~24–26%</td>
+                <td class="num">#3 bloc</td>
+              </tr>
+              <tr class="highlight">
+                <td>Micron</td>
+                <td class="num">~12–14%</td>
+                <td class="num">Smaller share but focused on DC SSDs</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card" style="margin-top:16px;">
+          <h3 style="font-size:14px;margin-bottom:10px;">Moats & Strategic Advantages</h3>
+          <div class="list">
+            <div><strong>Oligopoly pricing discipline:</strong> 3 players control &gt;90% of DRAM; capacity cuts after 2022–23 downcycle are holding.</div>
+            <div><strong>Technology leadership:</strong> 1γ DRAM node delivers ~15% power advantage; majority of output by H2 CY2026.</div>
+            <div><strong>HBM execution:</strong> #2 player, strong yields, full 2026 allocation.</div>
+            <div><strong>Only U.S. supplier:</strong> CHIPS Act funding and geopolitical preference for domestic memory.</div>
+            <div><strong>Vertical integration:</strong> Wafer-to-module control enables faster HBM and LP-SOCAMM2 ramp.</div>
+            <div><strong>G9 NAND platform:</strong> Enables 122TB and 245TB QLC SSDs for hyperscalers.</div>
           </div>
         </div>
       </section>
 
       <section class="section" id="growth-drivers">
         <h2>🚀 Growth Drivers</h2>
-        <div class="card">
+        <div class="card" style="margin-bottom:14px;">
+          <h3 style="font-size:14px;margin-bottom:8px;">HBM — Crown Jewel TAM ($35B → $100B by 2028)</h3>
           <div class="list">
-            <div><strong>HBM supercycle:</strong> TAM projected $35B → $100B by 2028; HBM4 ramp in mid-2026.</div>
-            <div><strong>AI server DRAM:</strong> LP-SOCAMM2 and higher memory content per rack.</div>
-            <div><strong>NAND recovery:</strong> G9 NAND enabling 122TB+ data center SSDs.</div>
-            <div><strong>PC & mobile refresh:</strong> Windows 10 EOL and AI PCs lift memory attach.</div>
+            <div><strong>Fully committed CY2026 supply</strong> under price and volume agreements.</div>
+            <div><strong>HBM TAM forecast</strong> lifted to ~$100B by 2028 (pulled forward by two years).</div>
+            <div><strong>“3-to-1” trade ratio:</strong> One bit of HBM consumes ~3 bits of conventional DRAM, structurally tightening DRAM supply.</div>
+            <div><strong>HBM4 ramp:</strong> Pin speeds &gt;11 Gbps; volume in Q2 CY2026 alongside NVIDIA’s Vera Rubin.</div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3 style="font-size:14px;margin-bottom:8px;">AI Data Center DRAM Explosion</h3>
+          <div class="list">
+            <div><strong>Server unit growth:</strong> raised to high-teens % for CY2025 (from 10%).</div>
+            <div><strong>LP-SOCAMM2 modules:</strong> 192GB enables &gt;50TB/rack at ~1/3 the power of DDR alternatives.</div>
+            <div><strong>Inference & agentic AI:</strong> memory-per-rack rising as inference scales.</div>
+            <div><strong>Industry anecdote:</strong> OpenAI reportedly consumes ~40% of global DRAM supply (industry sources).</div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3 style="font-size:14px;margin-bottom:8px;">Memory Supercycle — BofA “1990s-level”</h3>
+          <div class="list">
+            <div><strong>BofA (Jan 13, 2026):</strong> DRAM revenue +51% YoY, NAND +45% YoY in 2026.</div>
+            <div><strong>ASP outlook:</strong> DRAM +33% YoY, NAND +26% YoY in 2026 (BofA).</div>
+            <div><strong>HBM market:</strong> $54.6B in 2026 (+58% YoY).</div>
+            <div><strong>Micron EPS:</strong> BofA pro forma FY26 EPS ~$31.84.</div>
+            <div><strong>TrendForce:</strong> Q4 CY2025 conventional DRAM prices +45–50% QoQ; total DRAM+HBM +50–55% QoQ.</div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3 style="font-size:14px;margin-bottom:8px;">NAND Recovery + Vera Rubin Demand</h3>
+          <div class="list">
+            <div><strong>NAND wafer prices:</strong> &gt;60% MoM in Nov 2025 for select categories.</div>
+            <div><strong>G9 NAND SSDs:</strong> 122TB and 245TB QLC in hyperscaler qualification.</div>
+            <div><strong>PCIe Gen6 SSD</strong> qualifications underway.</div>
+            <div><strong>Vera Rubin platform:</strong> massive NVMe SSD staging demand.</div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3 style="font-size:14px;margin-bottom:8px;">PC & Mobile Refresh</h3>
+          <div class="list">
+            <div><strong>Windows 10 EOL:</strong> PC upgrade cycle; CY2025 PC unit growth high-single digits.</div>
+            <div><strong>Smartphone DRAM content:</strong> 12GB+ models at 59% of flagship mix (Q3 CY2025).</div>
+            <div><strong>Roadmap:</strong> 1γ LPDDR6 and 24Gb LPDDR5X sampling.</div>
+            <div><strong>AI PC uplift:</strong> higher memory per device.</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="font-size:14px;margin-bottom:8px;">Automotive & Embedded</h3>
+          <div class="list">
+            <div><strong>Design wins:</strong> ASIL-rated LPDDR5X and UFS 4.1 for L2+/L3.</div>
+            <div><strong>Industrial demand:</strong> automation, robotics, edge AI tailwinds.</div>
           </div>
         </div>
       </section>
@@ -528,44 +823,211 @@
         <h2>⚠️ Risks</h2>
         <div class="card">
           <div class="list">
-            <div><strong>Cyclicality:</strong> memory historically boom-bust; risk of overbuild.</div>
-            <div><strong>China exposure:</strong> restrictions reduce TAM and pricing flexibility.</div>
-            <div><strong>Samsung comeback:</strong> HBM4 yield improvements could pressure ASPs.</div>
-            <div><strong>Capex intensity:</strong> $20B FY26 spend raises downside sensitivity.</div>
+            <div><strong>Cyclicality:</strong> Memory is boom-bust. FY26 CapEx ~$20B increases downside if demand slows. <em>Counter:</em> HBM structurally tightens DRAM supply; AI demand less volatile than PCs.</div>
+            <div><strong>China restrictions:</strong> Micron exited China server chip market (TrendForce, Oct 2025). <em>Counter:</em> U.S. government/defense and hyperscalers prioritize domestic supply.</div>
+            <div><strong>Samsung HBM4 comeback:</strong> If Samsung fixes yields, HBM ASPs could compress. <em>Counter:</em> Micron already fully allocated for 2026 and targets 30% share.</div>
+            <div><strong>Capital intensity:</strong> $20B FY26 CapEx + Singapore $24B fab + $7B HBM packaging plant. <em>Counter:</em> Q1 FY26 OCF $8.4B shows funding capacity.</div>
+            <div><strong>Tariff uncertainty:</strong> 2026 trade policy could disrupt Asian supply chains. <em>Counter:</em> Expanded U.S. manufacturing footprint reduces exposure.</div>
+            <div><strong>Customer concentration:</strong> Hyperscalers + NVIDIA ecosystem dominate revenue. <em>Counter:</em> Multi-year AI buildout with committed HBM supply contracts.</div>
+            <div><strong>Valuation premium:</strong> All-time high price; any guide cut could cause sharp drawdown. <em>Counter:</em> Forward P/E ~13x still modest for 50%+ growth.</div>
           </div>
         </div>
       </section>
 
       <section class="section" id="valuation">
         <h2>💰 Valuation</h2>
-        <div class="table-wrap">
+        <div class="table-wrap" style="margin-bottom:16px;">
           <table>
             <thead>
               <tr>
-                <th>Metric</th>
-                <th class="num">MU</th>
-                <th class="num">SK Hynix</th>
-                <th class="num">Samsung Mem.</th>
+                <th>Current Multiples (Jan 27, 2026)</th>
+                <th class="num">Value</th>
               </tr>
             </thead>
             <tbody>
               <tr>
+                <td>Stock Price</td>
+                <td class="num">~$410</td>
+              </tr>
+              <tr>
+                <td>Market Cap</td>
+                <td class="num">~$462B</td>
+              </tr>
+              <tr>
+                <td>Enterprise Value</td>
+                <td class="num">~$464B</td>
+              </tr>
+              <tr>
+                <td>Trailing P/E (TTM)</td>
+                <td class="num">39.0x</td>
+              </tr>
+              <tr class="highlight">
                 <td>Forward P/E</td>
-                <td class="num">~13x</td>
-                <td class="num">12–14x</td>
-                <td class="num">Discounted</td>
+                <td class="num">12.97x</td>
+              </tr>
+              <tr>
+                <td>PEG (5yr)</td>
+                <td class="num">0.72</td>
               </tr>
               <tr>
                 <td>P/S (TTM)</td>
-                <td class="num">10.9x</td>
-                <td class="num">~6x</td>
-                <td class="num">~2–3x</td>
+                <td class="num">10.95x</td>
               </tr>
               <tr>
-                <td>HBM Share</td>
-                <td class="num">25–28%</td>
-                <td class="num">~62%</td>
-                <td class="num">8–10%</td>
+                <td>P/B</td>
+                <td class="num">7.85x</td>
+              </tr>
+              <tr>
+                <td>EV/Revenue</td>
+                <td class="num">10.96x</td>
+              </tr>
+              <tr>
+                <td>EV/EBITDA</td>
+                <td class="num">20.59x</td>
+              </tr>
+              <tr>
+                <td>1-Year Return</td>
+                <td class="num">+352%</td>
+              </tr>
+              <tr>
+                <td>YTD Return</td>
+                <td class="num">+44%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Peer Comparison</th>
+                <th class="num">Forward P/E</th>
+                <th class="num">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td>Micron</td>
+                <td class="num">~13x</td>
+                <td class="num">HBM #2, 68% GM guide</td>
+              </tr>
+              <tr>
+                <td>SK Hynix</td>
+                <td class="num">~12–14x</td>
+                <td class="num">HBM leader</td>
+              </tr>
+              <tr>
+                <td>Samsung Memory</td>
+                <td class="num">Discounted</td>
+                <td class="num">Conglomerate discount</td>
+              </tr>
+              <tr>
+                <td>NVIDIA</td>
+                <td class="num">30x+</td>
+                <td class="num">AI GPU benchmark multiple</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            <strong>Forward earnings context:</strong> The trailing P/E looks expensive only because earnings are inflecting violently upward. At Q2 FY26 run-rate ($8.42 EPS × 4 = $33.68), MU trades at ~12.2x. If BofA’s $31.84 FY26 EPS estimate materializes, the stock trades at ~12.9x forward earnings.
+          </p>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-top:10px;">
+            <strong>Historical context:</strong> Micron historically traded 8–12x forward earnings at cycle peaks and 5–15x trailing. Current 13x forward suggests a modest structural premium but not euphoria.
+          </p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Analyst Targets</th>
+                <th class="num">Date</th>
+                <th class="num">Target</th>
+                <th class="num">Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Mizuho</td>
+                <td class="num">Jan 27, 2026</td>
+                <td class="num">$480</td>
+                <td class="num">Outperform</td>
+              </tr>
+              <tr>
+                <td>BofA</td>
+                <td class="num">Jan 13, 2026</td>
+                <td class="num">$400</td>
+                <td class="num">Buy</td>
+              </tr>
+              <tr>
+                <td>Barclays</td>
+                <td class="num">2026</td>
+                <td class="num">—</td>
+                <td class="num">Overweight (81/100 score)</td>
+              </tr>
+              <tr>
+                <td>Consensus</td>
+                <td class="num">Jan 2026</td>
+                <td class="num">$356.51</td>
+                <td class="num">Range $107–$500</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="recent-news">
+        <h2>🗓️ Recent News & Catalysts</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Event</th>
+                <th class="num">Source</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Jan 27, 2026</td>
+                <td>$24B Singapore NAND fab announced; production H2 2028, 700k sqft cleanroom, 1,600 jobs</td>
+                <td class="num">Micron IR / Reuters</td>
+              </tr>
+              <tr>
+                <td>Jan 27, 2026</td>
+                <td>Mizuho raises PT to $480 from $390</td>
+                <td class="num">Mizuho</td>
+              </tr>
+              <tr>
+                <td>Jan 13, 2026</td>
+                <td>BofA declares “Memory Supercycle” comparable to 1990s; PT $400</td>
+                <td class="num">BofA</td>
+              </tr>
+              <tr>
+                <td>Dec 17, 2025</td>
+                <td>Q1 FY26 earnings beat; Q2 guide $18.7B and 68% GM</td>
+                <td class="num">Micron IR</td>
+              </tr>
+              <tr>
+                <td>Late 2025</td>
+                <td>Global memory supply shortage; DRAM/NAND prices +45–60% QoQ</td>
+                <td class="num">TrendForce</td>
+              </tr>
+              <tr>
+                <td>Oct 2025</td>
+                <td>Micron exits China server chip market amid tensions</td>
+                <td class="num">TrendForce</td>
+              </tr>
+              <tr>
+                <td>Sep 2025</td>
+                <td>FY25 results: $37.4B revenue, +49% YoY</td>
+                <td class="num">Micron IR</td>
+              </tr>
+              <tr>
+                <td>Ongoing</td>
+                <td>$7B HBM packaging facility in Singapore; Idaho & New York fabs progressing</td>
+                <td class="num">Micron IR</td>
               </tr>
             </tbody>
           </table>
@@ -578,17 +1040,27 @@
           <div class="case-card bull">
             <h3>🐂 Bull — $500+</h3>
             <ul>
-              <li>HBM TAM hits $100B with MU at 30% share.</li>
-              <li>FY26 EPS $31–34 implies 12–15x forward P/E.</li>
-              <li>Supercycle extends through 2027–2028.</li>
+              <li>HBM TAM reaches $100B by 2028 with Micron &gt;30% share → $30B+ HBM revenue.</li>
+              <li>BofA FY26 EPS $31.84; 15–16x multiple → $477–$509.</li>
+              <li>Supercycle extends 2027–2028 as inference and agentic AI expand memory needs.</li>
+              <li>NAND recovery: 122–245TB QLC SSDs standard for AI staging.</li>
+              <li>Oligopoly discipline holds; no irrational capacity expansion.</li>
+              <li>Structural de-cyclicalization of memory demand.</li>
+              <li>U.S. manufacturing advantage + CHIPS Act subsidies.</li>
+              <li>68% GM sustains, turning Micron into 40%+ operating margin company.</li>
             </ul>
           </div>
           <div class="case-card bear">
             <h3>🐻 Bear — $200–250</h3>
             <ul>
-              <li>Cycle peaks in mid-2026 and prices crash.</li>
-              <li>Samsung floods HBM4 supply.</li>
-              <li>Valuation compresses to 8–10x.</li>
+              <li>Cycle peaks in mid-2026; inventory builds and prices collapse.</li>
+              <li>Samsung floods HBM4 supply after yield recovery.</li>
+              <li>AI CapEx slowdown hits HBM and data center DRAM demand.</li>
+              <li>$20B+ annual CapEx becomes a burden; FCF compresses.</li>
+              <li>China TAM permanently lost; trade barriers worsen.</li>
+              <li>Tariff escalation increases cost and reduces access.</li>
+              <li>Valuation compresses to 8–10x forward earnings → $250–$320.</li>
+              <li>HBM4 execution hiccups or qualification delays.</li>
             </ul>
           </div>
         </div>
@@ -596,10 +1068,81 @@
 
       <section class="section" id="verdict">
         <h2>✅ Verdict / Rating</h2>
-        <div class="card verdict">
+        <div class="card verdict" style="margin-bottom:16px;">
           <p style="font-size:13px;line-height:1.7;color:var(--text-secondary);">
-            <strong>Rating: Overweight / Cautiously Bullish.</strong> Micron sits at the center of the AI memory supercycle, with 68% gross margin guidance and a structurally tighter supply backdrop. Valuation looks reasonable on forward earnings, but cycle risk remains high — position sizing matters.
+            <strong>Rating: Overweight / Cautiously Bullish.</strong> Micron is in the most powerful earnings ramp in its history: FY25 revenue $37B, Q2 FY26 guide implies $75B annualized run-rate, and gross margins approaching 70%. On a forward basis (~13x P/E, PEG 0.72), valuation is reasonable for 50%+ growth — but the memory cycle remains a meaningful risk.
           </p>
+          <p style="font-size:13px;line-height:1.7;color:var(--text-secondary);margin-top:10px;">
+            <strong>Key question:</strong> duration. If the AI-driven supercycle extends into 2027–2028, upside is significant. If it peaks in 2026, downside risk is real. Position sizing matters.
+          </p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Rating Framework</th>
+                <th class="num">Score</th>
+                <th class="num">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Structural Demand</td>
+                <td class="num">9/10</td>
+                <td class="num">AI/HBM demand accelerating</td>
+              </tr>
+              <tr>
+                <td>Competitive Position</td>
+                <td class="num">8.5/10</td>
+                <td class="num">HBM #2, 1γ DRAM lead</td>
+              </tr>
+              <tr>
+                <td>Financial Momentum</td>
+                <td class="num">10/10</td>
+                <td class="num">Record revenue, 68% GM guide</td>
+              </tr>
+              <tr>
+                <td>Valuation</td>
+                <td class="num">7.5/10</td>
+                <td class="num">Forward cheap, trailing rich</td>
+              </tr>
+              <tr>
+                <td>Risk Profile</td>
+                <td class="num">6/10</td>
+                <td class="num">Cycle + geopolitical risks</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="related-context">
+        <h2>🔗 Related Context</h2>
+        <div class="card" style="display:flex;flex-direction:column;gap:14px;">
+          <a href="../../ai-value-chain/hbm-memory-layer.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">🧠</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Layer 4 — HBM & Memory</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Understand the HBM market dynamics and memory supercycle driving Micron's growth.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
+          <a href="../../ai-value-chain/layer1-raw-materials.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">⛓️</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Layer 1 — Raw Materials</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">The upstream materials and equipment that enable DRAM/NAND manufacturing.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
+          <a href="../../ai-value-chain/cowos-packaging.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">🧩</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">CoWoS Packaging</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Advanced packaging tech critical for HBM stacking.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
         </div>
       </section>
 
@@ -612,6 +1155,11 @@
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
               <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Stacked DRAM with massive bandwidth used in AI accelerators.</div>
             </div>
+            <div id="jargon-hbm4" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">HBM4</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Next-gen HBM with higher pin speeds (&gt;11 Gbps) targeted for 2026 ramps.</div>
+            </div>
             <div id="jargon-dram" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
               <strong style="color:var(--accent);">DRAM</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
@@ -621,6 +1169,16 @@
               <strong style="color:var(--accent);">NAND</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
               <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Flash storage used in SSDs for data centers and devices.</div>
+            </div>
+            <div id="jargon-qlc" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">QLC</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Quad-Level Cell NAND storing 4 bits per cell; higher density, lower cost.</div>
+            </div>
+            <div id="jargon-tlc" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">TLC</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Triple-Level Cell NAND storing 3 bits per cell; balanced cost and performance.</div>
             </div>
             <div id="jargon-tam" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
               <strong style="color:var(--accent);">TAM</strong>
@@ -632,9 +1190,25 @@
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
               <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Average Selling Price — pricing power indicator for memory.</div>
             </div>
+            <div id="jargon-peg" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">PEG Ratio</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Price/Earnings-to-Growth — valuation relative to earnings growth.</div>
+            </div>
+            <div id="jargon-ev-ebitda" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">EV/EBITDA</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Enterprise value divided by EBITDA; common valuation multiple.</div>
+            </div>
+            <div id="jargon-lp-socamm" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">LP-SOCAMM2</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Low-power memory module standard enabling high-capacity, energy-efficient server memory.</div>
+            </div>
           </div>
         </div>
       </section>
+      <p style="font-size:11px;color:var(--text-dimmer);margin-top:20px;">Sources: Micron IR, Yahoo Finance, TrendForce, BofA, CNBC, Reuters (as of Feb 3, 2026). This is research, not financial advice.</p>
     </div>
   </main>
 </div>
