@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -161,6 +161,32 @@
     color: var(--text);
   }
 
+  .callout-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 14px;
+    margin: 18px 0 10px;
+  }
+  .voice-card {
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .voice-card .tag {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .voice-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
   /* Highlight box */
   .highlight-box {
     background: var(--accent-glow);
@@ -211,6 +237,7 @@
   }
   .stat-box .value.red { color: var(--red); }
   .stat-box .value.orange { color: var(--orange); }
+  .stat-box .value.purple { color: var(--worth-accent); }
   .stat-box .label {
     font-size: 12px;
     color: var(--text-dim);
@@ -313,6 +340,186 @@
     color: var(--text-dimmer);
     padding: 0 8px;
     flex-shrink: 0;
+  }
+
+  /* Timeline */
+  .timeline {
+    display: grid;
+    gap: 14px;
+    margin-top: 18px;
+  }
+  .timeline-step {
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
+    border-radius: 14px;
+    padding: 16px 18px;
+    position: relative;
+  }
+  .timeline-step::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: -14px;
+    width: 2px;
+    height: 14px;
+    background: var(--border-alt);
+  }
+  .timeline-step:first-child::before { display: none; }
+  .timeline-step .step-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .timeline-step .step-body {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .timeline-step strong { color: var(--text); }
+
+  .price-journey {
+    margin: 18px 0;
+    padding: 20px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
+    border-radius: 14px;
+  }
+  .price-track {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+  }
+  .price-node {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    position: relative;
+  }
+  .price-node::after {
+    content: '➔';
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-dimmer);
+  }
+  .price-node:last-child::after { display: none; }
+  .price-node .price {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
+  }
+  .price-node .price-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .price-node.crash {
+    border-color: var(--red);
+    background: var(--red-glow);
+  }
+  .price-node.crash .price { color: var(--red); }
+  .price-node.peak {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+  }
+  .price-node.peak .price { color: var(--accent); }
+
+  /* Strike grid */
+  .strike-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 18px;
+  }
+  .strike-card {
+    border: 1px solid var(--border-alt);
+    border-radius: 14px;
+    padding: 18px;
+    background: var(--surface-alt);
+  }
+  .strike-card .strike-num {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--red);
+    margin-bottom: 6px;
+  }
+  .strike-card h4 {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .strike-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* Figure placeholders */
+  .figure-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 14px;
+    margin: 18px 0;
+  }
+  .figure-card {
+    border: 1px dashed var(--border-alt);
+    border-radius: 14px;
+    padding: 18px;
+    background: var(--surface-alt);
+  }
+  .figure-card .icon {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  .figure-card .caption {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  .figure-card a {
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .figure-card a:hover { text-decoration: underline; }
+
+  /* Waterfall diagram */
+  .waterfall {
+    display: grid;
+    gap: 10px;
+    margin: 18px 0;
+  }
+  .waterfall-step {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
+    border-radius: 12px;
+  }
+  .waterfall-step .amount {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  .waterfall-step.negative .amount { color: var(--red); }
+  .waterfall-step .detail {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
   }
 
   /* Lesson list */
@@ -425,6 +632,8 @@
     .flow-visual { flex-direction: column; }
     .flow-arrow { transform: rotate(90deg); }
     .gamma-channel .channel-arrow { display: none; }
+    .price-track { grid-template-columns: 1fr; }
+    .price-node::after { display: none; }
   }
 
   html { scroll-behavior: smooth; }
@@ -538,20 +747,20 @@
 <div class="top-bar">
   <a href="../" class="back-link">← Back to Study Hub</a>
   <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
-    <span id="theme-icon">☀️</span>
+    <span id="theme-icon">🌙</span>
   </button>
 </div>
 
 <h1>🔥 Pain + Reflection = Progress</h1>
 <p class="subtitle">Lessons from a 6-sigma silver crash — by <a href="https://x.com/abcampbell" target="_blank">@abcampbell</a> (Campbell, Rose Technology)</p>
 
-<!-- ===== 1. THE EQUATION ===== -->
+<!-- ===== 1. THE REFLECTION ===== -->
 <div class="card">
-  <div class="section-title"><span class="emoji">🧠</span> Pain + Reflection = Progress</div>
+  <div class="section-title"><span class="emoji">🧠</span> The Reflection</div>
   <blockquote>
-    <p>"Pain + Reflection = Progress" — Ray Dalio</p>
+    <p>"Pain + Reflection = Progress" — Ray Dalio. Not an aphorism to me — a way of life and one of the most profound lessons from my time at Bridgewater.</p>
   </blockquote>
-  <p>The emotional side of investing is underrated. The best investors in the world bat <strong>55-60%</strong>. That means even the greats are wrong 40-45% of the time.</p>
+  <p>Friday was painful. But if you're going to take risk in public markets, the only way out is through: tell the truth about the drawdown, the story you told yourself, and the one you should have told. The best investors bat <strong>55–60%</strong>. That means they're wrong 40–45% of the time. If you want the upside, you take the bruises.</p>
   <div class="stat-row" style="margin-top:20px;">
     <div class="stat-box">
       <div class="value">55-60%</div>
@@ -561,14 +770,35 @@
       <div class="value red">40-45%</div>
       <div class="label">How often they're wrong</div>
     </div>
+    <div class="stat-box">
+      <div class="value orange">6σ</div>
+      <div class="label">What Friday felt like</div>
+    </div>
   </div>
-  <p style="margin-top:16px;">Humility isn't optional — it's the price of admission. Every drawdown is either a lesson or a scar. The difference is whether you reflect or just react.</p>
+  <p style="margin-top:16px;">The two demons in your head are greed and fear. Greed tells you to press. Fear tells you to hide. But the new feeling for me was <strong>responsibility</strong> — the moment when your audience grows from friends to more people than you could ever actually meet.</p>
+
+  <div class="callout-grid">
+    <div class="voice-card">
+      <div class="tag">Oxford Union</div>
+      <p>"I learned to straddle the line between insouciant and incisive. It’s not an act so much as a worldview — strong conviction with the humility that I’m often totally full of it."</p>
+    </div>
+    <div class="voice-card">
+      <div class="tag">Micro-Viral Lag</div>
+      <p>The more listeners you get, the more context dilutes — like a game of internet telephone. There’s lag between when you write and when people act, and you feel that weight when the book turns.</p>
+    </div>
+    <div class="voice-card">
+      <div class="tag">Responsibility</div>
+      <p>I felt guilty about cutting while others were still long. That feeling mattered emotionally — and it was a terrible risk decision.</p>
+    </div>
+  </div>
+
+  <p>One more thing: I’m thinking about splitting the free rambles (philosophy, worldview, process) from paid, actionable trade ideas. That creates actual responsibility on my end, and actual value on yours. For now, not every post will be about rocks — and that’s fine.</p>
 </div>
 
-<!-- ===== 2. WHAT 6-SIGMA FEELS LIKE ===== -->
+<!-- ===== 2. HOW HISTORIC ===== -->
 <div class="card">
-  <div class="section-title"><span class="emoji">📉</span> What 6-Sigma Feels Like</div>
-  <p>Friday's silver crash was one of the largest in <strong>275 years</strong>. The volatility surface was pricing approximately <strong>3-sigma</strong> as the tail risk scenario. What actually happened was <strong>6-sigma</strong>.</p>
+  <div class="section-title"><span class="emoji">📉</span> How Historic Was This?</div>
+  <p>Friday's silver crash was one of the largest in <strong>275 years</strong>. The vol surface priced a ~<strong>3-sigma</strong> tail. What showed up was more like <strong>6-sigma</strong> — the kind of move that rivals the end of bimetallism, the Hunt Brothers, and March 2020.</p>
 
   <div class="sigma-scale">
     <div class="sigma-bar">
@@ -603,34 +833,144 @@
     </div>
   </div>
 
-  <div class="highlight-box warning">
-    <p>The market was hedged for a 3-sigma tail. It got a 6-sigma event — one of the largest silver moves in 275 years of data.</p>
+  <div class="figure-grid">
+    <div class="figure-card">
+      <div class="icon">📷</div>
+      <div class="caption">275 years of silver returns — Friday lands in the extreme tail.</div>
+      <a href="https://x.com/abcampbell/status/2017748786437632273" target="_blank">View original chart</a>
+    </div>
+    <div class="figure-card">
+      <div class="icon">📊</div>
+      <div class="caption">China money supply vs West — capital migration into metals.</div>
+      <a href="https://x.com/abcampbell/status/2017748786437632273" target="_blank">View original chart</a>
+    </div>
+    <div class="figure-card">
+      <div class="icon">📈</div>
+      <div class="caption">Shanghai silver inventory — the story underneath price.</div>
+      <a href="https://x.com/abcampbell/status/2017748786437632273" target="_blank">View original chart</a>
+    </div>
+    <div class="figure-card">
+      <div class="icon">📉</div>
+      <div class="caption">London silver curve backwardation — easing physical stress.</div>
+      <a href="https://x.com/abcampbell/status/2017748786437632273" target="_blank">View original chart</a>
+    </div>
   </div>
-  <p style="margin-top:12px;">When your risk model says "this is the worst case" and the actual event is <em>orders of magnitude beyond that</em>, it's not a failure of the trade thesis — it's a failure of the risk framework. The vol surface was wrong.</p>
+
+  <div class="highlight-box warning">
+    <p>The market was hedged for a 3-sigma tail. It got a 6-sigma event — on a random Friday in January.</p>
+  </div>
 </div>
 
-<!-- ===== 3. SHORT GAMMA MECHANICS ===== -->
+<!-- ===== 3. BLOW-BY-BLOW ===== -->
 <div class="card">
-  <div class="section-title"><span class="emoji">⚡</span> Short Gamma Mechanics — 3 Channels of Amplification</div>
-  <p>The crash wasn't just selling. It was a <strong>mechanical cascade</strong> through three distinct short gamma channels, each feeding the others:</p>
+  <div class="section-title"><span class="emoji">🧭</span> The Blow-by-Blow</div>
+  <p>Silver's path into the crash was a story of vertical rallies and abrupt air pockets. This wasn't a slow bleed — it was a staircase up and a trapdoor down.</p>
+
+  <div class="price-journey">
+    <div class="price-track">
+      <div class="price-node">
+        <div class="price">$40s</div>
+        <div class="price-label">Nov Open</div>
+      </div>
+      <div class="price-node">
+        <div class="price">$85</div>
+        <div class="price-label">+74%</div>
+      </div>
+      <div class="price-node">
+        <div class="price">-15%</div>
+        <div class="price-label">Selloff</div>
+      </div>
+      <div class="price-node peak">
+        <div class="price">$117</div>
+        <div class="price-label">Peak</div>
+      </div>
+      <div class="price-node crash">
+        <div class="price">Crash</div>
+        <div class="price-label">Trapdoor</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-step">
+      <div class="step-title">November → Year End</div>
+      <div class="step-body">Opened in the high <strong>$40s</strong>, rallied <strong>74%</strong> to ~$85, then rolled over <strong>-15%</strong> as the year closed.</div>
+    </div>
+    <div class="timeline-step">
+      <div class="step-title">Early January</div>
+      <div class="step-body">Bulls defended the trend and pushed another <strong>65%</strong> rally to ~$117 (New York peak), before western sellers hit it again.</div>
+    </div>
+    <div class="timeline-step">
+      <div class="step-title">Thursday Night</div>
+      <div class="step-body">Kevin Warsh nomination leaks — a hawkish signal I discounted after meeting him at Stanford in 2011. He struck me as more politician than economist. I told myself Trump wanted easy money anyway. Mistake.</div>
+    </div>
+    <div class="timeline-step">
+      <div class="step-title">Friday</div>
+      <div class="step-body">China opened and sold. Gold down 8%. The market never found a bid. The short-gamma machine took over.</div>
+    </div>
+  </div>
+
+  <blockquote>
+    <p>I should have recognized the Warsh signal and the China open as a clean exit. I didn't. That’s on me.</p>
+  </blockquote>
+</div>
+
+<!-- ===== 4. THE 4 STRIKES ===== -->
+<div class="card">
+  <div class="section-title"><span class="emoji">🧨</span> The 4 Strikes</div>
+  <p>This is my honest self-assessment — four mistakes, stacked together. The third one was the worst.</p>
+  <div class="strike-grid">
+    <div class="strike-card">
+      <div class="strike-num">Strike 1</div>
+      <h4>China Sold Instead of Rescuing</h4>
+      <p>Gold down 8%, local Chinese silver ETF halted. That was the exit signal. I didn’t recognize it in time.</p>
+    </div>
+    <div class="strike-card">
+      <div class="strike-num">Strike 2</div>
+      <h4>Didn’t Hit the Bid</h4>
+      <p>I rationalized the downside by leaning on options exposure. I should have pledged to cut at US open.</p>
+    </div>
+    <div class="strike-card">
+      <div class="strike-num">Strike 3</div>
+      <h4>Felt Responsible</h4>
+      <p>I didn’t want to flee like a dog in the night while followers were still long. It felt noble. It was stupid.</p>
+    </div>
+    <div class="strike-card">
+      <div class="strike-num">Strike 4</div>
+      <h4>Hidden Short Gamma</h4>
+      <p>My own book had a dirty hedge: rolling call spreads left me long ATM vol but short gamma through the curve.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 5. SHORT GAMMA MECHANICS ===== -->
+<div class="card">
+  <div class="section-title"><span class="emoji">⚡</span> Short Gamma Mechanics — 3 Channels + My 4th</div>
+  <p>The crash wasn't just selling. It was a <strong>mechanical cascade</strong> through short gamma channels, each feeding the others:</p>
 
   <div class="gamma-diagram" style="margin-top:20px;">
     <div class="gamma-channel">
       <div class="channel-num">Channel 1</div>
       <div class="channel-title">💥 Excess Leverage</div>
-      <div class="channel-desc">Margin calls force leveraged longs to sell into a falling market. The more it drops, the more they must sell. Forced liquidation creates a self-reinforcing loop — selling begets more selling.</div>
+      <div class="channel-desc">Margin calls force leveraged longs to sell into a falling market. The more it drops, the more they must sell. Forced liquidation creates a self-reinforcing loop.</div>
       <div class="channel-arrow">↘</div>
     </div>
     <div class="gamma-channel">
       <div class="channel-num">Channel 2</div>
       <div class="channel-title">📊 Short Option Gamma</div>
-      <div class="channel-desc">Market makers who sold options must delta-hedge by selling the underlying as price falls. The faster it drops, the more they sell. This is the textbook gamma squeeze — except in reverse.</div>
+      <div class="channel-desc">Dealers hedging short calls sell more as price falls. It’s the gamma squeeze, in reverse.</div>
       <div class="channel-arrow">↘</div>
     </div>
     <div class="gamma-channel">
       <div class="channel-num">Channel 3</div>
       <div class="channel-title">🏗️ Levered ETFs</div>
-      <div class="channel-desc">AGQ ($5B AUM, 2x levered silver ETF) had to mechanically dump ~$4B of silver exposure to rebalance. This is not discretionary — it's a mathematical requirement. The ETF <em>must</em> sell at end of day to maintain its leverage ratio.</div>
+      <div class="channel-desc">AGQ ($5B AUM, 2x levered) had to dump ~$4B of silver exposure into the decline. It’s not optional — it’s math.</div>
+      <div class="channel-arrow">↘</div>
+    </div>
+    <div class="gamma-channel">
+      <div class="channel-num">Channel 4</div>
+      <div class="channel-title">🪤 My Hidden Gamma</div>
+      <div class="channel-desc">Rolling call spreads gave me a false sense of security: long ATM vol but short gamma through the curve — a dirty hedge that worsened the drop.</div>
       <div class="channel-arrow">↘</div>
     </div>
   </div>
@@ -658,6 +998,11 @@
         <div class="name">ETF Rebalance</div>
       </div>
       <div class="flow-arrow">→</div>
+      <div class="flow-node danger">
+        <div class="label">Ch. 4</div>
+        <div class="name">Dirty Hedge</div>
+      </div>
+      <div class="flow-arrow">→</div>
       <div class="flow-node" style="border-color: var(--red);">
         <div class="label">Result</div>
         <div class="name" style="color: var(--red);">6σ Crash</div>
@@ -666,18 +1011,59 @@
   </div>
 
   <div class="highlight-box warm" style="margin-top:16px;">
-    <p>Key insight: Most market participants didn't know how much hidden short gamma existed across all three channels simultaneously. The gamma was invisible until it detonated.</p>
+    <p>Key insight: the market looked long vol, but there was hidden short gamma everywhere — including in my own book.</p>
   </div>
 </div>
 
-<!-- ===== 4. CHINA PREMIUM ===== -->
+<!-- ===== 6. AGQ MECHANICS ===== -->
+<div class="card">
+  <div class="section-title"><span class="emoji">🏗️</span> AGQ — The $4 Billion Forced Seller</div>
+  <p>The double-levered silver fund AGQ had quietly grown to ~$5B in assets. At 2x exposure, that’s $10B of synthetic silver. When silver dropped 20%, the fund was down $2B in a day and mechanically had to sell ~$4B to rebalance.</p>
+
+  <div class="waterfall">
+    <div class="waterfall-step">
+      <div class="amount">$5B</div>
+      <div class="detail">AGQ assets under management</div>
+    </div>
+    <div class="waterfall-step">
+      <div class="amount">$10B</div>
+      <div class="detail">2x exposure via futures</div>
+    </div>
+    <div class="waterfall-step negative">
+      <div class="amount">-20%</div>
+      <div class="detail">Silver down in a day</div>
+    </div>
+    <div class="waterfall-step negative">
+      <div class="amount">-$2B</div>
+      <div class="detail">Fund drawdown from exposure</div>
+    </div>
+    <div class="waterfall-step">
+      <div class="amount">$3B</div>
+      <div class="detail">New fund value after loss</div>
+    </div>
+    <div class="waterfall-step">
+      <div class="amount">$6B</div>
+      <div class="detail">New delta required (2x of $3B)</div>
+    </div>
+    <div class="waterfall-step negative">
+      <div class="amount">-$4B</div>
+      <div class="detail">Mechanical selling to rebalance</div>
+    </div>
+  </div>
+
+  <blockquote>
+    <p>Andy Constan — mentor and friend — tipped me on the AGQ rebalance timing (1:30pm). Monetizing relationship alpha if not my own work.</p>
+  </blockquote>
+</div>
+
+<!-- ===== 7. CHINA PREMIUM ===== -->
 <div class="card">
   <div class="section-title"><span class="emoji">🇨🇳</span> The "China Premium" — Dog Wagging the Western Tail</div>
   <p>Western metals investors systematically <strong>underestimate</strong> the influence of Eastern demand on commodity prices. Three blind spots:</p>
   <ul>
-    <li><strong>East demand magnitude</strong> — Chinese physical demand for silver (industrial + investment) is massive and growing. Solar panel manufacturing alone is a structural demand driver.</li>
-    <li><strong>Overnight session returns</strong> — A disproportionate share of metals returns accrue during the Asian trading session. If you're only watching COMEX, you're seeing half the picture.</li>
-    <li><strong>Chinese capital flight</strong> — With property markets under stress and capital controls tightening, precious metals become a vehicle for capital preservation and transfer. This is not speculative demand — it's structural.</li>
+    <li><strong>East demand magnitude</strong> — Chinese physical demand for silver (industrial + investment) is massive and growing.</li>
+    <li><strong>Overnight session returns</strong> — A disproportionate share of metals returns accrue during Asia hours. If you're only watching COMEX, you're seeing half the picture.</li>
+    <li><strong>Chinese capital flight</strong> — With property stress and controls tightening, metals become a vehicle for preservation.</li>
   </ul>
 
   <div class="stat-row" style="margin-top:20px;">
@@ -696,11 +1082,67 @@
   </div>
 
   <blockquote style="margin-top:16px;">
-    <p>The Western metals narrative focuses on Fed policy and dollar strength. The actual price driver is increasingly East — and most Western investors aren't watching.</p>
+    <p>The Western narrative is Fed policy and DXY. The actual dog is Shanghai — and New York is the tail.</p>
   </blockquote>
 </div>
 
-<!-- ===== 5. THESIS vs POSITIONING ===== -->
+<!-- ===== 8. FOG OF WAR ===== -->
+<div class="card">
+  <div class="section-title"><span class="emoji">🌫️</span> Fog of War</div>
+  <p>By the time New York imploded, Chinese markets were closed. The data got messy fast.</p>
+  <ul>
+    <li><strong>China premium broke</strong> — simple back-of-envelope estimates were off because the sessions didn’t line up.</li>
+    <li><strong>SLV under NAV?</strong> — NAV uses London clearing price, which was closed before the worst of the move.</li>
+    <li><strong>Data pipes</strong> — do your feeds handle frequency well? Classic pipeline error during volatility.</li>
+    <li><strong>Chinese silver ETF halted</strong> — no retail rescue bid.</li>
+  </ul>
+
+  <div class="highlight-box">
+    <p>Ground truth: my fiancée was hiking and still saw Western jewelry dealers selling sterling silver at $1.90/gram (~$64/oz fine). The thesis didn’t vanish — the tape did.</p>
+  </div>
+</div>
+
+<!-- ===== 9. WHERE FROM HERE ===== -->
+<div class="card">
+  <div class="section-title"><span class="emoji">🧭</span> Where From Here</div>
+  <p>The positioning is <strong>extremely tactical</strong>. I reserve the right to go flat or short across the commodity curve based on evolving conditions. But on a relative basis, I still like metals.</p>
+  <ul>
+    <li><strong>Short MSTR</strong> — based on analysis from 14 months ago about their weird business model.</li>
+    <li><strong>AI air gap</strong> — massive capex into data centers vs. delayed enterprise revenues.</li>
+    <li><strong>Enterprise agents</strong> — likely start showing up late Q2, revenues following later.</li>
+    <li><strong>Twitter AI hype</strong> — most workflows are from hackers and small firms, not enterprise.</li>
+    <li><strong>Geopolitics</strong> — Tehran signals still lean toward metals in the medium term.</li>
+  </ul>
+
+  <blockquote>
+    <p>I’m becoming increasingly concerned we’ll see a drawdown in stocks as people price the air gap. But I’m open to being wrong and ready to go flat.</p>
+  </blockquote>
+</div>
+
+<!-- ===== 10. SCOREBOARD ===== -->
+<div class="card">
+  <div class="section-title"><span class="emoji">📌</span> The Scoreboard</div>
+  <p>End of day damage report: down <strong>2%</strong> on silver, <strong>2%</strong> on gold, plus copper and other positions = <strong>down 8%</strong> on the day. Bruised but not beaten.</p>
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="value red">-8%</div>
+      <div class="label">Day P&amp;L</div>
+    </div>
+    <div class="stat-box">
+      <div class="value">+12.6%</div>
+      <div class="label">YTD</div>
+    </div>
+    <div class="stat-box">
+      <div class="value purple">+165%</div>
+      <div class="label">Since Jan '25</div>
+    </div>
+  </div>
+  <div class="highlight-box warm">
+    <p>Bruised, not beaten. Still standing — now wiser.</p>
+  </div>
+</div>
+
+<!-- ===== 11. THESIS vs POSITIONING ===== -->
 <div class="card">
   <div class="section-title"><span class="emoji">🎯</span> Thesis Unchanged, Positioning Changed</div>
   <p>The fundamental bull case for silver remains intact. What changed was the <em>positioning</em> and <em>price</em>, not the <em>thesis</em>:</p>
@@ -726,10 +1168,10 @@
     </div>
   </div>
 
-  <p>Separating thesis from positioning is critical. When you conflate the two, a drawdown feels like being wrong. When you separate them, a drawdown is either a buying opportunity or a risk management lesson — but it doesn't mean the thesis is broken.</p>
+  <p>Separating thesis from positioning is critical. When you conflate the two, a drawdown feels like being wrong. When you separate them, a drawdown is either a buying opportunity or a risk lesson — but it doesn't mean the thesis is broken.</p>
 </div>
 
-<!-- ===== 6. MONEY WISDOM LESSONS ===== -->
+<!-- ===== 12. MONEY WISDOM LESSONS ===== -->
 <div class="card">
   <div class="section-title"><span class="emoji">💡</span> Money Wisdom — Lessons Learned</div>
 
@@ -737,32 +1179,42 @@
     <div class="lesson-item">
       <div class="lesson-icon">🛡️</div>
       <h4>Diversify & Hedge</h4>
-      <p>Concentration kills. Even if the thesis is right, position sizing and hedging determine whether you survive to be proven right. Humility about tail risk isn't weakness — it's survival.</p>
+      <p>Concentration kills. Even if the thesis is right, position sizing and hedging determine whether you survive to be proven right.</p>
     </div>
     <div class="lesson-item">
       <div class="lesson-icon">🔍</div>
       <h4>Know Your Gamma Exposure</h4>
-      <p>Understand the actual gamma in the market — not just your own positions, but the levered ETFs, the options open interest, the margin levels. If you can't quantify the gamma, you can't quantify the risk.</p>
+      <p>Understand the actual gamma in the market — not just your own positions, but the levered ETFs, options OI, and margin levels.</p>
     </div>
     <div class="lesson-item">
       <div class="lesson-icon">🎤</div>
       <h4>Audience ≠ Allocation</h4>
-      <p>Don't let audience pressure (followers, subscribers, public calls) influence your position sizing. Public conviction and private risk management must be separate. The crowd rewards boldness; the market rewards discipline.</p>
+      <p>Don’t let audience pressure influence size. Public conviction and private risk management must be separate.</p>
     </div>
     <div class="lesson-item">
       <div class="lesson-icon">⚙️</div>
       <h4>See Gamma Before It Hits</h4>
-      <p>Recognize short gamma mechanics before they trigger. By the time the cascade starts, it's too late. The playbook: identify levered products, measure options open interest, check margin levels — before the move, not during.</p>
+      <p>Recognize short gamma mechanics before they trigger. By the time the cascade starts, it’s already too late.</p>
     </div>
     <div class="lesson-item">
       <div class="lesson-icon">🧠</div>
       <h4>Separate Thesis from Position</h4>
-      <p>A thesis can be right while a position is wrong. Timing, sizing, and leverage are independent variables from fundamental analysis. Manage them independently.</p>
+      <p>A thesis can be right while a position is wrong. Timing, sizing, and leverage are separate variables.</p>
     </div>
     <div class="lesson-item">
       <div class="lesson-icon">📊</div>
       <h4>Respect the Tail</h4>
-      <p>If the vol surface says 3-sigma is the tail, assume 6-sigma is possible. Models are maps, not territory. The market doesn't care about your confidence interval.</p>
+      <p>If the vol surface says 3-sigma is the tail, assume 6-sigma is possible. Models are maps, not territory.</p>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-icon">🧭</div>
+      <h4>Process Over Narrative</h4>
+      <p>When the tape snaps, process wins. Narrative is a lagging indicator.</p>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-icon">🧩</div>
+      <h4>Know When to Leave</h4>
+      <p>If the exit signal appears, take it. The market doesn’t pay you for loyalty.</p>
     </div>
   </div>
 </div>
