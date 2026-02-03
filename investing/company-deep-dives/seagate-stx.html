@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seagate (STX) — Company Deep Dive</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0f0f14;
+    --surface: #171720;
+    --surface-alt: #1f1f2a;
+    --surface-hover: #242433;
+    --border: #2a2a35;
+    --border-alt: #333344;
+    --text: #ece9e3;
+    --text-secondary: #d5d1c7;
+    --text-muted: #9a9488;
+    --text-dim: #766f64;
+    --text-dimmer: #5b554c;
+    --accent: #f59e0b;
+    --accent-soft: rgba(245, 158, 11, 0.14);
+    --accent-glow: rgba(245, 158, 11, 0.2);
+    --highlight: #fbbf24;
+    --green: #34d399;
+    --red: #f87171;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --text-dimmer: #a5a09a;
+    --accent: #d97706;
+    --accent-soft: rgba(217, 119, 6, 0.1);
+    --accent-glow: rgba(217, 119, 6, 0.15);
+    --highlight: #b45309;
+    --green: #059669;
+    --red: #dc2626;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .page-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+  }
+
+  .content { flex: 1; min-width: 0; }
+  .container { max-width: 980px; }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  h1 {
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--highlight);
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 28px;
+    font-weight: 500;
+  }
+
+  .section {
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s ease-out both;
+  }
+
+  .section h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+  }
+
+  .stat-card .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+  .stat-card .value {
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .stat-card .note {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
+    color: var(--text-muted);
+  }
+
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    text-align: left;
+    padding: 10px 12px;
+    color: var(--text-muted);
+    font-size: 11px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody tr.highlight td { color: var(--highlight); font-weight: 600; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 18px;
+  }
+
+  .bars {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .bar-row { display: flex; align-items: center; gap: 10px; }
+  .bar-label { width: 90px; font-size: 12px; color: var(--text-muted); }
+  .bar-track {
+    flex: 1;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--surface-alt);
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #111;
+  }
+  .bar-fill.wdc { width: 63%; background: linear-gradient(90deg, #60a5fa, #2563eb); color: #eaf2ff; }
+  .bar-fill.stx { width: 37%; background: linear-gradient(90deg, #fbbf24, #f59e0b); }
+
+  .list {
+    display: grid;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .list strong { color: var(--text); }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .case-card {
+    border-radius: 14px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .case-card.bull { border-color: rgba(52, 211, 153, 0.4); background: rgba(52, 211, 153, 0.06); }
+  .case-card.bear { border-color: rgba(248, 113, 113, 0.4); background: rgba(248, 113, 113, 0.05); }
+  .case-card h3 { font-size: 14px; margin-bottom: 8px; }
+  .case-card ul { padding-left: 16px; font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+  .verdict {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), transparent);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+  }
+
+  .jargon {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1.5px dotted var(--accent);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .jargon:hover { color: var(--highlight); border-color: var(--highlight); }
+  .jargon-def { scroll-margin-top: 24px; }
+  .jargon-def:target {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 10px;
+    animation: jargon-flash 1.2s ease;
+  }
+  @keyframes jargon-flash {
+    0%, 100% { outline-color: transparent; }
+    20%, 80% { outline-color: var(--accent); }
+  }
+  .jargon-back {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-left: 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .jargon-back:hover { opacity: 1; color: var(--accent); }
+
+  .section-nav {
+    position: sticky;
+    top: 96px;
+    width: 220px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    height: fit-content;
+    max-height: calc(100vh - 140px);
+    overflow: auto;
+  }
+  .section-nav-title {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .section-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .section-nav a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+  }
+  .section-nav a:hover { color: var(--accent); border-color: var(--border); background: var(--surface-hover); }
+  .section-nav a.active { color: var(--accent); background: var(--accent-soft); border-color: var(--accent); }
+
+  html { scroll-behavior: smooth; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .case-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    body { padding: 24px 16px; }
+    .page-layout { flex-direction: column; gap: 12px; }
+    .section-nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      padding: 8px;
+      border-radius: 12px;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+    .section-nav-title { display: none; }
+    .section-nav-links { flex-direction: row; gap: 8px; }
+    .section-nav a {
+      white-space: nowrap;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border-color: var(--border);
+      background: var(--surface);
+    }
+    .section-nav a.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+  }
+</style>
+</head>
+<body>
+<div class="page-layout">
+  <nav class="section-nav" aria-label="Section navigation">
+    <div class="section-nav-title">On this page</div>
+    <div class="section-nav-links" id="section-nav-links"></div>
+  </nav>
+  <main class="content">
+    <div class="container">
+      <div class="top-bar">
+        <a href="../../" class="back-link">← Back to Study Hub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+          <span id="theme-icon">☀️</span>
+        </button>
+      </div>
+
+      <h1>Seagate (STX) — Company Deep Dive</h1>
+      <p class="subtitle">HAMR technology leader in a two-player HDD market — AI storage demand meets pricing power.</p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="label">Price</div>
+          <div class="value">~$444</div>
+          <div class="note">Post-earnings rally</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Market Cap</div>
+          <div class="value">~$94.6B</div>
+          <div class="note">HDD pure play</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">FQ2 FY26 Rev</div>
+          <div class="value">$2.83B</div>
+          <div class="note">+21.5% YoY</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Gross Margin</div>
+          <div class="value">42.2%</div>
+          <div class="note">Record quarter</div>
+        </div>
+      </div>
+
+      <section class="section" id="company-overview">
+        <h2>🏢 Company Overview</h2>
+        <div class="card">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            Seagate is a pure-play <a href="#jargon-hdd" class="jargon">HDD</a> manufacturer in a global duopoly with Western Digital. Its Mozaic <a href="#jargon-hamr" class="jargon">HAMR</a> platform enables multi‑terabyte‑per‑disk capacity, driving higher ASPs and margins as AI data growth explodes.
+          </p>
+          <div class="pill-row">
+            <span class="pill">87% exabytes = nearline</span>
+            <span class="pill">Sold out through 2026</span>
+            <span class="pill">Mozaic 3+ shipping</span>
+            <span class="pill">Build‑to‑order model</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="recent-financials">
+        <h2>📊 Recent Financials</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th class="num">FQ2 FY26</th>
+                <th class="num">FQ2 FY25</th>
+                <th class="num">YoY</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Revenue</td>
+                <td class="num">$2.83B</td>
+                <td class="num">$2.33B</td>
+                <td class="num">+21.5%</td>
+              </tr>
+              <tr>
+                <td>Non-GAAP GM</td>
+                <td class="num">42.2%</td>
+                <td class="num">34.7%</td>
+                <td class="num">+750 bps</td>
+              </tr>
+              <tr>
+                <td>Non-GAAP EPS</td>
+                <td class="num">$3.11</td>
+                <td class="num">$2.03</td>
+                <td class="num">+53%</td>
+              </tr>
+              <tr class="highlight">
+                <td>Q3 Guide</td>
+                <td class="num">$2.8–3.0B</td>
+                <td class="num">—</td>
+                <td class="num">EPS $3.4 ± $0.2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="competitive-position">
+        <h2>🛡️ Competitive Position</h2>
+        <div class="two-col">
+          <div class="card">
+            <h3 style="font-size:14px;margin-bottom:10px;">HDD Duopoly Share</h3>
+            <div class="bars">
+              <div class="bar-row">
+                <div class="bar-label">WDC</div>
+                <div class="bar-track"><div class="bar-fill wdc">63%</div></div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">Seagate</div>
+                <div class="bar-track"><div class="bar-fill stx">37%</div></div>
+              </div>
+            </div>
+            <p style="font-size:12px;color:var(--text-muted);margin-top:10px;line-height:1.6;">Nearline cloud share is closer to 50/50, but WDC appears larger in blended stats.</p>
+          </div>
+          <div class="card">
+            <h3 style="font-size:14px;margin-bottom:10px;">Moats</h3>
+            <div class="list">
+              <div><strong>HAMR lead:</strong> 12–18 months ahead in high‑capacity drives.</div>
+              <div><strong>Pricing power:</strong> build‑to‑order model reduces oversupply.</div>
+              <div><strong>AI storage TCO:</strong> 5–10× cheaper per TB than SSDs.</div>
+              <div><strong>Pure‑play focus:</strong> capex and R&amp;D concentrated on HDD.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="growth-drivers">
+        <h2>🚀 Growth Drivers</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>AI data growth:</strong> checkpointing and inference data land on HDD.</div>
+            <div><strong>HAMR ramp:</strong> Mozaic 4 (4 TB/disk) expands margins.</div>
+            <div><strong>Capacity sold out:</strong> orders extending into 2027–2028.</div>
+            <div><strong>Operating leverage:</strong> OPEX trending toward 10% of revenue.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="risks">
+        <h2>⚠️ Risks</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>Valuation stretch:</strong> 34x forward earnings for hardware.</div>
+            <div><strong>SSD substitution:</strong> NAND cost declines erode HDD TCO gap.</div>
+            <div><strong>HAMR execution:</strong> reliability or yield issues could delay ramp.</div>
+            <div><strong>Customer concentration:</strong> hyperscalers dominate revenue.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="valuation">
+        <h2>💰 Valuation</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th class="num">STX</th>
+                <th class="num">WDC (post‑split)</th>
+                <th class="num">HDD History</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Forward P/E</td>
+                <td class="num">~34x</td>
+                <td class="num">~22x</td>
+                <td class="num">8–15x</td>
+              </tr>
+              <tr>
+                <td>P/S</td>
+                <td class="num">~9.9x</td>
+                <td class="num">~5x</td>
+                <td class="num">1–3x</td>
+              </tr>
+              <tr>
+                <td>Dividend Yield</td>
+                <td class="num">0.7%</td>
+                <td class="num">0.2%</td>
+                <td class="num">Varies</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="bull-bear">
+        <h2>🐂 Bull vs. 🐻 Bear Case</h2>
+        <div class="case-grid">
+          <div class="case-card bull">
+            <h3>🐂 Bull — $500+</h3>
+            <ul>
+              <li>HAMR mix drives 35%+ operating margins.</li>
+              <li>AI storage demand holds through 2027.</li>
+              <li>FCF supports rapid debt reduction and buybacks.</li>
+            </ul>
+          </div>
+          <div class="case-card bear">
+            <h3>🐻 Bear — $250–300</h3>
+            <ul>
+              <li>Cloud capex slows and exabyte demand cools.</li>
+              <li>Multiple compresses back to 15x.</li>
+              <li>SSD economics narrow the TCO advantage.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="verdict">
+        <h2>✅ Verdict / Rating</h2>
+        <div class="card verdict">
+          <p style="font-size:13px;line-height:1.7;color:var(--text-secondary);">
+            <strong>Rating: Hold / Wait for Pullback.</strong> Execution is outstanding and demand visibility is the best in company history, but valuation is stretched after a 600% rally. Attractive on weakness in the $320–350 range.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="jargon">
+        <h2>📖 Jargon Decoder</h2>
+        <div class="card">
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div id="jargon-hdd" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">HDD</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Hard disk drives used for low-cost mass storage.</div>
+            </div>
+            <div id="jargon-hamr" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">HAMR</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Heat‑Assisted Magnetic Recording — enables much higher areal density.</div>
+            </div>
+            <div id="jargon-tco" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">TCO</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Total Cost of Ownership — HDDs remain 5–10× cheaper per TB.</div>
+            </div>
+            <div id="jargon-csp" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">CSP</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Cloud Service Provider — hyperscalers like AWS, Azure, GCP.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = saved === 'dark' ? '☀️' : '🌙';
+    });
+  }
+})();
+
+function slugifyHeading(text) {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
+
+function initSectionNav() {
+  const navLinks = document.getElementById('section-nav-links');
+  if (!navLinks) return;
+
+  let headings = Array.from(document.querySelectorAll('.section h2'));
+  if (!headings.length) {
+    headings = Array.from(document.querySelectorAll('h2'));
+  }
+  if (!headings.length) return;
+
+  headings.forEach((heading) => {
+    if (!heading.id) {
+      heading.id = slugifyHeading(heading.textContent || '');
+    }
+  });
+
+  navLinks.innerHTML = '';
+  headings.forEach((heading) => {
+    const link = document.createElement('a');
+    link.className = 'section-link';
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent || '';
+    navLinks.appendChild(link);
+  });
+
+  const linkMap = new Map();
+  navLinks.querySelectorAll('a').forEach((link) => {
+    const targetId = link.getAttribute('href').slice(1);
+    linkMap.set(targetId, link);
+    link.addEventListener('click', () => setActive(targetId));
+  });
+
+  function setActive(id) {
+    linkMap.forEach((link) => {
+      link.classList.remove('active');
+      link.removeAttribute('aria-current');
+    });
+    const activeLink = linkMap.get(id);
+    if (activeLink) {
+      activeLink.classList.add('active');
+      activeLink.setAttribute('aria-current', 'true');
+    }
+  }
+
+  setActive(headings[0].id);
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActive(entry.target.id);
+        }
+      });
+    },
+    { rootMargin: '-20% 0px -65% 0px', threshold: [0, 0.1, 0.5] }
+  );
+
+  headings.forEach((heading) => observer.observe(heading));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initSectionNav();
+});
+</script>
+</body>
+</html>
