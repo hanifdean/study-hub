@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Micron (MU) — Company Deep Dive</title>
+<title>Intel (INTC) — Company Deep Dive</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
@@ -66,7 +66,6 @@
   }
 
   .content { flex: 1; min-width: 0; }
-
   .container { max-width: 980px; }
 
   .top-bar {
@@ -218,33 +217,6 @@
     gap: 18px;
   }
 
-  .bars {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .bar-row { display: flex; align-items: center; gap: 10px; }
-  .bar-label { width: 90px; font-size: 12px; color: var(--text-muted); }
-  .bar-track {
-    flex: 1;
-    height: 28px;
-    border-radius: 8px;
-    background: var(--surface-alt);
-    overflow: hidden;
-  }
-  .bar-fill {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding-left: 10px;
-    font-size: 12px;
-    font-weight: 700;
-    color: #111;
-  }
-  .bar-fill.micron { width: 26%; background: linear-gradient(90deg, #fbbf24, #f59e0b); }
-  .bar-fill.hynix { width: 33%; background: linear-gradient(90deg, #60a5fa, #2563eb); color: #eaf2ff; }
-  .bar-fill.samsung { width: 33%; background: linear-gradient(90deg, #f97316, #ea580c); color: #fff3e7; }
-
   .list {
     display: grid;
     gap: 10px;
@@ -274,7 +246,6 @@
     border: 1px solid rgba(245, 158, 11, 0.4);
   }
 
-  /* Inline jargon links */
   .jargon {
     color: var(--accent);
     text-decoration: none;
@@ -396,29 +367,29 @@
         </button>
       </div>
 
-      <h1>Micron (MU) — Company Deep Dive</h1>
-      <p class="subtitle">HBM-led memory supercycle, oligopoly pricing, and the AI data center demand shock.</p>
+      <h1>Intel (INTC) — Company Deep Dive</h1>
+      <p class="subtitle">IDM turnaround meets foundry ambition: 18A ramp, AI‑era CPU defense, and a high‑stakes bet against TSMC.</p>
 
       <div class="stats-grid">
         <div class="stat-card">
           <div class="label">Price</div>
-          <div class="value">~$410</div>
-          <div class="note">Feb 3, 2026</div>
+          <div class="value">~$48.81</div>
+          <div class="note">Feb 2, 2026 close</div>
         </div>
         <div class="stat-card">
           <div class="label">Market Cap</div>
-          <div class="value">~$462B</div>
-          <div class="note">Only US memory giant</div>
+          <div class="value">~$260B</div>
+          <div class="note">52‑week high ~$54.60</div>
         </div>
         <div class="stat-card">
           <div class="label">FY25 Revenue</div>
-          <div class="value">$37.4B</div>
-          <div class="note">+49% YoY</div>
+          <div class="value">$52.9B</div>
+          <div class="note">Slightly down YoY</div>
         </div>
         <div class="stat-card">
-          <div class="label">FY26 Q2 Guide</div>
-          <div class="value">$18.7B</div>
-          <div class="note">68% gross margin</div>
+          <div class="label">18A HVM</div>
+          <div class="value">Live</div>
+          <div class="note">Fab 52, Arizona</div>
         </div>
       </div>
 
@@ -426,53 +397,213 @@
         <h2>🏢 Company Overview</h2>
         <div class="card">
           <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
-            Micron is the only US-headquartered memory manufacturer, producing <a href="#jargon-dram" class="jargon">DRAM</a>, <a href="#jargon-nand" class="jargon">NAND</a>, and <a href="#jargon-hbm" class="jargon">HBM</a>. The Cloud Memory BU (HBM + server DRAM) is now the largest and highest-margin segment, reflecting the AI infrastructure boom.
+            Intel is the world’s largest <a href="#jargon-idm" class="jargon">IDM</a>, designing and manufacturing its own semiconductors while attempting to become a leading contract foundry through <a href="#jargon-ifs" class="jargon">IFS</a>. Under CEO Lip‑Bu Tan, Intel is divesting non‑core assets and refocusing on x86 CPUs plus a foundry transformation built around the <a href="#jargon-18a" class="jargon">18A</a> node, with aggressive plans for <a href="#jargon-14a" class="jargon">14A</a>.
           </p>
           <div class="pill-row">
-            <span class="pill">Founded 1978</span>
-            <span class="pill">HQ: Boise, Idaho</span>
-            <span class="pill">53k employees</span>
-            <span class="pill">Global fabs (US/Japan/Singapore)</span>
+            <span class="pill">Founded 1968</span>
+            <span class="pill">HQ: Santa Clara, CA</span>
+            <span class="pill">Largest IDM</span>
+            <span class="pill">Foundry transformation</span>
+            <span class="pill">CHIPS Act support</span>
           </div>
+        </div>
+        <div class="table-wrap" style="margin-top:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Segment (Post‑2025 Reorg)</th>
+                <th class="num">Description</th>
+                <th class="num">FY2025 Revenue</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Client Computing Group (CCG)</td>
+                <td class="num">Core Ultra PCs, NEX folded in</td>
+                <td class="num">~$31B (est.)</td>
+              </tr>
+              <tr>
+                <td>Data Center & AI (DCAI)</td>
+                <td class="num">Xeon + Gaudi + networking</td>
+                <td class="num">~$17B (est.)</td>
+              </tr>
+              <tr>
+                <td>Intel Foundry (IFS)</td>
+                <td class="num">Internal + external manufacturing</td>
+                <td class="num">$4.5B Q4 run‑rate</td>
+              </tr>
+              <tr>
+                <td>Mobileye</td>
+                <td class="num">Autonomous driving (MBLY)</td>
+                <td class="num">Partial stake sales 2025</td>
+              </tr>
+              <tr>
+                <td>Altera</td>
+                <td class="num">FPGA unit sold majority to Silver Lake</td>
+                <td class="num">$3.3B proceeds</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
       <section class="section" id="recent-financials">
         <h2>📊 Recent Financials</h2>
-        <div class="table-wrap">
+        <div class="table-wrap" style="margin-bottom:16px;">
           <table>
             <thead>
               <tr>
-                <th>Metric</th>
-                <th class="num">Q1 FY26</th>
-                <th class="num">Q1 FY25</th>
+                <th>Q4 2025 Results (Jan 22, 2026)</th>
+                <th class="num">Q4 2025</th>
+                <th class="num">Consensus</th>
                 <th class="num">YoY</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>Revenue</td>
-                <td class="num">$13.64B</td>
-                <td class="num">$8.71B</td>
-                <td class="num">+57%</td>
+                <td class="num">$13.7B</td>
+                <td class="num">$13.4B</td>
+                <td class="num">-4.1%</td>
               </tr>
               <tr>
-                <td>Non-GAAP GM</td>
-                <td class="num">56.8%</td>
-                <td class="num">39.5%</td>
-                <td class="num">+1,730 bps</td>
+                <td>Non‑GAAP EPS</td>
+                <td class="num">$0.15</td>
+                <td class="num">$0.08</td>
+                <td class="num">Improved</td>
               </tr>
               <tr>
-                <td>Non-GAAP EPS</td>
-                <td class="num">$4.78</td>
-                <td class="num">$1.79</td>
-                <td class="num">+167%</td>
-              </tr>
-              <tr class="highlight">
-                <td>Q2 FY26 Guide</td>
-                <td class="num">$18.7B</td>
+                <td>GAAP Net Income</td>
+                <td class="num">-$600M</td>
                 <td class="num">—</td>
-                <td class="num">68% GM</td>
+                <td class="num">Worse</td>
+              </tr>
+              <tr>
+                <td>Non‑GAAP Gross Margin</td>
+                <td class="num">37.9%</td>
+                <td class="num">36.5% guide</td>
+                <td class="num">+140 bps vs. guide</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>FY2025 Summary</th>
+                <th class="num">FY2025</th>
+                <th class="num">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Revenue</td>
+                <td class="num">$52.9B</td>
+                <td class="num">Slightly down YoY</td>
+              </tr>
+              <tr>
+                <td>Non‑GAAP Gross Margin</td>
+                <td class="num">36.7%</td>
+                <td class="num">+70 bps YoY</td>
+              </tr>
+              <tr>
+                <td>Non‑GAAP EPS</td>
+                <td class="num">$0.42</td>
+                <td class="num">+$0.55 improvement</td>
+              </tr>
+              <tr>
+                <td>Non‑GAAP OpEx</td>
+                <td class="num">$16.5B</td>
+                <td class="num">-15% vs. 2024</td>
+              </tr>
+              <tr>
+                <td>Operating Cash Flow</td>
+                <td class="num">$9.7B</td>
+                <td class="num">H2 inflection</td>
+              </tr>
+              <tr>
+                <td>Gross CapEx</td>
+                <td class="num">$17.7B</td>
+                <td class="num">+ government offsets</td>
+              </tr>
+              <tr>
+                <td>Adjusted FCF</td>
+                <td class="num">-$1.6B full year</td>
+                <td class="num">+ $3.1B in H2</td>
+              </tr>
+              <tr>
+                <td>Cash & Investments</td>
+                <td class="num">$37.4B</td>
+                <td class="num">Balance sheet strengthened</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Q1 2026 Guidance (Miss)</th>
+                <th class="num">Guidance</th>
+                <th class="num">Consensus</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Revenue</td>
+                <td class="num">$11.7B – $12.7B</td>
+                <td class="num">$12.5B</td>
+              </tr>
+              <tr>
+                <td>Non‑GAAP EPS</td>
+                <td class="num">$0.00</td>
+                <td class="num">$0.05</td>
+              </tr>
+              <tr>
+                <td>GAAP EPS</td>
+                <td class="num">-$0.21</td>
+                <td class="num">—</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:10px;">Management cited <a href="#jargon-18a" class="jargon">18A</a> supply constraints; expects improvement in Q2.</p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Strategic Capital Inflows (2025)</th>
+                <th class="num">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>NVIDIA equity investment</td>
+                <td class="num">$5B</td>
+              </tr>
+              <tr>
+                <td>SoftBank investment (IFS)</td>
+                <td class="num">$2B</td>
+              </tr>
+              <tr>
+                <td>CHIPS Act (equity + grants)</td>
+                <td class="num">$8.9B authorized; $7.86B received</td>
+              </tr>
+              <tr>
+                <td>Altera stake sale</td>
+                <td class="num">$3.3B</td>
+              </tr>
+              <tr>
+                <td>Mobileye partial sales</td>
+                <td class="num">~$1B+</td>
+              </tr>
+              <tr>
+                <td>Debt repaid</td>
+                <td class="num">$3.7B</td>
               </tr>
             </tbody>
           </table>
@@ -483,43 +614,132 @@
         <h2>🛡️ Competitive Position</h2>
         <div class="two-col">
           <div class="card">
-            <h3 style="font-size:14px;margin-bottom:10px;">DRAM Oligopoly (Q3 2025)</h3>
-            <div class="bars">
-              <div class="bar-row">
-                <div class="bar-label">SK Hynix</div>
-                <div class="bar-track"><div class="bar-fill hynix">33%</div></div>
-              </div>
-              <div class="bar-row">
-                <div class="bar-label">Samsung</div>
-                <div class="bar-track"><div class="bar-fill samsung">33%</div></div>
-              </div>
-              <div class="bar-row">
-                <div class="bar-label">Micron</div>
-                <div class="bar-track"><div class="bar-fill micron">26%</div></div>
-              </div>
+            <h3 style="font-size:14px;margin-bottom:10px;">x86 CPU Share (Q3 2025)</h3>
+            <div class="table-wrap" style="padding:12px;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Category</th>
+                    <th class="num">Intel</th>
+                    <th class="num">AMD</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Overall x86 Unit Share</td>
+                    <td class="num">~75%</td>
+                    <td class="num">~25%</td>
+                  </tr>
+                  <tr>
+                    <td>Desktop CPUs</td>
+                    <td class="num">~67%</td>
+                    <td class="num">~33%</td>
+                  </tr>
+                  <tr>
+                    <td>Notebook CPUs</td>
+                    <td class="num">~75%+</td>
+                    <td class="num">Rising</td>
+                  </tr>
+                  <tr>
+                    <td>Server CPUs</td>
+                    <td class="num">~72%</td>
+                    <td class="num">~28%</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <p style="font-size:12px;color:var(--text-muted);margin-top:10px;line-height:1.6;">Micron is the only US supplier, benefiting from CHIPS Act support and strategic preference in AI supply chains.</p>
+            <p style="font-size:12px;color:var(--text-muted);margin-top:10px;line-height:1.6;">AMD’s EPYC share rise is the most material erosion; ARM CPUs are also growing in cloud workloads.</p>
           </div>
           <div class="card">
-            <h3 style="font-size:14px;margin-bottom:10px;">Moats</h3>
+            <h3 style="font-size:14px;margin-bottom:10px;">Foundry Positioning</h3>
             <div class="list">
-              <div><strong>HBM execution:</strong> #2 player with 25–28% share and full 2026 allocation.</div>
-              <div><strong>1γ DRAM leadership:</strong> ~15% power advantage vs peers.</div>
-              <div><strong>Pricing discipline:</strong> 3-player oligopoly controls >90% DRAM.</div>
-              <div><strong>US-based supply:</strong> geopolitical & defense tailwinds.</div>
+              <div><strong><a href="#jargon-18a" class="jargon">18A</a> HVM:</strong> reached late Jan 2026 at Fab 52 (~40k wafers/month).</div>
+              <div><strong><a href="#jargon-pdk" class="jargon">PDK</a> delivery:</strong> 18A‑P 1.0 delivered to customers end‑2025.</div>
+              <div><strong>External wins:</strong> Microsoft reportedly committed to 18A‑P for Maia 2.</div>
+              <div><strong>Roadmap:</strong> aggressive <a href="#jargon-14a" class="jargon">14A</a> development underway.</div>
             </div>
+          </div>
+        </div>
+        <div class="table-wrap" style="margin-top:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Foundry Comparison</th>
+                <th class="num">Leading Node</th>
+                <th class="num">2025 Revenue</th>
+                <th class="num">External Customers</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>TSMC</td>
+                <td class="num">N2 (2nm) ramping</td>
+                <td class="num">~$90B+</td>
+                <td class="num">Apple, NVIDIA, AMD, Qualcomm</td>
+              </tr>
+              <tr>
+                <td>Samsung</td>
+                <td class="num">SF2 (2nm) in dev</td>
+                <td class="num">~$15B</td>
+                <td class="num">Mixed results</td>
+              </tr>
+              <tr class="highlight">
+                <td>Intel Foundry</td>
+                <td class="num">18A (1.8nm)</td>
+                <td class="num">~$4.5B (Q4 run‑rate)</td>
+                <td class="num">Nascent; Microsoft rumored</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card" style="margin-top:16px;">
+          <h3 style="font-size:14px;margin-bottom:10px;">AI Accelerators vs. NVIDIA</h3>
+          <div class="list">
+            <div><strong>NVIDIA dominance:</strong> ~94% AI GPU market share with CUDA moat.</div>
+            <div><strong>Intel’s angle:</strong> <a href="#jargon-gaudi" class="jargon">Gaudi</a> for cost‑efficient inference; custom ASIC services via IFS.</div>
+            <div><strong>Strategic win:</strong> custom Xeon with NVLink integration validates Intel CPUs in AI nodes.</div>
           </div>
         </div>
       </section>
 
       <section class="section" id="growth-drivers">
         <h2>🚀 Growth Drivers</h2>
-        <div class="card">
+        <div class="card" style="margin-bottom:14px;">
+          <h3 style="font-size:14px;margin-bottom:8px;">18A Foundry Ramp</h3>
           <div class="list">
-            <div><strong>HBM supercycle:</strong> TAM projected $35B → $100B by 2028; HBM4 ramp in mid-2026.</div>
-            <div><strong>AI server DRAM:</strong> LP-SOCAMM2 and higher memory content per rack.</div>
-            <div><strong>NAND recovery:</strong> G9 NAND enabling 122TB+ data center SSDs.</div>
-            <div><strong>PC & mobile refresh:</strong> Windows 10 EOL and AI PCs lift memory attach.</div>
+            <div><strong>HVM reached:</strong> 18A in production at Fab 52; 18A‑P PDK delivered.</div>
+            <div><strong>External anchor:</strong> Microsoft reportedly using 18A‑P for Maia 2 AI accelerators.</div>
+            <div><strong>Valuation unlock:</strong> a credible #2 foundry could be worth $50–100B+ alone.</div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3 style="font-size:14px;margin-bottom:8px;">AI‑Driven Server Refresh</h3>
+          <div class="list">
+            <div><strong>DCAI growth:</strong> Q4 revenue $4.7B (+9% YoY) with Granite Rapids ramp.</div>
+            <div><strong>CPU host demand:</strong> AI accelerators still require x86 control planes.</div>
+            <div><strong>HSBC view:</strong> FY26 server shipments up 15–20% vs. Street 4–6%.</div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3 style="font-size:14px;margin-bottom:8px;">PC Refresh + AI PCs</h3>
+          <div class="list">
+            <div><strong>Core Ultra Series 3:</strong> 200+ notebook designs using 18A.</div>
+            <div><strong>Windows 10 EOL:</strong> creates enterprise refresh tailwind.</div>
+            <div><strong>Client AI:</strong> hybrid cloud + on‑device <a href="#jargon-npu" class="jargon">NPU</a> workloads lift performance requirements.</div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3 style="font-size:14px;margin-bottom:8px;">CHIPS Act & Government Support</h3>
+          <div class="list">
+            <div><strong>CHIPS funding:</strong> $8.9B authorized; ~$7.86B received.</div>
+            <div><strong>National champion:</strong> bipartisan support for U.S. semiconductor sovereignty.</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="font-size:14px;margin-bottom:8px;">ASIC & Custom Silicon</h3>
+          <div class="list">
+            <div><strong>Hyperscaler demand:</strong> rising custom ASIC buildouts (TPU, Trainium, Maia).</div>
+            <div><strong>IFS + design services:</strong> potential high‑margin growth vector if executed.</div>
           </div>
         </div>
       </section>
@@ -528,44 +748,181 @@
         <h2>⚠️ Risks</h2>
         <div class="card">
           <div class="list">
-            <div><strong>Cyclicality:</strong> memory historically boom-bust; risk of overbuild.</div>
-            <div><strong>China exposure:</strong> restrictions reduce TAM and pricing flexibility.</div>
-            <div><strong>Samsung comeback:</strong> HBM4 yield improvements could pressure ASPs.</div>
-            <div><strong>Capex intensity:</strong> $20B FY26 spend raises downside sensitivity.</div>
+            <div><strong>Foundry execution risk (high):</strong> yield and reliability must meet TSMC standards. <em>Counter:</em> 18A reached HVM and PDK delivered; Microsoft deal would validate roadmap.</div>
+            <div><strong>CPU share loss (med‑high):</strong> AMD + ARM continue gaining. <em>Counter:</em> Granite Rapids + Panther Lake aim to stabilize share; NVLink Xeon win helps.</div>
+            <div><strong>Massive capex burden:</strong> $15–20B+/year investment could destroy ROIC. <em>Counter:</em> CHIPS Act offsets + strategic equity infusions reduce cash burn.</div>
+            <div><strong>AI GPU irrelevance:</strong> Gaudi has stumbled; NVIDIA dominates. <em>Counter:</em> Intel pivots to inference, custom ASICs, and CPU host leadership.</div>
+            <div><strong>Management execution:</strong> third CEO in 3 years; cultural reset takes time. <em>Counter:</em> Lip‑Bu Tan’s Cadence pedigree + OpEx cuts show progress.</div>
+            <div><strong>18A supply constraints:</strong> Q1 guidance missed due to lack of 18A capacity. <em>Counter:</em> management expects supply improvements in Q2.</div>
+            <div><strong>Geopolitics:</strong> CHIPS funding risk or Taiwan tension relief could weaken the urgency for Intel. <em>Counter:</em> bipartisan support suggests durable backing.</div>
           </div>
         </div>
       </section>
 
       <section class="section" id="valuation">
         <h2>💰 Valuation</h2>
-        <div class="table-wrap">
+        <div class="table-wrap" style="margin-bottom:16px;">
           <table>
             <thead>
               <tr>
-                <th>Metric</th>
-                <th class="num">MU</th>
-                <th class="num">SK Hynix</th>
-                <th class="num">Samsung Mem.</th>
+                <th>Current Multiples (at ~$48.81)</th>
+                <th class="num">Value</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Forward P/E</td>
-                <td class="num">~13x</td>
-                <td class="num">12–14x</td>
-                <td class="num">Discounted</td>
+                <td>Market Cap</td>
+                <td class="num">~$260B</td>
+              </tr>
+              <tr>
+                <td>Trailing P/E (GAAP)</td>
+                <td class="num">~5,400x (losses distort)</td>
+              </tr>
+              <tr class="highlight">
+                <td>Forward P/E (2026E)</td>
+                <td class="num">~22x</td>
               </tr>
               <tr>
                 <td>P/S (TTM)</td>
-                <td class="num">10.9x</td>
-                <td class="num">~6x</td>
-                <td class="num">~2–3x</td>
+                <td class="num">~4.9x</td>
               </tr>
               <tr>
-                <td>HBM Share</td>
-                <td class="num">25–28%</td>
-                <td class="num">~62%</td>
-                <td class="num">8–10%</td>
+                <td>EV/Revenue</td>
+                <td class="num">~4.5x</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Peer Comparison</th>
+                <th class="num">Forward P/E</th>
+                <th class="num">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td>Intel</td>
+                <td class="num">~22x</td>
+                <td class="num">Turnaround + foundry option</td>
+              </tr>
+              <tr>
+                <td>AMD</td>
+                <td class="num">~28x</td>
+                <td class="num">Server share gains</td>
+              </tr>
+              <tr>
+                <td>NVIDIA</td>
+                <td class="num">~35x</td>
+                <td class="num">AI GPU dominance</td>
+              </tr>
+              <tr>
+                <td>TSMC</td>
+                <td class="num">~22x</td>
+                <td class="num">Foundry leader</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card" style="margin-bottom:14px;">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            <strong>Value trap vs. turnaround:</strong> FY25 EPS of $0.42 does not justify $260B on fundamentals alone. The valuation assumes 18A foundry traction, AI‑driven CPU demand, and a multi‑year margin recovery.
+          </p>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-top:10px;">
+            <strong>Upside case:</strong> if Intel reaches $3–4 EPS by 2028 with foundry credibility, a 20–25x multiple implies $60–100+.
+          </p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Analyst Targets</th>
+                <th class="num">Date</th>
+                <th class="num">Target</th>
+                <th class="num">Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>KeyBanc (Vinh)</td>
+                <td class="num">Jan 13, 2026</td>
+                <td class="num">$60</td>
+                <td class="num">Overweight</td>
+              </tr>
+              <tr>
+                <td>Seaport Global</td>
+                <td class="num">Jan 20, 2026</td>
+                <td class="num">$65</td>
+                <td class="num">Buy</td>
+              </tr>
+              <tr>
+                <td>HSBC</td>
+                <td class="num">Jan 2026</td>
+                <td class="num">Raised (bullish)</td>
+                <td class="num">Buy</td>
+              </tr>
+              <tr>
+                <td>Consensus</td>
+                <td class="num">Jan 2026</td>
+                <td class="num">~$38–46</td>
+                <td class="num">Reduce (MarketBeat)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="recent-news">
+        <h2>🗓️ Recent News & Catalysts</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Event</th>
+                <th class="num">Impact</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Jan 2026</td>
+                <td>Q4 2025 beat EPS/revenue but Q1 guide missed on supply constraints</td>
+                <td class="num">Stock -13% AH</td>
+              </tr>
+              <tr>
+                <td>Jan 2026</td>
+                <td>18A reaches HVM at Fab 52 (AZ) ~40K wafers/month</td>
+                <td class="num">Foundry milestone</td>
+              </tr>
+              <tr>
+                <td>Jan 2026</td>
+                <td>Microsoft reportedly commits to 18A‑P for Maia 2 AI accelerators</td>
+                <td class="num">Potential anchor customer</td>
+              </tr>
+              <tr>
+                <td>Jan 2026</td>
+                <td>CEO Tan meets President Trump; “Made in America” narrative</td>
+                <td class="num">Stock +10%</td>
+              </tr>
+              <tr>
+                <td>CES 2026</td>
+                <td>Core Ultra Series 3 “Panther Lake” launches; 200+ notebooks</td>
+                <td class="num">PC competitiveness</td>
+              </tr>
+              <tr>
+                <td>Late 2025</td>
+                <td>NVIDIA $5B equity investment completed; SoftBank $2B in IFS</td>
+                <td class="num">Balance sheet boost</td>
+              </tr>
+              <tr>
+                <td>H2 2026</td>
+                <td>Investor Day planned at Santa Clara HQ</td>
+                <td class="num">Foundry pipeline update</td>
               </tr>
             </tbody>
           </table>
@@ -576,19 +933,23 @@
         <h2>🐂 Bull vs. 🐻 Bear Case</h2>
         <div class="case-grid">
           <div class="case-card bull">
-            <h3>🐂 Bull — $500+</h3>
+            <h3>🐂 Bull — $65–80+</h3>
             <ul>
-              <li>HBM TAM hits $100B with MU at 30% share.</li>
-              <li>FY26 EPS $31–34 implies 12–15x forward P/E.</li>
-              <li>Supercycle extends through 2027–2028.</li>
+              <li>18A delivers competitive yields; major external customers sign on.</li>
+              <li>AI server demand lifts Xeon; NVLink partnership entrenches Intel in AI nodes.</li>
+              <li>PC refresh + AI PC adoption boosts CCG margins.</li>
+              <li>CHIPS Act + strategic partners reduce capital stress.</li>
+              <li>EPS reaches $3–4 by 2028; 20–25x multiple implies $60–100+.</li>
             </ul>
           </div>
           <div class="case-card bear">
-            <h3>🐻 Bear — $200–250</h3>
+            <h3>🐻 Bear — $25–35</h3>
             <ul>
-              <li>Cycle peaks in mid-2026 and prices crash.</li>
-              <li>Samsung floods HBM4 supply.</li>
-              <li>Valuation compresses to 8–10x.</li>
+              <li>Foundry fails to scale; external customers remain minimal.</li>
+              <li>CPU market share erodes below 50% as AMD/ARM accelerate.</li>
+              <li>CapEx remains $15–20B/year with weak ROIC.</li>
+              <li>Gaudi remains irrelevant; Intel’s AI role shrinks to low‑margin CPUs.</li>
+              <li>Investor patience fades; valuation reverts to trough levels.</li>
             </ul>
           </div>
         </div>
@@ -596,10 +957,51 @@
 
       <section class="section" id="verdict">
         <h2>✅ Verdict / Rating</h2>
-        <div class="card verdict">
+        <div class="card verdict" style="margin-bottom:16px;">
           <p style="font-size:13px;line-height:1.7;color:var(--text-secondary);">
-            <strong>Rating: Overweight / Cautiously Bullish.</strong> Micron sits at the center of the AI memory supercycle, with 68% gross margin guidance and a structurally tighter supply backdrop. Valuation looks reasonable on forward earnings, but cycle risk remains high — position sizing matters.
+            <strong>Rating: Speculative Turnaround / High Volatility.</strong> Intel is no longer a deep‑value contrarian trade; at ~$49 it prices in real 18A and foundry success that is not yet proven. The upside is meaningful if Intel becomes a credible #2 foundry, but the downside is also real if the execution falters. Position size accordingly.
           </p>
+          <p style="font-size:13px;line-height:1.7;color:var(--text-secondary);margin-top:10px;">
+            <strong>Key milestones:</strong> Q2 supply improvement, formal foundry customer announcements, 14A commitments, and server share stabilization in 2026.
+          </p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Rating Framework</th>
+                <th class="num">Score</th>
+                <th class="num">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Structural Demand</td>
+                <td class="num">7.5/10</td>
+                <td class="num">AI server tailwinds</td>
+              </tr>
+              <tr>
+                <td>Competitive Position</td>
+                <td class="num">6.5/10</td>
+                <td class="num">Share loss vs. AMD/ARM</td>
+              </tr>
+              <tr>
+                <td>Financial Momentum</td>
+                <td class="num">6/10</td>
+                <td class="num">H2 FCF inflection, still weak</td>
+              </tr>
+              <tr>
+                <td>Valuation</td>
+                <td class="num">6.5/10</td>
+                <td class="num">Reasonable if turnaround works</td>
+              </tr>
+              <tr>
+                <td>Risk Profile</td>
+                <td class="num">4.5/10</td>
+                <td class="num">Binary foundry outcome</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
@@ -637,34 +1039,65 @@
         <h2>📖 Jargon Decoder</h2>
         <div class="card">
           <div style="display:flex;flex-direction:column;gap:10px;">
-            <div id="jargon-hbm" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
-              <strong style="color:var(--accent);">HBM (High Bandwidth Memory)</strong>
+            <div id="jargon-idm" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">IDM</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Stacked DRAM with massive bandwidth used in AI accelerators.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Integrated Device Manufacturer — designs and manufactures chips in‑house.</div>
             </div>
-            <div id="jargon-dram" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
-              <strong style="color:var(--accent);">DRAM</strong>
+            <div id="jargon-ifs" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">IFS (Intel Foundry Services)</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Dynamic RAM used for main memory in servers, PCs, and GPUs.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Intel’s contract manufacturing business for external customers.</div>
             </div>
-            <div id="jargon-nand" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
-              <strong style="color:var(--accent);">NAND</strong>
+            <div id="jargon-hvm" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">HVM</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Flash storage used in SSDs for data centers and devices.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">High‑Volume Manufacturing — full‑scale production ramp.</div>
             </div>
-            <div id="jargon-tam" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
-              <strong style="color:var(--accent);">TAM</strong>
+            <div id="jargon-18a" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">18A</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Total Addressable Market — the full revenue opportunity for a product category.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Intel’s 1.8nm process node; cornerstone of its foundry turnaround.</div>
             </div>
-            <div id="jargon-asp" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
-              <strong style="color:var(--accent);">ASP</strong>
+            <div id="jargon-14a" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">14A</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Average Selling Price — pricing power indicator for memory.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Next‑gen 1.4nm process under development; key to staying competitive.</div>
+            </div>
+            <div id="jargon-pdk" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">PDK</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Process Design Kit — the foundry’s technical toolkit for chip designers.</div>
+            </div>
+            <div id="jargon-fabless" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Fabless</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Chip designers who outsource manufacturing (e.g., AMD, NVIDIA).</div>
+            </div>
+            <div id="jargon-wafer" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Wafer</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Silicon disk on which chips are fabricated; measured in WPM.</div>
+            </div>
+            <div id="jargon-chips" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">CHIPS Act</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">U.S. legislation subsidizing domestic semiconductor manufacturing.</div>
+            </div>
+            <div id="jargon-gaudi" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Gaudi</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Intel AI accelerator family aimed at inference workloads.</div>
+            </div>
+            <div id="jargon-npu" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">NPU</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Neural Processing Unit integrated into CPUs for AI workloads.</div>
             </div>
           </div>
         </div>
       </section>
+      <p style="font-size:11px;color:var(--text-dimmer);margin-top:20px;">Sources: Intel IR, earnings calls, analyst notes (as of Feb 3, 2026). This is research, not financial advice.</p>
     </div>
   </main>
 </div>
