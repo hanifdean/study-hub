@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indonesia's Gold Industry: From Mine to Market</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0f0f14;
+    --surface: #171720;
+    --surface-alt: #1f1f2a;
+    --surface-hover: #242433;
+    --border: #2a2a35;
+    --border-alt: #333344;
+    --text: #ece9e3;
+    --text-secondary: #d5d1c7;
+    --text-muted: #9a9488;
+    --text-dim: #766f64;
+    --text-dimmer: #5b554c;
+    --accent: #f59e0b;
+    --accent-soft: rgba(245, 158, 11, 0.14);
+    --accent-glow: rgba(245, 158, 11, 0.2);
+    --highlight: #fbbf24;
+    --green: #34d399;
+    --red: #f87171;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --text-dimmer: #a5a09a;
+    --accent: #d97706;
+    --accent-soft: rgba(217, 119, 6, 0.1);
+    --accent-glow: rgba(217, 119, 6, 0.15);
+    --highlight: #b45309;
+    --green: #059669;
+    --red: #dc2626;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .page-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+  }
+
+  .content { flex: 1; min-width: 0; }
+
+  .container { max-width: 980px; }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .back-links {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  h1 {
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--highlight);
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .source-credit {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+  }
+  .source-credit a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--accent);
+  }
+  .source-credit a:hover { color: var(--highlight); border-color: var(--highlight); }
+
+  .section {
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s ease-out both;
+  }
+
+  .section h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+  }
+
+  .stat-card .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+  .stat-card .value {
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .stat-card .note {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
+    color: var(--text-muted);
+  }
+
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    text-align: left;
+    padding: 10px 12px;
+    color: var(--text-muted);
+    font-size: 11px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody tr.highlight td { color: var(--highlight); font-weight: 600; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 18px;
+  }
+
+  .list {
+    display: grid;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .list strong { color: var(--text); }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .case-card {
+    border-radius: 14px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .case-card h3 { font-size: 14px; margin-bottom: 8px; }
+  .case-card ul { padding-left: 16px; font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+  /* Inline jargon links */
+  .jargon {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1.5px dotted var(--accent);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .jargon:hover { color: var(--highlight); border-color: var(--highlight); }
+  .jargon-def { scroll-margin-top: 24px; }
+  .jargon-def:target {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 10px;
+    animation: jargon-flash 1.2s ease;
+  }
+  @keyframes jargon-flash {
+    0%, 100% { outline-color: transparent; }
+    20%, 80% { outline-color: var(--accent); }
+  }
+  .jargon-back {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-left: 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .jargon-back:hover { opacity: 1; color: var(--accent); }
+
+  .section-nav {
+    position: sticky;
+    top: 96px;
+    width: 220px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    height: fit-content;
+    max-height: calc(100vh - 140px);
+    overflow: auto;
+  }
+  .section-nav-title {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .section-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .section-nav a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+  }
+  .section-nav a:hover { color: var(--accent); border-color: var(--border); background: var(--surface-hover); }
+  .section-nav a.active { color: var(--accent); background: var(--accent-soft); border-color: var(--accent); }
+
+  html { scroll-behavior: smooth; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .value-chain {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .stage-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    background: linear-gradient(145deg, rgba(245, 158, 11, 0.08), transparent);
+  }
+  .stage-card h3 { font-size: 14px; margin-bottom: 8px; color: var(--highlight); }
+  .stage-card p { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+  .stage-flow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 12px;
+  }
+  .stage-flow span { padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface-alt); }
+
+  .sidebar-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    background: var(--surface-alt);
+  }
+
+  .emiten-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .emiten-card {
+    border-radius: 14px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .emiten-card h3 { font-size: 14px; margin-bottom: 6px; }
+  .emiten-card p { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+  .emiten-card .pill-row { margin-top: 8px; }
+
+  @media (max-width: 900px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .case-grid { grid-template-columns: 1fr; }
+    .value-chain { grid-template-columns: 1fr 1fr; }
+    .emiten-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    body { padding: 24px 16px; }
+    .page-layout { flex-direction: column; gap: 12px; }
+    .section-nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      padding: 8px;
+      border-radius: 12px;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+    .section-nav-title { display: none; }
+    .section-nav-links { flex-direction: row; gap: 8px; }
+    .section-nav a {
+      white-space: nowrap;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border-color: var(--border);
+      background: var(--surface);
+    }
+    .section-nav a.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+  }
+</style>
+</head>
+<body>
+<div class="page-layout">
+  <nav class="section-nav" aria-label="Section navigation">
+    <div class="section-nav-title">On this page</div>
+    <div class="section-nav-links" id="section-nav-links"></div>
+  </nav>
+  <main class="content">
+    <div class="container">
+      <div class="top-bar">
+        <div class="back-links">
+          <a href="../" class="back-link">← Back to Investing Index</a>
+          <a href="../.." class="back-link">← Back to Study Hub</a>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+          <span id="theme-icon">☀️</span>
+        </button>
+      </div>
+
+      <h1>Indonesia's Gold Industry: From Mine to Market</h1>
+      <p class="subtitle">Comprehensive mapping of Indonesia's gold value chain and all IDX-listed gold emitens</p>
+      <p class="source-credit">Source: <a href="https://snips.stockbit.com/unboxing/indonesias-gold-playbook-from-mine-to-market" target="_blank" rel="noopener">Stockbit Snips</a> (Theodorus Melvin, Stockbit Sekuritas)</p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="label">Royalty Rate</div>
+          <div class="value">10% → 16%</div>
+          <div class="note">PP 26/2022 to PP 18/2025</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Economic Grade</div>
+          <div class="value">0.5–5 g/t</div>
+          <div class="note">Au grade range</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Refinery Edge</div>
+          <div class="value">LBMA</div>
+          <div class="note">Only ANTM accredited</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Price Catalyst</div>
+          <div class="value">+61% YTD</div>
+          <div class="note">Macro tailwinds (2025)</div>
+        </div>
+      </div>
+
+      <section class="section" id="executive-summary">
+        <h2>✨ Executive Summary</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>Value chain clarity:</strong> Exploration → Mining → Refinery → Fabrication, plus a fast-growing financial services layer (pawning, savings, installments).</div>
+            <div><strong>Business model split:</strong> Miners are price-sensitive and margin-volatile; refiners/traders run on volume with stable 4–5% spreads.</div>
+            <div><strong>IDX coverage mapped:</strong> 12+ emitens across exploration, construction, pure-play miners, mixed portfolios, and by-product producers.</div>
+            <div><strong>Technical reality:</strong> <a href="#jargon-heap-leach" class="jargon">Heap leach</a> for low-grade oxide ore, <a href="#jargon-cil" class="jargon">CIL</a> for higher-grade sulfides; economics hinge on <a href="#jargon-aisc" class="jargon">AISC</a> and recovery rates.</div>
+            <div><strong>Regulatory lever:</strong> Royalty stepped up to 16% in 2025 at $3,000/oz; refinery accreditation (<a href="#jargon-lbma" class="jargon">LBMA</a>) drives premium pricing.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="gold-value-chain">
+        <h2>🔗 Gold Value Chain</h2>
+        <div class="two-col">
+          <div class="card">
+            <div class="value-chain">
+              <div class="stage-card">
+                <h3>1) Exploration</h3>
+                <p>Discover reserves and prove economic viability under <a href="#jargon-jorc" class="jargon">JORC</a> standards.</p>
+              </div>
+              <div class="stage-card">
+                <h3>2) Mining</h3>
+                <p>Open pit or underground. Produce <a href="#jargon-dore" class="jargon">doré</a> (10–30% Au).</p>
+              </div>
+              <div class="stage-card">
+                <h3>3) Refinery</h3>
+                <p>Purify doré into 99.5–99.9% <a href="#jargon-bullion" class="jargon">bullion</a>.</p>
+              </div>
+              <div class="stage-card">
+                <h3>4) Fabrication</h3>
+                <p>Transform bullion into <a href="#jargon-minted-bar" class="jargon">minted bars</a> and jewelry.</p>
+              </div>
+            </div>
+            <div class="stage-flow">
+              <span>Exploration</span> → <span>Mining</span> → <span>Refinery</span> → <span>Fabrication</span>
+            </div>
+          </div>
+          <div class="sidebar-card">
+            <h3 style="font-size:14px;margin-bottom:10px;">Financial Services Layer</h3>
+            <div class="list">
+              <div><strong>Gadai emas:</strong> pawn-backed liquidity (Pegadaian).</div>
+              <div><strong>Tabungan emas:</strong> micro-savings products (Pegadaian, BRIS).</div>
+              <div><strong>Cicil emas:</strong> installment-based gold ownership.</div>
+            </div>
+            <div class="pill-row">
+              <span class="pill">Pegadaian</span>
+              <span class="pill">BRIS</span>
+              <span class="pill">Retail demand</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="business-model-comparison">
+        <h2>⚖️ Business Model Comparison</h2>
+        <div class="case-grid">
+          <div class="case-card">
+            <h3>⛏️ Mining</h3>
+            <ul>
+              <li>Revenue = gold price × production volume.</li>
+              <li>Profitability driven by price moves and <a href="#jargon-aisc" class="jargon">AISC</a>.</li>
+              <li>High operating leverage; margins swing with cycles.</li>
+              <li>Product: ore → <a href="#jargon-dore" class="jargon">doré</a>.</li>
+            </ul>
+          </div>
+          <div class="case-card">
+            <h3>🏛️ Trading & Refinery</h3>
+            <ul>
+              <li>Revenue from spread (buy-sell margin).</li>
+              <li>Profitability tied to volume; margins ~4–5% stable.</li>
+              <li>Lower price sensitivity vs miners.</li>
+              <li>Product: <a href="#jargon-bullion" class="jargon">bullion</a>, <a href="#jargon-minted-bar" class="jargon">minted bars</a>, jewelry.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="idx-gold-emiten-map">
+        <h2>🗺️ IDX Gold Emiten Map</h2>
+        <div class="emiten-grid">
+          <div class="emiten-card">
+            <h3>Exploration</h3>
+            <p><strong>CUAN</strong> — Intam project.</p>
+            <p><strong>DEWA</strong> — Gayo Mineral Resources project.</p>
+            <div class="pill-row">
+              <span class="pill">Early-stage drilling</span>
+              <span class="pill">Resource definition</span>
+            </div>
+          </div>
+          <div class="emiten-card">
+            <h3>Construction</h3>
+            <p><strong>INDY</strong> — Awak Mas project, target 100k oz/year.</p>
+            <p><strong>EMAS</strong> — Pani project, <a href="#jargon-heap-leach" class="jargon">heap leach</a> facility target 2026, ~79k oz (2026).</p>
+            <div class="pill-row">
+              <span class="pill">Ramp-up phase</span>
+              <span class="pill">Capex heavy</span>
+            </div>
+          </div>
+          <div class="emiten-card">
+            <h3>Pure-Play Miners (Doré)</h3>
+            <p><strong>BRMS</strong> — Citra Palu Minerals, heap leach + <a href="#jargon-cil" class="jargon">CIL</a>, +16% YoY production outlook 2026.</p>
+            <p><strong>PSAB</strong> — J Resources Asia Pasifik.</p>
+            <p><strong>ARCI</strong> — Araren pit recovery ramp-up.</p>
+            <div class="pill-row">
+              <span class="pill">Operating mines</span>
+              <span class="pill">Cash cost focus</span>
+            </div>
+          </div>
+          <div class="emiten-card">
+            <h3>Gold as Segment</h3>
+            <p><strong>MDKA</strong> — Tujuh Bukit mine, Pani heap leach 2026.</p>
+            <p><strong>UNTR</strong> — Martabe mine (Agincourt), Sumbawa Jutaraya ramp-up.</p>
+            <p><strong>ANTM</strong> — Mining + only <a href="#jargon-lbma" class="jargon">LBMA</a>-accredited refinery.</p>
+            <div class="pill-row">
+              <span class="pill">Diversified</span>
+              <span class="pill">Gold not sole driver</span>
+            </div>
+          </div>
+          <div class="emiten-card">
+            <h3>Gold from Copper (By-product)</h3>
+            <p><strong>AMMN</strong> — Batu Hijau, phase 7→8 transition (lower 2025 output).</p>
+            <p><strong>Freeport</strong> — Grasberg (force majeure 2025); only open pit → underground transition in Indonesia.</p>
+            <div class="pill-row">
+              <span class="pill"><a href="#jargon-porphyry" class="jargon">Porphyry Cu-Au</a></span>
+              <span class="pill"><a href="#jargon-byproduct" class="jargon">By-product credit</a></span>
+            </div>
+          </div>
+          <div class="emiten-card">
+            <h3>Refinery & Fabrication</h3>
+            <p><strong>ANTM</strong> — LBMA Good Delivery List.</p>
+            <p><strong>ARCI</strong> — refinery facility.</p>
+            <p><strong>HRTA</strong> — refinery facility.</p>
+            <p><strong>AMMN + Freeport</strong> — <a href="#jargon-pmr" class="jargon">PMR</a> processes anode slime.</p>
+            <div class="pill-row">
+              <span class="pill">Premium pricing</span>
+              <span class="pill">Global liquidity</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-wrap" style="margin-top:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Stage</th>
+                <th>Emiten</th>
+                <th>Projects / Key Facts</th>
+                <th class="num">2026 Outlook</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td colspan="4">Exploration</td>
+              </tr>
+              <tr>
+                <td>Exploration</td>
+                <td>CUAN</td>
+                <td>Intam project, early resource definition under <a href="#jargon-jorc" class="jargon">JORC</a>.</td>
+                <td class="num">Pre-production</td>
+              </tr>
+              <tr>
+                <td>Exploration</td>
+                <td>DEWA</td>
+                <td>Gayo Mineral Resources exploration.</td>
+                <td class="num">Pre-production</td>
+              </tr>
+              <tr class="highlight">
+                <td colspan="4">Construction</td>
+              </tr>
+              <tr>
+                <td>Construction</td>
+                <td>INDY</td>
+                <td>Awak Mas project.</td>
+                <td class="num">100k oz/yr target</td>
+              </tr>
+              <tr>
+                <td>Construction</td>
+                <td>EMAS</td>
+                <td>Pani project, heap leach facility.</td>
+                <td class="num">~79k oz (2026)</td>
+              </tr>
+              <tr class="highlight">
+                <td colspan="4">Pure-play Miners (Doré)</td>
+              </tr>
+              <tr>
+                <td>Mining</td>
+                <td>BRMS</td>
+                <td>Citra Palu Minerals, heap leach + <a href="#jargon-cil" class="jargon">CIL</a>.</td>
+                <td class="num">+16% YoY</td>
+              </tr>
+              <tr>
+                <td>Mining</td>
+                <td>PSAB</td>
+                <td>J Resources Asia Pasifik (producing).</td>
+                <td class="num">Stable output</td>
+              </tr>
+              <tr>
+                <td>Mining</td>
+                <td>ARCI</td>
+                <td>Araren pit recovery ramp-up.</td>
+                <td class="num">Ramp-up phase</td>
+              </tr>
+              <tr class="highlight">
+                <td colspan="4">Gold as Segment</td>
+              </tr>
+              <tr>
+                <td>Mining + Mixed</td>
+                <td>MDKA</td>
+                <td>Tujuh Bukit, Pani heap leach 2026.</td>
+                <td class="num">Pani start-up</td>
+              </tr>
+              <tr>
+                <td>Mining + Mixed</td>
+                <td>UNTR</td>
+                <td>Martabe (Agincourt), Sumbawa Jutaraya ramp.</td>
+                <td class="num">Ramping</td>
+              </tr>
+              <tr>
+                <td>Mining + Refinery</td>
+                <td>ANTM</td>
+                <td>Mining + only LBMA-accredited refinery.</td>
+                <td class="num">Stable output</td>
+              </tr>
+              <tr class="highlight">
+                <td colspan="4">Gold from Copper (By-product)</td>
+              </tr>
+              <tr>
+                <td>By-product</td>
+                <td>AMMN</td>
+                <td>Batu Hijau phase 7→8 transition.</td>
+                <td class="num">Lower 2025; normalize 2026</td>
+              </tr>
+              <tr>
+                <td>By-product</td>
+                <td>Freeport</td>
+                <td>Grasberg, force majeure 2025.</td>
+                <td class="num">Recovery in 2026</td>
+              </tr>
+              <tr class="highlight">
+                <td colspan="4">Refinery & Fabrication</td>
+              </tr>
+              <tr>
+                <td>Refinery</td>
+                <td>ANTM</td>
+                <td>LBMA Good Delivery, premium pricing.</td>
+                <td class="num">Strategic edge</td>
+              </tr>
+              <tr>
+                <td>Refinery</td>
+                <td>ARCI</td>
+                <td>Refinery facility supports doré processing.</td>
+                <td class="num">Capacity growth</td>
+              </tr>
+              <tr>
+                <td>Refinery</td>
+                <td>HRTA</td>
+                <td>Refinery facility and retail fabrication.</td>
+                <td class="num">Volume-driven</td>
+              </tr>
+              <tr>
+                <td>Refinery</td>
+                <td>AMMN + Freeport</td>
+                <td><a href="#jargon-pmr" class="jargon">PMR</a> processes anode slime from copper.</td>
+                <td class="num">Ramp-up</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="technical-deep-dive">
+        <h2>🧪 Technical Deep Dive</h2>
+        <div class="two-col">
+          <div class="card">
+            <h3 style="font-size:14px;margin-bottom:10px;">Ore Types & Mining</h3>
+            <div class="list">
+              <div><strong>Oxide ore:</strong> near surface, lower grade; open pit with <a href="#jargon-heap-leach" class="jargon">heap leach</a>.</div>
+              <div><strong>Sulfide ore:</strong> higher grade, underground, processed via <a href="#jargon-cil" class="jargon">CIL</a>.</div>
+              <div><strong>Deposits:</strong> <a href="#jargon-porphyry" class="jargon">porphyry copper-gold</a> vs <a href="#jargon-epithermal" class="jargon">epithermal deposits</a> (gold-only).</div>
+            </div>
+          </div>
+          <div class="card">
+            <h3 style="font-size:14px;margin-bottom:10px;">Processing & Economics</h3>
+            <div class="list">
+              <div><strong>Grade economics:</strong> economic grades typically 0.5–5 <a href="#jargon-gt" class="jargon">g/t Au</a>.</div>
+              <div><strong>Recovery:</strong> heap leach = lower <a href="#jargon-recovery" class="jargon">recovery rate</a>, CIL = higher recovery.</div>
+              <div><strong>Cost metrics:</strong> <a href="#jargon-aisc" class="jargon">AISC</a> and <a href="#jargon-cash-cost" class="jargon">cash cost</a> dictate resilience.</div>
+              <div><strong>Standard:</strong> <a href="#jargon-jorc" class="jargon">JORC</a> governs resource disclosure.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="regulatory-cost">
+        <h2>📜 Regulatory & Cost</h2>
+        <div class="two-col">
+          <div class="card">
+            <h3 style="font-size:14px;margin-bottom:10px;">Royalty Regime Shift</h3>
+            <div class="list">
+              <div><strong>PP 26/2022:</strong> 10% royalty at gold ≥ $2,000/oz.</div>
+              <div><strong>PP 18/2025:</strong> 16% royalty at gold ≥ $3,000/oz.</div>
+              <div><strong>Implication:</strong> higher fiscal take compresses margins for high-cost producers.</div>
+            </div>
+          </div>
+          <div class="card">
+            <h3 style="font-size:14px;margin-bottom:10px;">LBMA Accreditation</h3>
+            <div class="list">
+              <div><strong>Only ANTM accredited</strong> on the <a href="#jargon-lbma" class="jargon">LBMA</a> Good Delivery List.</div>
+              <div><strong>Benefits:</strong> premium pricing, global liquidity, trust for wholesale buyers.</div>
+              <div><strong>Strategic edge:</strong> refinery gatekeeper for domestic doré.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="related-context">
+        <h2>🔗 Related Context</h2>
+        <div class="card" style="display:flex;flex-direction:column;gap:14px;">
+          <a href="../company-deep-dives/micron-mu.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">🔍</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Company Deep Dives</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Explore deep-dive templates and valuation frameworks.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
+          <a href="../" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">💰</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Investing Index</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Back to investing materials and market studies.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
+          <a href="../.." style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">🏠</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Study Hub Home</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">All curated pages across topics.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="section" id="jargon">
+        <h2>📖 Key Jargon</h2>
+        <div class="card">
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div id="jargon-dore" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Doré</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Unrefined gold-silver alloy (10–30% Au) produced from mines.</div>
+            </div>
+            <div id="jargon-bullion" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Bullion</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Refined gold (99.5–99.9% purity) used for investment and fabrication.</div>
+            </div>
+            <div id="jargon-minted-bar" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Minted Bar</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Retail-grade gold bars with standardized weights and designs.</div>
+            </div>
+            <div id="jargon-jorc" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">JORC</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">International code for reporting mineral resources and reserves.</div>
+            </div>
+            <div id="jargon-heap-leach" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Heap Leach</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Low-cost process for oxide ore using cyanide solution percolation.</div>
+            </div>
+            <div id="jargon-cil" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">CIL (Carbon-in-Leach)</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Higher-recovery process for sulfide ores; higher capex/opex.</div>
+            </div>
+            <div id="jargon-lbma" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">LBMA</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">London Bullion Market Association; Good Delivery accreditation signals global trust.</div>
+            </div>
+            <div id="jargon-aisc" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">AISC</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">All-in sustaining cost; core profitability metric for miners.</div>
+            </div>
+            <div id="jargon-cash-cost" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Cash Cost</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Direct operating cost per ounce before sustaining capex.</div>
+            </div>
+            <div id="jargon-porphyry" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Porphyry Copper-Gold</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Large, low-grade deposits yielding copper with gold by-product.</div>
+            </div>
+            <div id="jargon-epithermal" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Epithermal Deposits</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Gold-dominant deposits where copper is uneconomic to recover.</div>
+            </div>
+            <div id="jargon-byproduct" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">By-product Credit</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Gold revenue that offsets copper operating costs.</div>
+            </div>
+            <div id="jargon-pmr" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">PMR</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Precious Metal Refinery processing anode slime from copper production.</div>
+            </div>
+            <div id="jargon-aqua" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Aqua Regia</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Acid mixture used to dissolve gold during refining.</div>
+            </div>
+            <div id="jargon-arb" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">ARB</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Araren pit; key recovery zone for ARCI.</div>
+            </div>
+            <div id="jargon-recovery" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Recovery Rate</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Percentage of gold recovered from ore during processing.</div>
+            </div>
+            <div id="jargon-gt" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">g/t Au</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Grams of gold per ton of ore; grade metric.</div>
+            </div>
+            <div id="jargon-troy" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Troy Ounce</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Standard unit for gold pricing (31.1035 grams).</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <p style="font-size:11px;color:var(--text-dimmer);margin-top:20px;">Sources: Stockbit Snips (Oct 2025), public company disclosures. This is research, not financial advice.</p>
+    </div>
+  </main>
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = saved === 'dark' ? '☀️' : '🌙';
+    });
+  }
+})();
+
+function slugifyHeading(text) {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
+
+function initSectionNav() {
+  const navLinks = document.getElementById('section-nav-links');
+  if (!navLinks) return;
+
+  let headings = Array.from(document.querySelectorAll('.section h2'));
+  if (!headings.length) {
+    headings = Array.from(document.querySelectorAll('h2'));
+  }
+  if (!headings.length) return;
+
+  headings.forEach((heading) => {
+    if (!heading.id) {
+      heading.id = slugifyHeading(heading.textContent || '');
+    }
+  });
+
+  navLinks.innerHTML = '';
+  headings.forEach((heading) => {
+    const link = document.createElement('a');
+    link.className = 'section-link';
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent || '';
+    navLinks.appendChild(link);
+  });
+
+  const linkMap = new Map();
+  navLinks.querySelectorAll('a').forEach((link) => {
+    const targetId = link.getAttribute('href').slice(1);
+    linkMap.set(targetId, link);
+    link.addEventListener('click', () => setActive(targetId));
+  });
+
+  function setActive(id) {
+    linkMap.forEach((link) => {
+      link.classList.remove('active');
+      link.removeAttribute('aria-current');
+    });
+    const activeLink = linkMap.get(id);
+    if (activeLink) {
+      activeLink.classList.add('active');
+      activeLink.setAttribute('aria-current', 'true');
+    }
+  }
+
+  setActive(headings[0].id);
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActive(entry.target.id);
+        }
+      });
+    },
+    { rootMargin: '-20% 0px -65% 0px', threshold: [0, 0.1, 0.5] }
+  );
+
+  headings.forEach((heading) => observer.observe(heading));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initSectionNav();
+});
+</script>
+</body>
+</html>
