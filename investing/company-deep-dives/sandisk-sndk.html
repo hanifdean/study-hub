@@ -223,7 +223,7 @@
     gap: 12px;
   }
   .bar-row { display: flex; align-items: center; gap: 10px; }
-  .bar-label { width: 90px; font-size: 12px; color: var(--text-muted); }
+  .bar-label { width: 120px; font-size: 12px; color: var(--text-muted); }
   .bar-track {
     flex: 1;
     height: 28px;
@@ -240,9 +240,10 @@
     font-weight: 700;
     color: #111;
   }
-  .bar-fill.samsung { width: 34%; background: linear-gradient(90deg, #f97316, #ea580c); color: #fff3e7; }
-  .bar-fill.kioxia { width: 26%; background: linear-gradient(90deg, #60a5fa, #2563eb); color: #eaf2ff; }
-  .bar-fill.hynix { width: 20%; background: linear-gradient(90deg, #34d399, #10b981); color: #083025; }
+  .bar-fill.samsung { width: 32.3%; background: linear-gradient(90deg, #f97316, #ea580c); color: #fff3e7; }
+  .bar-fill.hynix { width: 19.3%; background: linear-gradient(90deg, #34d399, #10b981); color: #083025; }
+  .bar-fill.kioxia { width: 15.3%; background: linear-gradient(90deg, #60a5fa, #2563eb); color: #eaf2ff; }
+  .bar-fill.micron { width: 13%; background: linear-gradient(90deg, #c084fc, #a855f7); color: #f5e8ff; }
   .bar-fill.sndk { width: 12.4%; background: linear-gradient(90deg, #fbbf24, #f59e0b); }
 
   .list {
@@ -396,22 +397,22 @@
       </div>
 
       <h1>SanDisk (SNDK) — Company Deep Dive</h1>
-      <p class="subtitle">Pure-play NAND leader with Kioxia JV, massive price run, and a wait-for-better-entry setup.</p>
+      <p class="subtitle">Pure-play NAND with Kioxia JV leverage, AI storage demand shock, and a valuation stretched after a 700% rally.</p>
 
       <div class="stats-grid">
         <div class="stat-card">
           <div class="label">Price</div>
           <div class="value">~$665</div>
-          <div class="note">Post spinoff rally</div>
+          <div class="note">Feb 3, 2026</div>
         </div>
         <div class="stat-card">
           <div class="label">Market Cap</div>
           <div class="value">~$98B</div>
-          <div class="note">Pure-play NAND</div>
+          <div class="note">147.6M shares</div>
         </div>
         <div class="stat-card">
           <div class="label">Q2 FY26 Revenue</div>
-          <div class="value">$3.03B</div>
+          <div class="value">$3.025B</div>
           <div class="note">+61% YoY</div>
         </div>
         <div class="stat-card">
@@ -425,47 +426,179 @@
         <h2>🏢 Company Overview</h2>
         <div class="card">
           <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
-            SanDisk is a <strong>pure-play <a href="#jargon-nand" class="jargon">NAND</a> flash manufacturer</strong> spun out as a standalone entity. It operates a long-standing joint venture with Kioxia, extended to 2034 with a $1.165B investment, and holds roughly 12.4% share of global NAND shipments.
+            SanDisk is the only U.S.-listed <strong>pure-play <a href="#jargon-nand" class="jargon">NAND</a> flash and SSD manufacturer</strong>, spun off from Western Digital on Feb 24, 2025. HQ in Milpitas, CA with ~11,000 employees under CEO David Goeckeler. The company operates a 25+ year joint venture with Kioxia, giving it access to the Yokkaichi and Kitakami fabs in Japan and the <a href="#jargon-bics" class="jargon">BiCS FLASH</a> roadmap.
           </p>
           <div class="pill-row">
-            <span class="pill">Kioxia JV to 2034</span>
-            <span class="pill">12.4% NAND share</span>
-            <span class="pill">HBF partnership (SK Hynix)</span>
-            <span class="pill">Up ~700% since spinoff</span>
+            <span class="pill">Pure-play NAND (only US-listed)</span>
+            <span class="pill">Kioxia JV extended to 2034</span>
+            <span class="pill">BiCS8 (218-layer) shipping</span>
+            <span class="pill">BiCS10 (332-layer) in 2026</span>
           </div>
+        </div>
+        <div class="table-wrap" style="margin-top:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Segment</th>
+                <th class="num">Focus</th>
+                <th class="num">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td>Data Center / Enterprise</td>
+                <td class="num">Enterprise SSDs</td>
+                <td class="num">Fastest growth; hyperscaler demand</td>
+              </tr>
+              <tr>
+                <td>Edge Solutions</td>
+                <td class="num">PC + gaming SSDs</td>
+                <td class="num">AI at the edge + client refresh</td>
+              </tr>
+              <tr>
+                <td>Consumer</td>
+                <td class="num">SD/USB/portable SSD</td>
+                <td class="num">Legacy cash cow</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
       <section class="section" id="recent-financials">
         <h2>📊 Recent Financials</h2>
-        <div class="table-wrap">
+        <div class="table-wrap" style="margin-bottom:16px;">
           <table>
             <thead>
               <tr>
-                <th>Metric</th>
+                <th>Q2 FY2026 (Ended Jan 2, 2026)</th>
                 <th class="num">Q2 FY26</th>
                 <th class="num">YoY</th>
                 <th class="num">Notes</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr class="highlight">
                 <td>Revenue</td>
                 <td class="num">$3.025B</td>
                 <td class="num">+61%</td>
-                <td class="num">Cycle upturn</td>
+                <td class="num">Beat consensus by 13%</td>
+              </tr>
+              <tr>
+                <td>GAAP Net Income</td>
+                <td class="num">$803M</td>
+                <td class="num">—</td>
+                <td class="num">Post-spinoff recovery</td>
+              </tr>
+              <tr>
+                <td>GAAP EPS</td>
+                <td class="num">$5.15</td>
+                <td class="num">—</td>
+                <td class="num">Strong beat</td>
+              </tr>
+              <tr class="highlight">
+                <td>Non-GAAP EPS</td>
+                <td class="num">$6.20</td>
+                <td class="num">2x est ($3.10)</td>
+                <td class="num">Massive upside surprise</td>
+              </tr>
+              <tr>
+                <td>Gross Margin</td>
+                <td class="num">51.1%</td>
+                <td class="num">+2,100 bps QoQ</td>
+                <td class="num">Mix shift + pricing</td>
+              </tr>
+              <tr>
+                <td>Operating Cash Flow</td>
+                <td class="num">$1.507B</td>
+                <td class="num">—</td>
+                <td class="num">Large cycle recovery</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Q3 FY2026 Guidance</th>
+                <th class="num">Metric</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td>Revenue</td>
+                <td class="num">$4.4–$4.8B (mid $4.6B)</td>
+              </tr>
+              <tr class="highlight">
+                <td>Non-GAAP Gross Margin</td>
+                <td class="num">65–67%</td>
+              </tr>
+              <tr class="highlight">
+                <td>Non-GAAP EPS</td>
+                <td class="num">$12–$14 (157M diluted shares)</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:10px;">Midpoint implies +52% QoQ revenue growth and record margins.</p>
+        </div>
+
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>FY Consensus</th>
+                <th class="num">FY25A</th>
+                <th class="num">FY26E</th>
+                <th class="num">FY27E</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Revenue</td>
+                <td class="num">$7.36B</td>
+                <td class="num">$10.45B (+42%)</td>
+                <td class="num">$13.15B (+26%)</td>
               </tr>
               <tr>
                 <td>EPS</td>
-                <td class="num">$6.20</td>
-                <td class="num">—</td>
-                <td class="num">Beat expectations</td>
+                <td class="num">$2.99</td>
+                <td class="num">$13.46 (+350%)</td>
+                <td class="num">$25.94 (+93%)</td>
               </tr>
-              <tr class="highlight">
-                <td>Q3 Guide</td>
-                <td class="num">$4.4–4.8B</td>
-                <td class="num">—</td>
-                <td class="num">65–67% GM</td>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Balance Sheet Snapshot (Q2 FY26)</th>
+                <th class="num">Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Cash</td>
+                <td class="num">$1.54B</td>
+              </tr>
+              <tr>
+                <td>Debt</td>
+                <td class="num">$813M</td>
+              </tr>
+              <tr>
+                <td>Net Cash</td>
+                <td class="num">$726M ($4.92/share)</td>
+              </tr>
+              <tr>
+                <td>D/E</td>
+                <td class="num">0.08x</td>
+              </tr>
+              <tr>
+                <td>Current Ratio</td>
+                <td class="num">3.11x</td>
               </tr>
             </tbody>
           </table>
@@ -476,34 +609,39 @@
         <h2>🛡️ Competitive Position</h2>
         <div class="two-col">
           <div class="card">
-            <h3 style="font-size:14px;margin-bottom:10px;">NAND Market Share</h3>
+            <h3 style="font-size:14px;margin-bottom:10px;">NAND Market Share (Q3 2025 TrendForce)</h3>
             <div class="bars">
               <div class="bar-row">
                 <div class="bar-label">Samsung</div>
-                <div class="bar-track"><div class="bar-fill samsung">34%</div></div>
+                <div class="bar-track"><div class="bar-fill samsung">32.3%</div></div>
               </div>
               <div class="bar-row">
-                <div class="bar-label">Kioxia/WDC</div>
-                <div class="bar-track"><div class="bar-fill kioxia">26%</div></div>
+                <div class="bar-label">SK Hynix + Solidigm</div>
+                <div class="bar-track"><div class="bar-fill hynix">19.3%</div></div>
               </div>
               <div class="bar-row">
-                <div class="bar-label">SK Hynix</div>
-                <div class="bar-track"><div class="bar-fill hynix">20%</div></div>
+                <div class="bar-label">Kioxia</div>
+                <div class="bar-track"><div class="bar-fill kioxia">15.3%</div></div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">Micron</div>
+                <div class="bar-track"><div class="bar-fill micron">~13%</div></div>
               </div>
               <div class="bar-row">
                 <div class="bar-label">SanDisk</div>
                 <div class="bar-track"><div class="bar-fill sndk">12.4%</div></div>
               </div>
             </div>
-            <p style="font-size:12px;color:var(--text-muted);margin-top:10px;line-height:1.6;">SanDisk’s share is smaller than DRAM peers, but the Kioxia JV provides scale, advanced process access, and cost leverage.</p>
+            <p style="font-size:12px;color:var(--text-muted);margin-top:10px;line-height:1.6;">Combined Kioxia + SanDisk = 27.7% (#2 bloc). Industry is an oligopoly of five players.</p>
           </div>
           <div class="card">
             <h3 style="font-size:14px;margin-bottom:10px;">Moats</h3>
             <div class="list">
-              <div><strong>JV scale:</strong> Shared capex and tech roadmaps with Kioxia.</div>
-              <div><strong>Pure-play focus:</strong> 100% NAND exposure for cycle upside.</div>
-              <div><strong>HBF partnership:</strong> Next-gen high-bandwidth flash with SK Hynix.</div>
-              <div><strong>Supply discipline:</strong> NAND consolidation supports pricing.</div>
+              <div><strong>Kioxia JV scale:</strong> Cost-sharing on $10B+ fabs and shared roadmaps.</div>
+              <div><strong>BiCS FLASH leadership:</strong> Co-development of 3D NAND (BiCS8, BiCS10).</div>
+              <div><strong>Pure-play scarcity:</strong> Only US-listed NAND stock.</div>
+              <div><strong>Oligopoly structure:</strong> 5 players; high entry barriers.</div>
+              <div><strong>Brand equity:</strong> Consumer storage brand recognition.</div>
             </div>
           </div>
         </div>
@@ -511,12 +649,40 @@
 
       <section class="section" id="growth-drivers">
         <h2>🚀 Growth Drivers</h2>
-        <div class="card">
+        <div class="card" style="margin-bottom:14px;">
+          <h3 style="font-size:14px;margin-bottom:8px;">AI Storage Demand Shock</h3>
           <div class="list">
-            <div><strong>AI storage demand:</strong> hyperscalers need high-capacity SSDs.</div>
-            <div><strong>Pricing recovery:</strong> NAND ASPs rebounding with tight supply.</div>
-            <div><strong>HBF roadmap:</strong> higher bandwidth flash expands TAM.</div>
-            <div><strong>PC/mobile refresh:</strong> higher storage content per device.</div>
+            <div><strong>Enterprise SSD growth:</strong> +30–40% QoQ as hyperscalers scale AI clusters.</div>
+            <div><strong>Price hikes:</strong> ETNews reports 100% NAND price hikes planned in 2026.</div>
+            <div><strong>Supply tightness:</strong> IDC sees 2026 NAND supply growth ~17% (below demand).</div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3 style="font-size:14px;margin-bottom:8px;">NAND Supercycle Setup</h3>
+          <div class="list">
+            <div><strong>Underinvestment 2022–24:</strong> Capex cuts + HBM competition for fab tools.</div>
+            <div><strong>Oligopoly discipline:</strong> Consolidation supports pricing power.</div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3 style="font-size:14px;margin-bottom:8px;">HBF Partnership with SK Hynix</h3>
+          <div class="list">
+            <div><strong>High-Bandwidth Flash (HBF):</strong> ~10x HBM capacity at lower cost.</div>
+            <div><strong>Timeline:</strong> Partnership announced Aug 2025; samples in H2 2026.</div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3 style="font-size:14px;margin-bottom:8px;">Kioxia JV Extension</h3>
+          <div class="list">
+            <div><strong>Extended to 2034:</strong> $1.165B investment (Jan 29, 2026).</div>
+            <div><strong>Capacity access:</strong> Yokkaichi + Kitakami fabs remain core assets.</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="font-size:14px;margin-bottom:8px;">Mix Shift to Enterprise SSD</h3>
+          <div class="list">
+            <div><strong>Higher ASP and margins</strong> vs consumer products.</div>
+            <div><strong>AI workloads:</strong> Storage-per-rack increasing with inference growth.</div>
           </div>
         </div>
       </section>
@@ -525,44 +691,175 @@
         <h2>⚠️ Risks</h2>
         <div class="card">
           <div class="list">
-            <div><strong>Momentum risk:</strong> RSI ~88 and 700% run create downside volatility.</div>
-            <div><strong>Cycle reversal:</strong> NAND oversupply remains the core risk.</div>
-            <div><strong>JV dependency:</strong> reliance on Kioxia roadmap and capex.</div>
-            <div><strong>Valuation stretch:</strong> analysts’ avg target $515 (below spot).</div>
+            <div><strong>NAND cyclicality:</strong> FY23 revenue fell 38% in downturn. <em>Counter:</em> AI-driven demand is more structural, not PC-only.</em></div>
+            <div><strong>China NAND competition:</strong> YMTC/CXMT subsidized expansion. <em>Counter:</em> export controls limit leading-edge access.</em></div>
+            <div><strong>Samsung price aggression:</strong> Can flood supply. <em>Counter:</em> Oligopoly discipline stronger after 2022–23 bust.</em></div>
+            <div><strong>Customer concentration:</strong> Hyperscalers dominate enterprise SSD demand. <em>Counter:</em> Multi-year AI buildout contracts.</em></div>
+            <div><strong>Kioxia JV dependency:</strong> No owned fabs — earthquake/geopolitical risk. <em>Counter:</em> JV scale makes SNDK cost competitive.</em></div>
+            <div><strong>Valuation stretched:</strong> +700% rally, RSI ~88. <em>Counter:</em> Earnings inflection is real; margins expanding.</em></div>
+            <div><strong>Negative trailing GAAP:</strong> TTM NI still -$1.04B from spinoff charges. <em>Counter:</em> Rapid profit rebound in FY26.</em></div>
           </div>
         </div>
       </section>
 
       <section class="section" id="valuation">
         <h2>💰 Valuation</h2>
-        <div class="table-wrap">
+        <div class="table-wrap" style="margin-bottom:16px;">
           <table>
             <thead>
               <tr>
-                <th>Metric</th>
-                <th class="num">SNDK</th>
-                <th class="num">WDC (post-split)</th>
-                <th class="num">MU (NAND segment)</th>
+                <th>Current Multiples (Feb 2026)</th>
+                <th class="num">Value</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Price Target (avg)</td>
-                <td class="num">$515</td>
-                <td class="num">—</td>
-                <td class="num">—</td>
+                <td>Stock Price</td>
+                <td class="num">~$665</td>
               </tr>
               <tr>
                 <td>Market Cap</td>
-                <td class="num">$98B</td>
-                <td class="num">~$35B</td>
-                <td class="num">$462B</td>
+                <td class="num">~$98B</td>
               </tr>
               <tr>
-                <td>NAND Share</td>
-                <td class="num">12.4%</td>
+                <td>Forward P/E (FY26E)</td>
+                <td class="num">~49x</td>
+              </tr>
+              <tr>
+                <td>Forward P/E (FY27E)</td>
+                <td class="num">~25.6x</td>
+              </tr>
+              <tr>
+                <td>P/S (TTM)</td>
+                <td class="num">10.84x</td>
+              </tr>
+              <tr>
+                <td>Forward P/S</td>
+                <td class="num">8.01x</td>
+              </tr>
+              <tr>
+                <td>EV/EBITDA</td>
+                <td class="num">68.4x</td>
+              </tr>
+              <tr>
+                <td>P/FCF</td>
+                <td class="num">67.8x</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Peer Comparison</th>
+                <th class="num">Forward P/E</th>
+                <th class="num">P/S</th>
+                <th class="num">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td>SanDisk</td>
+                <td class="num">~49x</td>
+                <td class="num">10.8x</td>
+                <td class="num">Pure-play premium</td>
+              </tr>
+              <tr>
+                <td>Micron</td>
+                <td class="num">~15–20x</td>
+                <td class="num">~5x</td>
+                <td class="num">Diversified DRAM+NAND</td>
+              </tr>
+              <tr>
+                <td>WDC (post-split)</td>
+                <td class="num">~29x</td>
+                <td class="num">~3x</td>
+                <td class="num">HDD + NAND</td>
+              </tr>
+              <tr>
+                <td>Samsung (Memory)</td>
+                <td class="num">~12x</td>
+                <td class="num">~1.5x</td>
+                <td class="num">Conglomerate discount</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            <strong>Valuation context:</strong> At 30x forward earnings (industry avg ~29x), SNDK is fairly valued. If Q3 midpoint EPS ($13) annualizes to ~$52, the stock trades at ~12.8x run-rate — but that assumes peak margins persist.
+          </p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Analyst Targets</th>
+                <th class="num">Date</th>
+                <th class="num">Target</th>
+                <th class="num">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Consensus</td>
+                <td class="num">Feb 2026</td>
+                <td class="num">$515</td>
+                <td class="num">~22% below spot</td>
+              </tr>
+              <tr>
+                <td>Citi</td>
+                <td class="num">2026</td>
                 <td class="num">—</td>
-                <td class="num">12–14%</td>
+                <td class="num">Sees upside into 2026</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="recent-news">
+        <h2>🗓️ Recent News & Catalysts</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Event</th>
+                <th class="num">Source</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Jan 29, 2026</td>
+                <td>Q2 blowout + Kioxia JV extended to 2034 + Q3 guide $4.4–4.8B</td>
+                <td class="num">Company</td>
+              </tr>
+              <tr>
+                <td>Jan 2026</td>
+                <td>ETNews reports planned 100% NAND price hikes</td>
+                <td class="num">ETNews</td>
+              </tr>
+              <tr>
+                <td>Dec 2025</td>
+                <td>PSMC fast-track announced (capacity roadmap)</td>
+                <td class="num">Company</td>
+              </tr>
+              <tr>
+                <td>Aug 2025</td>
+                <td>HBF partnership with SK Hynix announced; samples H2 2026</td>
+                <td class="num">Company</td>
+              </tr>
+              <tr>
+                <td>Feb 24, 2025</td>
+                <td>Spinoff from Western Digital completed</td>
+                <td class="num">Company</td>
+              </tr>
+              <tr>
+                <td>2025</td>
+                <td>Top S&P 500 stock of the year (+700%)</td>
+                <td class="num">Market data</td>
               </tr>
             </tbody>
           </table>
@@ -575,17 +872,20 @@
           <div class="case-card bull">
             <h3>🐂 Bull — $780+</h3>
             <ul>
-              <li>AI-driven NAND demand sustains 60%+ margins.</li>
-              <li>HBF adoption expands high-value flash TAM.</li>
-              <li>Multiple expansion on pure-play narrative.</li>
+              <li>Cycle has legs through 2027; NAND pricing stays tight with AI demand.</li>
+              <li>Margins sustain 65%+ and EPS power exceeds $50/year.</li>
+              <li>Pure-play premium justifies 30x FY27 EPS (~$26).</li>
+              <li>HBF expands TAM beyond standard NAND.</li>
+              <li>Enterprise SSD mix shift persists.</li>
             </ul>
           </div>
           <div class="case-card bear">
             <h3>🐻 Bear — $300–400</h3>
             <ul>
-              <li>Supply returns and ASPs fall sharply.</li>
-              <li>Momentum unwind after 700% rally.</li>
-              <li>JV capex weighs on free cash flow.</li>
+              <li>Peak cycle already priced in; margins mean-revert quickly.</li>
+              <li>Samsung cuts prices aggressively; YMTC wildcard.</li>
+              <li>Supply normalizes in 2026–27; pricing power evaporates.</li>
+              <li>$98B market cap too rich for $7.4B trailing revenue.</li>
             </ul>
           </div>
         </div>
@@ -593,10 +893,46 @@
 
       <section class="section" id="verdict">
         <h2>✅ Verdict / Rating</h2>
-        <div class="card verdict">
+        <div class="card verdict" style="margin-bottom:16px;">
           <p style="font-size:13px;line-height:1.7;color:var(--text-secondary);">
-            <strong>Rating: Watch / Wait for Pullback.</strong> SanDisk is a leveraged NAND cycle play with strong JV backing and a powerful AI storage tailwind, but the stock is stretched at ~$665. Preferred entry zone: <strong>$450–500</strong>.
+            <strong>Rating: Wait for Pullback.</strong> Business quality 4/5, earnings trajectory 5/5, valuation 2/5, risk/reward 3/5. The AI NAND supercycle is real, but the stock is stretched after a 700% rally. Preferred entry zone: <strong>$450–500</strong>. If long, trim into strength.
           </p>
+          <p style="font-size:13px;line-height:1.7;color:var(--text-secondary);margin-top:10px;">
+            <strong>Next catalyst:</strong> Q3 FY26 report in April 2026.
+          </p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Rating Framework</th>
+                <th class="num">Score</th>
+                <th class="num">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Business Quality</td>
+                <td class="num">4/5</td>
+                <td class="num">JV scale + BiCS roadmap</td>
+              </tr>
+              <tr>
+                <td>Earnings Trajectory</td>
+                <td class="num">5/5</td>
+                <td class="num">Massive EPS ramp in FY26</td>
+              </tr>
+              <tr>
+                <td>Valuation</td>
+                <td class="num">2/5</td>
+                <td class="num">Rich vs peers</td>
+              </tr>
+              <tr>
+                <td>Risk/Reward</td>
+                <td class="num">3/5</td>
+                <td class="num">Cycle + momentum risk</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
@@ -631,6 +967,16 @@
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
               <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Non-volatile memory used in SSDs and mobile storage.</div>
             </div>
+            <div id="jargon-ssd" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">SSD (Solid-State Drive)</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Storage device built on NAND flash with high throughput and low latency.</div>
+            </div>
+            <div id="jargon-bics" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">BiCS FLASH</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Kioxia/SanDisk 3D NAND technology platform (BiCS8 = 218-layer, BiCS10 = 332-layer).</div>
+            </div>
             <div id="jargon-asp" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
               <strong style="color:var(--accent);">ASP</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
@@ -642,13 +988,14 @@
               <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Next-gen flash architecture targeting AI workloads with higher bandwidth.</div>
             </div>
             <div id="jargon-jv" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
-              <strong style="color:var(--accent);">JV</strong>
+              <strong style="color:var(--accent);">JV (Joint Venture)</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Joint Venture — shared manufacturing and capex partnership with Kioxia.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Shared manufacturing and capex partnership with Kioxia.</div>
             </div>
           </div>
         </div>
       </section>
+      <p style="font-size:11px;color:var(--text-dimmer);margin-top:20px;">Sources: Company filings, TrendForce, IDC, ETNews (as of Feb 3, 2026). This is research, not financial advice.</p>
     </div>
   </main>
 </div>
