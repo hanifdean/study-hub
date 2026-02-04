@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lumentum (LITE) — Company Deep Dive</title>
+<title>Lumentum (LITE) — The Optics Play in the AI Trade</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
@@ -247,6 +247,7 @@
     border: 1px solid rgba(245, 158, 11, 0.4);
   }
 
+  /* Inline jargon links */
   .jargon {
     color: var(--accent);
     text-decoration: none;
@@ -317,39 +318,35 @@
   html { scroll-behavior: smooth; }
 
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
+    from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  @media (max-width: 900px) {
+  footer {
+    margin-top: 40px;
+    font-size: 12px;
+    color: var(--text-dimmer);
+    text-align: center;
+  }
+
+  @media (max-width: 1024px) {
+    .page-layout { flex-direction: column; }
+    .section-nav { position: static; width: 100%; order: -1; display: flex; gap: 12px; align-items: center; }
+    .section-nav-title { display: none; }
+    .section-nav-links { flex-direction: row; gap: 8px; overflow-x: auto; padding-bottom: 6px; }
+    .section-nav a { white-space: nowrap; }
+  }
+
+  @media (max-width: 720px) {
+    body { padding: 28px 18px; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
     .two-col { grid-template-columns: 1fr; }
     .case-grid { grid-template-columns: 1fr; }
+    h1 { font-size: 26px; }
   }
 
-  @media (max-width: 768px) {
-    body { padding: 24px 16px; }
-    .page-layout { flex-direction: column; gap: 12px; }
-    .section-nav {
-      position: sticky;
-      top: 0;
-      width: 100%;
-      padding: 8px;
-      border-radius: 12px;
-      overflow-x: auto;
-      overflow-y: hidden;
-    }
-    .section-nav-title { display: none; }
-    .section-nav-links { flex-direction: row; gap: 8px; }
-    .section-nav a {
-      white-space: nowrap;
-      font-size: 12px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      border-color: var(--border);
-      background: var(--surface);
-    }
-    .section-nav a.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
   }
 </style>
 </head>
@@ -368,578 +365,385 @@
         </button>
       </div>
 
-      <h1>Lumentum (LITE) — Company Deep Dive</h1>
-      <p class="subtitle">EML market dominance, 1.6T transceiver ramp, and CPO/OCS optionality — priced for perfection.</p>
+      <h1>Lumentum (LITE) — The Optics Play in the AI Trade</h1>
+      <p class="subtitle">The copper wall is real. Lumentum makes the lasers that power the optical transition inside hyperscale AI clusters.</p>
 
       <div class="stats-grid">
         <div class="stat-card">
           <div class="label">Price</div>
           <div class="value">~$390</div>
-          <div class="note">Feb 3, 2026</div>
+          <div class="note">Feb 4, 2026</div>
         </div>
         <div class="stat-card">
-          <div class="label">Market Cap</div>
-          <div class="value">~$28B</div>
-          <div class="note">Pure-play AI optics</div>
+          <div class="label">EML Share</div>
+          <div class="value">50–60%</div>
+          <div class="note">Datacom lasers</div>
         </div>
         <div class="stat-card">
-          <div class="label">FY25 Revenue</div>
-          <div class="value">$1.65B</div>
-          <div class="note">+21% YoY</div>
+          <div class="label">Q2 FY26 Revenue</div>
+          <div class="value">$665.5M</div>
+          <div class="note">+65% YoY</div>
         </div>
         <div class="stat-card">
-          <div class="label">Q2 FY26 Guide</div>
-          <div class="value">$630–670M</div>
-          <div class="note">20–22% OPM</div>
+          <div class="label">Q3 FY26 Guide</div>
+          <div class="value">$805M</div>
+          <div class="note">+85% YoY</div>
         </div>
       </div>
+
+      <section class="section" id="executive-summary">
+        <h2>🧭 Executive Summary</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>Pure-play optics lever.</strong> Lumentum makes the <a class="jargon" href="#jargon-eml">EML</a> laser sources (“light engines”) that power high-speed optical <a class="jargon" href="#jargon-transceiver">transceivers</a>.</div>
+            <div><strong>Dominant share.</strong> 50–60% market share in EMLs for datacom, positioning LITE at the choke point of 800G/1.6T ramps.</div>
+            <div><strong>Structural growth.</strong> The copper wall is forcing a shift to <a class="jargon" href="#jargon-siph">silicon photonics</a> and <a class="jargon" href="#jargon-cpo">CPO</a> — a permanent AI infrastructure upgrade cycle.</div>
+            <div><strong>Financial inflection.</strong> Revenue doubling YoY with expanding margins; Q2 FY26 revenue $665.5M (+65% YoY), EPS $1.67 (20% beat), Q3 guide $805M (+85% YoY).</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="copper-wall">
+        <h2>🧱 The Copper Wall — Why Optics is Inevitable</h2>
+        <div class="two-col">
+          <div class="card">
+            <div class="list">
+              <div><strong>AI clusters now exceed 1M GPUs.</strong> Data movement, not compute, is the bottleneck.</div>
+              <div><strong>Copper fails at high speeds.</strong> At 1.6T, copper requires ~<a class="jargon" href="#jargon-pjbit">15 pJ/bit</a> and burns more power as heat than signal.</div>
+              <div><strong>Optics saves power.</strong> <a class="jargon" href="#jargon-siph">SiPh</a> + <a class="jargon" href="#jargon-cpo">CPO</a> reduce energy to 5–6 pJ/bit (~70% reduction), cutting total networking power ~50%.</div>
+              <div><strong>Nomura forecast.</strong> 1.6T optical modules ship 2.5M (2025) → 20M (2026), an 8x jump.</div>
+              <div><strong>NVIDIA proof point.</strong> Spectrum-X Ethernet Photonics cuts power per port ~5x.</div>
+              <div><strong>This is survival, not optional.</strong> AI data centers cannot scale without optics.</div>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Link Type</th>
+                  <th class="num">Energy/bit</th>
+                  <th class="num">Implication</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Copper (very high speed)</td>
+                  <td class="num">~15 pJ/bit</td>
+                  <td class="num">Heat wall, short reach</td>
+                </tr>
+                <tr class="highlight">
+                  <td>Optical (SiPh + CPO)</td>
+                  <td class="num">5–6 pJ/bit</td>
+                  <td class="num">70% energy reduction</td>
+                </tr>
+                <tr>
+                  <td>Result</td>
+                  <td class="num">~50% lower network power</td>
+                  <td class="num">Enables 1.6T scale-out</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:12px;color:var(--text-muted);margin-top:10px;line-height:1.6;">For a deeper dive, see the <a class="jargon" href="../../ai-value-chain/silicon-photonics.html">Silicon Photonics</a> overview page.</p>
+          </div>
+        </div>
+      </section>
 
       <section class="section" id="company-overview">
         <h2>🏢 Company Overview</h2>
         <div class="card">
           <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
-            Lumentum Holdings (spun out of JDSU in 2015) is a San Jose-based leader in optical and photonic components powering AI data centers. The business is split into <strong>Cloud & Networking (~88% of revenue)</strong> and <strong>Industrial Tech (~12%)</strong>. The core moat is <a href="#jargon-eml" class="jargon">EML</a> laser chips — the engine of today’s 800G and tomorrow’s <a href="#jargon-1-6t" class="jargon">1.6T</a> transceivers — where Lumentum holds an estimated <strong>50–60% market share</strong>.
+            Lumentum is headquartered in <strong>San Jose, California</strong> and was spun out of JDS Uniphase in 2015. It is the market leader in <a class="jargon" href="#jargon-eml">EML</a> lasers and a critical supplier of optical components for hyperscale AI data centers. Two operating segments drive the business: <strong>Cloud & Networking (~88% of revenue)</strong> and <strong>Industrial Tech (~12%)</strong>.
           </p>
           <div class="pill-row">
-            <span class="pill">Founded 2015 (JDSU spinoff)</span>
-            <span class="pill">HQ: San Jose, CA</span>
-            <span class="pill">Segments: Cloud & Networking + Industrial Tech</span>
-            <span class="pill">Key fab: InP in San Jose</span>
-            <span class="pill">Major acquisitions: Oclaro, NeoPhotonics, CloudLight</span>
+            <span class="pill">Founded 2015 (spin)</span>
+            <span class="pill">HQ: San Jose</span>
+            <span class="pill">Cloud & Networking: 88%</span>
+            <span class="pill">Industrial Tech: 12%</span>
           </div>
         </div>
         <div class="table-wrap" style="margin-top:16px;">
           <table>
             <thead>
               <tr>
-                <th>Segment (FY25)</th>
-                <th class="num">Revenue</th>
-                <th class="num">YoY</th>
+                <th>Segment / Asset</th>
+                <th class="num">Share</th>
                 <th class="num">Notes</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="highlight">
+              <tr>
                 <td>Cloud & Networking</td>
-                <td class="num">$1,411M</td>
-                <td class="num">+30%</td>
-                <td class="num">EMLs, NLL, transceivers, OCS</td>
+                <td class="num">~88%</td>
+                <td class="num">EMLs, <a class="jargon" href="#jargon-transceiver">transceivers</a>, <a class="jargon" href="#jargon-ocs">OCS</a></td>
               </tr>
               <tr>
                 <td>Industrial Tech</td>
-                <td class="num">$234M</td>
-                <td class="num">-14.6%</td>
-                <td class="num">VCSELs + ultrafast lasers</td>
+                <td class="num">~12%</td>
+                <td class="num"><a class="jargon" href="#jargon-vcsel">VCSEL</a> 3D sensing, ultrafast lasers</td>
+              </tr>
+              <tr>
+                <td>Oclaro (2018)</td>
+                <td class="num">Acquisition</td>
+                <td class="num">EML scale + datacom footprint</td>
+              </tr>
+              <tr>
+                <td>NeoPhotonics (2022)</td>
+                <td class="num">Acquisition</td>
+                <td class="num">Coherent & <a class="jargon" href="#jargon-dci">DCI</a> lasers</td>
+              </tr>
+              <tr>
+                <td>Cloud Light (2023)</td>
+                <td class="num">Acquisition</td>
+                <td class="num">Transceiver modules, hyperscaler access</td>
               </tr>
             </tbody>
           </table>
         </div>
       </section>
 
-      <section class="section" id="recent-financials">
-        <h2>📊 Recent Financials</h2>
+      <section class="section" id="product-portfolio">
+        <h2>🧩 Product Portfolio</h2>
         <div class="table-wrap" style="margin-bottom:16px;">
           <table>
             <thead>
               <tr>
-                <th>FY2025 (Ended Jun 28, 2025)</th>
-                <th class="num">FY2025</th>
-                <th class="num">FY2024</th>
-                <th class="num">YoY</th>
+                <th>Product</th>
+                <th class="num">What it does</th>
+                <th class="num">Why it matters</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Revenue</td>
-                <td class="num">$1,645M</td>
+                <td><a class="jargon" href="#jargon-eml">EML Lasers</a></td>
+                <td class="num">100G/200G per lane optical sources</td>
+                <td class="num">50–60% share powering 800G/1.6T <a class="jargon" href="#jargon-pluggable">pluggable optics</a></td>
+              </tr>
+              <tr>
+                <td>800G/1.6T Cloud <a class="jargon" href="#jargon-transceiver">Transceivers</a></td>
+                <td class="num">Full modules for hyperscalers</td>
+                <td class="num">Manufactured with <a class="jargon" href="#jargon-fabrinet">Fabrinet</a></td>
+              </tr>
+              <tr>
+                <td><a class="jargon" href="#jargon-ocs">OCS</a> (Optical Circuit Switches)</td>
+                <td class="num">Light-based reconfigurable switching</td>
+                <td class="num">Shipping to 3 customers; new architecture</td>
+              </tr>
+              <tr>
+                <td>Ultra-High-Power Lasers for <a class="jargon" href="#jargon-cpo">CPO</a></td>
+                <td class="num">Lasers integrated near switch ASICs</td>
+                <td class="num">Largest purchase commitment in history; H2 2026 ramp</td>
+              </tr>
+              <tr>
+                <td>Narrow-Linewidth Lasers</td>
+                <td class="num"><a class="jargon" href="#jargon-zr">ZR/ZR+</a> coherent modules</td>
+                <td class="num"><a class="jargon" href="#jargon-dci">DCI</a> links between data centers</td>
+              </tr>
+              <tr>
+                <td>Industrial (3D sensing + ultrafast)</td>
+                <td class="num"><a class="jargon" href="#jargon-vcsel">VCSEL</a> for Face ID, ultrafast lasers</td>
+                <td class="num">Apple 3D sensing declining</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            Lumentum is one of the few players that can scale <a class="jargon" href="#jargon-inp">InP</a>-based EMLs at hyperscale volumes. This gives LITE pricing power in the core “light engine” component — a critical bottleneck as data centers transition from copper to optics.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="financial-deep-dive">
+        <h2>📊 Financial Deep Dive</h2>
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Fiscal Year</th>
+                <th class="num">Revenue</th>
+                <th class="num">YoY Growth</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>FY2024</td>
                 <td class="num">$1,359M</td>
+                <td class="num">—</td>
+              </tr>
+              <tr class="highlight">
+                <td>FY2025</td>
+                <td class="num">$1,645M</td>
                 <td class="num">+21%</td>
               </tr>
-              <tr>
-                <td>Non-GAAP Gross Margin</td>
-                <td class="num">34.7%</td>
-                <td class="num">30.2%</td>
-                <td class="num">+450 bps</td>
-              </tr>
-              <tr>
-                <td>Non-GAAP Operating Income</td>
-                <td class="num">$160M</td>
-                <td class="num">-$7.6M</td>
-                <td class="num">Swing to profit</td>
-              </tr>
-              <tr>
-                <td>Non-GAAP EPS</td>
-                <td class="num">$2.06</td>
-                <td class="num">$0.44</td>
-                <td class="num">+368%</td>
-              </tr>
             </tbody>
           </table>
         </div>
-
         <div class="table-wrap" style="margin-bottom:16px;">
           <table>
             <thead>
               <tr>
-                <th>Q1 FY2026 (Ended Sep 27, 2025)</th>
-                <th class="num">Q1 FY26</th>
-                <th class="num">Q1 FY25</th>
+                <th>Quarter / Guide</th>
+                <th class="num">Revenue</th>
                 <th class="num">YoY</th>
+                <th class="num">Gross Margin</th>
+                <th class="num">EPS</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="highlight">
-                <td>Revenue</td>
-                <td class="num">$533.8M</td>
-                <td class="num">$337.0M</td>
+              <tr>
+                <td>Q1 FY26</td>
+                <td class="num">$534M</td>
                 <td class="num">+58%</td>
-              </tr>
-              <tr>
-                <td>Non-GAAP Gross Margin</td>
                 <td class="num">39.4%</td>
-                <td class="num">32.8%</td>
-                <td class="num">+660 bps</td>
-              </tr>
-              <tr>
-                <td>Non-GAAP Operating Margin</td>
-                <td class="num">18.7%</td>
-                <td class="num">3.0%</td>
-                <td class="num">+1,570 bps</td>
-              </tr>
-              <tr>
-                <td>Non-GAAP EPS</td>
                 <td class="num">$1.10</td>
-                <td class="num">$0.18</td>
-                <td class="num">+511%</td>
+              </tr>
+              <tr class="highlight">
+                <td>Q2 FY26 (reported Feb 3, 2026)</td>
+                <td class="num">$665.5M</td>
+                <td class="num">+65%</td>
+                <td class="num">40%+ trending</td>
+                <td class="num">$1.67 (20% beat)</td>
               </tr>
               <tr>
-                <td>Adj. EBITDA</td>
-                <td class="num">$127.6M</td>
-                <td class="num">$37.0M</td>
-                <td class="num">+245%</td>
-              </tr>
-              <tr>
-                <td>Components Revenue</td>
-                <td class="num">$379.2M</td>
+                <td>Q3 FY26 Guidance (midpoint)</td>
+                <td class="num">$805M</td>
+                <td class="num">+85%</td>
+                <td class="num">40%+</td>
                 <td class="num">—</td>
-                <td class="num">+63.9%</td>
-              </tr>
-              <tr>
-                <td>Systems Revenue</td>
-                <td class="num">$154.6M</td>
-                <td class="num">—</td>
-                <td class="num">+46.5%</td>
               </tr>
             </tbody>
           </table>
-          <p style="font-size:12px;color:var(--text-muted);margin-top:10px;">Revenue beat consensus by 1.43%; EPS beat by 6.8%.</p>
         </div>
-
-        <div class="table-wrap" style="margin-bottom:16px;">
-          <table>
-            <thead>
-              <tr>
-                <th>Q2 FY2026 Guidance (Feb 3, 2026)</th>
-                <th class="num">Metric</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="highlight">
-                <td>Revenue</td>
-                <td class="num">$630–$670M (mid ~$650M)</td>
-              </tr>
-              <tr class="highlight">
-                <td>Non-GAAP Operating Margin</td>
-                <td class="num">20–22%</td>
-              </tr>
-              <tr class="highlight">
-                <td>Non-GAAP EPS</td>
-                <td class="num">$1.30–$1.50</td>
-              </tr>
-            </tbody>
-          </table>
-          <p style="font-size:12px;color:var(--text-muted);margin-top:10px;">Implies ~22% QoQ growth and a ~$2.6B annualized run-rate two quarters ahead of the $600M/quarter target.</p>
+        <div class="two-col">
+          <div class="card">
+            <div class="list">
+              <div><strong>Annualized run-rate:</strong> ~$3.2B (vs FY25 $1.6B).</div>
+              <div><strong>Margin trajectory:</strong> GM trending to 40%+, OM 20%+.</div>
+              <div><strong>Balance sheet:</strong> $1.12B cash, $2.16B debt.</div>
+              <div><strong>Long-term targets:</strong> GM ≥40%, OM &gt;20%.</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="list">
+              <div><strong>Key driver:</strong> 800G/1.6T demand ramp from hyperscalers.</div>
+              <div><strong>Mix shift:</strong> EMLs and transceivers scaling faster than industrial.</div>
+              <div><strong>Operating leverage:</strong> higher utilization on laser fabs.</div>
+            </div>
+          </div>
         </div>
+      </section>
 
+      <section class="section" id="ai-stack">
+        <h2>🧱 Where LITE Sits in the AI Infrastructure Stack</h2>
+        <div class="card" style="margin-bottom:16px;">
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--text-secondary);">
+            <div style="padding:10px 12px;border-radius:10px;background:var(--surface-alt);border:1px solid var(--border);">Layer 5 — Software (getting disrupted)</div>
+            <div style="padding:10px 12px;border-radius:10px;background:var(--surface-alt);border:1px solid var(--border);">Layer 4 — Compute (NVDA, AMD)</div>
+            <div style="padding:10px 12px;border-radius:10px;background:var(--surface-alt);border:1px solid var(--border);">Layer 3 — Memory (MU, SK Hynix)</div>
+            <div style="padding:10px 12px;border-radius:10px;background:rgba(245, 158, 11, 0.12);border:1px solid rgba(245, 158, 11, 0.5);color:var(--text);font-weight:600;">Layer 2 — Networking / Optics ← LITE HERE</div>
+            <div style="padding:10px 12px;border-radius:10px;background:var(--surface-alt);border:1px solid var(--border);">Layer 1 — Power (CEG, VRT)</div>
+            <div style="padding:10px 12px;border-radius:10px;background:var(--surface-alt);border:1px solid var(--border);">Layer 0 — Commodities (copper, silver, uranium)</div>
+          </div>
+        </div>
+        <div class="card">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            Lumentum bridges the physical world (copper, power, heat) and the compute world. Without optics at Layer 2, scale-out AI clusters hit a wall. LITE is one of the few suppliers that can meet volume and performance requirements at 1.6T, making it a leverage point between commodities and GPUs.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="competitive-landscape">
+        <h2>⚔️ Competitive Landscape</h2>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Balance Sheet Snapshot (Sep 27, 2025)</th>
-                <th class="num">Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Cash & Short-term Investments</td>
-                <td class="num">$1.12B</td>
-              </tr>
-              <tr>
-                <td>Long-term Debt</td>
-                <td class="num">$2.16B</td>
-              </tr>
-              <tr>
-                <td>Net Debt</td>
-                <td class="num">~$1.04B</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="section" id="competitive-position">
-        <h2>🛡️ Competitive Position</h2>
-        <div class="two-col">
-          <div class="card">
-            <h3 style="font-size:14px;margin-bottom:10px;">EML Market Share (800G Datacom)</h3>
-            <div class="table-wrap" style="padding:12px;">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Company</th>
-                    <th class="num">Estimated Share</th>
-                    <th class="num">Notes</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="highlight">
-                    <td>Lumentum</td>
-                    <td class="num">~50–60%</td>
-                    <td class="num">Dominant <a href="#jargon-eml" class="jargon">EML</a> supplier</td>
-                  </tr>
-                  <tr>
-                    <td>Coherent (II-VI)</td>
-                    <td class="num">~20–30%</td>
-                    <td class="num">#2 scale player</td>
-                  </tr>
-                  <tr>
-                    <td>Others</td>
-                    <td class="num">~10–20%</td>
-                    <td class="num">Fragmented</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <p style="font-size:12px;color:var(--text-muted);margin-top:10px;line-height:1.6;">EMLs are extremely difficult to manufacture at high yields — a durable moat.</p>
-          </div>
-          <div class="card">
-            <h3 style="font-size:14px;margin-bottom:10px;">Moats & Strategic Advantages</h3>
-            <div class="list">
-              <div><strong>InP fabrication scale:</strong> Single <a href="#jargon-inp" class="jargon">InP</a> fab in San Jose with ~40% capacity expansion underway.</div>
-              <div><strong>Vertical integration:</strong> CloudLight acquisition brought <a href="#jargon-transceiver" class="jargon">transceiver</a> systems + hyperscaler relationships.</div>
-              <div><strong>Narrow-linewidth lasers:</strong> Demand for <a href="#jargon-zr" class="jargon">ZR/ZR+</a> coherent modules outpacing supply through FY26.</div>
-              <div><strong>First-mover in OCS:</strong> Initial <a href="#jargon-ocs" class="jargon">OCS</a> revenue achieved with multiple customers committed.</div>
-              <div><strong>Pricing power:</strong> Sold-out EML and NLL capacity gives leverage in contract negotiations.</div>
-            </div>
-          </div>
-        </div>
-        <div class="table-wrap" style="margin-top:16px;">
-          <table>
-            <thead>
-              <tr>
-                <th>Peer Comparison (FY26E)</th>
-                <th class="num">LITE</th>
-                <th class="num">COHR</th>
-                <th class="num">CIEN</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Market Cap</td>
-                <td class="num">~$28B</td>
-                <td class="num">~$30B</td>
-                <td class="num">~$12B</td>
-              </tr>
-              <tr>
-                <td>Forward P/S</td>
-                <td class="num">~11x</td>
-                <td class="num">~4.5x</td>
-                <td class="num">~2.8x</td>
-              </tr>
-              <tr>
-                <td>Forward P/E</td>
-                <td class="num">~55–65x</td>
-                <td class="num">~35–40x</td>
-                <td class="num">~25x</td>
-              </tr>
-              <tr>
-                <td>Forward EV/EBITDA</td>
-                <td class="num">~45–55x</td>
-                <td class="num">~25–30x</td>
-                <td class="num">~18x</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="card" style="margin-top:16px;">
-          <h3 style="font-size:14px;margin-bottom:10px;">Coherent vs. Lumentum — Key Takeaway</h3>
-          <div class="list">
-            <div><strong>Coherent scale:</strong> ~2x datacom revenue and a large industrial laser business at ~1/3 the P/S multiple.</div>
-            <div><strong>Lumentum growth:</strong> +58% YoY vs Coherent’s ~+17% on a smaller base; purer AI optics exposure.</div>
-            <div><strong>Investor trade-off:</strong> LITE offers higher growth but extreme multiple risk if momentum slows.</div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="growth-drivers">
-        <h2>🚀 Growth Drivers</h2>
-        <div class="card" style="margin-bottom:14px;">
-          <h3 style="font-size:14px;margin-bottom:8px;">AI Data Center Interconnects — Optical Scale-Out</h3>
-          <div class="list">
-            <div><strong>Architectural shift:</strong> Copper scale-up → optical scale-out is irreversible in AI clusters.</div>
-            <div><strong>Capex tailwind:</strong> Hyperscalers spending $50B+ annually; ~10% flows to networking/optics.</div>
-            <div><strong>Mix shift:</strong> Cloud/AI now &gt;60% of Lumentum revenue, up from ~40% two years ago.</div>
-          </div>
-        </div>
-        <div class="card" style="margin-bottom:14px;">
-          <h3 style="font-size:14px;margin-bottom:8px;">800G → 1.6T Ramp (Core Driver)</h3>
-          <div class="list">
-            <div><strong>800G volume driver:</strong> Today’s standard using 100G/lane <a href="#jargon-eml" class="jargon">EML</a> chips.</div>
-            <div><strong>1.6T forecast:</strong> ~35M units in 2026 (doubled vs early estimates).</div>
-            <div><strong>200G/lane EML:</strong> Lumentum shipping substantial orders; first fills expected.</div>
-            <div><strong>Content per module:</strong> Each speed generation raises optical content and margins.</div>
-          </div>
-        </div>
-        <div class="card" style="margin-bottom:14px;">
-          <h3 style="font-size:14px;margin-bottom:8px;">Co-Packaged Optics (CPO)</h3>
-          <div class="list">
-            <div><strong>Largest purchase commitment in company history</strong> for ultra-high-power lasers.</div>
-            <div><strong>CPO ramp:</strong> Expected in CY H2 2026 as optical engines move onto switch ASICs.</div>
-            <div><strong>Specialty lasers:</strong> Lumentum’s <a href="#jargon-cpo" class="jargon">CPO</a> requires high-power CW lasers.</div>
-          </div>
-        </div>
-        <div class="card" style="margin-bottom:14px;">
-          <h3 style="font-size:14px;margin-bottom:8px;">Optical Circuit Switches (OCS)</h3>
-          <div class="list">
-            <div><strong>First revenue:</strong> Q4 FY25; shipping to two customers, third committed for CY2026.</div>
-            <div><strong>High-ASP category:</strong> Reconfigurable optical networking inside AI clusters.</div>
-            <div><strong>Optionality:</strong> Potential $500M+ line by FY27+ if adoption accelerates.</div>
-          </div>
-        </div>
-        <div class="card" style="margin-bottom:14px;">
-          <h3 style="font-size:14px;margin-bottom:8px;">Narrow-Linewidth Lasers for DCI</h3>
-          <div class="list">
-            <div><strong>Demand outpacing supply:</strong> Six consecutive quarters of growth.</div>
-            <div><strong>DCI tailwind:</strong> <a href="#jargon-dci" class="jargon">DCI</a> builds require <a href="#jargon-zr" class="jargon">ZR/ZR+</a> coherent pluggables.</div>
-          </div>
-        </div>
-        <div class="card">
-          <h3 style="font-size:14px;margin-bottom:8px;">Capacity Expansion</h3>
-          <div class="list">
-            <div><strong>InP fab +40%:</strong> San Jose capacity expansion on schedule.</div>
-            <div><strong>Fabrinet manufacturing:</strong> Scales transceiver output in Thailand.</div>
-            <div><strong>In-house OCS production:</strong> Accelerating into 2026.</div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="risks">
-        <h2>⚠️ Risks</h2>
-        <div class="card">
-          <div class="list">
-            <div><strong>Valuation priced to perfection:</strong> +340% in 2025, +750% from lows. <em>Counter:</em> structural optical demand shift and supply constraints support premium.</div>
-            <div><strong>Hyperscaler capex cyclicality:</strong> Any pullback in cloud spend hits optics. <em>Counter:</em> AI buildout still early and multi-year committed.</div>
-            <div><strong>Customer concentration:</strong> 3 hyperscalers dominate Cloud & Networking. <em>Counter:</em> deepened attach via CloudLight transceiver platform.</div>
-            <div><strong>Single fab risk:</strong> One <a href="#jargon-inp" class="jargon">InP</a> fab in San Jose is a single point of failure. <em>Counter:</em> capacity investment underway and strong cash position.</div>
-            <div><strong>Competition:</strong> Coherent scale and Broadcom <a href="#jargon-sip" class="jargon">silicon photonics</a> threat. <em>Counter:</em> InP still superior for high-speed EMLs and long-haul performance.</div>
-            <div><strong>Growth deceleration:</strong> Sustaining &gt;50% growth from $2.5B+ base is hard. <em>Counter:</em> 1.6T + CPO + OCS could keep growth elevated through FY27.</div>
-            <div><strong>Debt load:</strong> $2.16B long-term debt. <em>Counter:</em> strong margin expansion + cash flow inflection.</div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="valuation">
-        <h2>💰 Valuation</h2>
-        <div class="table-wrap" style="margin-bottom:16px;">
-          <table>
-            <thead>
-              <tr>
-                <th>Current Multiples (early Feb 2026)</th>
-                <th class="num">Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Stock Price</td>
-                <td class="num">~$390</td>
-              </tr>
-              <tr>
-                <td>Market Cap</td>
-                <td class="num">~$28B</td>
-              </tr>
-              <tr>
-                <td>P/S (TTM)</td>
-                <td class="num">~15x</td>
-              </tr>
-              <tr>
-                <td>P/S (FY26E)</td>
-                <td class="num">~11x</td>
-              </tr>
-              <tr class="highlight">
-                <td>Forward P/E (FY26E)</td>
-                <td class="num">~55–65x</td>
-              </tr>
-              <tr>
-                <td>EV/EBITDA (Forward)</td>
-                <td class="num">~45–55x</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="table-wrap" style="margin-bottom:16px;">
-          <table>
-            <thead>
-              <tr>
-                <th>Peer Valuation</th>
-                <th class="num">Forward P/S</th>
-                <th class="num">Forward P/E</th>
+                <th>Company</th>
+                <th class="num">Positioning</th>
                 <th class="num">Notes</th>
               </tr>
             </thead>
             <tbody>
               <tr class="highlight">
-                <td>Lumentum</td>
-                <td class="num">~11x</td>
-                <td class="num">~55–65x</td>
-                <td class="num">Fastest growth, pure AI optics</td>
+                <td>LITE</td>
+                <td class="num">Laser specialist</td>
+                <td class="num">Dominant <a class="jargon" href="#jargon-eml">EML</a> supplier, optics pure-play</td>
               </tr>
               <tr>
-                <td>Coherent</td>
-                <td class="num">~4.5x</td>
-                <td class="num">~35–40x</td>
-                <td class="num">2x revenue scale</td>
+                <td>COHR (Coherent)</td>
+                <td class="num">Closest competitor</td>
+                <td class="num">More diversified, potentially better valuation</td>
               </tr>
               <tr>
-                <td>Ciena</td>
-                <td class="num">~2.8x</td>
-                <td class="num">~25x</td>
-                <td class="num">Systems-heavy</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="card" style="margin-bottom:14px;">
-          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
-            <strong>Valuation context:</strong> Lumentum trades at a significant premium to peers. The premium is only justified if the company sustains 40%+ growth into FY27 and expands operating margin toward 25%+ on richer product mix (CPO, OCS, cloud modules).
-          </p>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Analyst Targets</th>
-                <th class="num">Date</th>
-                <th class="num">Target</th>
-                <th class="num">Rating</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Morgan Stanley</td>
-                <td class="num">Feb 2026</td>
-                <td class="num">$350</td>
-                <td class="num">Overweight</td>
+                <td>AVGO</td>
+                <td class="num">Switch ASICs + <a class="jargon" href="#jargon-cpo">CPO</a></td>
+                <td class="num">Ecosystem partner; controls switching silicon</td>
               </tr>
               <tr>
-                <td>Zacks</td>
-                <td class="num">Feb 2026</td>
-                <td class="num">—</td>
-                <td class="num">#3 (Hold)</td>
+                <td>MRVL</td>
+                <td class="num">Custom silicon / <a class="jargon" href="#jargon-dsp">DSP</a></td>
+                <td class="num">Could be disrupted as CPO reduces module complexity</td>
               </tr>
               <tr>
-                <td>Consensus</td>
-                <td class="num">Feb 2026</td>
-                <td class="num">Below $390</td>
-                <td class="num">Stock above most PTs</td>
+                <td>INTC</td>
+                <td class="num">OCI chiplets</td>
+                <td class="num">Pivoting into photonics and packaging</td>
               </tr>
             </tbody>
           </table>
         </div>
       </section>
 
-      <section class="section" id="recent-news">
-        <h2>🗓️ Recent News & Catalysts</h2>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Event</th>
-                <th class="num">Source</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Feb 3, 2026</td>
-                <td>Q2 FY26 results (after close). Market focused on margin &gt;40% and Q3 guide ($700M+?)</td>
-                <td class="num">LITE IR</td>
-              </tr>
-              <tr>
-                <td>Late Jan 2026</td>
-                <td>Morgan Stanley raises PT to $350 (Overweight) ahead of earnings</td>
-                <td class="num">MS</td>
-              </tr>
-              <tr>
-                <td>FY2025</td>
-                <td>Largest purchase commitment in company history for UHP lasers (CPO)</td>
-                <td class="num">Company</td>
-              </tr>
-              <tr>
-                <td>Q4 FY25</td>
-                <td>First <a href="#jargon-ocs" class="jargon">OCS</a> revenue; two customers shipping, third committed</td>
-                <td class="num">Company</td>
-              </tr>
-              <tr>
-                <td>2025</td>
-                <td>200G/lane EML orders begin filling for 1.6T ramp</td>
-                <td class="num">Company</td>
-              </tr>
-              <tr>
-                <td>2025</td>
-                <td>InP fab expansion +40% capacity underway</td>
-                <td class="num">Company</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="section" id="bull-bear">
-        <h2>🐂 Bull vs. 🐻 Bear Case</h2>
+      <section class="section" id="investment-thesis">
+        <h2>📌 Investment Thesis — Bull & Bear</h2>
         <div class="case-grid">
           <div class="case-card bull">
-            <h3>🐂 Bull — $500+</h3>
+            <h3>🐂 Bull Case</h3>
             <ul>
-              <li>AI optical spend still in early innings; hyperscaler capex accelerates through CY2027.</li>
-              <li>1.6T ramp delivers 35M units in 2026; Lumentum’s 200G/lane EMLs are the gatekeeper.</li>
-              <li>Revenue hits $3B+ in FY27 with 25%+ OPM.</li>
-              <li>CPO and OCS each become $500M+ lines; margin mix improves.</li>
-              <li>Supply constraints sustain pricing power and multi-year contracts.</li>
-              <li>“NVIDIA of optics” narrative drives rerating.</li>
+              <li>Copper wall is real physics; optics transition is structural.</li>
+              <li>LITE dominates <a class="jargon" href="#jargon-eml">EML</a> lasers and benefits from 800G/1.6T ramps.</li>
+              <li>Multiple growth vectors: <a class="jargon" href="#jargon-ocs">OCS</a>, <a class="jargon" href="#jargon-cpo">CPO</a>, coherent ZR/ZR+.</li>
+              <li>Margins expanding as laser fabs scale and mix shifts to datacom.</li>
+              <li>Revenue doubling; annualized run-rate ~$3.2B.</li>
             </ul>
           </div>
           <div class="case-card bear">
-            <h3>🐻 Bear — $200–250</h3>
+            <h3>🐻 Bear Case</h3>
             <ul>
-              <li>Valuation compresses as growth decelerates to ~20% in FY27.</li>
-              <li>Hyperscaler capex slows or ROI concerns drive pauses.</li>
-              <li>Single InP fab disruption or yield issues constrain supply.</li>
-              <li>Broadcom silicon photonics wins at 1.6T+ and erodes InP advantage.</li>
-              <li>Coherent scale catches up; Lumentum loses share in EMLs.</li>
-              <li>Momentum unwind after 340%+ run.</li>
+              <li>Valuation is rich (~$390); better entry target $280–320.</li>
+              <li>Customer concentration risk with hyperscalers.</li>
+              <li><a class="jargon" href="#jargon-cpo">CPO</a> could commoditize transceivers.</li>
+              <li>COHR competition intensifies on pricing.</li>
+              <li>Apple 3D sensing declines in Industrial segment.</li>
             </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="catalysts-risks">
+        <h2>🚀 Growth Catalysts & Risks</h2>
+        <div class="two-col">
+          <div class="card">
+            <div class="list">
+              <div><strong>Catalyst 1:</strong> 800G/1.6T cloud <a class="jargon" href="#jargon-transceiver">transceivers</a> ramp.</div>
+              <div><strong>Catalyst 2:</strong> <a class="jargon" href="#jargon-ocs">OCS</a> adoption for reconfigurable optical fabrics.</div>
+              <div><strong>Catalyst 3:</strong> <a class="jargon" href="#jargon-cpo">CPO</a> + ultra-high-power lasers ramp in H2 2026.</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="list">
+              <div><strong>Risks:</strong> valuation compression, customer concentration, technology disruption, macro capex cycles.</div>
+              <div><strong>Watch:</strong> hyperscaler qualification cycles and <a class="jargon" href="#jargon-siph">SiPh</a> penetration rates.</div>
+            </div>
           </div>
         </div>
       </section>
 
       <section class="section" id="verdict">
-        <h2>✅ Verdict / Rating</h2>
+        <h2>✅ Verdict</h2>
         <div class="card verdict" style="margin-bottom:16px;">
           <p style="font-size:13px;line-height:1.7;color:var(--text-secondary);">
-            <strong>Rating: WAIT / HOLD for existing holders.</strong> Lumentum is one of the best positioned AI optics suppliers with EML dominance and real optionality in <a href="#jargon-cpo" class="jargon">CPO</a> and <a href="#jargon-ocs" class="jargon">OCS</a>. Financial momentum is strong (39% gross margin already), but the stock is priced for flawless execution at 15x sales and ~60x forward earnings. Risk/reward improves on a 25–30% pullback.
-          </p>
-          <p style="font-size:13px;line-height:1.7;color:var(--text-secondary);margin-top:10px;">
-            <strong>Key catalyst:</strong> Feb 3, 2026 Q2 FY26 earnings — watch for Q3 guidance above $700M, gross margin crossing 40%, and updates on 1.6T + CPO timelines.
+            <strong>Great business, wait for the pullback.</strong> Lumentum is the cleanest optics play in the AI trade, with dominant <a class="jargon" href="#jargon-eml">EML</a> share and a structural tailwind from copper-to-optics conversion. At current valuation, the risk/reward is less attractive — but LITE is a core candidate for any AI infrastructure portfolio at the right price.
           </p>
         </div>
         <div class="table-wrap">
@@ -954,28 +758,28 @@
             <tbody>
               <tr>
                 <td>Structural Demand</td>
-                <td class="num">9/10</td>
-                <td class="num">AI optical buildout accelerating</td>
+                <td class="num">9.5/10</td>
+                <td class="num">Copper wall + 1.6T ramps</td>
               </tr>
               <tr>
                 <td>Competitive Position</td>
-                <td class="num">8.5/10</td>
-                <td class="num">EML share leader</td>
+                <td class="num">9/10</td>
+                <td class="num">EML dominance</td>
               </tr>
               <tr>
                 <td>Financial Momentum</td>
                 <td class="num">9/10</td>
-                <td class="num">Margin expansion underway</td>
+                <td class="num">Revenue doubling, GM 40%+</td>
               </tr>
               <tr>
                 <td>Valuation</td>
-                <td class="num">3/10</td>
-                <td class="num">Expensive vs peers</td>
+                <td class="num">6/10</td>
+                <td class="num">Premium price</td>
               </tr>
               <tr>
                 <td>Risk Profile</td>
-                <td class="num">5/10</td>
-                <td class="num">High concentration + single fab</td>
+                <td class="num">6.5/10</td>
+                <td class="num">Concentration + tech shifts</td>
               </tr>
             </tbody>
           </table>
@@ -985,27 +789,27 @@
       <section class="section" id="related-context">
         <h2>🔗 Related Context</h2>
         <div class="card" style="display:flex;flex-direction:column;gap:14px;">
+          <a href="../uranium-nuclear-energy.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">☢️</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Uranium & Nuclear Energy</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Layer 1 power thesis for AI data centers.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
           <a href="../../ai-value-chain/silicon-photonics.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
-            <span style="font-size:24px;">🌈</span>
+            <span style="font-size:24px;">🔆</span>
             <div>
               <div style="font-size:14px;font-weight:600;color:var(--text);">Silicon Photonics</div>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">The optical interconnect revolution powering Lumentum's growth.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Optics transition drivers and CPO roadmap.</div>
             </div>
             <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
           </a>
-          <a href="../../ai-value-chain/silicon-photonics-2.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
-            <span style="font-size:24px;">🧬</span>
+          <a href="./micron-mu.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">💾</span>
             <div>
-              <div style="font-size:14px;font-weight:600;color:var(--text);">Silicon Photonics II</div>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">CMOS leverage and fab economics behind optical components.</div>
-            </div>
-            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
-          </a>
-          <a href="../../ai-value-chain/layer5-systems-networking.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
-            <span style="font-size:24px;">🛰️</span>
-            <div>
-              <div style="font-size:14px;font-weight:600;color:var(--text);">Layer 5 — Systems & Networking</div>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Networking infrastructure where optical transceivers are deployed.</div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Micron (MU) — Deep Dive</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Memory layer demand shock.</div>
             </div>
             <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
           </a>
@@ -1017,64 +821,106 @@
         <div class="card">
           <div style="display:flex;flex-direction:column;gap:10px;">
             <div id="jargon-eml" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
-              <strong style="color:var(--accent);">EML (Electro-Absorption Modulated Laser)</strong>
+              <strong style="color:var(--accent);">EML (Electro-absorption Modulated Laser)</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Laser + modulator on one chip; the gold standard for 100G/200G-per-lane datacom.</div>
-            </div>
-            <div id="jargon-inp" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
-              <strong style="color:var(--accent);">InP (Indium Phosphide)</strong>
-              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Semiconductor substrate used for high-speed lasers with superior optical performance.</div>
-            </div>
-            <div id="jargon-cpo" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
-              <strong style="color:var(--accent);">CPO (Co-Packaged Optics)</strong>
-              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Integrates optical engines with switch ASICs to reduce power and latency.</div>
-            </div>
-            <div id="jargon-ocs" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
-              <strong style="color:var(--accent);">OCS (Optical Circuit Switch)</strong>
-              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Reconfigurable optical switching fabric inside AI clusters.</div>
-            </div>
-            <div id="jargon-dci" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
-              <strong style="color:var(--accent);">DCI (Data Center Interconnect)</strong>
-              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">High-capacity links connecting data centers across metro/long-haul distances.</div>
-            </div>
-            <div id="jargon-transceiver" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
-              <strong style="color:var(--accent);">Transceiver</strong>
-              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Module that converts electrical signals to optical and back; the core of networking links.</div>
-            </div>
-            <div id="jargon-zr" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
-              <strong style="color:var(--accent);">ZR / ZR+</strong>
-              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Coherent pluggable optics standards for 400G/800G long-haul DCI.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">High-performance laser source used in datacom transceivers.</div>
             </div>
             <div id="jargon-vcsel" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
               <strong style="color:var(--accent);">VCSEL</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Vertical-cavity surface-emitting laser used in 3D sensing (e.g., Face ID).</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Vertical-cavity surface-emitting laser used in 3D sensing.</div>
+            </div>
+            <div id="jargon-siph" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Silicon Photonics (SiPh)</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Optical components built on silicon to integrate photonics with electronics.</div>
+            </div>
+            <div id="jargon-cpo" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">CPO (Co-packaged Optics)</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Optical engines integrated next to switch ASICs to reduce power/latency.</div>
+            </div>
+            <div id="jargon-ocs" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">OCS (Optical Circuit Switch)</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Reconfigurable optical switching fabric for large AI clusters.</div>
+            </div>
+            <div id="jargon-transceiver" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Transceiver</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Module converting electrical signals into optical signals and back.</div>
+            </div>
+            <div id="jargon-dci" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">DCI (Data Center Interconnect)</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">High-speed links between separate data centers.</div>
+            </div>
+            <div id="jargon-serdes" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">SerDes</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Serializer/Deserializer circuitry for high-speed data transfer.</div>
+            </div>
+            <div id="jargon-pjbit" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">pJ/bit</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Picojoules per bit — energy used to move one bit of data.</div>
+            </div>
+            <div id="jargon-coherent" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Coherent Optics</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Optical transmission using phase modulation to increase reach and bandwidth.</div>
+            </div>
+            <div id="jargon-zr" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">ZR / ZR+</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Coherent pluggable standards for 400G/800G DCI links.</div>
+            </div>
+            <div id="jargon-dsp" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">DSP</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Digital signal processor used in coherent optics.</div>
+            </div>
+            <div id="jargon-asic" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">ASIC</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Application-specific integrated circuit, e.g., switch silicon.</div>
+            </div>
+            <div id="jargon-tam" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">TAM</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Total Addressable Market.</div>
+            </div>
+            <div id="jargon-inp" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">InP (Indium Phosphide)</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">III-V material used for high-speed lasers and photonics.</div>
+            </div>
+            <div id="jargon-pluggable" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Pluggable Optics</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Removable optical modules (e.g., 800G/1.6T).</div>
             </div>
             <div id="jargon-800g" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
-              <strong style="color:var(--accent);">800G</strong>
+              <strong style="color:var(--accent);">800G / 1.6T</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">800 gigabit-per-second optical module standard; current volume node.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Optical module speeds for next-gen AI data centers.</div>
             </div>
-            <div id="jargon-1-6t" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
-              <strong style="color:var(--accent);">1.6T</strong>
+            <div id="jargon-hyperscaler" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Hyperscaler</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">1.6 terabit-per-second transceiver generation; next major upgrade wave.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Large cloud providers (AWS, Google, Microsoft, etc.).</div>
             </div>
-            <div id="jargon-sip" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
-              <strong style="color:var(--accent);">Silicon Photonics</strong>
+            <div id="jargon-fabrinet" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Fabrinet</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Optical components built on silicon wafers; lower cost but debated at 1.6T+.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Manufacturing partner for optical transceiver modules.</div>
             </div>
           </div>
         </div>
       </section>
-      <p style="font-size:11px;color:var(--text-dimmer);margin-top:20px;">Sources: Lumentum IR, Zacks, company presentations, industry reports (as of Feb 3, 2026). This is research, not financial advice.</p>
+      <p style="font-size:11px;color:var(--text-dimmer);margin-top:20px;">Sources: Lumentum IR, Nomura, NVIDIA, company filings (as of Feb 4, 2026). This is research, not financial advice.</p>
+
+      <footer>Built by Robin 🐱 — Last updated Feb 4, 2026</footer>
     </div>
   </main>
 </div>
