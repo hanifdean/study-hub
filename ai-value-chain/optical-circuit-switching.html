@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Optical Circuit Switching (OCS) - Learning Hub</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-2: #141421;
+    --border: #1e1e2e;
+    --text: #e8e8ed;
+    --muted: #9ca3af;
+    --accent: #5ec4b6;
+    --blue: #60a5fa;
+    --green: #22c55e;
+    --purple: #a78bfa;
+    --teal: #2dd4bf;
+    --pink: #f472b6;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-2: #f5f3ef;
+    --border: #e5e0d8;
+    --text: #2c2a26;
+    --muted: #6b6560;
+    --accent: #1a8a7d;
+    --blue: #2563eb;
+    --green: #059669;
+    --purple: #7c3aed;
+    --teal: #0d9488;
+    --pink: #db2777;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 32px 20px 80px;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--surface-2); color: var(--accent); border: 1px solid var(--border);
+    padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 600;
+  }
+  .hero {
+    background: radial-gradient(circle at top left, rgba(6,182,212,0.18), transparent 55%),
+                radial-gradient(circle at top right, rgba(96,165,250,0.15), transparent 45%),
+                var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px;
+    margin-bottom: 28px;
+  }
+  h1 {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800;
+    margin: 12px 0 10px;
+  }
+  .hero p { color: var(--muted); max-width: 820px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+  }
+  .card h3 { font-size: 16px; margin-bottom: 6px; }
+  .card p { color: var(--muted); font-size: 13px; }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 24px 0 12px;
+  }
+  .why-now {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    display: grid;
+    gap: 16px;
+  }
+  .transition {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 12px;
+    align-items: center;
+  }
+  .node {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    text-align: center;
+  }
+  .node .label { font-size: 12px; color: var(--muted); }
+  .node .value { font-weight: 700; margin-top: 6px; }
+  .arrow {
+    font-size: 26px; color: var(--accent); font-weight: 800;
+  }
+  .wave {
+    height: 6px; border-radius: 999px; background: linear-gradient(90deg, #60a5fa, #06b6d4, #a78bfa);
+    margin-top: 10px;
+  }
+  .badge {
+    display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px;
+    background: var(--surface-2); color: var(--accent); border: 1px solid var(--border);
+  }
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;
+  }
+  .stat {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px;
+  }
+  .stat .num { font-size: 20px; font-weight: 800; color: var(--accent); }
+  .stat .label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  details {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 16px;
+  }
+  details + details { margin-top: 12px; }
+  summary {
+    list-style: none;
+    cursor: pointer;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  summary::after {
+    content: "▾";
+    color: var(--muted);
+    transition: transform 0.2s ease;
+  }
+  details[open] summary::after { transform: rotate(180deg); }
+  details p { color: var(--muted); font-size: 13px; margin-top: 10px; }
+
+  .value-chain {
+    display: grid; gap: 16px;
+  }
+  .layer {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+  }
+  .layer h4 { font-size: 15px; margin-bottom: 10px; }
+  .companies { display: flex; flex-wrap: wrap; gap: 10px; }
+  .company {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 8px 10px;
+    font-size: 12px; font-weight: 600;
+  }
+  .logo {
+    width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; font-size: 11px; font-weight: 800;
+  }
+  .design { color: var(--blue); }
+  .design .logo { background: rgba(96,165,250,0.15); color: var(--blue); border: 1px solid rgba(96,165,250,0.4); }
+  .foundry { color: var(--green); }
+  .foundry .logo { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.4); }
+  .light { color: var(--purple); }
+  .light .logo { background: rgba(167,139,250,0.15); color: var(--purple); border: 1px solid rgba(167,139,250,0.4); }
+  .test { color: var(--teal); }
+  .test .logo { background: rgba(45,212,191,0.15); color: var(--teal); border: 1px solid rgba(45,212,191,0.4); }
+  .layer-label {
+    font-size: 12px; font-weight: 700; margin-bottom: 8px;
+    display: inline-flex; align-items: center; gap: 8px; padding: 4px 8px; border-radius: 999px;
+  }
+  .layer-label.design { background: rgba(96,165,250,0.12); border: 1px solid rgba(96,165,250,0.4); }
+  .layer-label.foundry { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.4); }
+  .layer-label.light { background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.4); }
+  .layer-label.test { background: rgba(45,212,191,0.12); border: 1px solid rgba(45,212,191,0.4); }
+
+  .insights {
+    display: grid; gap: 12px;
+  }
+  .insight {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 16px;
+  }
+  .insight h4 { font-size: 14px; margin-bottom: 6px; }
+  .insight p { font-size: 13px; color: var(--muted); }
+
+  .source {
+    margin-top: 26px; font-size: 12px; color: var(--muted);
+  }
+
+  /* Inline jargon links */
+  .jargon {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1.5px dotted var(--accent);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .jargon:hover {
+    color: var(--teal);
+    border-color: var(--teal);
+  }
+  .jargon-def {
+    scroll-margin-top: 24px;
+  }
+  .jargon-def:target {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 10px;
+    animation: jargon-flash 1.2s ease;
+  }
+  @keyframes jargon-flash {
+    0%, 100% { outline-color: transparent; }
+    20%, 80% { outline-color: var(--accent); }
+  }
+  .jargon-back {
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    margin-left: 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .jargon-back:hover { opacity: 1; color: var(--accent); }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto 0;
+    padding: 0 0 16px 0;
+  }
+  .back-link {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  @media (max-width: 720px) {
+    body { padding: 20px 14px 60px; }
+    .hero { padding: 20px; }
+    .transition { grid-template-columns: 1fr; text-align: center; }
+    .arrow { transform: rotate(90deg); }
+  }
+
+  html { scroll-behavior: smooth; }
+
+  .page-layout {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+  }
+  .content { flex: 1; min-width: 0; }
+  .section-nav {
+    position: sticky;
+    top: 96px;
+    width: 220px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    height: fit-content;
+    max-height: calc(100vh - 140px);
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .section-nav-title {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .section-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .section-nav a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+  }
+  .section-nav a:hover {
+    color: var(--accent);
+    border-color: var(--border);
+    background: var(--surface-hover);
+  }
+  .section-nav a.active {
+    color: var(--accent);
+    background: var(--accent-glow);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent-glow) inset;
+  }
+  .section-nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  @media (max-width: 768px) {
+    body { padding: 24px 16px; }
+    .top-bar { max-width: 100%; padding-bottom: 12px; }
+    .page-layout { flex-direction: column; gap: 12px; }
+    .section-nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      padding: 8px;
+      border-radius: 12px;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+    .section-nav-title { display: none; }
+    .section-nav-links {
+      flex-direction: row;
+      gap: 8px;
+    }
+    .section-nav a {
+      white-space: nowrap;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border-color: var(--border);
+      background: var(--surface);
+    }
+    .section-nav a.active {
+      border-color: var(--accent);
+      background: var(--accent-glow);
+      color: var(--accent);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .section { animation: none; }
+  }
+
+</style>
+</head>
+<body>
+  <div class="page-layout">
+  <nav class="section-nav" aria-label="Section navigation">
+    <div class="section-nav-title">On this page</div>
+    <div class="section-nav-links" id="section-nav-links"></div>
+  </nav>
+  <main class="content">
+<div class="container">
+<div class="top-bar">
+  <a href="../" class="back-link">← Back to Study Hub</a>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+    <span id="theme-icon">☀️</span>
+  </button>
+</div>
+    <div class="hero">
+      <span class="pill">L5.5 • Photonics Bridge</span>
+      <h1>Optical Circuit Switching (OCS): Data Center Networks with Light</h1>
+      <p>
+        OCS reroutes traffic using pure light paths, eliminating costly optical-to-electrical conversions. It is the
+        switching layer that makes massive GPU clusters and photonic interconnects scale.
+      </p>
+      <div class="wave"></div>
+    </div>
+
+    <!-- ROBIN'S TLDR -->
+    <div class="card" style="border-color:var(--accent);background:linear-gradient(135deg,rgba(6,182,212,0.08),transparent 60%),var(--surface);margin-bottom:24px;">
+      <h3 style="color:var(--accent);font-size:14px;margin-bottom:8px;">🐱 Robin's TLDR — What is this really about?</h3>
+      <p style="font-size:14px;color:var(--text);line-height:1.7;">
+        <strong>The one-liner:</strong> OCS switches network traffic using actual light beams instead of converting
+        light → electricity → light (<a href="#jargon-oeo" class="jargon">O-E-O</a>) at every hop.
+      </p>
+      <p style="font-size:14px;color:var(--text);line-height:1.7;margin-top:10px;">
+        <strong>Think of it like this:</strong> Traditional network switches are toll booths where every car must stop,
+        show ID, and restart. OCS is like a highway interchange where roads physically move to redirect traffic — no
+        stopping needed.
+      </p>
+      <p style="font-size:14px;color:var(--text);line-height:1.7;margin-top:10px;">
+        <strong>Why it matters:</strong> Google already uses this (Project Apollo) and gets ~40% less power + 30% more
+        throughput. This is the infrastructure layer that makes massive GPU clusters actually work.
+      </p>
+    </div>
+
+    <div class="section-title">Why Now?</div>
+    <div class="why-now">
+      <div class="transition">
+        <div class="node">
+          <div class="label">Electronic Switching</div>
+          <div class="value">O-E-O conversion → heat + bottlenecks</div>
+          <div class="badge">Scaling wall</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="node">
+          <div class="label">Optical Switching</div>
+          <div class="value">Pure light paths → low loss + long reach</div>
+          <div class="badge">Future-proof</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Power / Thermal Wall</h3>
+        <p>AI scaling pushes electronic switches to their heat limits. OCS removes the hot O-E-O conversion step.</p>
+      </div>
+      <div class="card">
+        <h3>Network Scalability</h3>
+        <p>Optical signals maintain integrity over longer distances, ideal for massive GPU clusters.</p>
+      </div>
+      <div class="card">
+        <h3>Dynamic Reconfigurability</h3>
+        <p>Software-defined control lets operators rewire physical topology without manual recabling.</p>
+      </div>
+    </div>
+
+    <div class="section-title">Key Concepts (Tap to Expand)</div>
+    <details open>
+      <summary>OCS Definition & How It Works</summary>
+      <p>
+        OCS is Layer 1 switching that reroutes optical paths without <a href="#jargon-oeo" class="jargon">O-E-O</a>
+        conversion. It is bandwidth-transparent (independent of baud rates), future-proof for 1.6T+ links, and measured
+        by insertion loss (1.0–2.0 dB) plus switching speed.
+      </p>
+      <p>
+        Two dominant implementations: <strong><a href="#jargon-mems" class="jargon">MEMS</a></strong> mirrors physically
+        redirect light beams (Google Apollo, Lumentum) with millisecond switching; <strong><a href="#jargon-siph" class="jargon">SiPh</a> +
+        <a href="#jargon-soa" class="jargon">SOA</a></strong> uses on-chip waveguides and SOA gain for nanosecond to
+        microsecond switching (Salience Labs, iPronics).
+      </p>
+      <div style="margin-top:12px;padding:12px;background:var(--surface-2);border-radius:10px;border-left:3px solid var(--accent);">
+        <p style="font-size:13px;color:var(--accent);font-weight:600;margin-bottom:4px;">🐱 Simply put</p>
+        <p style="font-size:13px;color:var(--muted);">
+          Traditional switches are like post offices — every package gets opened, read, re-packed, and forwarded. OCS is
+          like a train track switch — you physically redirect the whole track, and trains (data) flow through without
+          stopping. Way less energy, way less delay.
+        </p>
+      </div>
+      <div style="margin-top:12px;padding:12px;background:var(--surface-2);border-radius:10px;border-left:3px solid var(--accent);">
+        <p style="font-size:13px;color:var(--accent);font-weight:600;margin-bottom:4px;">🐱 Simply put</p>
+        <p style="font-size:13px;color:var(--muted);">
+          Tiny mirrors on a chip that physically tilt to redirect light beams. Imagine a room full of tiny disco balls
+          that you can precisely angle to bounce a laser beam to any destination.
+        </p>
+      </div>
+    </details>
+    <details>
+      <summary>Strategic Deployment Areas</summary>
+      <p>
+        OCS is most powerful in the spine layer (backbone interconnecting switches), cutting power/cost by &gt;40%.
+        It enables 3D torus topologies and real-time fault recovery inside TPU/GPU clusters. It also powers
+        compute-to-memory fabrics (remote DRAM / <a href="#jargon-cxl" class="jargon">CXL</a>),
+        <a href="#jargon-ici" class="jargon">ICI</a> inside GPU trays, and
+        <a href="#jargon-dci" class="jargon">DCI</a> between data center buildings.
+      </p>
+    </details>
+    <details>
+      <summary>Memory Tiering & Resource Allocation</summary>
+      <p>
+        OCS enables DRAM pooling to optimize expensive HBM ratios via low-latency optical paths. With
+        <a href="#jargon-sdn" class="jargon">SDN</a> control, physical topologies can be reconfigured in real-time per
+        workload, making it a key component of Google’s next-gen architecture.
+      </p>
+      <div style="margin-top:12px;padding:12px;background:var(--surface-2);border-radius:10px;border-left:3px solid var(--accent);">
+        <p style="font-size:13px;color:var(--accent);font-weight:600;margin-bottom:4px;">🐱 Simply put</p>
+        <p style="font-size:13px;color:var(--muted);">
+          GPUs need lots of expensive HBM memory, but not all data needs to be in the fast lane. OCS lets you create a
+          “memory highway” where servers can reach remote memory pools almost as fast as local memory. It’s like having
+          a warehouse across town that feels as close as your garage because the road is a dedicated expressway.
+        </p>
+      </div>
+    </details>
+
+    <div class="section-title">Google Apollo Stats</div>
+    <div class="stats">
+      <div class="stat">
+        <div class="num">+30% throughput</div>
+        <div class="label">Higher effective bandwidth</div>
+      </div>
+      <div class="stat">
+        <div class="num">-40% power</div>
+        <div class="label">Lower switching energy</div>
+      </div>
+      <div class="stat">
+        <div class="num">-30% CapEx</div>
+        <div class="label">Less hardware + cabling</div>
+      </div>
+      <div class="stat">
+        <div class="num">50x less downtime</div>
+        <div class="label">Faster fault recovery</div>
+      </div>
+    </div>
+
+    <div class="section-title">Value Chain / Key Players</div>
+    <div class="card" style="padding:0;overflow:hidden;">
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        <thead style="background:var(--surface-2);">
+          <tr>
+            <th style="text-align:left;padding:12px;border-bottom:1px solid var(--border);">Company</th>
+            <th style="text-align:left;padding:12px;border-bottom:1px solid var(--border);">Role</th>
+            <th style="text-align:left;padding:12px;border-bottom:1px solid var(--border);">Key Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:12px;border-bottom:1px solid var(--border);">Google</td>
+            <td style="padding:12px;border-bottom:1px solid var(--border);">Vertically integrated OCS</td>
+            <td style="padding:12px;border-bottom:1px solid var(--border);">Project Apollo: +30% throughput, -40% power, -30% capex, 50x less downtime</td>
+          </tr>
+          <tr>
+            <td style="padding:12px;border-bottom:1px solid var(--border);">Lumentum (LITE)</td>
+            <td style="padding:12px;border-bottom:1px solid var(--border);">Google's primary OCS hardware partner</td>
+            <td style="padding:12px;border-bottom:1px solid var(--border);">Co-leads OCP OCS standardization, 300x300 switch</td>
+          </tr>
+          <tr>
+            <td style="padding:12px;border-bottom:1px solid var(--border);">Coherent (COHR)</td>
+            <td style="padding:12px;border-bottom:1px solid var(--border);">Liquid Crystal (LCOS) OCS</td>
+            <td style="padding:12px;border-bottom:1px solid var(--border);">Won ECOC 2024 Innovation Award, 64x64 to 320x320 matrices</td>
+          </tr>
+          <tr>
+            <td style="padding:12px;border-bottom:1px solid var(--border);">DiCon Fiberoptics</td>
+            <td style="padding:12px;border-bottom:1px solid var(--border);">3D <a href="#jargon-mems" class="jargon">MEMS</a> specialist</td>
+            <td style="padding:12px;border-bottom:1px solid var(--border);">Up to 600x600 ports, ultra-low loss, quantum computing &amp; defense</td>
+          </tr>
+          <tr>
+            <td style="padding:12px;border-bottom:1px solid var(--border);">iPronics</td>
+            <td style="padding:12px;border-bottom:1px solid var(--border);"><a href="#jargon-fppga" class="jargon">FPPGA</a> pioneer</td>
+            <td style="padding:12px;border-bottom:1px solid var(--border);">Field Programmable Photonic Gate Array — software-defined reconfigurable optical paths</td>
+          </tr>
+          <tr>
+            <td style="padding:12px;border-bottom:1px solid var(--border);">nEye.ai</td>
+            <td style="padding:12px;border-bottom:1px solid var(--border);">Silicon Photonics <a href="#jargon-mems" class="jargon">MEMS</a></td>
+            <td style="padding:12px;border-bottom:1px solid var(--border);">Backed by NVIDIA, Microsoft (M12), Micron. Joined OCP OCS project</td>
+          </tr>
+          <tr>
+            <td style="padding:12px;">Salience Labs</td>
+            <td style="padding:12px;">SOA-based switching</td>
+            <td style="padding:12px;">Backed by Applied Ventures, energy-efficient AI data centers</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-title">Investment Insights</div>
+    <div class="insights">
+      <div class="insight">
+        <h4>OCS is the switching layer for photonics</h4>
+        <p>It is where silicon photonics meets the network — the enabling bridge for scale.</p>
+      </div>
+      <div class="insight">
+        <h4>Economics proven at hyperscaler scale</h4>
+        <p>Google’s 40% power reduction is decisive in AI data center economics.</p>
+      </div>
+      <div class="insight">
+        <h4>Lumentum is the bottleneck supplier</h4>
+        <p>They supply both laser sources and OCS hardware, emerging as the key choke point.</p>
+      </div>
+      <div class="insight">
+        <h4>L5.5 infrastructure = picks and shovels</h4>
+        <p>This is the plumbing that connects GPU clusters — a durable infrastructure thesis.</p>
+      </div>
+      <div class="insight">
+        <h4>OCP standards accelerate adoption</h4>
+        <p>As OCS becomes standardized, hyperscaler rollout speeds up dramatically.</p>
+      </div>
+    </div>
+
+    <details>
+      <summary>Key Jargon Decoded</summary>
+      <div style="margin-top:10px;display:grid;gap:10px;">
+        <div id="jargon-ocs" class="jargon-def" style="padding:10px;background:var(--surface-2);border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">OCS (Optical Circuit Switching)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--muted);">Switching network traffic by reconfiguring light paths directly, without converting to electronics at every hop.</p>
+        </div>
+        <div id="jargon-oeo" class="jargon-def" style="padding:10px;background:var(--surface-2);border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">O-E-O (Optical-Electrical-Optical conversion)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--muted);">The traditional step where light is converted to electricity for switching, then back to light — a major power and latency hit.</p>
+        </div>
+        <div id="jargon-mems" class="jargon-def" style="padding:10px;background:var(--surface-2);border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">MEMS (Micro-Electro-Mechanical Systems)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--muted);">Tiny mechanical mirrors that physically steer light beams to new paths.</p>
+        </div>
+        <div id="jargon-soa" class="jargon-def" style="padding:10px;background:var(--surface-2);border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">SOA (Semiconductor Optical Amplifier)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--muted);">An on-chip amplifier that boosts optical signals and enables faster switching in photonic circuits.</p>
+        </div>
+        <div id="jargon-siph" class="jargon-def" style="padding:10px;background:var(--surface-2);border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">SiPh (Silicon Photonics)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--muted);">Using silicon to guide and process light for high-bandwidth optical interconnects.</p>
+        </div>
+        <div id="jargon-sdn" class="jargon-def" style="padding:10px;background:var(--surface-2);border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">SDN (Software-Defined Networking)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--muted);">Centralized software control over network paths and topology.</p>
+        </div>
+        <div id="jargon-fppga" class="jargon-def" style="padding:10px;background:var(--surface-2);border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">FPPGA (Field Programmable Photonic Gate Array)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--muted);">A reconfigurable photonic circuit, like an FPGA but for light paths.</p>
+        </div>
+        <div id="jargon-cxl" class="jargon-def" style="padding:10px;background:var(--surface-2);border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">CXL (Compute Express Link)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--muted);">A protocol for shared memory and cache coherence across CPUs, GPUs, and accelerators.</p>
+        </div>
+        <div id="jargon-dci" class="jargon-def" style="padding:10px;background:var(--surface-2);border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">DCI (Data Center Interconnect)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--muted);">Long-haul connections between data center buildings or campuses.</p>
+        </div>
+        <div id="jargon-ici" class="jargon-def" style="padding:10px;background:var(--surface-2);border-radius:10px;">
+          <p style="font-size:13px;"><strong style="color:var(--accent);">ICI (Inter-Chip Interconnect)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+          <p style="font-size:12px;color:var(--muted);">The physical links that connect chips or chiplets inside a system.</p>
+        </div>
+      </div>
+    </details>
+
+    <p class="source">Source: <a href="https://x.com/PhotonCap/status/2018818451989836172" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline;">@PhotonCap on X</a> — Optical Circuit Switching (OCS) thread</p>
+  </div>
+</main>
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = saved === 'dark' ? '☀️' : '🌙';
+    });
+  }
+})();
+
+function slugifyHeading(text) {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
+
+function initSectionNav() {
+  const navLinks = document.getElementById('section-nav-links');
+  if (!navLinks) return;
+
+  let headings = Array.from(document.querySelectorAll('.section h2'));
+  if (!headings.length) {
+    headings = Array.from(document.querySelectorAll('.section-title, h2'));
+  }
+  if (!headings.length) return;
+
+  headings.forEach((heading) => {
+    if (!heading.id) {
+      heading.id = slugifyHeading(heading.textContent || '');
+    }
+  });
+
+  navLinks.innerHTML = '';
+  headings.forEach((heading) => {
+    const link = document.createElement('a');
+    link.className = 'section-link';
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent || '';
+    navLinks.appendChild(link);
+  });
+
+  const linkMap = new Map();
+  navLinks.querySelectorAll('a').forEach((link) => {
+    const targetId = link.getAttribute('href').slice(1);
+    linkMap.set(targetId, link);
+    link.addEventListener('click', () => setActive(targetId));
+  });
+
+  function setActive(id) {
+    linkMap.forEach((link) => {
+      link.classList.remove('active');
+      link.removeAttribute('aria-current');
+    });
+    const activeLink = linkMap.get(id);
+    if (activeLink) {
+      activeLink.classList.add('active');
+      activeLink.setAttribute('aria-current', 'true');
+    }
+  }
+
+  setActive(headings[0].id);
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActive(entry.target.id);
+        }
+      });
+    },
+    { rootMargin: '-20% 0px -65% 0px', threshold: [0, 0.1, 0.5] }
+  );
+
+  headings.forEach((heading) => observer.observe(heading));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initSectionNav();
+});
+
+</script>
+</body>
+</html>

@@ -79,6 +79,16 @@
     color: var(--text-muted);
   }
   #page-count { font-weight: 600; }
+  .link-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+  }
+  .link-btn:hover { color: var(--accent); }
 
   /* Theme toggle */
   .theme-toggle {
@@ -300,6 +310,14 @@
     padding-right: 2rem;
   }
   .card-title .icon { font-size: 1rem; }
+  .unread-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--accent);
+    display: inline-block;
+    box-shadow: 0 0 0 2px var(--surface);
+  }
   .card-desc {
     font-size: 0.8rem;
     color: var(--text-muted);
@@ -379,7 +397,12 @@
   <div class="header">
     <div class="header-left">
       <h1>📚 Study Hub</h1>
-      <p><span id="page-count">22</span> pages, curated by Robin 🐱</p>
+      <p>
+        <span id="page-count">22</span> pages, <span id="unread-count">0</span> unread ·
+        <button class="link-btn" onclick="markAllRead()">Mark all as read</button> /
+        <button class="link-btn" onclick="resetRead()">Reset</button>
+        · curated by Robin 🐱
+      </p>
     </div>
     <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
       <span id="theme-icon">🌙</span>
@@ -396,6 +419,7 @@
   <div class="controls">
     <select class="sort-select" id="sort-select">
       <option value="recent">Recently Added</option>
+      <option value="unread">Unread First</option>
       <option value="alpha">Alphabetical</option>
       <option value="category">By Category</option>
     </select>
@@ -654,6 +678,18 @@ const PAGES = [
     date: '2025-02-09'
   },
   {
+    id: 'x402',
+    title: 'x402 — Internet-Native Payments for Agents',
+    icon: '💳',
+    desc: 'Coinbase’s open standard for pay-per-request HTTP payments. Agents can autonomously buy APIs/data with 402 + crypto.',
+    tags: ['AI Infrastructure', 'Crypto', 'Payments'],
+    url: 'ai-value-chain/x402-agentic-payments.html',
+    category: 'AI & Semiconductor Value Chain',
+    categoryIcon: '🤖',
+    section: 'hanif',
+    date: '2026-02-04'
+  },
+  {
     id: 'si-photonics',
     title: 'Silicon Photonics',
     icon: '💡',
@@ -676,6 +712,18 @@ const PAGES = [
     categoryIcon: '🤖',
     section: 'hanif',
     date: '2025-02-11'
+  },
+  {
+    id: 'ocs',
+    title: 'Optical Circuit Switching (OCS)',
+    icon: '🔀',
+    desc: 'Layer 1 optical switching — reroutes light without O-E-O conversion. Google Apollo: +30% throughput, -40% power. The switching layer that makes photonic interconnects work at scale.',
+    tags: ['Emerging Tech', 'Deep Dive', 'AI Infrastructure'],
+    url: 'ai-value-chain/optical-circuit-switching.html',
+    category: 'AI & Semiconductor Value Chain',
+    categoryIcon: '🤖',
+    section: 'hanif',
+    date: '2026-02-04'
   },
   // --- Hanif: Investing ---
   {
@@ -767,13 +815,13 @@ const PAGES = [
     id: 'lumentum-lite',
     title: 'Lumentum (LITE) — Deep Dive',
     icon: '🔦',
-    desc: 'AI optical infrastructure leader. 50-60% EML share, 58% YoY growth. Premium valuation — consider COHR instead.',
+    desc: 'AI optical infrastructure leader. 50–60% EML share, revenue doubling, optics transition tailwind.',
     tags: ['Investing', 'Deep Dive', 'Optical', 'AI Infrastructure'],
     url: 'investing/company-deep-dives/lumentum-lite.html',
     category: 'Company Deep Dives',
     categoryIcon: '🔍',
     section: 'hanif',
-    date: '2026-02-03'
+    date: '2026-02-04'
   },
   {
     id: 'intel-intc',
@@ -892,6 +940,8 @@ const PAGES = [
 let currentSection = 'sasya';
 let activeTags = new Set();
 let favorites = new Set(JSON.parse(localStorage.getItem('studyhub-favs') || '[]'));
+let readPages = new Set(JSON.parse(localStorage.getItem('studyhub-read') || '[]'));
+let unreadOnly = false;
 let searchQuery = '';
 let sortMode = 'recent';
 
@@ -933,7 +983,8 @@ function getFilteredPages() {
   return PAGES.filter(p =>
     p.section === currentSection &&
     matchesSearch(p) &&
-    matchesTags(p)
+    matchesTags(p) &&
+    (!unreadOnly || !readPages.has(p.id))
   );
 }
 
@@ -946,6 +997,14 @@ function sortPages(pages) {
     case 'category':
       arr.sort((a, b) => a.category.localeCompare(b.category) || a.title.localeCompare(b.title));
       break;
+    case 'unread':
+      arr.sort((a, b) => {
+        const aUnread = readPages.has(a.id) ? 1 : 0;
+        const bUnread = readPages.has(b.id) ? 1 : 0;
+        if (aUnread !== bUnread) return aUnread - bUnread;
+        return b.date.localeCompare(a.date);
+      });
+      break;
     case 'recent':
     default:
       arr.sort((a, b) => b.date.localeCompare(a.date));
@@ -956,13 +1015,15 @@ function sortPages(pages) {
 
 function renderCard(page, isFav) {
   const starred = favorites.has(page.id);
+  const isRead = readPages.has(page.id);
+  const unreadDot = isRead ? '' : '<span class="unread-dot" title="Unread"></span>';
   return `
-    <div class="card" style="cursor:pointer;" onclick="if(!event.target.closest('.star-btn'))window.location.href='${page.url}'">
+    <div class="card" style="cursor:pointer;" onclick="if(!event.target.closest('.star-btn')){markRead('${page.id}');window.location.href='${page.url}';}">
       <button class="star-btn ${starred ? 'starred' : ''}" onclick="event.stopPropagation();toggleFav('${page.id}')" title="${starred ? 'Remove from favorites' : 'Add to favorites'}">
         ${starred ? '★' : '☆'}
       </button>
       <div class="card-title">
-        <span class="icon">${page.icon}</span> ${page.title}
+        ${unreadDot}<span class="icon">${page.icon}</span> ${page.title}
       </div>
       <div class="card-desc">${page.desc}</div>
       <div class="tags">${page.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
@@ -971,6 +1032,7 @@ function renderCard(page, isFav) {
 }
 
 function render() {
+  updateCounts();
   const filtered = getFilteredPages();
   const sorted = sortPages(filtered);
   const area = document.getElementById('content-area');
@@ -981,7 +1043,8 @@ function render() {
     p.section === currentSection &&
     favorites.has(p.id) &&
     matchesSearch(p) &&
-    matchesTags(p)
+    matchesTags(p) &&
+    (!unreadOnly || !readPages.has(p.id))
   );
   const favSection = document.getElementById('favorites-section');
   const favCards = document.getElementById('favorites-cards');
@@ -1081,7 +1144,9 @@ function buildTagFilters() {
   PAGES.forEach(p => p.tags.forEach(t => allTags.add(t)));
   const sorted = [...allTags].sort();
   const container = document.getElementById('tag-filters');
-  container.innerHTML = sorted.map(t => {
+  const unreadActive = unreadOnly ? 'active' : '';
+  const unreadPill = `<button class="tag-pill ${unreadActive}" onclick="toggleUnreadOnly()">Unread only</button>`;
+  container.innerHTML = unreadPill + sorted.map(t => {
     const active = activeTags.has(t) ? 'active' : '';
     return `<button class="tag-pill ${active}" onclick="toggleTag('${t.replace(/'/g, "\\'")}')">${t}</button>`;
   }).join('');
@@ -1094,9 +1159,50 @@ function toggleTag(tag) {
   render();
 }
 
+function toggleUnreadOnly() {
+  unreadOnly = !unreadOnly;
+  buildTagFilters();
+  render();
+}
+
 // ============================================================
 // ACTIONS
 // ============================================================
+function saveReadState() {
+  localStorage.setItem('studyhub-read', JSON.stringify([...readPages]));
+}
+
+function updateCounts() {
+  const total = PAGES.length;
+  const readCount = PAGES.filter(p => readPages.has(p.id)).length;
+  const unreadCount = total - readCount;
+  document.getElementById('page-count').textContent = total;
+  document.getElementById('unread-count').textContent = unreadCount;
+}
+
+function markRead(pageId) {
+  if (!readPages.has(pageId)) {
+    readPages.add(pageId);
+    saveReadState();
+    updateCounts();
+    render();
+  }
+}
+
+function markAllRead() {
+  readPages = new Set(PAGES.map(p => p.id));
+  saveReadState();
+  updateCounts();
+  render();
+}
+
+function resetRead() {
+  readPages = new Set();
+  saveReadState();
+  updateCounts();
+  render();
+}
+
 function switchTab(section, btn) {
   currentSection = section;
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -1139,7 +1245,7 @@ function toggleTheme() {
     document.getElementById('theme-icon').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
 
     // Update page count
-    document.getElementById('page-count').textContent = PAGES.length;
+    updateCounts();
 
     // Search
     document.getElementById('search-input').addEventListener('input', function() {
