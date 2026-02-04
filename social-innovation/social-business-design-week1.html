@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introduction to Social Business Design</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-alt: #1a1a2e;
+    --surface-hover: #1e1e2a;
+    --border: #1e1e2e;
+    --border-alt: #2a2a4a;
+    --text: #e8e8ed;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-dim: #6b7280;
+    --accent: #5ec4b6;
+    --accent-glow: rgba(94, 196, 182, 0.12);
+    --green: #34d399;
+    --green-glow: rgba(52, 211, 153, 0.12);
+    --red: #ef4444;
+    --red-glow: rgba(239, 68, 68, 0.12);
+    --orange: #f59e0b;
+    --orange-glow: rgba(245, 158, 11, 0.12);
+    --highlight: #fbbf24;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --accent: #1a8a7d;
+    --accent-glow: rgba(26, 138, 125, 0.06);
+    --green: #059669;
+    --green-glow: rgba(5, 150, 105, 0.08);
+    --red: #dc2626;
+    --red-glow: rgba(220, 38, 38, 0.08);
+    --orange: #d97706;
+    --orange-glow: rgba(217, 119, 6, 0.08);
+    --highlight: #b45309;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .container { max-width: 800px; margin: 0 auto; }
+
+  .top-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 800px; margin: 0 auto; padding: 0 0 16px 0;
+  }
+  .back-link {
+    font-size: 13px; color: var(--text-muted); text-decoration: none;
+    display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+  .theme-toggle {
+    background: none; border: 1.5px solid var(--border-alt); border-radius: 8px;
+    padding: 6px 10px; cursor: pointer; font-size: 16px; color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero { text-align: center; margin: 2rem 0 3rem; animation: fadeUp 0.6s ease-out; }
+  .hero .tag {
+    display: inline-block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-glow); padding: 6px 14px;
+    border-radius: 6px; margin-bottom: 16px; font-weight: 700;
+  }
+  .hero h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .hero .subtitle { color: var(--text-muted); font-size: 14px; }
+
+  .section { margin-bottom: 2.5rem; animation: fadeUp 0.6s ease-out; }
+  .section h2 {
+    font-size: 18px; font-weight: 700; color: var(--accent);
+    margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
+  }
+  .section h3 { font-size: 15px; font-weight: 700; margin: 1.25rem 0 0.5rem; }
+  .section p { font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 0.75rem; }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 1.25rem; margin-bottom: 1rem;
+  }
+  .card-title { font-size: 14px; font-weight: 700; margin-bottom: 0.5rem; }
+  .card p { margin-bottom: 0.4rem; }
+
+  .highlight-box {
+    background: var(--accent-glow); border: 1px solid var(--accent);
+    border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;
+  }
+  .highlight-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 0.5rem; }
+  .highlight-box p { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+  table {
+    width: 100%; border-collapse: collapse; font-size: 13px; margin: 1rem 0;
+  }
+  th, td {
+    padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border);
+  }
+  th { font-weight: 700; color: var(--accent); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  td { color: var(--text-secondary); }
+
+  .metric-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem; margin: 1rem 0;
+  }
+  .metric {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 1rem; text-align: center;
+  }
+  .metric .value { font-size: 20px; font-weight: 800; color: var(--accent); }
+  .metric .label { font-size: 11px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+
+  .timeline { margin: 1rem 0; }
+  .timeline-item {
+    display: flex; gap: 1rem; padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-year { font-weight: 700; color: var(--accent); min-width: 60px; font-size: 13px; }
+  .timeline-desc { font-size: 13px; color: var(--text-secondary); }
+
+  .footer {
+    margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+    text-align: center; font-size: 12px; color: var(--text-dim);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  html { scroll-behavior: smooth; }
+
+  .page-layout {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+  }
+  .content { flex: 1; min-width: 0; }
+  .section-nav {
+    position: sticky;
+    top: 96px;
+    width: 220px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    height: fit-content;
+    max-height: calc(100vh - 140px);
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .section-nav-title {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .section-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .section-nav a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+  }
+  .section-nav a:hover {
+    color: var(--accent);
+    border-color: var(--border);
+    background: var(--surface-hover);
+  }
+  .section-nav a.active {
+    color: var(--accent);
+    background: var(--accent-glow);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent-glow) inset;
+  }
+  .section-nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  @media (max-width: 768px) {
+    body { padding: 24px 16px; }
+    .top-bar { max-width: 100%; padding-bottom: 12px; }
+    .page-layout { flex-direction: column; gap: 12px; }
+    .section-nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      padding: 8px;
+      border-radius: 12px;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+    .section-nav-title { display: none; }
+    .section-nav-links {
+      flex-direction: row;
+      gap: 8px;
+    }
+    .section-nav a {
+      white-space: nowrap;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border-color: var(--border);
+      background: var(--surface);
+    }
+    .section-nav a.active {
+      border-color: var(--accent);
+      background: var(--accent-glow);
+      color: var(--accent);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .section { animation: none; }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="../index.html" class="back-link">← Back to Study Hub</a>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+    <span id="theme-icon">🌙</span>
+  </button>
+</div>
+
+<div class="page-layout">
+  <nav class="section-nav" aria-label="Section navigation">
+    <div class="section-nav-title">On this page</div>
+    <div class="section-nav-links" id="section-nav-links"></div>
+  </nav>
+  <main class="content">
+<div class="container">
+  <div class="hero">
+    <span class="tag">Social Business Design — Week 1</span>
+    <h1>🏗️ Introduction to Social Business Design</h1>
+    <p class="subtitle">What makes a business "social", how social enterprises emerged, their types, hybrid challenges, and the contested role of business in the social space.</p>
+  </div>
+
+  <div class="section">
+    <h2>1. Social Utility vs Social Intent</h2>
+    <p><strong>Social utility</strong> is a positive side-effect of a profit-seeking firm (e.g., Facebook reconnecting families), whereas <strong>social intent</strong> means the social good is the core purpose and financial returns are a by-product.</p>
+    <p><strong>Dankbaar &amp; Groot (2014)</strong> show this distinction in their Skype case: the tool created social value, but the primary intent remained commercial.</p>
+    <p><strong>Mair &amp; Martí (2006)</strong> note that in social enterprises, financial objectives are not primary; they are subordinated to mission.</p>
+
+    <div class="highlight-box">
+      <div class="label">Key takeaway</div>
+      <p><strong>Social enterprises are defined by intent, not just outcomes.</strong> Utility can be accidental; intent is designed and operationalized.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>2. The Social Enterprise GOATs — Microfinance</h2>
+    <p>Microfinance is often called the “unicorn” of social enterprise because it scaled a mission-driven model across countries while remaining financially sustainable.</p>
+    <p>Its core innovation was <strong>group lending</strong>: no formal credit assessment needed, and social pressure within the group ensured repayment.</p>
+
+    <div class="metric-grid">
+      <div class="metric">
+        <div class="value">139.9M</div>
+        <div class="label">Borrowers (2018)</div>
+      </div>
+      <div class="metric">
+        <div class="value">80%</div>
+        <div class="label">Women served</div>
+      </div>
+      <div class="metric">
+        <div class="value">65%</div>
+        <div class="label">Rural clients</div>
+      </div>
+      <div class="metric">
+        <div class="value">$124.1B</div>
+        <div class="label">Portfolio</div>
+      </div>
+      <div class="metric">
+        <div class="value">+8.5%</div>
+        <div class="label">YoY Growth</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Other social enterprise exemplars</div>
+      <p>Ocean Sole (recycling flip-flops), GoodWeave (child-labor-free rugs), TOMS (one-for-one model).</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>3. The Base of the Pyramid (BOP) — Prahalad</h2>
+    <p><strong>Prahalad’s core thesis:</strong> ~4 billion people earn &lt;$1,500/year, forming a massive, underserved market.</p>
+
+    <table>
+      <tr><th>Before Prahalad</th><th>After Prahalad</th></tr>
+      <tr><td>MNCs focus on the TOP of the pyramid</td><td>BOP is a legitimate opportunity</td></tr>
+      <tr><td>Affordability challenges are barriers</td><td>Affordable products are possible</td></tr>
+      <tr><td>Institutional voids seen as risk</td><td>Institutional voids are hotbeds of innovation</td></tr>
+      <tr><td>Market failure = not their problem</td><td>MNCs can be agents of change</td></tr>
+    </table>
+
+    <p><strong>Hammond et al. (2007)</strong> estimated $5 trillion/year of unmet needs at the base of the pyramid.</p>
+    <p>Example of BOP innovation: <strong>GE’s low-cost ultrasound</strong>, designed for affordability and rugged contexts.</p>
+    <p><strong>Important:</strong> the BOP thesis was largely falsified in practice, but it sparked the rise of modern social entrepreneurship.</p>
+  </div>
+
+  <div class="section">
+    <h2>4. Institutional Voids</h2>
+    <p><strong>Douglass North (1990)</strong> distinguishes between formal institutions (laws, courts, financial systems) and informal institutions (culture, ethics, norms).</p>
+    <p><strong>Khanna &amp; Palepu</strong> coined “institutional voids” to describe missing or weak institutions in emerging markets.</p>
+    <p>These voids make markets more expensive (incomplete info, difficulty evaluating partners, weak contract enforcement) and more risky.</p>
+
+    <div class="metric-grid">
+      <div class="card">
+        <div class="card-title">Formal institutional voids</div>
+        <p>Weak legal systems, unreliable courts, missing credit bureaus, inadequate infrastructure.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Informal institutional voids</div>
+        <p>Low trust, opaque norms, ethics gaps, weak civic culture or enforcement of social contracts.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>5. Social Intrapreneurship vs Social Entrepreneurship</h2>
+    <p><strong>Social intrapreneurship</strong> happens inside corporations, NGOs, or public agencies: innovators launch initiatives that do well <em>and</em> do good while leveraging existing resources.</p>
+    <p><strong>Social entrepreneurship</strong> is a standalone startup whose core purpose is social good delivered through a financially sustainable model.</p>
+    <p><strong>Reference:</strong> Neessen, Caniëls, Vos &amp; de Jong (2018) propose an integrated model of intrapreneurship that blends personal initiative with organizational support.</p>
+  </div>
+
+  <div class="section">
+    <h2>6. Three Types of Social Enterprises (Zahra's Typology)</h2>
+    <p>Zahra’s typology is based on <strong>embeddedness</strong> (deep local roots) and <strong>geographic scale</strong> (local vs systemic reach).</p>
+
+    <table>
+      <tr><th>Type</th><th>Definition</th><th>Example &amp; Theory Link</th></tr>
+      <tr>
+        <td><strong>Social Bricoleurs</strong></td>
+        <td>Local, small-scale improvisers using available resources and intimate knowledge.</td>
+        <td>SHE (Sustainable Health Enterprises) — pads made from local materials. Linked to <strong>Hayek’s local knowledge</strong>.</td>
+      </tr>
+      <tr>
+        <td><strong>Social Constructionists</strong></td>
+        <td>Fill gaps for underserved clients; introduce reforms and scalable solutions.</td>
+        <td>Hey Girls — products + lobbying + cross-subsidisation. Linked to <strong>Kirzner’s alertness</strong>.</td>
+      </tr>
+      <tr>
+        <td><strong>Social Engineers</strong></td>
+        <td>Reframe systemic problems with revolutionary change and new combinations.</td>
+        <td>Pad Man (Muruganantham) — redesigned the sanitary pad industry. Linked to <strong>Schumpeter’s creative destruction</strong>.</td>
+      </tr>
+    </table>
+
+    <div class="card">
+      <div class="card-title">All three can coexist in one market</div>
+      <p>In period poverty: <strong>Banaleaves</strong> (bricoleur), <strong>girls’ education + lobbying</strong> (constructionist), <strong>self-employment creation</strong> (engineer).</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>7. Hybridity Theory — The Core Challenge</h2>
+    <p>Social enterprises are hybrids mixing charity and business — historically considered distinct and incompatible.</p>
+    <p><strong>Continuum:</strong> Charity/Not-for-Profit ← <strong>Hybrid (SE)</strong> → Commercial Entrepreneurship.</p>
+
+    <table>
+      <tr><th>Dimension</th><th>Pro-Profit</th><th>Pro-Social</th></tr>
+      <tr><td>Strategic Intent</td><td>Maximize shareholder value</td><td>Maximize social impact</td></tr>
+      <tr><td>Critical Tasks</td><td>Market growth, profitability</td><td>Mission delivery, community reach</td></tr>
+      <tr><td>Competencies</td><td>Commercial execution, scale</td><td>Social program design, empathy</td></tr>
+      <tr><td>Controls &amp; Rewards</td><td>Financial metrics, incentives</td><td>Impact metrics, mission alignment</td></tr>
+    </table>
+
+    <div class="card">
+      <div class="card-title">Overspecialising risks</div>
+      <p><strong>Too social:</strong> mission drift, lopsided resource development, inability to capitalise on assets.</p>
+      <p><strong>Too financial:</strong> lack of investment in measurement, neglect of social need, identity tensions.</p>
+    </div>
+
+    <div class="highlight-box">
+      <div class="label">Core insight</div>
+      <p><strong>Social entrepreneurship is essentially about the management of these trade-offs.</strong></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>8. Scaling Challenges</h2>
+    <p>Seven key inhibitors (plus additional operational frictions) constrain scaling — these are the focus of the rest of the course.</p>
+
+    <div class="metric-grid">
+      <div class="card"><div class="card-title">Affordability (Customer)</div><p>Low ability to pay limits revenue and reach.</p></div>
+      <div class="card"><div class="card-title">Attracting Finance (Financial)</div><p>Capital is scarce, expensive, or misaligned with impact goals.</p></div>
+      <div class="card"><div class="card-title">Ecosystem Complexity</div><p>Multiple stakeholders and dependencies slow execution.</p></div>
+      <div class="card"><div class="card-title">Institutional Challenges</div><p>Formal &amp; informal voids raise transaction costs.</p></div>
+      <div class="card"><div class="card-title">Impact Measurement (Social Good)</div><p>Hard-to-quantify outcomes weaken accountability.</p></div>
+      <div class="card"><div class="card-title">Value Proposition (PMF)</div><p>Solution-market fit is fragile in resource-poor contexts.</p></div>
+      <div class="card"><div class="card-title">Managerial (Cognition)</div><p>Decision-making under ambiguity strains leadership.</p></div>
+      <div class="card"><div class="card-title">Competitiveness (Strategic)</div><p>Competing incumbents can out-scale SEs.</p></div>
+      <div class="card"><div class="card-title">Internal (Operational)</div><p>Systems, talent, and process limitations slow growth.</p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>9. The Contested Role of Business — Dark Side</h2>
+    <p>Critiques include <strong>greenwashing</strong>, the self-serving “business case,” “environmentalism of the rich” (Dauvergne 2016), and saviour syndrome.</p>
+
+    <div class="card">
+      <div class="card-title">Compartamos controversy</div>
+      <p>Accused of extracting excessive profits from the poor; Muhammad Yunus called it “loan-sharking” with 100%+ interest rates.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="timeline-year">1990</span>
+        <span class="timeline-desc">Founded as an NGO.</span>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2000</span>
+        <span class="timeline-desc">Converted into a for-profit entity.</span>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2007</span>
+        <span class="timeline-desc">IPO priced at 12× book value.</span>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="label">Course philosophy</div>
+      <p><strong>“Seek to do no harm before you seek to do good.”</strong></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>10. Key Legal Structures</h2>
+    <p><strong>B Corp certification</strong> requires rigorous standards of social and environmental performance, accountability, and transparency.</p>
+
+    <table>
+      <tr><th>Country</th><th>Legal Structures &amp; Notes</th></tr>
+      <tr><td>United States</td><td>Benefit Corp, L3C, SPC, PBC, 501c3 — multiple pathways for hybrid missions.</td></tr>
+      <tr><td>Russia</td><td>CISS centers and SME classification for social enterprises.</td></tr>
+      <tr><td>Vietnam</td><td>Enterprise Law 2014 provides incentives and recognition for SEs.</td></tr>
+      <tr><td>Pakistan</td><td>No specific legal structure; SEs adapt existing corporate forms.</td></tr>
+    </table>
+
+    <div class="card">
+      <div class="card-title">Global trend</div>
+      <p>Social enterprises are increasingly receiving separate legal recognition worldwide.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>11. Key References</h2>
+    <div class="card">
+      <p>Prahalad &amp; Hammond (2002)</p>
+      <p>Prahalad &amp; Hart (2002)</p>
+      <p>Mair &amp; Martí (2006)</p>
+      <p>Dankbaar &amp; Groot (2014)</p>
+      <p>Zahra et al.</p>
+      <p>Khanna &amp; Palepu</p>
+      <p>Douglass North (1990)</p>
+      <p>Estrin et al. (2013)</p>
+      <p>Neessen et al. (2018)</p>
+      <p>Dauvergne (2016)</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    Social Innovation &amp; Design — Study Hub · Built with 🐱 by Robin
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('theme-icon').textContent = saved === 'dark' ? '☀️' : '🌙';
+  });
+})();
+
+function slugifyHeading(text) {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
+
+function initSectionNav() {
+  const navLinks = document.getElementById('section-nav-links');
+  if (!navLinks) return;
+
+  let headings = Array.from(document.querySelectorAll('.section h2'));
+  if (!headings.length) {
+    headings = Array.from(document.querySelectorAll('.section-title, h2'));
+  }
+  if (!headings.length) return;
+
+  headings.forEach((heading) => {
+    if (!heading.id) {
+      heading.id = slugifyHeading(heading.textContent || '');
+    }
+  });
+
+  navLinks.innerHTML = '';
+  headings.forEach((heading) => {
+    const link = document.createElement('a');
+    link.className = 'section-link';
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent || '';
+    navLinks.appendChild(link);
+  });
+
+  const linkMap = new Map();
+  navLinks.querySelectorAll('a').forEach((link) => {
+    const targetId = link.getAttribute('href').slice(1);
+    linkMap.set(targetId, link);
+    link.addEventListener('click', () => setActive(targetId));
+  });
+
+  function setActive(id) {
+    linkMap.forEach((link) => {
+      link.classList.remove('active');
+      link.removeAttribute('aria-current');
+    });
+    const activeLink = linkMap.get(id);
+    if (activeLink) {
+      activeLink.classList.add('active');
+      activeLink.setAttribute('aria-current', 'true');
+    }
+  }
+
+  setActive(headings[0].id);
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActive(entry.target.id);
+        }
+      });
+    },
+    { rootMargin: '-20% 0px -65% 0px', threshold: [0, 0.1, 0.5] }
+  );
+
+  headings.forEach((heading) => observer.observe(heading));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initSectionNav();
+});
+
+</script>
+</body>
+</html>
