@@ -226,11 +226,28 @@
   }
   .list strong { color: var(--text); }
 
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .case-card {
+    border-radius: 14px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .case-card.bull { border-color: rgba(52, 211, 153, 0.4); background: rgba(52, 211, 153, 0.06); }
+  .case-card.bear { border-color: rgba(248, 113, 113, 0.4); background: rgba(248, 113, 113, 0.05); }
+  .case-card h3 { font-size: 14px; margin-bottom: 8px; }
+  .case-card ul { padding-left: 16px; font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
   .verdict {
     background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), transparent);
     border: 1px solid rgba(245, 158, 11, 0.4);
   }
 
+  /* Inline jargon links */
   .jargon {
     color: var(--accent);
     text-decoration: none;
@@ -308,6 +325,7 @@
   @media (max-width: 900px) {
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
     .two-col { grid-template-columns: 1fr; }
+    .case-grid { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 768px) {
@@ -352,28 +370,28 @@
       </div>
 
       <h1>Merdeka Copper Gold (MDKA) — Company Deep Dive</h1>
-      <p class="subtitle">Indonesia’s multi-commodity growth miner: gold, copper, and nickel with a transformational 2026 production ramp.</p>
+      <p class="subtitle">Multi-commodity growth platform across gold, copper, and nickel with a step-change in output from Pani Gold and MBMA battery materials.</p>
 
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="label">FY2025 Revenue</div>
-          <div class="value">Rp31.69T</div>
-          <div class="note">Multi-commodity mix</div>
+          <div class="label">Ticker</div>
+          <div class="value">MDKA.JK</div>
+          <div class="note">Diversified mining</div>
         </div>
         <div class="stat-card">
-          <div class="label">Gold Production</div>
+          <div class="label">FY2025 Revenue</div>
+          <div class="value">Rp31.69T</div>
+          <div class="note">Gold + copper + nickel</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Gold Output</div>
           <div class="value">103k oz</div>
           <div class="note">Tujuh Bukit Gold</div>
         </div>
         <div class="stat-card">
-          <div class="label">Copper Production</div>
-          <div class="value">10.4k tons</div>
-          <div class="note">Wetar Copper</div>
-        </div>
-        <div class="stat-card">
-          <div class="label">2026 Gold Target</div>
-          <div class="value">180–205k oz</div>
-          <div class="note">Pani + TB Gold</div>
+          <div class="label">Liquidity</div>
+          <div class="value">$824M</div>
+          <div class="note">$364M cash + $460M undrawn</div>
         </div>
       </div>
 
@@ -381,62 +399,142 @@
         <h2>🏢 Company Overview</h2>
         <div class="card">
           <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
-            Merdeka Copper Gold is a diversified Indonesian miner with producing assets in gold and copper, plus large-scale nickel exposure through MBMA and a fast-ramping gold project at <a href="emas-merdeka.html" class="jargon">EMAS</a>. The flagship Tujuh Bukit Gold mine anchors current production, while Wetar Copper adds steady by-product cash flow. The next leg is Pani Gold (via EMAS), which targets a step-change from ~103k oz today to 180–205k oz by 2026.
+            Merdeka Copper Gold (MDKA) is a diversified Indonesian miner with producing gold and copper operations and fast-growing nickel exposure via <a href="#jargon-mbma" class="jargon">MBMA</a>. The near-term story is a gold production step-up driven by Pani Gold (via <a href="emas-merdeka-gold-resources.html" class="jargon">EMAS</a>) and a longer-term copper optionality from the Tujuh Bukit underground project.
           </p>
           <div class="pill-row">
-            <span class="pill">Ticker: MDKA.JK</span>
-            <span class="pill">Gold + Copper + Nickel</span>
-            <span class="pill">Assets: TB Gold, Wetar, MBMA</span>
-            <span class="pill">Pani Gold ramp 2026</span>
+            <span class="pill">Multi-commodity (Au/Cu/Ni)</span>
+            <span class="pill">Tujuh Bukit + Wetar</span>
+            <span class="pill">Pani Gold via EMAS</span>
+            <span class="pill">MBMA battery materials</span>
+            <span class="pill">2026 gold surge</span>
           </div>
         </div>
       </section>
 
-      <section class="section" id="investment-thesis">
-        <h2>✅ Investment Thesis</h2>
-        <div class="card verdict">
-          <p style="font-size:13px;line-height:1.7;color:var(--text-secondary);">
-            <strong>Thesis:</strong> MDKA is a high-growth, multi-commodity miner with visible gold production acceleration (Pani Gold) and nickel optionality via MBMA. The near-term catalyst is a 2026 gold output jump to 180–205k oz, while copper and nickel stabilize cash flow. If the ramp executes, earnings and NAV could inflect sharply.
-          </p>
-        </div>
-      </section>
-
-      <section class="section" id="business-segments">
-        <h2>🧭 Business Segments</h2>
-        <div class="table-wrap">
+      <section class="section" id="key-metrics">
+        <h2>📌 Key Metrics</h2>
+        <div class="table-wrap" style="margin-bottom:16px;">
           <table>
             <thead>
               <tr>
-                <th>Asset / Segment</th>
-                <th class="num">Commodity</th>
-                <th class="num">Status</th>
+                <th>Metric (FY2025)</th>
+                <th class="num">Result</th>
                 <th class="num">Notes</th>
               </tr>
             </thead>
             <tbody>
               <tr class="highlight">
-                <td>Tujuh Bukit Gold</td>
-                <td class="num">Gold</td>
+                <td>Revenue</td>
+                <td class="num">Rp31.69T</td>
+                <td class="num">Gold + copper + nickel</td>
+              </tr>
+              <tr>
+                <td>Gold production (TB Gold)</td>
+                <td class="num">103,156 oz</td>
+                <td class="num">104,168 oz sold @ $3,138/oz</td>
+              </tr>
+              <tr>
+                <td>Copper production (Wetar)</td>
+                <td class="num">10,454 tons</td>
+                <td class="num">Producing asset</td>
+              </tr>
+              <tr>
+                <td>Nickel saprolite</td>
+                <td class="num">7.0M <a href="#jargon-wmt" class="jargon">wmt</a></td>
+                <td class="num">+42% YoY via MBMA</td>
+              </tr>
+              <tr>
+                <td>Nickel limonite</td>
+                <td class="num">14.7M wmt</td>
+                <td class="num">+45% YoY via MBMA</td>
+              </tr>
+              <tr>
+                <td>Liquidity</td>
+                <td class="num">$824M</td>
+                <td class="num">Cash + undrawn facilities</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:10px;">MDKA is transitioning from single-asset gold into a diversified mining platform with scale growth in 2026–2032.</p>
+        </div>
+      </section>
+
+      <section class="section" id="investment-thesis">
+        <h2>💡 Investment Thesis</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>Gold production step-change:</strong> 2026 target of 180–205k oz as Pani Gold ramps alongside Tujuh Bukit, nearly doubling FY2025 output.</div>
+            <div><strong>Nickel leverage to EV chain:</strong> MBMA’s growing saprolite/limonite volumes support battery materials positioning.</div>
+            <div><strong>Copper optionality:</strong> Tujuh Bukit underground copper project provides long-duration growth beyond the gold cycle.</div>
+            <div><strong>Balance sheet capacity:</strong> $364M cash plus $460M undrawn gives room for construction and ramp-up phases.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="asset-breakdown">
+        <h2>⛏️ Asset-by-Asset Breakdown</h2>
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Asset</th>
+                <th class="num">Status</th>
+                <th class="num">FY2025 Output / Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td>Tujuh Bukit Gold (East Java)</td>
                 <td class="num">Producing</td>
-                <td class="num">~103k oz (FY25)</td>
+                <td class="num">103k oz gold</td>
+              </tr>
+              <tr>
+                <td>Tujuh Bukit Copper (Underground)</td>
+                <td class="num">Dev. stage</td>
+                <td class="num">Long-term copper growth option</td>
               </tr>
               <tr>
                 <td>Wetar Copper</td>
-                <td class="num">Copper</td>
                 <td class="num">Producing</td>
-                <td class="num">~10.4k tons (FY25)</td>
+                <td class="num">10.4k tons copper</td>
               </tr>
               <tr>
-                <td>MBMA (Nickel)</td>
-                <td class="num">Nickel</td>
-                <td class="num">Producing</td>
-                <td class="num">Saprolite + limonite feedstock</td>
-              </tr>
-              <tr class="highlight">
                 <td>Pani Gold (via EMAS)</td>
-                <td class="num">Gold</td>
-                <td class="num">Development</td>
-                <td class="num">First gold Q1 2026</td>
+                <td class="num">Construction</td>
+                <td class="num">~79k oz target 2026, ramp to 500k oz by 2032</td>
+              </tr>
+              <tr>
+                <td>Nickel (via MBMA)</td>
+                <td class="num">Producing</td>
+                <td class="num">7.0M wmt saprolite + 14.7M wmt limonite</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>2026 Targets</th>
+                <th class="num">Guidance</th>
+                <th class="num">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td>Gold production</td>
+                <td class="num">180–205k oz</td>
+                <td class="num">Pani + Tujuh Bukit</td>
+              </tr>
+              <tr>
+                <td>Nickel saprolite</td>
+                <td class="num">8–10M wmt</td>
+                <td class="num">MBMA ramp</td>
+              </tr>
+              <tr>
+                <td>Nickel limonite</td>
+                <td class="num">20–25M wmt</td>
+                <td class="num">HPAL feedstock growth</td>
               </tr>
             </tbody>
           </table>
@@ -447,10 +545,10 @@
         <h2>🚀 Growth Catalysts</h2>
         <div class="card">
           <div class="list">
-            <div><strong>Pani Gold ramp:</strong> 2026 target 180–205k oz, with a multi-year path to 500k oz by 2032 (via EMAS).</div>
-            <div><strong>Higher gold pricing:</strong> FY25 average realized ~$3,138/oz supports margins and project funding.</div>
-            <div><strong>Nickel scale-up:</strong> MBMA targets 8–10M wmt saprolite and 20–25M wmt limonite by 2026.</div>
-            <div><strong>Underground copper optionality:</strong> Tujuh Bukit Copper project adds long-term upside if developed.</div>
+            <div><strong>Pani Gold first pour:</strong> EMAS Q1 2026 production start is the key step-change catalyst.</div>
+            <div><strong>Gold volume acceleration:</strong> 2026 guidance implies ~2x output vs FY2025.</div>
+            <div><strong>Nickel scale-up:</strong> MBMA saprolite/limonite growth improves downstream positioning.</div>
+            <div><strong>Copper project milestones:</strong> Progress at Tujuh Bukit underground would extend MDKA’s commodity mix.</div>
           </div>
         </div>
       </section>
@@ -459,10 +557,10 @@
         <h2>⚠️ Risks</h2>
         <div class="card">
           <div class="list">
-            <div><strong>Execution risk:</strong> Pani construction delays or ramp issues would push the growth thesis back.</div>
-            <div><strong>Nickel price pressure:</strong> Indonesia’s supply surge can compress margins.</div>
-            <div><strong>Complex structure:</strong> Multiple subsidiaries (MBMA, EMAS) add governance and funding complexity.</div>
-            <div><strong>Capital intensity:</strong> Large <a href="#jargon-capex" class="jargon">capex</a> programs raise dilution or leverage risk.</div>
+            <div><strong>Pani execution risk:</strong> Construction delays or ramp hiccups would push back the gold surge.</div>
+            <div><strong>Nickel price volatility:</strong> Battery materials pricing pressure impacts MBMA economics.</div>
+            <div><strong>Complex group structure:</strong> Multiple listed vehicles (MBMA, EMAS) add governance complexity.</div>
+            <div><strong>Commodity cyclicality:</strong> Gold, copper, and nickel each face distinct downturn cycles.</div>
           </div>
         </div>
       </section>
@@ -470,11 +568,11 @@
       <section class="section" id="related-context">
         <h2>🔗 Related Context</h2>
         <div class="card" style="display:flex;flex-direction:column;gap:14px;">
-          <a href="emas-merdeka.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
-            <span style="font-size:24px;">🏗️</span>
+          <a href="emas-merdeka-gold-resources.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">🥇</span>
             <div>
-              <div style="font-size:14px;font-weight:600;color:var(--text);">EMAS (Pani Gold) Deep Dive</div>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Pre-production gold project powering MDKA’s 2026 ramp.</div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">EMAS — Pani Gold Project</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">MDKA’s gold growth engine with 2026 first production.</div>
             </div>
             <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
           </a>
@@ -485,36 +583,36 @@
         <h2>📖 Jargon Decoder</h2>
         <div class="card">
           <div style="display:flex;flex-direction:column;gap:10px;">
-            <div id="jargon-capex" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
-              <strong style="color:var(--accent);">CapEx</strong>
+            <div id="jargon-mbma" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">MBMA (Merdeka Battery Materials)</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Capital expenditures needed to build or expand mines and processing plants.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">MDKA’s nickel and battery materials subsidiary focused on saprolite and limonite supply.</div>
             </div>
             <div id="jargon-wmt" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
               <strong style="color:var(--accent);">WMT (Wet Metric Ton)</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Nickel ore volume measured on a wet weight basis before drying.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Measurement of ore tonnage that includes natural moisture content.</div>
             </div>
-            <div id="jargon-heap-leach" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
-              <strong style="color:var(--accent);">Heap Leach</strong>
+            <div id="jargon-saprolite" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Saprolite</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Gold recovery process using chemical solutions on stacked ore heaps.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Nickel-rich laterite ore typically used for ferronickel or NPI feedstock.</div>
             </div>
-            <div id="jargon-aisc" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
-              <strong style="color:var(--accent);">AISC</strong>
+            <div id="jargon-limonite" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Limonite</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">All-in sustaining cost — total cost per ounce to keep mines running.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Lower-grade nickel laterite ore used in HPAL processing for battery materials.</div>
             </div>
-            <div id="jargon-emas" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
-              <strong style="color:var(--accent);">EMAS</strong>
+            <div id="jargon-hpal" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">HPAL</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Merdeka Gold Resources — MDKA’s gold-focused subsidiary and Pani Gold owner.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">High Pressure Acid Leach, a process to extract nickel/cobalt from limonite.</div>
             </div>
           </div>
         </div>
       </section>
 
-      <p style="font-size:11px;color:var(--text-dimmer);margin-top:20px;">Sources: Indo watchlist notes, MDKA disclosures, EMAS IPO materials (as of 2025). This is research, not financial advice.</p>
+      <p style="font-size:11px;color:var(--text-dimmer);margin-top:20px;">Sources: Indo watchlist notes, company disclosures (as of Feb 4, 2026). This is research, not financial advice.</p>
     </div>
   </main>
 </div>
