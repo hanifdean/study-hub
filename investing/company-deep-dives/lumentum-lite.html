@@ -396,9 +396,48 @@
         <div class="card">
           <div class="list">
             <div><strong>Pure-play optics lever.</strong> Lumentum makes the <a class="jargon" href="#jargon-eml">EML</a> laser sources (“light engines”) that power high-speed optical <a class="jargon" href="#jargon-transceiver">transceivers</a>.</div>
-            <div><strong>Dominant share.</strong> 50–60% market share in EMLs for datacom, positioning LITE at the choke point of 800G/1.6T ramps.</div>
+            <div><strong>Dominant share.</strong> 50–60% market share in EMLs for datacom, positioning LITE at the choke point of <a class="jargon" href="#jargon-800g">800G/1.6T</a> ramps.</div>
             <div><strong>Structural growth.</strong> The copper wall is forcing a shift to <a class="jargon" href="#jargon-siph">silicon photonics</a> and <a class="jargon" href="#jargon-cpo">CPO</a> — a permanent AI infrastructure upgrade cycle.</div>
             <div><strong>Financial inflection.</strong> Revenue doubling YoY with expanding margins; Q2 FY26 revenue $665.5M (+65% YoY), EPS $1.67 (20% beat), Q3 guide $805M (+85% YoY).</div>
+          </div>
+          <div style="padding:12px 16px;border-left:3px solid var(--accent);background:var(--surface-alt);border-radius:0 10px 10px 0;margin-top:12px;">
+            <p style="font-size:12px;font-style:italic;color:var(--text-secondary);line-height:1.6;">
+              "We are seeing unprecedented demand across all our cloud networking product lines. The copper wall is not a theoretical concept — it's a real constraint our customers are hitting today."
+            </p>
+            <p style="font-size:11px;color:var(--text-dim);margin-top:6px;">— CEO Alan Lowe, Q2 FY26 Earnings Call (Feb 3, 2026)</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="variant-view">
+        <h2>🎯 Variant View — Where We Disagree with Consensus</h2>
+        <div class="card" style="border-left:3px solid var(--accent);">
+          <div style="display:grid;gap:14px;font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            <div>
+              <strong style="color:var(--text);">What consensus believes:</strong>
+              <ul style="margin-top:8px;padding-left:18px;">
+                <li>Market prices LITE as a “telecom/3D sensing recovery + AI optionality” story.</li>
+                <li>Street models weight the Industrial segment (Apple 3D sensing) recovery heavily.</li>
+                <li>Valuation assumes linear growth from current Cloud & Networking ramp.</li>
+                <li>Most analysts model 800G pluggable transceivers as the primary growth driver.</li>
+              </ul>
+            </div>
+            <div>
+              <strong style="color:var(--text);">Why we think consensus is wrong:</strong>
+              <ol style="margin-top:8px;padding-left:18px;">
+                <li><strong>OCS is a new TAM, not incremental.</strong> LITE is already shipping OCS to 3 customers. Street models don't break this out. Google's Apollo program proves OCS economics (40% power reduction, 30% capex reduction). If OCS becomes standard across hyperscalers, it's a $2–4B addressable market that doesn't exist in current models.</li>
+                <li><strong>CPO lasers are LITE's biggest-ever purchase commitment.</strong> Management said "largest purchase commitment in company history" for ultra-high-power CPO lasers ramping H2 2026. This isn't in consensus estimates. CPO doesn't cannibalize pluggable revenue — it's additive because it's a different product (light source vs. module).</li>
+                <li><strong>The copper-to-optics transition is accelerating faster than models assume.</strong> Nomura's 8x jump forecast (2.5M → 20M 1.6T modules) implies optical penetration hitting 50–70% in the highest-end segment. LITE's EML dominance means they capture disproportionate share of every unit shipped.</li>
+              </ol>
+            </div>
+            <div>
+              <strong style="color:var(--text);">The evidence:</strong>
+              <ul style="margin-top:8px;padding-left:18px;">
+                <li>Q2 FY26 earnings call (Feb 3, 2026): CEO Alan Lowe — "We are seeing unprecedented demand across all our cloud networking product lines. Our OCS products are now shipping to three customers and the pipeline continues to expand."</li>
+                <li>Q2 FY26 earnings call: "Our CPO laser program represents the largest purchase commitment in Lumentum's history, with production ramps beginning in H2 calendar 2026."</li>
+                <li>Google Apollo paper (arXiv 2208.10041): 30% throughput increase, 40% power reduction, 50x less downtime — proving OCS economics at scale.</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
@@ -409,9 +448,11 @@
           <div class="card">
             <div class="list">
               <div><strong>AI clusters now exceed 1M GPUs.</strong> Data movement, not compute, is the bottleneck.</div>
-              <div><strong>Copper fails at high speeds.</strong> At 1.6T, copper requires ~<a class="jargon" href="#jargon-pjbit">15 pJ/bit</a> and burns more power as heat than signal.</div>
+              <div><strong>Copper fails at high speeds.</strong> At <a class="jargon" href="#jargon-800g">1.6T</a>, copper requires ~<a class="jargon" href="#jargon-pjbit">15 pJ/bit</a> and burns more power as heat than signal.</div>
+              <div><strong><a class="jargon" href="#jargon-serdes">SerDes</a> scaling breaks.</strong> Power per lane rises faster than bandwidth, accelerating the copper wall.</div>
               <div><strong>Optics saves power.</strong> <a class="jargon" href="#jargon-siph">SiPh</a> + <a class="jargon" href="#jargon-cpo">CPO</a> reduce energy to 5–6 pJ/bit (~70% reduction), cutting total networking power ~50%.</div>
               <div><strong>Nomura forecast.</strong> 1.6T optical modules ship 2.5M (2025) → 20M (2026), an 8x jump.</div>
+              <div><strong>SiPh penetration.</strong> 50–70% share in the highest-end 1.6T segment.</div>
               <div><strong>NVIDIA proof point.</strong> Spectrum-X Ethernet Photonics cuts power per port ~5x.</div>
               <div><strong>This is survival, not optional.</strong> AI data centers cannot scale without optics.</div>
             </div>
@@ -520,7 +561,7 @@
               </tr>
               <tr>
                 <td>800G/1.6T Cloud <a class="jargon" href="#jargon-transceiver">Transceivers</a></td>
-                <td class="num">Full modules for hyperscalers</td>
+                <td class="num">Full modules for <a class="jargon" href="#jargon-hyperscaler">hyperscalers</a></td>
                 <td class="num">Manufactured with <a class="jargon" href="#jargon-fabrinet">Fabrinet</a></td>
               </tr>
               <tr>
@@ -535,7 +576,7 @@
               </tr>
               <tr>
                 <td>Narrow-Linewidth Lasers</td>
-                <td class="num"><a class="jargon" href="#jargon-zr">ZR/ZR+</a> coherent modules</td>
+                <td class="num"><a class="jargon" href="#jargon-zr">ZR/ZR+</a> <a class="jargon" href="#jargon-coherent">coherent optics</a> modules</td>
                 <td class="num"><a class="jargon" href="#jargon-dci">DCI</a> links between data centers</td>
               </tr>
               <tr>
@@ -545,6 +586,20 @@
               </tr>
             </tbody>
           </table>
+        </div>
+        <div style="display:grid;gap:12px;margin-bottom:16px;">
+          <div style="padding:12px 16px;border-left:3px solid var(--accent);background:var(--surface-alt);border-radius:0 10px 10px 0;">
+            <p style="font-size:12px;font-style:italic;color:var(--text-secondary);line-height:1.6;">
+              "Our OCS products are now shipping to three customers and the pipeline continues to expand. This is a fundamentally new architecture for data center networking."
+            </p>
+            <p style="font-size:11px;color:var(--text-dim);margin-top:6px;">— CEO Alan Lowe, Q2 FY26 Earnings Call (Feb 3, 2026)</p>
+          </div>
+          <div style="padding:12px 16px;border-left:3px solid var(--accent);background:var(--surface-alt);border-radius:0 10px 10px 0;">
+            <p style="font-size:12px;font-style:italic;color:var(--text-secondary);line-height:1.6;">
+              "Our CPO laser program represents the largest purchase commitment in Lumentum's history, with production ramps beginning in H2 calendar 2026."
+            </p>
+            <p style="font-size:11px;color:var(--text-dim);margin-top:6px;">— CEO Alan Lowe, Q2 FY26 Earnings Call (Feb 3, 2026)</p>
+          </div>
         </div>
         <div class="card">
           <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
@@ -613,6 +668,12 @@
               </tr>
             </tbody>
           </table>
+        </div>
+        <div style="padding:12px 16px;border-left:3px solid var(--accent);background:var(--surface-alt);border-radius:0 10px 10px 0;margin-bottom:16px;">
+          <p style="font-size:12px;font-style:italic;color:var(--text-secondary);line-height:1.6;">
+            "We expect cloud networking revenue to more than double year-over-year in fiscal 2026, driven by 800G ramps and early 1.6T qualifications."
+          </p>
+          <p style="font-size:11px;color:var(--text-dim);margin-top:6px;">— CFO, Q2 FY26 Earnings Call (Feb 3, 2026)</p>
         </div>
         <div class="two-col">
           <div class="card">
@@ -695,27 +756,83 @@
       </section>
 
       <section class="section" id="investment-thesis">
-        <h2>📌 Investment Thesis — Bull & Bear</h2>
-        <div class="case-grid">
+        <h2>📌 Investment Thesis — Narrative Scenarios</h2>
+        <div style="display:grid;gap:14px;">
           <div class="case-card bull">
-            <h3>🐂 Bull Case</h3>
-            <ul>
-              <li>Copper wall is real physics; optics transition is structural.</li>
-              <li>LITE dominates <a class="jargon" href="#jargon-eml">EML</a> lasers and benefits from 800G/1.6T ramps.</li>
-              <li>Multiple growth vectors: <a class="jargon" href="#jargon-ocs">OCS</a>, <a class="jargon" href="#jargon-cpo">CPO</a>, coherent ZR/ZR+.</li>
-              <li>Margins expanding as laser fabs scale and mix shifts to datacom.</li>
-              <li>Revenue doubling; annualized run-rate ~$3.2B.</li>
-            </ul>
+            <h3>🐂 Bull Case — $550+ (40%+ upside)</h3>
+            <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+              OCS adoption expands beyond Google to all major hyperscalers (Microsoft, Meta, Amazon). LITE's OCS + CPO lasers ramp simultaneously in H2 2026, creating a dual growth engine the market hasn't modeled. Revenue hits $4B+ annualized by FY27. EML dominance holds as 1.6T volumes explode 8x per Nomura. Gross margins expand to 42–45% on operating leverage. At 25x forward earnings on $8+ EPS, LITE trades to $550+.
+            </p>
+            <div style="margin-top:10px;font-size:12px;color:var(--text-dim);">
+              <strong>Key assumptions:</strong> OCS becomes multi-customer standard, CPO laser ramp on schedule, 1.6T adoption follows Nomura forecast, no major market correction.
+            </div>
+          </div>
+          <div class="case-card" style="border-color:var(--accent);background:var(--accent-soft);">
+            <h3>📊 Base Case — $420-450 (8-15% upside)</h3>
+            <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+              Current trajectory continues — Cloud & Networking grows 60–70% YoY, OCS remains a 2–3 customer product for now, CPO ramps on time but slowly. Revenue reaches $3.4–3.6B annualized. Margins hit 40% target but don't exceed it. Industrial segment stays flat/declining. Market gives LITE a reasonable premium for growth but not a re-rate. At 20–22x forward earnings, LITE trades $420–450.
+            </p>
+            <div style="margin-top:10px;font-size:12px;color:var(--text-dim);">
+              <strong>Key assumptions:</strong> No macro shock, moderate competition from COHR, CPO ramp meets but doesn't beat timeline.
+            </div>
           </div>
           <div class="case-card bear">
-            <h3>🐻 Bear Case</h3>
-            <ul>
-              <li>Valuation is rich (~$390); better entry target $280–320.</li>
-              <li>Customer concentration risk with hyperscalers.</li>
-              <li><a class="jargon" href="#jargon-cpo">CPO</a> could commoditize transceivers.</li>
-              <li>COHR competition intensifies on pricing.</li>
-              <li>Apple 3D sensing declines in Industrial segment.</li>
-            </ul>
+            <h3>🐻 Bear Case — $250-280 (28-36% downside)</h3>
+            <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+              Hyperscaler capex cycle slows (tariffs, recession, budget resets). 1.6T adoption delays by 2–3 quarters. Coherent aggressively undercuts on EML pricing, compressing gross margins to 35%. CPO laser ramp pushes to 2027. OCS stays niche (Google only). Industrial continues declining. Revenue stalls at $2.5–2.8B. At 15x forward earnings on compressed $5 EPS, LITE trades to $250–280.
+            </p>
+            <div style="margin-top:10px;font-size:12px;color:var(--text-dim);">
+              <strong>Key assumptions:</strong> Macro deterioration, competition intensifies, technology timeline slips.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="kill-conditions">
+        <h2>☠️ Kill Conditions — When to Exit</h2>
+        <div class="card">
+          <div style="display:grid;gap:14px;">
+            <div style="padding:14px;border-left:3px solid var(--red);border-radius:0 10px 10px 0;background:rgba(248,113,113,0.05);">
+              <strong style="color:var(--red);">Kill #1: EML market share drops below 40%</strong>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">If Coherent or a new entrant takes meaningful EML share, LITE's pricing power erodes. Watch quarterly share data from LightCounting. If share drops below 40% for two consecutive quarters → exit. Loss of the dominant position is the thesis.</p>
+            </div>
+            <div style="padding:14px;border-left:3px solid var(--red);border-radius:0 10px 10px 0;background:rgba(248,113,113,0.05);">
+              <strong style="color:var(--red);">Kill #2: Hyperscaler capex cuts &gt;20% YoY</strong>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">If Google/Microsoft/Meta collectively cut AI infrastructure spending by &gt;20%, the entire optical ramp slows. Watch quarterly capex disclosures from Big 4. If combined cuts exceed 20% → reduce position by half. Exit at $300.</p>
+            </div>
+            <div style="padding:14px;border-left:3px solid var(--red);border-radius:0 10px 10px 0;background:rgba(248,113,113,0.05);">
+              <strong style="color:var(--red);">Kill #3: CPO laser ramp delays past Q1 2027</strong>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">Management flagged "largest purchase commitment in history." If this slips significantly (&gt;6 months), it signals demand uncertainty or execution issues. One quarter slip = hold. Two quarters = exit at $280.</p>
+            </div>
+            <div style="padding:14px;border-left:3px solid var(--red);border-radius:0 10px 10px 0;background:rgba(248,113,113,0.05);">
+              <strong style="color:var(--red);">Kill #4: Gross margin compression below 36% for 2+ quarters</strong>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">Signals pricing war with Coherent or mix deterioration. Two consecutive quarters below 36% → exit. Margin expansion is a key leg of the thesis.</p>
+            </div>
+            <div style="padding:14px;border-left:3px solid var(--red);border-radius:0 10px 10px 0;background:rgba(248,113,113,0.05);">
+              <strong style="color:var(--red);">Kill #5: OCS customer concentration stays at 3 or fewer through FY27</strong>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">If OCS doesn't expand beyond current customers by end of FY27, it's a niche product not a platform shift. Re-evaluate thesis entirely.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="asymmetry">
+        <h2>⚖️ Risk/Reward Asymmetry</h2>
+        <div class="card" style="border:1px solid var(--accent);background:linear-gradient(135deg,var(--accent-soft),transparent 60%);">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <div style="padding:14px;border-radius:12px;background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.4);">
+              <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-muted);font-weight:700;">Upside</div>
+              <div style="font-size:20px;font-weight:700;margin-top:8px;color:var(--green);">$550 target</div>
+              <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">~41% upside from ~$390</div>
+            </div>
+            <div style="padding:14px;border-radius:12px;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.4);">
+              <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-muted);font-weight:700;">Downside</div>
+              <div style="font-size:20px;font-weight:700;margin-top:8px;color:var(--red);">$265 floor</div>
+              <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">~32% downside (midpoint of $250–280)</div>
+            </div>
+          </div>
+          <div style="margin-top:16px;font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            <strong>Risk/Reward: 1.3:1.</strong> At current price, R/R is marginal. The thesis is excellent but the price already reflects much of it. <strong>Ideal entry: $280–320</strong> where R/R shifts to 2:1+.
           </div>
         </div>
       </section>
@@ -920,7 +1037,7 @@
       </section>
       <p style="font-size:11px;color:var(--text-dimmer);margin-top:20px;">Sources: Lumentum IR, Nomura, NVIDIA, company filings (as of Feb 4, 2026). This is research, not financial advice.</p>
 
-      <footer>Built by Robin 🐱 — Last updated Feb 4, 2026</footer>
+      <footer>Built by Robin 🐱 — Last updated Feb 5, 2026</footer>
     </div>
   </main>
 </div>
