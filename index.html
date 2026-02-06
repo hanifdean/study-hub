@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Study Hub — Hanif & Sasya</title>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
@@ -523,7 +524,7 @@
   <!-- Search -->
   <div class="search-wrap">
     <span class="search-icon">🔍</span>
-    <input type="text" id="search-input" placeholder="What are you looking for? Try 'semiconductors', 'Coupa', 'mind map'..." autocomplete="off">
+    <input type="text" id="search-input" placeholder="Search pages... (press / to focus, Esc to clear)" autocomplete="off">
   </div>
 
   <!-- Controls: sort -->
@@ -1132,26 +1133,47 @@ let searchQuery = '';
 let sortMode = 'recent';
 
 // ============================================================
-// FUZZY SEARCH
+// FUZZY SEARCH (using Fuse.js)
 // ============================================================
-function fuzzyMatch(text, query) {
-  text = text.toLowerCase();
-  query = query.toLowerCase();
-  if (text.includes(query)) return true;
-  // simple subsequence match
-  let qi = 0;
-  for (let i = 0; i < text.length && qi < query.length; i++) {
-    if (text[i] === query[qi]) qi++;
-  }
-  return qi === query.length;
+let fuse = null;
+
+function initFuse() {
+  const options = {
+    keys: [
+      { name: 'title', weight: 0.4 },
+      { name: 'desc', weight: 0.2 },
+      { name: 'category', weight: 0.2 },
+      { name: 'tags', weight: 0.2 }
+    ],
+    threshold: 0.4,
+    ignoreLocation: true,
+    includeScore: true,
+    minMatchCharLength: 2
+  };
+  fuse = new Fuse(PAGES, options);
 }
 
 function matchesSearch(page) {
   if (!searchQuery) return true;
   const q = searchQuery.trim();
   if (!q) return true;
-  const haystack = [page.title, page.desc, page.category, ...page.tags].join(' ');
-  return fuzzyMatch(haystack, q);
+  
+  // Use Fuse.js if available, fallback to simple match
+  if (fuse) {
+    const results = fuse.search(q);
+    return results.some(r => r.item.id === page.id);
+  }
+  
+  // Fallback: simple fuzzy match
+  const haystack = [page.title, page.desc, page.category, ...page.tags].join(' ').toLowerCase();
+  const query = q.toLowerCase();
+  if (haystack.includes(query)) return true;
+  // subsequence match
+  let qi = 0;
+  for (let i = 0; i < haystack.length && qi < query.length; i++) {
+    if (haystack[i] === query[qi]) qi++;
+  }
+  return qi === query.length;
 }
 
 function matchesTags(page) {
@@ -1477,10 +1499,30 @@ function toggleTheme() {
     // Update page count
     updateCounts();
 
+    // Initialize Fuse.js for fuzzy search
+    initFuse();
+
     // Search
-    document.getElementById('search-input').addEventListener('input', function() {
+    const searchInput = document.getElementById('search-input');
+    searchInput.addEventListener('input', function() {
       searchQuery = this.value;
       render();
+    });
+
+    // Keyboard shortcuts: / to focus search, Esc to clear
+    document.addEventListener('keydown', function(e) {
+      // / to focus search (when not already in an input)
+      if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        searchInput.focus();
+      }
+      // Esc to clear search and blur
+      if (e.key === 'Escape' && document.activeElement === searchInput) {
+        searchInput.value = '';
+        searchQuery = '';
+        searchInput.blur();
+        render();
+      }
     });
 
     // Sort
