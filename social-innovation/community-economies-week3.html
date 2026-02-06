@@ -29,6 +29,8 @@
     --orange-glow: rgba(245, 158, 11, 0.12);
     --purple: #a78bfa;
     --purple-glow: rgba(167, 139, 250, 0.12);
+    --blue: #60a5fa;
+    --blue-glow: rgba(96, 165, 250, 0.12);
     --highlight: #fbbf24;
   }
 
@@ -53,6 +55,8 @@
     --orange-glow: rgba(217, 119, 6, 0.08);
     --purple: #7c3aed;
     --purple-glow: rgba(124, 58, 237, 0.08);
+    --blue: #2563eb;
+    --blue-glow: rgba(37, 99, 235, 0.08);
     --highlight: #b45309;
   }
 
@@ -130,6 +134,42 @@
   .insight-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--purple); margin-bottom: 0.5rem; }
   .insight-box p { font-size: 14px; line-height: 1.7; color: var(--text); }
 
+  /* QUOTE STYLING */
+  .quote-box {
+    background: var(--surface-alt); border-left: 4px solid var(--accent);
+    border-radius: 0 12px 12px 0; padding: 1.25rem 1.25rem 1.25rem 1.5rem; margin: 1.25rem 0;
+    position: relative;
+  }
+  .quote-box::before {
+    content: '"';
+    position: absolute;
+    top: 8px;
+    left: 12px;
+    font-size: 48px;
+    color: var(--accent);
+    opacity: 0.3;
+    font-family: Georgia, serif;
+    line-height: 1;
+  }
+  .quote-box blockquote {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text);
+    font-style: italic;
+    margin: 0 0 0.75rem 0;
+    padding-left: 24px;
+  }
+  .quote-box .citation {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-style: normal;
+    padding-left: 24px;
+  }
+  .quote-box .citation strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
   table {
     width: 100%; border-collapse: collapse; font-size: 13px; margin: 1rem 0;
   }
@@ -143,12 +183,6 @@
     display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1rem; margin: 1rem 0;
   }
-  .metric {
-    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-    padding: 1rem; text-align: center;
-  }
-  .metric .value { font-size: 20px; font-weight: 800; color: var(--accent); }
-  .metric .label { font-size: 11px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
 
   .reading-card {
     background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
@@ -165,6 +199,158 @@
   }
   @media (max-width: 600px) {
     .comparison-grid { grid-template-columns: 1fr; }
+  }
+
+  /* DIAGRAM STYLES */
+  .diagram {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+  }
+  .diagram-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  /* Framework Diagram */
+  .framework-grid {
+    display: grid;
+    grid-template-columns: 120px 1fr 1fr;
+    grid-template-rows: auto 1fr 1fr;
+    gap: 8px;
+    min-width: 500px;
+  }
+  .framework-grid .corner { }
+  .framework-grid .col-header {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    padding: 8px;
+    background: var(--surface-alt);
+    border-radius: 8px;
+  }
+  .framework-grid .row-header {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    padding: 12px 8px;
+    background: var(--surface-alt);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .framework-grid .cell {
+    background: var(--accent-glow);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+  }
+  .framework-grid .cell .type-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .framework-grid .cell .type-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .framework-grid .cell.market { background: var(--blue-glow); }
+  .framework-grid .cell.market .type-name { color: var(--blue); }
+  .framework-grid .cell.associative { background: var(--green-glow); }
+  .framework-grid .cell.associative .type-name { color: var(--green); }
+  .framework-grid .cell.moral { background: var(--purple-glow); }
+  .framework-grid .cell.moral .type-name { color: var(--purple); }
+  .framework-grid .cell.communal { background: var(--orange-glow); }
+  .framework-grid .cell.communal .type-name { color: var(--orange); }
+
+  /* Flow Diagram */
+  .flow-diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    min-width: 400px;
+  }
+  .flow-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .flow-node {
+    background: var(--surface-alt);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    text-align: center;
+    min-width: 100px;
+  }
+  .flow-node.highlight {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+  }
+  .flow-node .icon { font-size: 24px; margin-bottom: 4px; }
+  .flow-node .label { font-size: 11px; font-weight: 600; color: var(--text); }
+  .flow-arrow {
+    color: var(--text-muted);
+    font-size: 20px;
+  }
+  .flow-arrow.down { transform: rotate(90deg); }
+
+  /* ROSCA Cycle Diagram */
+  .rosca-cycle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 1rem 0;
+  }
+  .rosca-step {
+    background: var(--surface-alt);
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .rosca-step.active {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+  }
+  .rosca-step .num {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  .rosca-step .text {
+    font-size: 9px;
+    color: var(--text-muted);
+    line-height: 1.2;
+    padding: 0 4px;
+  }
+  .rosca-arrow {
+    color: var(--text-dim);
+    font-size: 16px;
   }
 
   .footer {
@@ -257,6 +443,8 @@
       border-color: var(--border);
       background: var(--surface);
     }
+    .framework-grid { min-width: 100%; grid-template-columns: 80px 1fr 1fr; }
+    .flow-diagram { min-width: 100%; }
   }
 
   @keyframes fadeUp {
@@ -294,150 +482,252 @@
     <h2>📚 The Readings</h2>
     
     <div class="reading-card">
-      <div class="source">Academy of Management Review, 2004</div>
+      <div class="source">Academy of Management Review, Vol. 29, No. 1, pp. 28-49</div>
       <div class="title">Systems of Exchange</div>
-      <div class="authors">Nicole Woolsey Biggart & Rick Delbridge</div>
+      <div class="authors">Nicole Woolsey Biggart & Rick Delbridge (2004)</div>
       <div class="desc">Develops a classification of exchange systems using network analysis, economics, and cultural sociology. Argues that the "free market" is just one possible economy—other types aren't "imperfections" but qualitatively different systems.</div>
     </div>
 
     <div class="reading-card">
-      <div class="source">Oxford University Press, 2022</div>
-      <div class="title">Community Economies in the Global South (Conclusion)</div>
-      <div class="authors">Caroline Shenaz Hossein & Mary Njeri Kinyanjui</div>
+      <div class="source">Oxford University Press, Chapter 12, pp. 223-240</div>
+      <div class="title">Community Economies in the Global South: Case Studies of ROSCAs</div>
+      <div class="authors">Caroline Shenaz Hossein & Mary Njeri Kinyanjui (2022)</div>
       <div class="desc">Examines ROSCAs (Rotating Savings and Credit Associations) and informal cooperatives as legitimate business forms. Argues that Global South communities have been practicing community economies long before Western development frameworks.</div>
     </div>
   </div>
 
   <!-- READING 1: SYSTEMS OF EXCHANGE -->
   <div class="section" id="systems-of-exchange">
-    <h2>1. Systems of Exchange (Biggart & Delbridge)</h2>
+    <h2>1. Systems of Exchange (Biggart & Delbridge, 2004)</h2>
     
     <h3>The Core Argument</h3>
-    <p>Traditional economics treats "the market" as the default—any other form of exchange is seen as an <strong>imperfection</strong> or <strong>friction</strong>. Biggart & Delbridge argue this is wrong: there are <strong>qualitatively different systems of exchange</strong>, each with its own logic, social relations, and outcomes.</p>
+    <p>Traditional economics treats "the market" as the default—any other form of exchange is seen as an <strong>imperfection</strong> or <strong>friction</strong>. Biggart & Delbridge argue this is wrong.</p>
 
-    <div class="highlight-box">
-      <div class="label">Key Insight</div>
-      <p>Markets are not natural or universal—they are <strong>culturally constructed</strong> and <strong>socially embedded</strong>. The "free market" is just one type of exchange arena, not the ideal against which all others should be measured.</p>
+    <div class="quote-box">
+      <blockquote>The "market" is but one form of exchange arena found in society. We argue that there may be qualitatively distinct types of socially organized exchange that support substantively different orientations to economic action and, hence, culturally different trading arenas.</blockquote>
+      <div class="citation"><strong>Biggart & Delbridge, 2004, p. 29</strong></div>
+    </div>
+
+    <h3>The Problem with Traditional Economics</h3>
+    <p>Classical economics offers a "perfect market" as a hypothetical ideal, but this makes markets empirically empty:</p>
+
+    <div class="quote-box">
+      <blockquote>Deviations from the ideal are conceptualized as imperfections and social relations between economic actors as friction.</blockquote>
+      <div class="citation"><strong>Biggart & Delbridge, 2004, p. 29</strong></div>
+    </div>
+
+    <div class="quote-box">
+      <blockquote>Markets [now] became empirically empty conceptualizations of the forums in which exchange costlessly took place.</blockquote>
+      <div class="citation"><strong>Demsetz (1982), cited in Biggart & Delbridge, 2004, p. 29</strong></div>
     </div>
 
     <h3>Three Approaches to Understanding Markets</h3>
     
     <div class="card">
       <div class="card-title">1. Economic Approach (Traditional)</div>
-      <p>Markets as <strong>price-setting mechanisms</strong>. Assumes rational actors, complete information, homogeneous commodities. Deviations = "imperfections." Social relations = "friction."</p>
-      <p><em>Limitation:</em> Treats markets as abstract, empirically empty concepts.</p>
+      <p>Markets as <strong>price-setting mechanisms</strong>. The "perfect market" assumes: sufficient firms, homogeneous commodities, independent actors, complete knowledge.</p>
     </div>
 
     <div class="card">
       <div class="card-title">2. Markets as Social Structures</div>
-      <p>Markets are networks of <strong>concrete social relations</strong>. Position in a network affects outcomes. Key theorists: Granovetter (embeddedness), White, Burt, Baker.</p>
-      <p><em>Limitation:</em> Focuses on structure of ties, not content or culture of ties.</p>
+      <p>Granovetter's (1985) "embeddedness" concept—markets are constituted by <strong>concrete social relations</strong>, not just rational individuals.</p>
+    </div>
+
+    <div class="quote-box">
+      <blockquote>The market is constituted by concrete social relations and is not simply a collection of rational individuals.</blockquote>
+      <div class="citation"><strong>Biggart & Delbridge, 2004, p. 30</strong></div>
     </div>
 
     <div class="card">
       <div class="card-title">3. Markets as Cultural Arenas</div>
-      <p>Markets as <strong>constructed social worlds</strong> with shared meanings, values, and beliefs. Culture shapes how actors define interests, evaluate options, and legitimate actions.</p>
-      <p>Key insight: "Categories of economic action are culturally variable and socially constructed."</p>
+      <p>Markets as constructed social worlds with shared meanings, values, and beliefs.</p>
+    </div>
+
+    <div class="quote-box">
+      <blockquote>Categories of economic action are culturally variable and socially constructed.</blockquote>
+      <div class="citation"><strong>DiMaggio (1994), cited in Biggart & Delbridge, 2004, p. 30</strong></div>
     </div>
 
     <h3>The Classification Framework</h3>
-    <p>Biggart & Delbridge combine <strong>network structure</strong> + <strong>cultural logic</strong> to classify different exchange systems:</p>
+    <p>Biggart & Delbridge combine <strong>logic of action</strong> (what motivates actors) + <strong>structure of relations</strong> (how actors connect) to create a 2×2 typology:</p>
 
-    <table>
-      <tr>
-        <th>Dimension</th>
-        <th>What it captures</th>
-      </tr>
-      <tr>
-        <td><strong>Logic of Action</strong></td>
-        <td>What motivates actors? Self-interest? Obligation? Solidarity? Status?</td>
-      </tr>
-      <tr>
-        <td><strong>Structure of Relations</strong></td>
-        <td>How are actors connected? Anonymous? Network-embedded? Hierarchical?</td>
-      </tr>
-    </table>
+    <!-- FRAMEWORK DIAGRAM -->
+    <div class="diagram">
+      <div class="diagram-title">Systems of Exchange Typology</div>
+      <div class="framework-grid">
+        <div class="corner"></div>
+        <div class="col-header">Dispersed Relations<br><span style="font-weight:400;font-size:10px;">(anonymous, arm's-length)</span></div>
+        <div class="col-header">Embedded Relations<br><span style="font-weight:400;font-size:10px;">(networked, ongoing ties)</span></div>
+        
+        <div class="row-header">Instrumental<br>Logic<br><span style="font-weight:400;font-size:10px;">(self-interest)</span></div>
+        <div class="cell market">
+          <div class="type-name">Price System</div>
+          <div class="type-desc">Classic "free market"<br>Anonymous exchange<br>Price = signal</div>
+        </div>
+        <div class="cell associative">
+          <div class="type-name">Associative</div>
+          <div class="type-desc">Network-based exchange<br>Strategic relationships<br>Repeat transactions</div>
+        </div>
+        
+        <div class="row-header">Substantive<br>Logic<br><span style="font-weight:400;font-size:10px;">(obligation, solidarity)</span></div>
+        <div class="cell moral">
+          <div class="type-name">Moral</div>
+          <div class="type-desc">Value-driven exchange<br>Fair trade, ethical<br>Shared beliefs</div>
+        </div>
+        <div class="cell communal">
+          <div class="type-name">Communal</div>
+          <div class="type-desc">Reciprocity & solidarity<br>ROSCAs, cooperatives<br>Social bonds = glue</div>
+        </div>
+      </div>
+    </div>
 
     <div class="insight-box">
       <div class="label">Why This Matters for Social Innovation</div>
-      <p>If you're designing a social enterprise, you need to understand <strong>what kind of exchange system</strong> you're operating in (or creating). Imposing a "market" logic where solidarity or reciprocity governs will fail—and vice versa.</p>
+      <p>If you're designing a social enterprise, you need to understand <strong>what kind of exchange system</strong> you're operating in. Imposing market logic where solidarity governs (or vice versa) will fail.</p>
     </div>
   </div>
 
   <!-- READING 2: COMMUNITY ECONOMIES -->
   <div class="section" id="community-economies">
-    <h2>2. Community Economies in the Global South (Hossein & Kinyanjui)</h2>
+    <h2>2. Community Economies in the Global South (Hossein & Kinyanjui, 2022)</h2>
     
     <h3>The Core Argument</h3>
-    <p>Western development institutions have historically dismissed informal, indigenous economies as "primitive" or "undeveloped." This reading argues the opposite: <strong>community economies are sophisticated, sustainable, and legitimate</strong>—and the Global South has been doing them for centuries.</p>
+    <p>Western development has dismissed informal economies as "primitive." This reading argues the opposite:</p>
+
+    <div class="quote-box">
+      <blockquote>Our research acknowledges that indigenous business cooperatives thrive in spite of the unleveled playing field that people outside of the West endure.</blockquote>
+      <div class="citation"><strong>Hossein & Kinyanjui, 2022, p. 223</strong></div>
+    </div>
+
+    <h3>The Colonial Legacy</h3>
+    <p>The authors trace how Western epistemologies labeled Global South practices as inferior:</p>
+
+    <div class="quote-box">
+      <blockquote>Imperialism, slavery, and colonialism are all part of the origins of capitalism; and racist colonizers extracted resources from the Global South with the sole purpose of enriching their own economies.</blockquote>
+      <div class="citation"><strong>Hossein & Kinyanjui, 2022, p. 223</strong></div>
+    </div>
+
+    <div class="quote-box">
+      <blockquote>Even after slavery and colonization was outlawed for its immorality, modernists were still permitted to label the people of the Global South as inept, primitive, communal, and incapable of managing their own affairs.</blockquote>
+      <div class="citation"><strong>Hossein & Kinyanjui, 2022, p. 223</strong></div>
+    </div>
+
+    <h3>The Binary Problem</h3>
+
+    <div class="quote-box">
+      <blockquote>For too long, the binary has been extreme versions of capitalism versus communism controlling the thinking on economics. Cedric Robinson (1983) in Black Marxism rejected this binary to some extent because both of these theories were very much rooted in European social forces that were fundamentally racist, Western, and white.</blockquote>
+      <div class="citation"><strong>Hossein & Kinyanjui, 2022, p. 224</strong></div>
+    </div>
 
     <div class="warning-box">
-      <div class="label">The Problem with Western Development</div>
-      <p>Structural Adjustment Programs (SAPs) and "modernization" projects imposed free-market orthodoxy on the Global South, ignoring existing community-based systems. The binary of <strong>capitalism vs. communism</strong> left no room for indigenous alternatives.</p>
+      <div class="label">Structural Adjustment Programs (SAPs)</div>
+      <p>The intent of these political projects was "to pursue ultra-liberalized free-market orthodoxy, in which people do not benefit from welfare-enhancing programs, and to remake these places into neoliberal market regimes of privatization" (p. 224).</p>
     </div>
 
-    <h3>What Are Community Economies?</h3>
-    <p>Economic activities rooted in <strong>self-reliance, solidarity, and collective action</strong>. They prioritize equity and social bonds over individual profit maximization.</p>
+    <h3>What Are ROSCAs?</h3>
+    
+    <!-- ROSCA CYCLE DIAGRAM -->
+    <div class="diagram">
+      <div class="diagram-title">How ROSCAs Work — The Rotating Cycle</div>
+      <div class="rosca-cycle">
+        <div class="rosca-step active">
+          <div class="num">1</div>
+          <div class="text">Members contribute</div>
+        </div>
+        <div class="rosca-arrow">→</div>
+        <div class="rosca-step">
+          <div class="num">2</div>
+          <div class="text">Pool funds</div>
+        </div>
+        <div class="rosca-arrow">→</div>
+        <div class="rosca-step">
+          <div class="num">3</div>
+          <div class="text">One member receives pot</div>
+        </div>
+        <div class="rosca-arrow">→</div>
+        <div class="rosca-step">
+          <div class="num">4</div>
+          <div class="text">Rotate until all receive</div>
+        </div>
+        <div class="rosca-arrow">↺</div>
+      </div>
+    </div>
 
     <div class="card">
-      <div class="card-title">ROSCAs (Rotating Savings & Credit Associations)</div>
-      <p>Groups where members contribute regularly and take turns receiving the pooled funds. Known by many names:</p>
-      <ul>
-        <li><strong>Indonesia:</strong> Arisan</li>
-        <li><strong>Nigeria:</strong> Esusu</li>
-        <li><strong>Kenya:</strong> Chama</li>
-        <li><strong>Caribbean:</strong> Sou-sou, Partner</li>
-        <li><strong>West Africa (Francophone):</strong> Tontines</li>
-      </ul>
-      <p>ROSCAs are primarily organized by <strong>women</strong> and serve both financial and social functions.</p>
+      <div class="card-title">ROSCAs Around the World</div>
+      <table>
+        <tr><th>Region</th><th>Local Name</th></tr>
+        <tr><td>Indonesia</td><td><strong>Arisan</strong></td></tr>
+        <tr><td>Nigeria</td><td>Esusu</td></tr>
+        <tr><td>Kenya</td><td>Chama</td></tr>
+        <tr><td>Caribbean</td><td>Sou-sou, Partner</td></tr>
+        <tr><td>West Africa (Francophone)</td><td>Tontines</td></tr>
+        <tr><td>Niger</td><td>Mata Masu Dubara ("Women on the Move")</td></tr>
+      </table>
     </div>
 
-    <h3>Key Themes</h3>
+    <div class="quote-box">
+      <blockquote>Rotating savings and credit associations (ROSCAs) and informal cooperatives mainly organized by women show that informality can advance people's livelihoods, and they are effective forms of business.</blockquote>
+      <div class="citation"><strong>Hossein & Kinyanjui, 2022, p. 225</strong></div>
+    </div>
 
+    <h3>Indigenous Philosophies</h3>
+    
     <div class="metric-grid">
       <div class="card">
-        <div class="card-title">🏛️ Colonial Legacy</div>
-        <p>Western epistemologies dominated discourse, labeling Global South practices as "inept" and "primitive." This narrative justified extraction and paternalistic development.</p>
+        <div class="card-title">🌍 Ubuntu</div>
+        <p>"I am because we are" — Southern African philosophy of interconnected humanity</p>
       </div>
       <div class="card">
-        <div class="card-title">🌱 Indigenous Knowledge</div>
-        <p>Philosophies like <strong>Ubuntu</strong> (Southern Africa), <strong>Ujamaa</strong> (Tanzania), and <strong>Kombit</strong> (Haiti) offer frameworks for cooperation that predate Western economics.</p>
+        <div class="card-title">🇹🇿 Ujamaa</div>
+        <p>Tanzanian concept of familyhood and collective economics</p>
       </div>
       <div class="card">
-        <div class="card-title">👩 Feminist Economics</div>
-        <p>Gibson-Graham's "diverse economies" framework recognizes that most economic activity happens <strong>outside</strong> formal capitalism—in households, communities, and informal networks, often led by women.</p>
+        <div class="card-title">🇭🇹 Kombit</div>
+        <p>Haitian collective labor practice rooted in mutual aid</p>
       </div>
-      <div class="card">
-        <div class="card-title">🏆 Nobel Recognition</div>
-        <p>Elinor Ostrom won the Nobel Prize (2009) for showing that communities can sustainably manage common resources—contrary to the "tragedy of the commons" narrative.</p>
-      </div>
+    </div>
+
+    <div class="quote-box">
+      <blockquote>Philosophies of Kombit, Ubuntu, Ujamaa are important to knowing how we build cooperation in business. The take-away in this book is that people of the Global South are the originators of the practice of community economies, exceling in humanizing the economy even when it is risky to do so.</blockquote>
+      <div class="citation"><strong>Hossein & Kinyanjui, 2022, p. 226</strong></div>
     </div>
 
     <h3>The Indonesia Case: Arisan</h3>
-    <p>The reading highlights research by <strong>Ririn Haryani & Kelly Dombroski</strong> on arisan in Indonesia:</p>
+    <p>The reading highlights research by <strong>Ririn Haryani & Kelly Dombroski</strong> on arisan:</p>
 
-    <div class="card">
-      <div class="card-title">Arisan: More Than Savings</div>
-      <ul>
-        <li><strong>100+ years</strong> of practice in Indonesia</li>
-        <li>Combines <strong>financial function</strong> (rotating credit) with <strong>social function</strong> (regular gatherings, care networks)</li>
-        <li>Reflects <strong>gotong royong</strong> (mutual assistance) values</li>
-        <li>Used by government for socialization programs (health, sanitation)</li>
-        <li>Members challenge "rational economic man" by operating collectively, not through self-interest</li>
-      </ul>
+    <div class="quote-box">
+      <blockquote>In a quiet way, the members in the Arisan system challenge the rational economic man by proposing a caring relational subject who operates collectively with others and not through self-interest.</blockquote>
+      <div class="citation"><strong>Hossein & Kinyanjui, 2022, p. 233</strong></div>
     </div>
 
-    <div class="highlight-box">
-      <div class="label">Arisan & Policy Influence</div>
-      <p>The authors note that arisan users were able to <strong>influence OJK (Indonesian Financial Services Authority)</strong> to issue regulations on financial inclusion. This represents grassroots influence on formal policy—community practices shaping what "financial inclusion" means.</p>
+    <div class="quote-box">
+      <blockquote>Arisan users can be co-opted by political systems, as noted, but the authors reveal how some users were able to influence the Indonesian Financial Service Authority to issue new regulations on financial inclusion. This collective organizing and coming together enables Arisan members to lobby the government for financial inclusion, and this is a major piece of transformative work.</blockquote>
+      <div class="citation"><strong>Hossein & Kinyanjui, 2022, p. 233</strong></div>
     </div>
 
     <h3>Critique of INGOs</h3>
-    <p>The reading is critical of how international NGOs have co-opted indigenous practices:</p>
+
+    <div class="quote-box">
+      <blockquote>Western aid monies are used to fund international non-governmental organizations (INGOs), such as CARE International, who are given millions of US dollars to assist in building up community and local cooperatives. INGOs know full well that money cooperatives and ROSCAs are very much embedded in the societies they want to help. Yet, they are paid subsidies to mimic local collectives that African people have been doing for centuries, and rebranding them as village savings loans (VSL) programs.</blockquote>
+      <div class="citation"><strong>Hossein & Kinyanjui, 2022, p. 225-226</strong></div>
+    </div>
 
     <div class="warning-box">
       <div class="label">The INGO Problem</div>
-      <p>Organizations like CARE receive millions to "teach" Village Savings & Loans (VSL) programs—essentially <strong>rebranding</strong> what African women have done for centuries. Western consultants profit from indigenous knowledge without crediting or compensating local communities.</p>
+      <p>Foreign consultants profit from "teaching" what local women have done for centuries. The knowledge flows one way—from communities to INGOs—without crediting or compensating the originators.</p>
+    </div>
+
+    <h3>The Feminist Economics Lens</h3>
+
+    <div class="quote-box">
+      <blockquote>The cases in this book are anchored in the feminist theories of diverse economies (DE) led by J. K. Gibson-Graham (1996, 2006) and the Community Economies Research Network (CERN). For three decades or more, feminist scholars have been writing about the existence of community economies.</blockquote>
+      <div class="citation"><strong>Hossein & Kinyanjui, 2022, p. 226</strong></div>
+    </div>
+
+    <div class="quote-box">
+      <blockquote>Most people in the Global South have had only non-capitalist experiences of solidarity and reciprocity.</blockquote>
+      <div class="citation"><strong>Hossein & Kinyanjui, 2022, p. 226</strong></div>
     </div>
   </div>
 
@@ -445,16 +735,50 @@
   <div class="section" id="synthesis">
     <h2>3. Connecting the Two Readings</h2>
 
-    <p>Both readings challenge the assumption that the "free market" is the natural or best form of economic organization:</p>
+    <!-- CONNECTION DIAGRAM -->
+    <div class="diagram">
+      <div class="diagram-title">How The Readings Connect</div>
+      <div class="flow-diagram">
+        <div class="flow-row">
+          <div class="flow-node">
+            <div class="icon">📚</div>
+            <div class="label">Biggart & Delbridge</div>
+          </div>
+          <div class="flow-arrow">+</div>
+          <div class="flow-node">
+            <div class="icon">🌍</div>
+            <div class="label">Hossein & Kinyanjui</div>
+          </div>
+        </div>
+        <div class="flow-arrow down">↓</div>
+        <div class="flow-row">
+          <div class="flow-node highlight">
+            <div class="icon">💡</div>
+            <div class="label">Shared Insight</div>
+          </div>
+        </div>
+        <div class="flow-arrow down">↓</div>
+        <div class="flow-row" style="max-width: 500px; text-align: center;">
+          <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
+            <strong>The "free market" is not the default or ideal.</strong><br>
+            Different societies organize exchange through different logics—solidarity, reciprocity, obligation—that are equally valid and often more sustainable.
+          </p>
+        </div>
+      </div>
+    </div>
 
     <div class="comparison-grid">
       <div class="card">
         <div class="card-title">Biggart & Delbridge</div>
-        <p>Academic/theoretical approach. Shows that exchange systems vary by <strong>logic of action</strong> and <strong>structure of relations</strong>. Markets are culturally constructed.</p>
+        <p><strong>Approach:</strong> Academic/theoretical</p>
+        <p><strong>Method:</strong> Classification framework</p>
+        <p><strong>Key insight:</strong> Exchange systems vary by logic + structure</p>
       </div>
       <div class="card">
         <div class="card-title">Hossein & Kinyanjui</div>
-        <p>Empirical/activist approach. Documents how <strong>community economies</strong> in the Global South embody alternative logics—solidarity, reciprocity, collective care.</p>
+        <p><strong>Approach:</strong> Empirical/activist</p>
+        <p><strong>Method:</strong> Case studies of ROSCAs</p>
+        <p><strong>Key insight:</strong> Global South has practiced community economies for centuries</p>
       </div>
     </div>
 
@@ -462,84 +786,112 @@
 
     <div class="card">
       <div class="card-title">1. Know Your Exchange System</div>
-      <p>Before designing a social enterprise, understand what exchange logic already exists. Imposing market logic on a solidarity-based community (or vice versa) will create friction.</p>
+      <p>Before designing a social enterprise, understand what exchange logic already exists. ROSCAs are <strong>communal systems</strong> in Biggart & Delbridge's framework—driven by solidarity and embedded relations.</p>
     </div>
 
     <div class="card">
       <div class="card-title">2. Value Indigenous Knowledge</div>
-      <p>Don't reinvent the wheel. Community economies have solved problems for centuries. Partner with, learn from, and credit local knowledge rather than extracting it.</p>
+      <p>Don't reinvent the wheel. Community economies have solved problems for centuries. Partner with and learn from local knowledge rather than extracting it.</p>
     </div>
 
     <div class="card">
       <div class="card-title">3. Question "Scaling" Assumptions</div>
-      <p>Western scaling models assume growth = good. Community economies prioritize <strong>sustainability, equity, and social cohesion</strong> over scale. What if staying small is the right strategy?</p>
+      <p>Western scaling models assume growth = good. Community economies prioritize <strong>sustainability, equity, and social cohesion</strong> over scale.</p>
+    </div>
+  </div>
+
+  <!-- KEY QUOTES -->
+  <div class="section" id="key-quotes">
+    <h2>4. Key Quotes for Citation</h2>
+
+    <h3>On Markets as Social Constructions</h3>
+    <div class="quote-box">
+      <blockquote>The "market" is but one form of exchange arena found in society.</blockquote>
+      <div class="citation"><strong>Biggart & Delbridge, 2004, p. 29</strong></div>
     </div>
 
-    <div class="card">
-      <div class="card-title">4. Recognize Multiple Payors</div>
-      <p>In community economies, "who pays" isn't just financial. Social obligations, reciprocity, and collective contribution are forms of payment. This connects to Week 3's "Who Pays?" theme.</p>
+    <h3>On Colonial Development Narratives</h3>
+    <div class="quote-box">
+      <blockquote>The spread of modernity followed a linear path for economic growth, tailored by European "enlightened" ideas. The form of development imposed on the South was largely to rehabilitate the Global South; it did not see a two-way exchange of knowledge sharing.</blockquote>
+      <div class="citation"><strong>Hossein & Kinyanjui, 2022, p. 223-224</strong></div>
+    </div>
+
+    <h3>On ROSCAs as Legitimate Business</h3>
+    <div class="quote-box">
+      <blockquote>Recognizing the variety of economic cooperation and mutual aid occurring in the Global South is part of understanding the equity in business.</blockquote>
+      <div class="citation"><strong>Hossein & Kinyanjui, 2022, p. 225</strong></div>
+    </div>
+
+    <h3>On Arisan Challenging "Economic Man"</h3>
+    <div class="quote-box">
+      <blockquote>The members in the Arisan system challenge the rational economic man by proposing a caring relational subject who operates collectively with others and not through self-interest.</blockquote>
+      <div class="citation"><strong>Hossein & Kinyanjui, 2022, p. 233</strong></div>
+    </div>
+
+    <h3>On Global South as Originators</h3>
+    <div class="quote-box">
+      <blockquote>People of the Global South are the originators of the practice of community economies, exceling in humanizing the economy even when it is risky to do so.</blockquote>
+      <div class="citation"><strong>Hossein & Kinyanjui, 2022, p. 226</strong></div>
     </div>
   </div>
 
   <!-- KEY CONCEPTS -->
   <div class="section" id="key-concepts">
-    <h2>4. Key Concepts Glossary</h2>
+    <h2>5. Key Concepts Glossary</h2>
 
     <table>
       <tr>
         <th>Term</th>
         <th>Definition</th>
+        <th>Source</th>
       </tr>
       <tr>
         <td><strong>Embeddedness</strong></td>
-        <td>Economic action is embedded in social relations, not separate from them (Granovetter/Polanyi)</td>
+        <td>Economic action is embedded in social relations, not separate from them</td>
+        <td>Granovetter (1985); Polanyi (1957)</td>
       </tr>
       <tr>
         <td><strong>ROSCA</strong></td>
-        <td>Rotating Savings & Credit Association—members pool funds and take turns receiving the pot</td>
-      </tr>
-      <tr>
-        <td><strong>Gotong Royong</strong></td>
-        <td>Indonesian concept of mutual assistance and collective responsibility</td>
-      </tr>
-      <tr>
-        <td><strong>Ubuntu</strong></td>
-        <td>"I am because we are"—Southern African philosophy of interconnected humanity</td>
+        <td>Rotating Savings & Credit Association—members pool funds, take turns receiving</td>
+        <td>Hossein & Kinyanjui, 2022</td>
       </tr>
       <tr>
         <td><strong>Diverse Economies</strong></td>
-        <td>Gibson-Graham's framework recognizing economic activity beyond formal capitalism</td>
-      </tr>
-      <tr>
-        <td><strong>Structural Adjustment</strong></td>
-        <td>IMF/World Bank programs that imposed free-market policies on developing countries</td>
+        <td>Framework recognizing economic activity beyond formal capitalism</td>
+        <td>Gibson-Graham (1996, 2006)</td>
       </tr>
       <tr>
         <td><strong>Logic of Action</strong></td>
-        <td>What motivates actors—self-interest, obligation, solidarity, status, etc.</td>
+        <td>What motivates actors—self-interest (instrumental) vs. obligation/solidarity (substantive)</td>
+        <td>Biggart & Delbridge, 2004</td>
+      </tr>
+      <tr>
+        <td><strong>Structural Adjustment</strong></td>
+        <td>IMF/World Bank programs imposing free-market policies on developing countries</td>
+        <td>Hossein & Kinyanjui, 2022</td>
       </tr>
     </table>
   </div>
 
   <!-- DISCUSSION QUESTIONS -->
   <div class="section" id="discussion">
-    <h2>5. Discussion Questions</h2>
+    <h2>6. Discussion Questions</h2>
 
     <div class="card">
       <div class="card-title">For Class Discussion</div>
       <ol style="font-size: 14px; line-height: 1.8; color: var(--text-secondary); margin-left: 1.25rem;">
-        <li>How would you classify <strong>arisan</strong> using Biggart & Delbridge's framework? What logic of action and structure of relations does it reflect?</li>
-        <li>The readings critique Western development as paternalistic. But is there a role for external support in strengthening community economies? Where's the line?</li>
-        <li>If community economies are so effective, why haven't they "scaled"? Is that even the right question to ask?</li>
+        <li>Using Biggart & Delbridge's framework, which quadrant does <strong>arisan</strong> belong to? Why?</li>
+        <li>The readings critique Western development as paternalistic. Is there a role for external support in strengthening community economies? Where's the line?</li>
+        <li>If community economies are so effective, why haven't they "scaled"? Is that even the right question?</li>
         <li>How might social enterprises <strong>learn from</strong> rather than <strong>replace</strong> existing community economies?</li>
-        <li>The arisan case shows grassroots influence on OJK policy. What conditions enabled this? How can community voices be amplified in other contexts?</li>
+        <li>The arisan case shows grassroots influence on OJK policy. What conditions enabled this? How can community voices be amplified elsewhere?</li>
       </ol>
     </div>
   </div>
 
   <div class="footer">
-    <p>Study Hub — Social Innovation & Design</p>
-    <p style="margin-top: 4px;">Sources: Biggart & Delbridge (2004), Hossein & Kinyanjui (2022), Haryani & Dombroski</p>
+    <p>Study Hub — Social Innovation & Design (MG4G2) Week 3</p>
+    <p style="margin-top: 4px;">Sources: Biggart & Delbridge (2004), Hossein & Kinyanjui (2022)</p>
   </div>
 
 </div>
