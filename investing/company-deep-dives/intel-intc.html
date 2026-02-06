@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Intel (INTC) — Company Deep Dive</title>
+<title>Intel (INTC) - Company Deep Dive</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
@@ -367,8 +367,8 @@
         </button>
       </div>
 
-      <h1>Intel (INTC) — Company Deep Dive</h1>
-      <p class="subtitle">IDM turnaround meets foundry ambition: 18A ramp, AI‑era CPU defense, and a high‑stakes bet against TSMC.</p>
+      <h1>Intel (INTC) - Company Deep Dive</h1>
+      <p class="subtitle">IDM turnaround meets foundry ambition: 18A ramp, AI-era CPU defense, and a high-stakes bet against TSMC.</p>
 
       <div class="stats-grid">
         <div class="stat-card">
@@ -379,7 +379,7 @@
         <div class="stat-card">
           <div class="label">Market Cap</div>
           <div class="value">~$260B</div>
-          <div class="note">52‑week high ~$54.60</div>
+          <div class="note">52-week high ~$54.60</div>
         </div>
         <div class="stat-card">
           <div class="label">FY25 Revenue</div>
@@ -393,11 +393,63 @@
         </div>
       </div>
 
+      <section class="section" id="executive-summary">
+        <h2>🧭 Executive Summary</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>Foundry pivot underway.</strong> Intel is the world's largest IDM attempting to become a credible #2 foundry behind TSMC. The 18A node has reached HVM at Fab 52 in Arizona.</div>
+            <div><strong>Strategic validation.</strong> Microsoft reportedly committed to 18A-P for Maia 2 AI accelerators. NVIDIA invested $5B equity, SoftBank $2B in IFS. ~$8B CHIPS Act funding received.</div>
+            <div><strong>Financial stress but improving.</strong> FY25: $52.9B revenue, $0.42 non-GAAP EPS. Q1 2026 guide missed consensus (supply constraints), but 18A ramp is the key milestone.</div>
+            <div><strong>Binary outcome.</strong> If 18A succeeds and external customers sign on, Intel re-rates as a foundry. If it fails, the stock is a value trap. This is speculative, not defensive.</div>
+          </div>
+          <div style="padding:12px 16px;border-left:3px solid var(--accent);background:var(--surface-alt);border-radius:0 10px 10px 0;margin-top:12px;">
+            <p style="font-size:12px;font-style:italic;color:var(--text-secondary);line-height:1.6;">
+              "18A is in high-volume manufacturing. This is not a press release - we are shipping wafers. The Microsoft relationship validates our foundry roadmap."
+            </p>
+            <p style="font-size:11px;color:var(--text-dim);margin-top:6px;">- CEO Lip-Bu Tan, Q4 2025 Earnings Call (Jan 22, 2026)</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="variant-view">
+        <h2>🎯 Variant View - Where We Disagree with Consensus</h2>
+        <div class="card" style="border-left:3px solid var(--accent);">
+          <div style="display:grid;gap:14px;font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            <div>
+              <strong style="color:var(--text);">What consensus believes:</strong>
+              <ul style="margin-top:8px;padding-left:18px;">
+                <li>Intel is a "Hold" - the turnaround is too uncertain to bet on.</li>
+                <li>x86 is in structural decline vs. ARM and custom silicon.</li>
+                <li>18A will never achieve TSMC-equivalent yields and reliability.</li>
+                <li>$15-20B/year capex will destroy ROIC for years.</li>
+              </ul>
+            </div>
+            <div>
+              <strong style="color:var(--text);">Why we think consensus is wrong:</strong>
+              <ol style="margin-top:8px;padding-left:18px;">
+                <li><strong>18A HVM is real, not vaporware.</strong> Intel reached high-volume manufacturing at Fab 52 with ~40K wafers/month. The PDK has been delivered to customers. This is execution, not a roadmap promise. The skepticism is priced in; the delivery isn't.</li>
+                <li><strong>Microsoft anchor validates external credibility.</strong> Microsoft's reported commitment to 18A-P for Maia 2 is the first major external customer for Intel Foundry. One major hyperscaler opens doors to others. This changes the narrative from "can Intel compete?" to "Intel is competing."</li>
+                <li><strong>AI server demand supports x86 near-term.</strong> Custom Xeon with NVLink integration validates Intel CPUs in AI nodes. AI servers still need x86 control planes. The ARM threat is real long-term but not immediate.</li>
+              </ol>
+            </div>
+            <div>
+              <strong style="color:var(--text);">The evidence:</strong>
+              <ul style="margin-top:8px;padding-left:18px;">
+                <li>Q4 2025 earnings: 18A in HVM at Fab 52, 18A-P PDK delivered to customers.</li>
+                <li>Reports: Microsoft using 18A-P for Maia 2 AI accelerators (potentially $15B lifetime deal value).</li>
+                <li>DCAI revenue: $4.7B in Q4 (+9% YoY) with Granite Rapids ramp underway.</li>
+                <li>Strategic investments: $5B NVIDIA equity, $2B SoftBank, ~$8B CHIPS Act - external validation of the turnaround.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="section" id="company-overview">
         <h2>🏢 Company Overview</h2>
         <div class="card">
           <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
-            Intel is the world’s largest <a href="#jargon-idm" class="jargon">IDM</a>, designing and manufacturing its own semiconductors while attempting to become a leading contract foundry through <a href="#jargon-ifs" class="jargon">IFS</a>. Under CEO Lip‑Bu Tan, Intel is divesting non‑core assets and refocusing on x86 CPUs plus a foundry transformation built around the <a href="#jargon-18a" class="jargon">18A</a> node, with aggressive plans for <a href="#jargon-14a" class="jargon">14A</a>.
+            Intel is the world's largest <a href="#jargon-idm" class="jargon">IDM</a>, designing and manufacturing its own semiconductors while attempting to become a leading contract foundry through <a href="#jargon-ifs" class="jargon">IFS</a>. Under CEO Lip-Bu Tan, Intel is divesting non-core assets and refocusing on x86 CPUs plus a foundry transformation built around the <a href="#jargon-18a" class="jargon">18A</a> node, with aggressive plans for <a href="#jargon-14a" class="jargon">14A</a>.
           </p>
           <div class="pill-row">
             <span class="pill">Founded 1968</span>
@@ -411,7 +463,7 @@
           <table>
             <thead>
               <tr>
-                <th>Segment (Post‑2025 Reorg)</th>
+                <th>Segment (Post-2025 Reorg)</th>
                 <th class="num">Description</th>
                 <th class="num">FY2025 Revenue</th>
               </tr>
@@ -430,7 +482,7 @@
               <tr>
                 <td>Intel Foundry (IFS)</td>
                 <td class="num">Internal + external manufacturing</td>
-                <td class="num">$4.5B Q4 run‑rate</td>
+                <td class="num">$4.5B Q4 run-rate</td>
               </tr>
               <tr>
                 <td>Mobileye</td>
@@ -467,7 +519,7 @@
                 <td class="num">-4.1%</td>
               </tr>
               <tr>
-                <td>Non‑GAAP EPS</td>
+                <td>Non-GAAP EPS</td>
                 <td class="num">$0.15</td>
                 <td class="num">$0.08</td>
                 <td class="num">Improved</td>
@@ -475,11 +527,11 @@
               <tr>
                 <td>GAAP Net Income</td>
                 <td class="num">-$600M</td>
-                <td class="num">—</td>
+                <td class="num">-</td>
                 <td class="num">Worse</td>
               </tr>
               <tr>
-                <td>Non‑GAAP Gross Margin</td>
+                <td>Non-GAAP Gross Margin</td>
                 <td class="num">37.9%</td>
                 <td class="num">36.5% guide</td>
                 <td class="num">+140 bps vs. guide</td>
@@ -504,17 +556,17 @@
                 <td class="num">Slightly down YoY</td>
               </tr>
               <tr>
-                <td>Non‑GAAP Gross Margin</td>
+                <td>Non-GAAP Gross Margin</td>
                 <td class="num">36.7%</td>
                 <td class="num">+70 bps YoY</td>
               </tr>
               <tr>
-                <td>Non‑GAAP EPS</td>
+                <td>Non-GAAP EPS</td>
                 <td class="num">$0.42</td>
                 <td class="num">+$0.55 improvement</td>
               </tr>
               <tr>
-                <td>Non‑GAAP OpEx</td>
+                <td>Non-GAAP OpEx</td>
                 <td class="num">$16.5B</td>
                 <td class="num">-15% vs. 2024</td>
               </tr>
@@ -554,18 +606,18 @@
             <tbody>
               <tr>
                 <td>Revenue</td>
-                <td class="num">$11.7B – $12.7B</td>
+                <td class="num">$11.7B - $12.7B</td>
                 <td class="num">$12.5B</td>
               </tr>
               <tr>
-                <td>Non‑GAAP EPS</td>
+                <td>Non-GAAP EPS</td>
                 <td class="num">$0.00</td>
                 <td class="num">$0.05</td>
               </tr>
               <tr>
                 <td>GAAP EPS</td>
                 <td class="num">-$0.21</td>
-                <td class="num">—</td>
+                <td class="num">-</td>
               </tr>
             </tbody>
           </table>
@@ -648,14 +700,14 @@
                 </tbody>
               </table>
             </div>
-            <p style="font-size:12px;color:var(--text-muted);margin-top:10px;line-height:1.6;">AMD’s EPYC share rise is the most material erosion; ARM CPUs are also growing in cloud workloads.</p>
+            <p style="font-size:12px;color:var(--text-muted);margin-top:10px;line-height:1.6;">AMD's EPYC share rise is the most material erosion; ARM CPUs are also growing in cloud workloads.</p>
           </div>
           <div class="card">
             <h3 style="font-size:14px;margin-bottom:10px;">Foundry Positioning</h3>
             <div class="list">
               <div><strong><a href="#jargon-18a" class="jargon">18A</a> HVM:</strong> reached late Jan 2026 at Fab 52 (~40k wafers/month).</div>
-              <div><strong><a href="#jargon-pdk" class="jargon">PDK</a> delivery:</strong> 18A‑P 1.0 delivered to customers end‑2025.</div>
-              <div><strong>External wins:</strong> Microsoft reportedly committed to 18A‑P for Maia 2.</div>
+              <div><strong><a href="#jargon-pdk" class="jargon">PDK</a> delivery:</strong> 18A-P 1.0 delivered to customers end-2025.</div>
+              <div><strong>External wins:</strong> Microsoft reportedly committed to 18A-P for Maia 2.</div>
               <div><strong>Roadmap:</strong> aggressive <a href="#jargon-14a" class="jargon">14A</a> development underway.</div>
             </div>
           </div>
@@ -686,7 +738,7 @@
               <tr class="highlight">
                 <td>Intel Foundry</td>
                 <td class="num">18A (1.8nm)</td>
-                <td class="num">~$4.5B (Q4 run‑rate)</td>
+                <td class="num">~$4.5B (Q4 run-rate)</td>
                 <td class="num">Nascent; Microsoft rumored</td>
               </tr>
             </tbody>
@@ -696,7 +748,7 @@
           <h3 style="font-size:14px;margin-bottom:10px;">AI Accelerators vs. NVIDIA</h3>
           <div class="list">
             <div><strong>NVIDIA dominance:</strong> ~94% AI GPU market share with CUDA moat.</div>
-            <div><strong>Intel’s angle:</strong> <a href="#jargon-gaudi" class="jargon">Gaudi</a> for cost‑efficient inference; custom ASIC services via IFS.</div>
+            <div><strong>Intel's angle:</strong> <a href="#jargon-gaudi" class="jargon">Gaudi</a> for cost-efficient inference; custom ASIC services via IFS.</div>
             <div><strong>Strategic win:</strong> custom Xeon with NVLink integration validates Intel CPUs in AI nodes.</div>
           </div>
         </div>
@@ -707,17 +759,17 @@
         <div class="card" style="margin-bottom:14px;">
           <h3 style="font-size:14px;margin-bottom:8px;">18A Foundry Ramp</h3>
           <div class="list">
-            <div><strong>HVM reached:</strong> 18A in production at Fab 52; 18A‑P PDK delivered.</div>
-            <div><strong>External anchor:</strong> Microsoft reportedly using 18A‑P for Maia 2 AI accelerators.</div>
-            <div><strong>Valuation unlock:</strong> a credible #2 foundry could be worth $50–100B+ alone.</div>
+            <div><strong>HVM reached:</strong> 18A in production at Fab 52; 18A-P PDK delivered.</div>
+            <div><strong>External anchor:</strong> Microsoft reportedly using 18A-P for Maia 2 AI accelerators.</div>
+            <div><strong>Valuation unlock:</strong> a credible #2 foundry could be worth $50-100B+ alone.</div>
           </div>
         </div>
         <div class="card" style="margin-bottom:14px;">
-          <h3 style="font-size:14px;margin-bottom:8px;">AI‑Driven Server Refresh</h3>
+          <h3 style="font-size:14px;margin-bottom:8px;">AI-Driven Server Refresh</h3>
           <div class="list">
             <div><strong>DCAI growth:</strong> Q4 revenue $4.7B (+9% YoY) with Granite Rapids ramp.</div>
             <div><strong>CPU host demand:</strong> AI accelerators still require x86 control planes.</div>
-            <div><strong>HSBC view:</strong> FY26 server shipments up 15–20% vs. Street 4–6%.</div>
+            <div><strong>HSBC view:</strong> FY26 server shipments up 15-20% vs. Street 4-6%.</div>
           </div>
         </div>
         <div class="card" style="margin-bottom:14px;">
@@ -725,7 +777,7 @@
           <div class="list">
             <div><strong>Core Ultra Series 3:</strong> 200+ notebook designs using 18A.</div>
             <div><strong>Windows 10 EOL:</strong> creates enterprise refresh tailwind.</div>
-            <div><strong>Client AI:</strong> hybrid cloud + on‑device <a href="#jargon-npu" class="jargon">NPU</a> workloads lift performance requirements.</div>
+            <div><strong>Client AI:</strong> hybrid cloud + on-device <a href="#jargon-npu" class="jargon">NPU</a> workloads lift performance requirements.</div>
           </div>
         </div>
         <div class="card" style="margin-bottom:14px;">
@@ -739,7 +791,7 @@
           <h3 style="font-size:14px;margin-bottom:8px;">ASIC & Custom Silicon</h3>
           <div class="list">
             <div><strong>Hyperscaler demand:</strong> rising custom ASIC buildouts (TPU, Trainium, Maia).</div>
-            <div><strong>IFS + design services:</strong> potential high‑margin growth vector if executed.</div>
+            <div><strong>IFS + design services:</strong> potential high-margin growth vector if executed.</div>
           </div>
         </div>
       </section>
@@ -749,10 +801,10 @@
         <div class="card">
           <div class="list">
             <div><strong>Foundry execution risk (high):</strong> yield and reliability must meet TSMC standards. <em>Counter:</em> 18A reached HVM and PDK delivered; Microsoft deal would validate roadmap.</div>
-            <div><strong>CPU share loss (med‑high):</strong> AMD + ARM continue gaining. <em>Counter:</em> Granite Rapids + Panther Lake aim to stabilize share; NVLink Xeon win helps.</div>
-            <div><strong>Massive capex burden:</strong> $15–20B+/year investment could destroy ROIC. <em>Counter:</em> CHIPS Act offsets + strategic equity infusions reduce cash burn.</div>
+            <div><strong>CPU share loss (med-high):</strong> AMD + ARM continue gaining. <em>Counter:</em> Granite Rapids + Panther Lake aim to stabilize share; NVLink Xeon win helps.</div>
+            <div><strong>Massive capex burden:</strong> $15-20B+/year investment could destroy ROIC. <em>Counter:</em> CHIPS Act offsets + strategic equity infusions reduce cash burn.</div>
             <div><strong>AI GPU irrelevance:</strong> Gaudi has stumbled; NVIDIA dominates. <em>Counter:</em> Intel pivots to inference, custom ASICs, and CPU host leadership.</div>
-            <div><strong>Management execution:</strong> third CEO in 3 years; cultural reset takes time. <em>Counter:</em> Lip‑Bu Tan’s Cadence pedigree + OpEx cuts show progress.</div>
+            <div><strong>Management execution:</strong> third CEO in 3 years; cultural reset takes time. <em>Counter:</em> Lip-Bu Tan's Cadence pedigree + OpEx cuts show progress.</div>
             <div><strong>18A supply constraints:</strong> Q1 guidance missed due to lack of 18A capacity. <em>Counter:</em> management expects supply improvements in Q2.</div>
             <div><strong>Geopolitics:</strong> CHIPS funding risk or Taiwan tension relief could weaken the urgency for Intel. <em>Counter:</em> bipartisan support suggests durable backing.</div>
           </div>
@@ -830,10 +882,10 @@
 
         <div class="card" style="margin-bottom:14px;">
           <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
-            <strong>Value trap vs. turnaround:</strong> FY25 EPS of $0.42 does not justify $260B on fundamentals alone. The valuation assumes 18A foundry traction, AI‑driven CPU demand, and a multi‑year margin recovery.
+            <strong>Value trap vs. turnaround:</strong> FY25 EPS of $0.42 does not justify $260B on fundamentals alone. The valuation assumes 18A foundry traction, AI-driven CPU demand, and a multi-year margin recovery.
           </p>
           <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-top:10px;">
-            <strong>Upside case:</strong> if Intel reaches $3–4 EPS by 2028 with foundry credibility, a 20–25x multiple implies $60–100+.
+            <strong>Upside case:</strong> if Intel reaches $3-4 EPS by 2028 with foundry credibility, a 20-25x multiple implies $60-100+.
           </p>
         </div>
 
@@ -869,7 +921,7 @@
               <tr>
                 <td>Consensus</td>
                 <td class="num">Jan 2026</td>
-                <td class="num">~$38–46</td>
+                <td class="num">~$38-46</td>
                 <td class="num">Reduce (MarketBeat)</td>
               </tr>
             </tbody>
@@ -901,17 +953,17 @@
               </tr>
               <tr>
                 <td>Jan 2026</td>
-                <td>Microsoft reportedly commits to 18A‑P for Maia 2 AI accelerators</td>
+                <td>Microsoft reportedly commits to 18A-P for Maia 2 AI accelerators</td>
                 <td class="num">Potential anchor customer</td>
               </tr>
               <tr>
                 <td>Jan 2026</td>
-                <td>CEO Tan meets President Trump; “Made in America” narrative</td>
+                <td>CEO Tan meets President Trump; "Made in America" narrative</td>
                 <td class="num">Stock +10%</td>
               </tr>
               <tr>
                 <td>CES 2026</td>
-                <td>Core Ultra Series 3 “Panther Lake” launches; 200+ notebooks</td>
+                <td>Core Ultra Series 3 "Panther Lake" launches; 200+ notebooks</td>
                 <td class="num">PC competitiveness</td>
               </tr>
               <tr>
@@ -929,28 +981,84 @@
         </div>
       </section>
 
-      <section class="section" id="bull-bear">
-        <h2>🐂 Bull vs. 🐻 Bear Case</h2>
-        <div class="case-grid">
+      <section class="section" id="investment-thesis">
+        <h2>📌 Investment Thesis — Narrative Scenarios</h2>
+        <div style="display:grid;gap:14px;">
           <div class="case-card bull">
-            <h3>🐂 Bull — $65–80+</h3>
-            <ul>
-              <li>18A delivers competitive yields; major external customers sign on.</li>
-              <li>AI server demand lifts Xeon; NVLink partnership entrenches Intel in AI nodes.</li>
-              <li>PC refresh + AI PC adoption boosts CCG margins.</li>
-              <li>CHIPS Act + strategic partners reduce capital stress.</li>
-              <li>EPS reaches $3–4 by 2028; 20–25x multiple implies $60–100+.</li>
-            </ul>
+            <h3>🐂 Bull Case — $80-100+ (64-105%+ upside)</h3>
+            <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+              18A delivers competitive yields and reliability. Microsoft's Maia 2 is just the first external customer — Meta and AWS follow. Intel becomes a credible #2 foundry worth $50-100B alone on sum-of-parts. AI server demand lifts Xeon as NVLink partnership entrenches Intel CPUs in AI nodes. PC refresh + AI PC adoption boosts CCG margins. CHIPS Act + strategic partners reduce capital stress. EPS reaches $3–4 by 2028. At 25x on $4 EPS, Intel trades to $100+. The market re-rates the stock as a foundry + CPU play.
+            </p>
+            <div style="margin-top:10px;font-size:12px;color:var(--text-dim);">
+              <strong>Key assumptions:</strong> 18A yields competitive with TSMC N3, multiple hyperscaler customers, x86 share stabilizes above 65%, 14A commitments materialize.
+            </div>
+          </div>
+          <div class="case-card" style="border-color:var(--accent);background:var(--accent-soft);">
+            <h3>📊 Base Case — $55-65 (13-33% upside)</h3>
+            <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+              18A ramps on schedule but external customers remain limited (Microsoft only for now). IFS contributes modestly but doesn't transform the story. x86 share stabilizes at 65-70% as ARM gains slow. AI PC adoption lifts CCG but doesn't dramatically expand margins. EPS recovers to $2.00-2.50 by 2027. At 22-26x forward earnings (premium for option value), Intel trades $44-65. Stock appreciation is gradual, driven by execution over time.
+            </p>
+            <div style="margin-top:10px;font-size:12px;color:var(--text-dim);">
+              <strong>Key assumptions:</strong> No macro shock, 18A achieves acceptable yields, Microsoft deal closes, CPU share erosion moderates.
+            </div>
           </div>
           <div class="case-card bear">
-            <h3>🐻 Bear — $25–35</h3>
-            <ul>
-              <li>Foundry fails to scale; external customers remain minimal.</li>
-              <li>CPU market share erodes below 50% as AMD/ARM accelerate.</li>
-              <li>CapEx remains $15–20B/year with weak ROIC.</li>
-              <li>Gaudi remains irrelevant; Intel’s AI role shrinks to low‑margin CPUs.</li>
-              <li>Investor patience fades; valuation reverts to trough levels.</li>
-            </ul>
+            <h3>🐻 Bear Case — $22-32 (34-55% downside)</h3>
+            <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+              Foundry fails to scale — 18A yields disappoint, external customers hesitate or cancel. Microsoft deal doesn't close or is smaller than reported. CPU market share erodes below 55% as AMD EPYC and ARM servers accelerate. $15-20B/year capex continues with negative ROIC. Gaudi remains irrelevant; Intel's AI role shrinks to low-margin CPU host. Investor patience exhausts; valuation reverts to trough 10-12x on depressed $2.50 EPS → $25-30.
+            </p>
+            <div style="margin-top:10px;font-size:12px;color:var(--text-dim);">
+              <strong>Key assumptions:</strong> 18A yield issues, no new external customers, server share loss accelerates, macro deterioration.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="kill-conditions">
+        <h2>☠️ Kill Conditions — When to Exit</h2>
+        <div class="card">
+          <div style="display:grid;gap:14px;">
+            <div style="padding:14px;border-left:3px solid var(--red);border-radius:0 10px 10px 0;background:rgba(248,113,113,0.05);">
+              <strong style="color:var(--red);">Kill #1: 18A external customer deals fail to materialize by Q4 2026</strong>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">The foundry thesis requires external validation. If Microsoft deal doesn't close AND no other major customer is announced by Q4 2026, the foundry pivot has failed. One or two quarters of delay is acceptable; a full year without external revenue is fatal. <strong>Exit price: $30.</strong></p>
+            </div>
+            <div style="padding:14px;border-left:3px solid var(--red);border-radius:0 10px 10px 0;background:rgba(248,113,113,0.05);">
+              <strong style="color:var(--red);">Kill #2: Server CPU share drops below 55%</strong>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">Currently ~72% server share. AMD EPYC and ARM are gaining. If share drops below 55%, pricing power collapses and the CPU cash cow thesis breaks. Watch quarterly share data from Mercury Research. <strong>Exit price: $35.</strong></p>
+            </div>
+            <div style="padding:14px;border-left:3px solid var(--red);border-radius:0 10px 10px 0;background:rgba(248,113,113,0.05);">
+              <strong style="color:var(--red);">Kill #3: Foundry losses exceed $6B/year for 3+ years</strong>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">Intel Foundry currently loses ~$5B/year. If losses increase and persist for 3+ years without external revenue traction, the capital destruction is unsustainable. Monitor quarterly segment reporting. <strong>Exit price: $28.</strong></p>
+            </div>
+            <div style="padding:14px;border-left:3px solid var(--red);border-radius:0 10px 10px 0;background:rgba(248,113,113,0.05);">
+              <strong style="color:var(--red);">Kill #4: 14A development significantly delayed</strong>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">18A needs 14A to maintain technology leadership. If 14A slips by &gt;1 year from current roadmap, Intel falls permanently behind TSMC. Watch technology announcements and Investor Day updates. <strong>Exit price: $32.</strong></p>
+            </div>
+            <div style="padding:14px;border-left:3px solid var(--red);border-radius:0 10px 10px 0;background:rgba(248,113,113,0.05);">
+              <strong style="color:var(--red);">Kill #5: CEO change before turnaround proves out</strong>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">Third CEO in 3 years. If Lip-Bu Tan leaves or is replaced before 2027, the turnaround strategy lacks continuity. Leadership stability is essential for multi-year execution. <strong>Re-evaluate position entirely.</strong></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="asymmetry">
+        <h2>⚖️ Risk/Reward Asymmetry</h2>
+        <div class="card" style="border:1px solid var(--accent);background:linear-gradient(135deg,var(--accent-soft),transparent 60%);">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <div style="padding:14px;border-radius:12px;background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.4);">
+              <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-muted);font-weight:700;">Upside</div>
+              <div style="font-size:20px;font-weight:700;margin-top:8px;color:var(--green);">$90 target</div>
+              <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">~84% upside from ~$49</div>
+            </div>
+            <div style="padding:14px;border-radius:12px;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.4);">
+              <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-muted);font-weight:700;">Downside</div>
+              <div style="font-size:20px;font-weight:700;margin-top:8px;color:var(--red);">$27 floor</div>
+              <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">~45% downside (midpoint of $22–32)</div>
+            </div>
+          </div>
+          <div style="margin-top:16px;font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            <strong>Risk/Reward: 1.87:1.</strong> Attractive on paper but binary. At current price, you're risking 45% to gain 84% — but this is a speculative turnaround, not a sure thing. <strong>Position sizing is critical.</strong> This is a "barbell" position: size it small enough that you can stomach a 50% loss, but large enough to matter if it works. <strong>Ideal entry: $38–42</strong> where R/R exceeds 2.5:1.
           </div>
         </div>
       </section>
@@ -959,7 +1067,7 @@
         <h2>✅ Verdict / Rating</h2>
         <div class="card verdict" style="margin-bottom:16px;">
           <p style="font-size:13px;line-height:1.7;color:var(--text-secondary);">
-            <strong>Rating: Speculative Turnaround / High Volatility.</strong> Intel is no longer a deep‑value contrarian trade; at ~$49 it prices in real 18A and foundry success that is not yet proven. The upside is meaningful if Intel becomes a credible #2 foundry, but the downside is also real if the execution falters. Position size accordingly.
+            <strong>Rating: Speculative Turnaround / High Volatility.</strong> Intel is no longer a deep-value contrarian trade; at ~$49 it prices in real 18A and foundry success that is not yet proven. The upside is meaningful if Intel becomes a credible #2 foundry, but the downside is also real if the execution falters. Position size accordingly.
           </p>
           <p style="font-size:13px;line-height:1.7;color:var(--text-secondary);margin-top:10px;">
             <strong>Key milestones:</strong> Q2 supply improvement, formal foundry customer announcements, 14A commitments, and server share stabilization in 2026.
@@ -1011,7 +1119,7 @@
           <a href="../../ai-value-chain/layer3-foundries.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
             <span style="font-size:24px;">🏭</span>
             <div>
-              <div style="font-size:14px;font-weight:600;color:var(--text);">Layer 3 — Foundries</div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Layer 3 - Foundries</div>
               <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">The foundry landscape Intel is trying to break into.</div>
             </div>
             <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
@@ -1019,7 +1127,7 @@
           <a href="../../ai-value-chain/layer2-chip-design.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
             <span style="font-size:24px;">🧠</span>
             <div>
-              <div style="font-size:14px;font-weight:600;color:var(--text);">Layer 2 — Chip Design</div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Layer 2 - Chip Design</div>
               <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">CPU and AI accelerator design competition.</div>
             </div>
             <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
@@ -1042,32 +1150,32 @@
             <div id="jargon-idm" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
               <strong style="color:var(--accent);">IDM</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Integrated Device Manufacturer — designs and manufactures chips in‑house.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Integrated Device Manufacturer - designs and manufactures chips in-house.</div>
             </div>
             <div id="jargon-ifs" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
               <strong style="color:var(--accent);">IFS (Intel Foundry Services)</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Intel’s contract manufacturing business for external customers.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Intel's contract manufacturing business for external customers.</div>
             </div>
             <div id="jargon-hvm" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
               <strong style="color:var(--accent);">HVM</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">High‑Volume Manufacturing — full‑scale production ramp.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">High-Volume Manufacturing - full-scale production ramp.</div>
             </div>
             <div id="jargon-18a" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
               <strong style="color:var(--accent);">18A</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Intel’s 1.8nm process node; cornerstone of its foundry turnaround.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Intel's 1.8nm process node; cornerstone of its foundry turnaround.</div>
             </div>
             <div id="jargon-14a" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
               <strong style="color:var(--accent);">14A</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Next‑gen 1.4nm process under development; key to staying competitive.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Next-gen 1.4nm process under development; key to staying competitive.</div>
             </div>
             <div id="jargon-pdk" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
               <strong style="color:var(--accent);">PDK</strong>
               <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
-              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Process Design Kit — the foundry’s technical toolkit for chip designers.</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Process Design Kit - the foundry's technical toolkit for chip designers.</div>
             </div>
             <div id="jargon-fabless" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
               <strong style="color:var(--accent);">Fabless</strong>
