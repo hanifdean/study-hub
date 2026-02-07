@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brazil in Action — Complete Study Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #0f0f14;
+    color: #e8e4de;
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  .header {
+    text-align: center;
+    padding: 2.5rem 1rem 1.5rem;
+    border-bottom: 1px solid #2a2a35;
+  }
+  .header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #f5c563;
+    margin-bottom: 0.5rem;
+  }
+  .header .subtitle {
+    font-size: 0.9rem;
+    color: #8a8578;
+  }
+  .header .meta {
+    font-size: 0.75rem;
+    color: #5a5a65;
+    margin-top: 0.5rem;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+
+  /* Navigation */
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    background: #0f0f14;
+    z-index: 100;
+    border-bottom: 1px solid #1a1a24;
+  }
+  .nav-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    border: 1.5px solid #2a2a35;
+    background: transparent;
+    color: #8a8578;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+  .nav-btn.active {
+    background: #f5c563;
+    color: #0f0f14;
+    border-color: #f5c563;
+  }
+  .nav-btn:hover:not(.active) {
+    border-color: #f5c563;
+    color: #f5c563;
+  }
+
+  /* Sections */
+  .section {
+    display: none;
+    padding: 1.5rem 0;
+  }
+  .section.active { display: block; }
+
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #f5c563;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #f5c56330;
+  }
+
+  /* Cards */
+  .card {
+    background: #1a1a24;
+    border-radius: 12px;
+    border: 1px solid #2a2a35;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #e8e4de;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .card-title .icon {
+    font-size: 1.1rem;
+  }
+
+  /* Lists */
+  ul, ol {
+    padding-left: 1.25rem;
+    margin: 0.5rem 0;
+  }
+  li {
+    margin-bottom: 0.4rem;
+    font-size: 0.85rem;
+    color: #c4bfb5;
+  }
+  li strong {
+    color: #e8e4de;
+  }
+  li em {
+    color: #f5c56399;
+  }
+
+  /* Highlight boxes */
+  .highlight {
+    background: #f5c56315;
+    border-left: 3px solid #f5c563;
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .highlight p {
+    font-size: 0.85rem;
+    color: #e8e4de;
+    margin: 0;
+  }
+  .highlight .label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #f5c563;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+  }
+
+  /* Quote */
+  .quote {
+    background: #15151e;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin: 0.75rem 0;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: #9a9590;
+    border-left: 3px solid #3a3a4a;
+  }
+  .quote .attribution {
+    font-style: normal;
+    font-size: 0.75rem;
+    color: #6a6a75;
+    margin-top: 0.5rem;
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #f5c563, #2a2a35);
+  }
+  .timeline-item {
+    position: relative;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -1.5rem;
+    top: 0.4rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #f5c563;
+    border: 2px solid #0f0f14;
+  }
+  .timeline-date {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #f5c563;
+    text-transform: uppercase;
+  }
+  .timeline-content {
+    font-size: 0.85rem;
+    color: #c4bfb5;
+    margin-top: 0.25rem;
+  }
+
+  /* Table */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+  }
+  th {
+    background: #1e1e2a;
+    color: #f5c563;
+    font-weight: 600;
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    border-bottom: 2px solid #f5c56340;
+  }
+  td {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid #2a2a35;
+    color: #c4bfb5;
+  }
+  tr:hover td {
+    background: #1a1a2440;
+  }
+
+  /* Concept grid */
+  .concept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
+  .concept-item {
+    background: #15151e;
+    border-radius: 8px;
+    padding: 0.75rem;
+    border: 1px solid #22222e;
+  }
+  .concept-term {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #f5c563;
+    margin-bottom: 0.25rem;
+  }
+  .concept-def {
+    font-size: 0.75rem;
+    color: #9a9590;
+    line-height: 1.5;
+  }
+
+  /* Expandable */
+  .expandable {
+    margin-bottom: 0.75rem;
+  }
+  .expand-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: #1a1a24;
+    border-radius: 8px;
+    border: 1px solid #2a2a35;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .expand-header:hover {
+    border-color: #f5c56360;
+  }
+  .expand-header.open {
+    border-radius: 8px 8px 0 0;
+    border-bottom-color: transparent;
+  }
+  .expand-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #e8e4de;
+    flex: 1;
+  }
+  .expand-icon {
+    color: #5a5a6a;
+    font-size: 0.75rem;
+    transition: transform 0.2s ease;
+  }
+  .expand-header.open .expand-icon {
+    transform: rotate(90deg);
+    color: #f5c563;
+  }
+  .expand-content {
+    display: none;
+    padding: 1rem;
+    background: #15151e;
+    border: 1px solid #2a2a35;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+  }
+  .expand-content.open {
+    display: block;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    border-top: 1px solid #1a1a24;
+    margin-top: 2rem;
+  }
+  .footer p {
+    font-size: 0.75rem;
+    color: #5a5a65;
+  }
+
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.4rem; }
+    .nav-btn { font-size: 0.7rem; padding: 0.4rem 0.75rem; }
+    .card { padding: 1rem; }
+    .concept-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🇧🇷 Brazil in Action</h1>
+  <div class="subtitle">Developing Management Systems to Implement Priority Projects</div>
+  <div class="meta">Case Study by Michael Barzelay • LSE Public Management</div>
+</div>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showSection('overview')">Overview</button>
+  <button class="nav-btn" onclick="showSection('context')">Context & Origins</button>
+  <button class="nav-btn" onclick="showSection('design')">Design Choices</button>
+  <button class="nav-btn" onclick="showSection('operations')">Operations</button>
+  <button class="nav-btn" onclick="showSection('concepts')">Key Concepts</button>
+  <button class="nav-btn" onclick="showSection('lessons')">Lessons</button>
+</nav>
+
+<div class="container">
+
+  <!-- OVERVIEW -->
+  <div class="section active" id="overview">
+    <h2 class="section-title">📋 Case Overview</h2>
+    
+    <div class="card">
+      <div class="card-title"><span class="icon">🎯</span> What was Brazil in Action?</div>
+      <p style="font-size: 0.85rem; color: #c4bfb5;">A program of <strong>42 priority presidential projects</strong> launched by President Fernando Henrique Cardoso in August 1996.</p>
+      <ul>
+        <li><strong>~50% infrastructure:</strong> highways, ports, railroads, pipelines, electrical transmission</li>
+        <li><strong>~50% social:</strong> health, education, housing, sanitation</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">⏱️</span> Timeline</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">Jan 1995</div>
+          <div class="timeline-content">Cardoso inaugurated as President</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Jun 1996</div>
+          <div class="timeline-content">Antonio Kandir becomes Planning Minister</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Jul 1996</div>
+          <div class="timeline-content">Intense design phase — project selection, branding</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Aug 9, 1996</div>
+          <div class="timeline-content">Public launch at ministers' meeting</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Sep 20, 1996</div>
+          <div class="timeline-content">Media event introducing all 35 project managers</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">1997</div>
+          <div class="timeline-content">Program in full operation; monthly presidential visits</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <div class="label">💡 Core Design Challenge</div>
+      <p>How do you get <strong>entrepreneurial results through bureaucratic structures</strong>? Cardoso couldn't bypass ministries like Kubitschek did — he had to achieve the same outcomes <em>through</em> the existing Federal bureaucracy.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">👥</span> Key Players</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Name</th><th>Role</th><th>Contribution</th></tr>
+          <tr><td><strong>Fernando Henrique Cardoso</strong></td><td>President</td><td>Vision, personal identification with projects, political will</td></tr>
+          <tr><td><strong>Antonio Kandir</strong></td><td>Planning Minister</td><td>Program leadership, ministerial negotiations</td></tr>
+          <tr><td><strong>José Paulo Silveira</strong></td><td>Secretary of Planning</td><td>Management system architect, day-to-day leadership</td></tr>
+          <tr><td><strong>Aluysio Asti</strong></td><td>Brazil in Action Director</td><td>Program operations, BNDES-style fund release innovation</td></tr>
+          <tr><td><strong>Clóvis Carvalho</strong></td><td>Chief of Staff</td><td>Presidential backing, cross-ministry coordination</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">📊</span> Results</div>
+      <ul>
+        <li>Large fraction of priority projects <strong>completed according to plan</strong></li>
+        <li>By Sep 1997: <strong>R$ 31.7 billion</strong> total investment</li>
+        <li>Only <strong>13% from Federal budget</strong> — rest leveraged from other sources</li>
+        <li>Inter-American Development Bank <strong>doubled</strong> projects sponsored</li>
+        <li>Japan Export-Import Bank: <strong>2 → 8 projects</strong></li>
+        <li>Became the <strong>principal symbol</strong> of Cardoso's first term</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <div class="section" id="context">
+    <h2 class="section-title">🌎 Context & Origins</h2>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">📉</span> The Problem: Stability Without Progress</div>
+      <p style="font-size: 0.85rem; color: #c4bfb5; margin-bottom: 0.75rem;">Before Brazil in Action, Cardoso's agenda was seen as <strong>only about macroeconomic stability</strong> — the Real Plan (1994) that tamed hyperinflation.</p>
+      <ul>
+        <li>Important but doesn't feel like <em>progress</em> to citizens</li>
+        <li>Brazilians expected development after years of stagnation</li>
+        <li>President's popularity starting to wane</li>
+      </ul>
+      <div class="quote">
+        "Brazilians expected the new government to address the desire that Brazil develop, that it forges ahead, and that it no longer stagnates."
+        <div class="attribution">— Government pollster</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">📚</span> Historical Inspiration: Kubitschek's Plano de Metas</div>
+      <p style="font-size: 0.85rem; color: #c4bfb5; margin-bottom: 0.75rem;"><strong>Juscelino Kubitschek</strong> (President 1956-1961) built <strong>Brasília</strong> — Brazil's new capital, constructed from scratch in the interior.</p>
+      
+      <div class="expandable">
+        <div class="expand-header" onclick="toggleExpand(this)">
+          <span class="expand-title">What was Brasília?</span>
+          <span class="expand-icon">▶</span>
+        </div>
+        <div class="expand-content">
+          <p style="font-size: 0.85rem; color: #c4bfb5;">Brazil's current capital city. Before 1960, the capital was Rio de Janeiro (on the coast). Kubitschek built Brasília as a massive, symbolic project to signal modernization and develop the interior. It was the capstone of many infrastructure projects.</p>
+        </div>
+      </div>
+
+      <div class="expandable">
+        <div class="expand-header" onclick="toggleExpand(this)">
+          <span class="expand-title">What was the Plano de Metas approach?</span>
+          <span class="expand-icon">▶</span>
+        </div>
+        <div class="expand-content">
+          <ul>
+            <li>Bundle many projects under ONE catchy name</li>
+            <li>Make all projects feel like a unified national effort</li>
+            <li>President personally associated with visible progress (visiting sites)</li>
+            <li>Simple message the public could rally behind</li>
+          </ul>
+          <div class="quote" style="margin-top: 0.75rem;">
+            A shop owner showed his notebook with "Plano de Metas" written on the cover: "The president made a Plano de Metas for Brazil, and I made a plano de metas for my shop."
+          </div>
+        </div>
+      </div>
+
+      <div class="expandable">
+        <div class="expand-header" onclick="toggleExpand(this)">
+          <span class="expand-title">Why couldn't Cardoso copy Kubitschek's method?</span>
+          <span class="expand-icon">▶</span>
+        </div>
+        <div class="expand-content">
+          <p style="font-size: 0.85rem; color: #c4bfb5; margin-bottom: 0.75rem;"><strong>Kubitschek bypassed the regular ministries</strong> by creating parallel agencies ("indirect administration") that reported directly to him.</p>
+          <p style="font-size: 0.85rem; color: #c4bfb5; margin-bottom: 0.75rem;">But by 1988, this model was <strong>discredited</strong> — the Constitution now favored "direct administration" (working through regular ministries).</p>
+          <p style="font-size: 0.85rem; color: #c4bfb5;">Cardoso also had a well-publicized "managerial reform of the state" agenda — bypassing bureaucracy would contradict this.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">💭</span> Cardoso's Philosophy</div>
+      <div class="quote">
+        "We have a national project, but it is a national project for a new reality. A deterministic national project was possible in the past, in a closed economy where the state was the principal investor... That is no longer possible in a climate of stability, fiscal discipline, and international financial interdependence. Today, the national project is more a national <em>process</em> of development than a national project."
+        <div class="attribution">— President Cardoso</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESIGN -->
+  <div class="section" id="design">
+    <h2 class="section-title">🔧 Design Choices</h2>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">📋</span> Project Selection</div>
+      <ul>
+        <li>Started at 10 → grew to 60 → cut to 30 → <strong>settled at 42</strong></li>
+        <li><strong>Selection criterion:</strong> "each should make a difference to development by catalyzing other investment decisions"</li>
+        <li>President made final decisions, but only from options in the planning process (PPA)</li>
+      </ul>
+      <div class="highlight" style="margin-top: 1rem;">
+        <div class="label">Example Projects</div>
+        <p><strong>Bolivia-Brazil gas pipeline</strong> (3,100 km) • <strong>Ferronorte railroad</strong> • São Paulo–Belo Horizonte highway • Northeast tourism airports</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🎨</span> Branding</div>
+      <ul>
+        <li>Initially considered "Investe Brasil"</li>
+        <li>PR firm Propeg suggested <strong>"Brasil em Ação"</strong> (Brazil in Action)</li>
+        <li>Symbols: logo + <strong>map showing all 42 project locations</strong></li>
+        <li>FHC personally identified with the map — knew every project by heart</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">⚖️</span> The Core Trade-off: Authority vs. Cooperation</div>
+      
+      <div class="table-wrap">
+        <table>
+          <tr>
+            <th>Option A: Managers in Planning Ministry</th>
+            <th>Option B: Managers in Sectoral Ministries ✓</th>
+          </tr>
+          <tr>
+            <td>Direct control over projects</td>
+            <td>No direct authority</td>
+          </tr>
+          <tr>
+            <td>Would trigger turf battles</td>
+            <td>Ministers retain ownership</td>
+          </tr>
+          <tr>
+            <td>Seen as power grab</td>
+            <td>Normal relationships preserved</td>
+          </tr>
+          <tr>
+            <td>Planning staff too small (~30)</td>
+            <td>Leverage existing capacity</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="highlight" style="margin-top: 1rem;">
+        <div class="label">The Solution</div>
+        <p><strong>Influence through information</strong> rather than control through hierarchy. Use transparency (MIS) + accountability + presidential backing as substitutes for formal authority.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🏦</span> The "Inverted Priorities" Innovation</div>
+      <p style="font-size: 0.85rem; color: #c4bfb5; margin-bottom: 0.75rem;"><strong>Problem:</strong> Even with ring-fenced money, ministries could still spend Brazil in Action funds on other things they cared about more.</p>
+      
+      <p style="font-size: 0.85rem; color: #c4bfb5; margin-bottom: 0.75rem;"><strong>Asti's insight</strong> (from BNDES banking):</p>
+      <div class="quote">
+        "When I finance a company building a steel plant, I pace the release of resources in tune with the project's execution. If the project is not going well, I stop the flow of credit."
+        <div class="attribution">— Aluysio Asti</div>
+      </div>
+
+      <p style="font-size: 0.85rem; color: #c4bfb5; margin-top: 1rem; margin-bottom: 0.5rem;"><strong>New procedure:</strong></p>
+      <ol>
+        <li>Treasury does NOT release funds automatically</li>
+        <li>Ministries must formally REQUEST funds from Planning</li>
+        <li>Planning only approves if satisfied with progress</li>
+        <li><strong>No progress = no money</strong></li>
+      </ol>
+
+      <div class="quote" style="margin-top: 1rem;">
+        "This banality changed everything."
+        <div class="attribution">— Asti</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">💻</span> Management Information System (MIS)</div>
+      <ul>
+        <li><strong>Web-based</strong> (novel in 1996!)</li>
+        <li>Each project = one webpage: goals, investment, physical & financial programming</li>
+        <li>Built in <strong>40 days</strong> by ~10 people</li>
+        <li>New versions every 8 months based on feedback</li>
+        <li>Added windows for: near-term problems + measures to avert them</li>
+        <li>President accessed <strong>1-2x per week</strong></li>
+      </ul>
+      <div class="quote" style="margin-top: 0.75rem;">
+        "Transparency by itself would begin to induce managers to take more responsibility, insofar as it would be possible for people to follow what was happening with more clarity. Poor results would reflect badly on managers."
+      </div>
+    </div>
+  </div>
+
+  <!-- OPERATIONS -->
+  <div class="section" id="operations">
+    <h2 class="section-title">⚙️ How It Operated</h2>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">📺</span> Presidential Visibility</div>
+      <ul>
+        <li><strong>Monthly visits</strong> to Brazil in Action project sites</li>
+        <li>Communications team managed all travel/media</li>
+        <li>Debate: visit ongoing projects (Kubitschek-style) or only completed ones?</li>
+        <li>Decision: <strong>ribbon-cutting only</strong> — didn't want FHC associated with incomplete work</li>
+        <li>Nov 1997: Major TV broadcast with all ministers, 700-person audience, 6 regions</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">📊</span> Information Flow</div>
+      <ul>
+        <li>Nearly <strong>daily requests</strong> from President's media team for project info</li>
+        <li>Press office produced bulletins fed to national/regional media</li>
+        <li><strong>Bi-monthly written reports</strong> to President (with problem details)</li>
+        <li><strong>Monthly 1-page summaries</strong> for President to read on flights</li>
+        <li>Public summary (stripped of problem details) available externally</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">👔</span> Manager Socialization</div>
+      <p style="font-size: 0.85rem; color: #c4bfb5; margin-bottom: 0.75rem;">The message to project managers:</p>
+      <div class="quote">
+        "Don't worry about financial resources. Instead of spending a third of your time working political contacts to secure resources, concentrate on the project. You'll have the money guaranteed. But if a project goes badly and you didn't tell us about problems in time, you are <strong>personally at fault</strong>."
+        <div class="attribution">— Kandir</div>
+      </div>
+      <ul style="margin-top: 1rem;">
+        <li>Consultants gave project management lectures</li>
+        <li>Specialist courses offered</li>
+        <li>Real socialization: <strong>Planning secretariat modeled the behavior</strong></li>
+        <li>Silveira himself was the example</li>
+      </ul>
+      <div class="quote" style="margin-top: 0.75rem;">
+        "The key to this process is not technique, it is a new attitude and posture — that of <strong>entrepreneurship</strong>. That is the essence of managerial change."
+        <div class="attribution">— Silveira</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🔧</span> Problem-Solving Routines</div>
+      <ul>
+        <li><strong>Daily staff meetings:</strong> 9:00am sharp → 10:00am sharp</li>
+        <li>Most problems resolved <strong>without escalating</strong></li>
+        <li>Kandir only involved for minister-level issues</li>
+        <li>Common practice: <strong>get discordant parties in the same room</strong></li>
+      </ul>
+      <div class="highlight" style="margin-top: 1rem;">
+        <div class="label">Example</div>
+        <p>Electricity project stuck without environmental license → Planning arranged meeting between IBAMA (environmental agency), ministry, and project manager → adjusted plan → license issued.</p>
+      </div>
+      <div class="quote" style="margin-top: 1rem;">
+        "The problems became known because of the management methodology of Brazil in Action. That's not to say that things were perfectly marvelous — far from it."
+        <div class="attribution">— Asti</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPTS -->
+  <div class="section" id="concepts">
+    <h2 class="section-title">📖 Key Concepts</h2>
+
+    <div class="concept-grid">
+      <div class="concept-item">
+        <div class="concept-term">Turf Battles</div>
+        <div class="concept-def">Conflicts between agencies when one encroaches on another's domain, authority, or resources. Avoided by keeping managers in sectoral ministries.</div>
+      </div>
+      <div class="concept-item">
+        <div class="concept-term">Inverted Priorities</div>
+        <div class="concept-def">When ministries spend earmarked funds on their own priorities instead of presidential priorities. Solved by conditional fund release.</div>
+      </div>
+      <div class="concept-item">
+        <div class="concept-term">Direct vs. Indirect Administration</div>
+        <div class="concept-def">Direct = through regular ministries. Indirect = parallel agencies. 1988 Constitution favored direct administration.</div>
+      </div>
+      <div class="concept-item">
+        <div class="concept-term">Ring-fencing</div>
+        <div class="concept-def">Protecting certain funds from budget cuts or reallocation. Necessary but not sufficient without conditional release.</div>
+      </div>
+      <div class="concept-item">
+        <div class="concept-term">PPA (Plano Pluri-annual)</div>
+        <div class="concept-def">Four-year investment/expenditure plan required by Brazil's Constitution. Brazil in Action projects were selected from this.</div>
+      </div>
+      <div class="concept-item">
+        <div class="concept-term">Transparency as Control</div>
+        <div class="concept-def">Using visible information (MIS) to create accountability without formal hierarchical authority.</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 1.5rem;">
+      <div class="card-title"><span class="icon">🆚</span> Kubitschek vs. Cardoso Approaches</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Dimension</th><th>Kubitschek (1956-61)</th><th>Cardoso (1996)</th></tr>
+          <tr><td>Structure</td><td>Created parallel agencies</td><td>Worked through existing ministries</td></tr>
+          <tr><td>Control</td><td>Direct hierarchical authority</td><td>Influence through information</td></tr>
+          <tr><td>Speed</td><td>Fast (bypassed bureaucracy)</td><td>Required coordination/persuasion</td></tr>
+          <tr><td>Legacy risk</td><td>Unaccountable agencies</td><td>Improved bureaucratic capacity</td></tr>
+          <tr><td>Similar</td><td colspan="2" style="text-align: center;">Presidential identification, catchy branding, visible projects</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSONS -->
+  <div class="section" id="lessons">
+    <h2 class="section-title">🎓 Lessons for Public Management</h2>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">1️⃣</span> Resources vs. Management</div>
+      <div class="quote">
+        "The lack of results in the public sector, in large measure, does not stem from the lack of resources, but rather from the lack of management."
+        <div class="attribution">— Senior Planning Ministry official</div>
+      </div>
+      <p style="font-size: 0.85rem; color: #c4bfb5; margin-top: 0.75rem;">Brazil in Action proved that with proper management systems, existing resources could deliver results that previously seemed impossible.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">2️⃣</span> Transparency as Substitute for Hierarchy</div>
+      <p style="font-size: 0.85rem; color: #c4bfb5;">When you lack formal authority, make information visible. The MIS created accountability without command-and-control — poor performance was exposed, good performance was recognized.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">3️⃣</span> Design Around Constraints</div>
+      <p style="font-size: 0.85rem; color: #c4bfb5;">Cardoso couldn't bypass bureaucracy (constitutional/political constraints). Instead of fighting this, the team designed a system that worked <em>with</em> existing structures while changing incentives.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">4️⃣</span> Behavioral Change Through Modeling</div>
+      <p style="font-size: 0.85rem; color: #c4bfb5;">Training lectures weren't enough. The Planning secretariat created culture change by <strong>modeling the behavior they wanted</strong> — Silveira embodied the entrepreneurial manager role.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">5️⃣</span> Political & Administrative Integration</div>
+      <p style="font-size: 0.85rem; color: #c4bfb5;">Brazil in Action combined:</p>
+      <ul>
+        <li><strong>Political</strong>: Presidential visibility, branding, media management</li>
+        <li><strong>Administrative</strong>: Project management, MIS, conditional fund release</li>
+      </ul>
+      <p style="font-size: 0.85rem; color: #c4bfb5; margin-top: 0.5rem;">Neither alone would have succeeded. Political will without management systems = announcements without delivery. Management systems without political backing = no leverage over ministries.</p>
+    </div>
+
+    <div class="highlight" style="margin-top: 1.5rem;">
+      <div class="label">🔑 The Big Insight</div>
+      <p>The system didn't eliminate problems — it made them <strong>visible</strong> and <strong>solvable</strong>. That's the essence of good management design: not preventing all failures, but creating the conditions for rapid detection and correction.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Study guide for LSE Public Management • Created by Robin 🐱</p>
+</div>
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleExpand(el) {
+  el.classList.toggle('open');
+  el.nextElementSibling.classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
