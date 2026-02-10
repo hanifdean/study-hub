@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brazil in Action — Context Mind Map</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #fffef5;
+    background-image: 
+      linear-gradient(#e8e4d0 1px, transparent 1px),
+      linear-gradient(90deg, #e8e4d0 1px, transparent 1px);
+    background-size: 25px 25px;
+    min-height: 100vh;
+    padding: 2rem;
+    color: #2a2a2a;
+  }
+
+  .title {
+    text-align: center;
+    font-family: 'Caveat', cursive;
+    font-size: 2rem;
+    color: #1a5f7a;
+    margin-bottom: 1.5rem;
+  }
+
+  .mindmap {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Central node */
+  .root {
+    position: absolute;
+    left: 50%;
+    top: 300px;
+    transform: translateX(-50%);
+    background: #ffd93d;
+    border: 3px solid #2a2a2a;
+    border-radius: 20px;
+    padding: 1rem 1.5rem;
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    box-shadow: 4px 4px 0 #2a2a2a;
+    z-index: 10;
+  }
+
+  /* Branch containers */
+  .branch {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .branch-title {
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    border: 2px solid #2a2a2a;
+    margin-bottom: 0.5rem;
+    box-shadow: 3px 3px 0 #2a2a2a;
+  }
+
+  .branch-items {
+    padding-left: 1rem;
+    border-left: 2px dashed #888;
+    margin-left: 0.5rem;
+  }
+
+  .item {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.6rem;
+    margin: 0.3rem 0;
+    background: white;
+    border: 1.5px solid #2a2a2a;
+    border-radius: 8px;
+    box-shadow: 2px 2px 0 #2a2a2a;
+    max-width: 200px;
+  }
+
+  .item.highlight {
+    background: #fff3cd;
+  }
+
+  .sub-items {
+    padding-left: 0.75rem;
+    margin-left: 0.5rem;
+    border-left: 1.5px dotted #aaa;
+  }
+
+  .sub-item {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+    margin: 0.2rem 0;
+    color: #555;
+    background: #f9f9f5;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+
+  /* Color coding for branches */
+  .policy .branch-title { background: #a8e6cf; }
+  .presidency .branch-title { background: #fdcb82; }
+  .organization .branch-title { background: #f6b8d1; }
+  .historical .branch-title { background: #b8d4e3; }
+  .political .branch-title { background: #d4b8e3; }
+  .constitutional .branch-title { background: #e3d4b8; }
+
+  /* Positioning */
+  .policy { left: 52%; top: 50px; }
+  .presidency { left: 70%; top: 180px; }
+  .organization { left: 65%; top: 420px; }
+  .historical { left: 5%; top: 50px; }
+  .political { left: 5%; top: 280px; }
+  .constitutional { left: 5%; top: 480px; }
+
+  /* Connection lines - using SVG */
+  .connections {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 800px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .connections path {
+    fill: none;
+    stroke: #2a2a2a;
+    stroke-width: 2;
+  }
+
+  .connections .dashed {
+    stroke-dasharray: 5, 5;
+  }
+
+  /* Labels on connections */
+  .conn-label {
+    position: absolute;
+    font-size: 0.65rem;
+    background: #fffef5;
+    padding: 0.1rem 0.3rem;
+    border-radius: 4px;
+    color: #666;
+    font-style: italic;
+  }
+
+  /* Annotations */
+  .annotation {
+    position: absolute;
+    font-family: 'Caveat', cursive;
+    font-size: 0.9rem;
+    color: #c0392b;
+    transform: rotate(-5deg);
+  }
+
+  .arrow {
+    font-size: 1.2rem;
+  }
+
+  /* Legend */
+  .legend {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    background: white;
+    border: 2px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 0.75rem;
+    font-size: 0.7rem;
+    box-shadow: 3px 3px 0 #2a2a2a;
+  }
+  .legend-title {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.2rem 0;
+  }
+  .legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 4px;
+    border: 1px solid #2a2a2a;
+  }
+
+  @media (max-width: 900px) {
+    body { padding: 1rem; }
+    .mindmap { transform: scale(0.7); transform-origin: top center; }
+  }
+</style>
+</head>
+<body>
+
+<h1 class="title">🇧🇷 Brazil in Action — Context Mind Map</h1>
+
+<div class="mindmap" style="height: 850px;">
+  
+  <!-- SVG Connections -->
+  <svg class="connections" viewBox="0 0 1200 800">
+    <!-- Root to Policy -->
+    <path d="M 600 300 Q 620 200 650 150" />
+    <!-- Root to Presidency -->
+    <path d="M 650 320 Q 750 280 820 250" />
+    <!-- Root to Organization -->
+    <path d="M 650 350 Q 750 400 800 450" />
+    <!-- Root to Historical -->
+    <path d="M 550 320 Q 400 200 250 150" />
+    <!-- Root to Political -->
+    <path d="M 550 330 Q 350 320 250 320" />
+    <!-- Root to Constitutional -->
+    <path d="M 550 350 Q 350 450 250 500" />
+    
+    <!-- Dashed connections for relationships -->
+    <path class="dashed" d="M 250 180 Q 400 250 520 300" style="stroke: #888;" />
+    <path class="dashed" d="M 250 400 Q 400 380 520 330" style="stroke: #888;" />
+  </svg>
+
+  <!-- Central Node -->
+  <div class="root">
+    Brazil in<br>Action
+    <div style="font-size: 0.8rem; font-weight: 400;">(1996)</div>
+  </div>
+
+  <!-- POLICY Branch (your original) -->
+  <div class="branch policy">
+    <div class="branch-title">📋 Policy</div>
+    <div class="branch-items">
+      <div class="item highlight">Development of Brazil</div>
+      <div class="sub-items">
+        <div class="sub-item">Shift from stability → development</div>
+        <div class="sub-item">National project as "process"</div>
+      </div>
+      <div class="item">42 Projects</div>
+      <div class="sub-items">
+        <div class="sub-item">~50% infrastructure</div>
+        <div class="sub-item">~50% social (health, edu, housing)</div>
+        <div class="sub-item">Selection: "catalyze other investment"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRESIDENCY Branch (your original, expanded) -->
+  <div class="branch presidency">
+    <div class="branch-title">🏛️ Presidency</div>
+    <div class="branch-items">
+      <div class="item highlight">Cardoso (FHC)</div>
+      <div class="sub-items">
+        <div class="sub-item">Personal identification w/ program</div>
+        <div class="sub-item">Monthly project visits</div>
+        <div class="sub-item">Knew every project by heart</div>
+      </div>
+      <div class="item">The Presidency Institution</div>
+      <div class="sub-items">
+        <div class="sub-item">Civil House (Clóvis Carvalho)</div>
+        <div class="sub-item">General Secretary (Eduardo Jorge)</div>
+        <div class="sub-item">Social Comms (Sérgio Amaral)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORGANIZATION Branch (your original, expanded) -->
+  <div class="branch organization">
+    <div class="branch-title">🏢 Organization</div>
+    <div class="branch-items">
+      <div class="item highlight">Ministry of Planning</div>
+      <div class="sub-items">
+        <div class="sub-item">Kandir (Minister)</div>
+        <div class="sub-item">Silveira (Secretary)</div>
+        <div class="sub-item">Asti (Program Director)</div>
+        <div class="sub-item">~30 staff only!</div>
+      </div>
+      <div class="item">Project Manager Role</div>
+      <div class="sub-items">
+        <div class="sub-item">Sat in sectoral ministries</div>
+        <div class="sub-item">Functional reporting to Planning</div>
+        <div class="sub-item">No formal authority over them</div>
+      </div>
+      <div class="item">Sectoral Ministries</div>
+      <div class="sub-items">
+        <div class="sub-item">Transport, Health, Education...</div>
+        <div class="sub-item">Controlled project execution</div>
+        <div class="sub-item">Turf concerns</div>
+      </div>
+      <div class="item">Treasury</div>
+      <div class="sub-items">
+        <div class="sub-item">Fund disbursement</div>
+        <div class="sub-item">Conditional release mechanism</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTORICAL Context (new) -->
+  <div class="branch historical">
+    <div class="branch-title">📜 Historical Context</div>
+    <div class="branch-items">
+      <div class="item highlight">Kubitschek (1956-61)</div>
+      <div class="sub-items">
+        <div class="sub-item">Built Brasília</div>
+        <div class="sub-item">"Plano de Metas"</div>
+        <div class="sub-item">Bypassed ministries</div>
+        <div class="sub-item">→ "Indirect administration"</div>
+      </div>
+      <div class="item">Lesson Drawn</div>
+      <div class="sub-items">
+        <div class="sub-item">President = face of projects</div>
+        <div class="sub-item">Catchy unified branding</div>
+        <div class="sub-item">Visit sites, create visibility</div>
+      </div>
+      <div class="item" style="background: #ffe0e0;">Constraint</div>
+      <div class="sub-items">
+        <div class="sub-item">Can't bypass ministries now</div>
+        <div class="sub-item">Must work through bureaucracy</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POLITICAL Context (new) -->
+  <div class="branch political">
+    <div class="branch-title">⚖️ Political Context</div>
+    <div class="branch-items">
+      <div class="item highlight">Real Plan (1994)</div>
+      <div class="sub-items">
+        <div class="sub-item">Tamed hyperinflation</div>
+        <div class="sub-item">Cardoso = finance minister</div>
+        <div class="sub-item">Won presidency on stability</div>
+      </div>
+      <div class="item">Public Expectation</div>
+      <div class="sub-items">
+        <div class="sub-item">"Brazil should develop"</div>
+        <div class="sub-item">"Move forward, not stagnate"</div>
+        <div class="sub-item">Stability ≠ progress (to voters)</div>
+      </div>
+      <div class="item" style="background: #ffe0e0;">Pressure</div>
+      <div class="sub-items">
+        <div class="sub-item">Popularity starting to wane</div>
+        <div class="sub-item">Need visible achievements</div>
+        <div class="sub-item">Re-election amendment coming</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONSTITUTIONAL Context (new) -->
+  <div class="branch constitutional">
+    <div class="branch-title">📜 Constitutional Context</div>
+    <div class="branch-items">
+      <div class="item highlight">1988 Constitution</div>
+      <div class="sub-items">
+        <div class="sub-item">Favors "direct administration"</div>
+        <div class="sub-item">Work through regular ministries</div>
+      </div>
+      <div class="item">Indirect Admin = Discredited</div>
+      <div class="sub-items">
+        <div class="sub-item">Kubitschek's parallel agencies</div>
+        <div class="sub-item">Became unaccountable</div>
+        <div class="sub-item">Abolished/reorganized</div>
+      </div>
+      <div class="item">Cardoso's Reform Agenda</div>
+      <div class="sub-items">
+        <div class="sub-item">"Managerial reform of state"</div>
+        <div class="sub-item">Can't contradict own agenda</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Annotations -->
+  <div class="annotation" style="left: 380px; top: 180px;">
+    ↙ inspired branding
+  </div>
+  <div class="annotation" style="left: 350px; top: 360px;">
+    ↙ created pressure
+  </div>
+  <div class="annotation" style="left: 400px; top: 520px;">
+    ← constrained options
+  </div>
+
+</div>
+
+<div class="legend">
+  <div class="legend-title">Legend</div>
+  <div class="legend-item">
+    <div class="legend-color" style="background: #a8e6cf;"></div>
+    <span>Policy (what)</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-color" style="background: #fdcb82;"></div>
+    <span>Presidency (who - political)</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-color" style="background: #f6b8d1;"></div>
+    <span>Organization (who - admin)</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-color" style="background: #b8d4e3;"></div>
+    <span>Historical context</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-color" style="background: #d4b8e3;"></div>
+    <span>Political context</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-color" style="background: #e3d4b8;"></div>
+    <span>Constitutional context</span>
+  </div>
+</div>
+
+</body>
+</html>
