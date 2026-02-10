@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brazil in Action — Context Mind Map</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #fafafa;
+    min-height: 100vh;
+    padding: 2rem;
+    color: #1a1a1a;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #2563eb;
+  }
+
+  /* Root node */
+  .root {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .root-box {
+    display: inline-block;
+    background: #fbbf24;
+    border: 2px solid #1a1a1a;
+    border-radius: 16px;
+    padding: 1rem 2rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  .root-sub {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #555;
+    margin-top: 0.25rem;
+  }
+
+  /* Two columns layout */
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .column-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #666;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e5e5e5;
+  }
+
+  /* Branch styling */
+  .branch {
+    margin-bottom: 1.5rem;
+  }
+
+  .branch-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .branch-header.policy { background: #d1fae5; border-left: 4px solid #10b981; }
+  .branch-header.presidency { background: #fed7aa; border-left: 4px solid #f97316; }
+  .branch-header.organization { background: #fce7f3; border-left: 4px solid #ec4899; }
+  .branch-header.historical { background: #dbeafe; border-left: 4px solid #3b82f6; }
+  .branch-header.political { background: #e9d5ff; border-left: 4px solid #a855f7; }
+  .branch-header.constitutional { background: #fef3c7; border-left: 4px solid #eab308; }
+
+  .branch-content {
+    padding-left: 1.25rem;
+    border-left: 2px solid #e5e5e5;
+    margin-left: 0.5rem;
+  }
+
+  .item {
+    padding: 0.4rem 0;
+    font-size: 0.85rem;
+  }
+
+  .item-main {
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  .item-sub {
+    font-size: 0.78rem;
+    color: #666;
+    padding-left: 1rem;
+    margin-top: 0.2rem;
+  }
+
+  .item-sub li {
+    margin: 0.15rem 0;
+    list-style: none;
+    position: relative;
+    padding-left: 0.75rem;
+  }
+  .item-sub li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: #999;
+    font-size: 0.7rem;
+  }
+
+  .highlight {
+    background: #fffbeb;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    display: inline;
+  }
+
+  .constraint {
+    background: #fee2e2;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    display: inline;
+    font-size: 0.75rem;
+    color: #b91c1c;
+  }
+
+  /* Connection indicators */
+  .connection {
+    font-size: 0.7rem;
+    color: #888;
+    font-style: italic;
+    margin-top: 0.5rem;
+    padding: 0.3rem 0.5rem;
+    background: #f5f5f5;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 768px) {
+    .columns {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🇧🇷 Brazil in Action — Context Mind Map</h1>
+
+  <div class="root">
+    <div class="root-box">
+      Brazil in Action
+      <div class="root-sub">1996 • 42 Presidential Priority Projects</div>
+    </div>
+  </div>
+
+  <div class="columns">
+    
+    <!-- LEFT COLUMN: Context -->
+    <div class="left">
+      <div class="column-title">📍 Context (Why & Constraints)</div>
+
+      <!-- Historical -->
+      <div class="branch">
+        <div class="branch-header historical">📜 Historical Context</div>
+        <div class="branch-content">
+          <div class="item">
+            <div class="item-main"><span class="highlight">Kubitschek (1956-61)</span></div>
+            <ul class="item-sub">
+              <li>Built Brasília (new capital)</li>
+              <li>"Plano de Metas" — unified branding</li>
+              <li>Bypassed ministries via parallel agencies</li>
+              <li>= "Indirect administration"</li>
+            </ul>
+          </div>
+          <div class="item">
+            <div class="item-main">Lesson for Cardoso</div>
+            <ul class="item-sub">
+              <li>President must be face of projects</li>
+              <li>Catchy name + visible progress</li>
+            </ul>
+          </div>
+          <div class="item">
+            <span class="constraint">⚠️ But: can't bypass ministries anymore</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Political -->
+      <div class="branch">
+        <div class="branch-header political">⚖️ Political Context</div>
+        <div class="branch-content">
+          <div class="item">
+            <div class="item-main"><span class="highlight">Real Plan (1994)</span></div>
+            <ul class="item-sub">
+              <li>Tamed hyperinflation</li>
+              <li>Cardoso = finance minister → won presidency</li>
+            </ul>
+          </div>
+          <div class="item">
+            <div class="item-main">Public Expectation</div>
+            <ul class="item-sub">
+              <li>"Brazil should develop, move forward"</li>
+              <li>Stability alone ≠ progress (to voters)</li>
+            </ul>
+          </div>
+          <div class="item">
+            <span class="constraint">⚠️ Pressure: popularity waning, need results</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Constitutional -->
+      <div class="branch">
+        <div class="branch-header constitutional">📋 Constitutional Context</div>
+        <div class="branch-content">
+          <div class="item">
+            <div class="item-main"><span class="highlight">1988 Constitution</span></div>
+            <ul class="item-sub">
+              <li>Favors "direct administration"</li>
+              <li>Must work through regular ministries</li>
+            </ul>
+          </div>
+          <div class="item">
+            <div class="item-main">Indirect Admin = Discredited</div>
+            <ul class="item-sub">
+              <li>Kubitschek's agencies became unaccountable</li>
+              <li>Abolished/reorganized</li>
+            </ul>
+          </div>
+          <div class="item">
+            <div class="item-main">Cardoso's Reform Agenda</div>
+            <ul class="item-sub">
+              <li>"Managerial reform of state"</li>
+              <li>Can't contradict by bypassing bureaucracy</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN: What & Who -->
+    <div class="right">
+      <div class="column-title">🏗️ What & Who</div>
+
+      <!-- Policy -->
+      <div class="branch">
+        <div class="branch-header policy">📋 Policy</div>
+        <div class="branch-content">
+          <div class="item">
+            <div class="item-main"><span class="highlight">Development of Brazil</span></div>
+            <ul class="item-sub">
+              <li>Shift: stability → visible development</li>
+              <li>National project as "process" not plan</li>
+            </ul>
+          </div>
+          <div class="item">
+            <div class="item-main">42 Projects</div>
+            <ul class="item-sub">
+              <li>~50% infrastructure (roads, ports, pipelines)</li>
+              <li>~50% social (health, education, housing)</li>
+              <li>Criterion: "catalyze other investment"</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Presidency -->
+      <div class="branch">
+        <div class="branch-header presidency">🏛️ Presidency</div>
+        <div class="branch-content">
+          <div class="item">
+            <div class="item-main"><span class="highlight">Cardoso (FHC)</span></div>
+            <ul class="item-sub">
+              <li>Personal identification with program</li>
+              <li>Monthly project visits</li>
+              <li>Knew every project by heart</li>
+            </ul>
+          </div>
+          <div class="item">
+            <div class="item-main">The Presidency Institution</div>
+            <ul class="item-sub">
+              <li>Civil House — Clóvis Carvalho (Chief of Staff)</li>
+              <li>General Secretary — Eduardo Jorge</li>
+              <li>Social Comms — Sérgio Amaral</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Organization -->
+      <div class="branch">
+        <div class="branch-header organization">🏢 Organization</div>
+        <div class="branch-content">
+          <div class="item">
+            <div class="item-main"><span class="highlight">Ministry of Planning</span></div>
+            <ul class="item-sub">
+              <li>Kandir (Minister)</li>
+              <li>Silveira (Secretary) — key architect</li>
+              <li>Asti (Program Director)</li>
+              <li>Only ~30 staff!</li>
+            </ul>
+          </div>
+          <div class="item">
+            <div class="item-main">Project Manager Role</div>
+            <ul class="item-sub">
+              <li>Sat inside sectoral ministries</li>
+              <li>Functional reporting to Planning</li>
+              <li>No formal authority over them</li>
+            </ul>
+          </div>
+          <div class="item">
+            <div class="item-main">Sectoral Ministries</div>
+            <ul class="item-sub">
+              <li>Transport, Health, Education, etc.</li>
+              <li>Controlled actual project execution</li>
+              <li>Turf concerns</li>
+            </ul>
+          </div>
+          <div class="item">
+            <div class="item-main">Treasury</div>
+            <ul class="item-sub">
+              <li>Fund disbursement</li>
+              <li>Partner for conditional release</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
