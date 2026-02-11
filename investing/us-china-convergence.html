@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US-China Convergence: The Superpower Trade</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #181b24;
+    --surface-2: #1f2330;
+    --border: rgba(255,255,255,0.06);
+    --text: #e8e6e1;
+    --text-muted: #8a8b91;
+    --accent: #6366f1;
+    --accent-glow: rgba(99,102,241,0.15);
+    --green: #34d399;
+    --green-glow: rgba(52,211,153,0.12);
+    --yellow: #fbbf24;
+    --yellow-glow: rgba(251,191,36,0.12);
+    --orange: #fb923c;
+    --orange-glow: rgba(251,146,60,0.12);
+    --red: #f87171;
+    --red-glow: rgba(248,113,113,0.12);
+    --gold: #f5c542;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-2: #f5f3ef;
+    --border: rgba(0,0,0,0.08);
+    --text: #2c2a26;
+    --text-muted: #6b6560;
+    --accent: #4f46e5;
+    --accent-glow: rgba(79,70,229,0.08);
+    --green: #059669;
+    --green-glow: rgba(5,150,105,0.08);
+    --yellow: #d97706;
+    --yellow-glow: rgba(217,119,6,0.08);
+    --orange: #ea580c;
+    --orange-glow: rgba(234,88,12,0.08);
+    --red: #dc2626;
+    --red-glow: rgba(220,38,38,0.08);
+    --gold: #b45309;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .container {
+    max-width: 720px;
+    width: 100%;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeUp 0.6s ease-out;
+  }
+
+  .header .tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-glow);
+    padding: 6px 14px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+  }
+
+  .header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .header p {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s ease-out both;
+  }
+
+  .section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section h2 .emoji {
+    font-size: 22px;
+  }
+
+  .section .desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .section p {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+
+  .section p:last-child { margin-bottom: 0; }
+
+  .tldr-hero {
+    background: linear-gradient(135deg, var(--accent) 0%, #4338ca 100%);
+    border: none;
+    border-radius: 16px;
+    padding: 28px 24px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.6s ease-out 0.1s both;
+  }
+
+  .tldr-hero::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -20%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .tldr-hero h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  .tldr-hero p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.9);
+  }
+
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+
+  .matrix-table th,
+  .matrix-table td {
+    padding: 12px;
+    font-size: 13px;
+    line-height: 1.55;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .matrix-table th {
+    background: var(--surface-2);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--text-muted);
+  }
+
+  .matrix-table tr:last-child td { border-bottom: none; }
+
+  .note-box {
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 10px;
+    background: var(--surface-2);
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .bullet-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 6px;
+  }
+
+  .bullet-item {
+    padding: 14px;
+    border-radius: 10px;
+    background: var(--surface-2);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .imperative-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .imperative-item {
+    background: var(--surface-2);
+    border-radius: 12px;
+    padding: 16px;
+    border-left: 3px solid var(--accent);
+  }
+
+  .imperative-item .title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .imperative-item .detail {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .quote-block {
+    margin: 10px 0 16px;
+    padding: 14px 16px;
+    border-left: 3px solid var(--accent);
+    background: var(--accent-glow);
+    border-radius: 0 10px 10px 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text);
+    font-style: italic;
+  }
+
+  .duel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .duel-card {
+    background: var(--surface-2);
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  .duel-card h3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .duel-card ul {
+    padding-left: 18px;
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .duel-card li { margin-bottom: 6px; }
+
+  .jargon-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .jargon-def {
+    padding: 14px;
+    background: var(--surface-2);
+    border-radius: 10px;
+  }
+
+  .jargon-def .term {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .jargon-def .definition {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .source-footer {
+    text-align: center;
+    margin-top: 36px;
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    animation: fadeUp 0.6s ease-out 0.5s both;
+  }
+
+  .source-footer a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .source-footer a:hover { text-decoration: underline; }
+
+  .source-footer .author {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 720px;
+    width: 100%;
+    margin: 0 auto 0;
+    padding: 0 0 16px 0;
+  }
+
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--accent); }
+
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 640px) {
+    body { padding: 24px 16px; }
+    .header h1 { font-size: 26px; }
+    .imperative-grid, .duel-grid { grid-template-columns: 1fr; }
+    .matrix-table { font-size: 12px; }
+    .matrix-table th, .matrix-table td { padding: 10px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="top-bar">
+  <a href="../" class="back-link">← Back to Study Hub</a>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+    <span id="theme-icon">☀️</span>
+  </button>
+</div>
+
+<div class="header">
+  <div class="tag">Framework · Macro</div>
+  <h1>US-China Convergence: The Superpower Trade</h1>
+  <p>Why the US and China will become more like each other — and what that means for investors.</p>
+</div>
+
+<div class="tldr-hero">
+  <h2>🐱 Robin's TLDR</h2>
+  <p>The irony of US-China decoupling is that each must borrow from their rival to stay competitive. The US must reinvest in infrastructure and manufacturing (become more like China). China must liberalize and stimulate consumption (become more like US). Because of their different starting points, this convergence favors Chinese equities over the next 5 years. The RMB is severely undervalued, Chinese equities trade at a 5x discount to US by % of global markets, and the gap is likely to close.</p>
+</div>
+
+<div class="section">
+  <h2><span class="emoji">⚖️</span> The Core Thesis — Convergence Through Opposition</h2>
+  <div class="desc">Decoupling pressure forces both superpowers to adopt traits of the other model.</div>
+  <table class="matrix-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>🇺🇸 United States</th>
+        <th>🇨🇳 China</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Current state</strong></td>
+        <td>Overconsumed, underproduced. 25 years of "harvest mode" — milking institutions while neglecting foundations.</td>
+        <td>Overinvested, underconsumed. Deep roots, suppressed wages, massive infrastructure buildout.</td>
+      </tr>
+      <tr>
+        <td><strong>Cost of decoupling</strong></td>
+        <td>🌋 <strong>Inflation</strong> (the lava pit) — rising import costs, inflating debt service, $20 burritos.</td>
+        <td>🧊 <strong>Deflation</strong> (the abyss) — excess capacity, depressed prices, youth unemployment.</td>
+      </tr>
+      <tr>
+        <td><strong>What they must do</strong></td>
+        <td>Reinvest in infrastructure, subsidize strategic industries, reduce consumption/welfare.</td>
+        <td>Liberalize economy, stimulate consumption, develop capital markets.</td>
+      </tr>
+      <tr>
+        <td><strong>Difficulty</strong></td>
+        <td>Hard. Rebuilding industrial capacity after 30 years of offshoring is colossal.</td>
+        <td>Easier. Pivoting from investment to consumption is the natural direction.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2><span class="emoji">💱</span> The RMB is Severely Undervalued</h2>
+  <div class="desc">Shanghai price levels suggest an exchange rate distortion that markets may eventually close.</div>
+  <table class="matrix-table">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Shanghai (RMB → USD)</th>
+        <th>US Equivalent</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Airport ride (central → Pudong)</td>
+        <td>136 RMB (~$20)</td>
+        <td>$150 (Manhattan → JFK)</td>
+      </tr>
+      <tr>
+        <td>4BR apartment, central location</td>
+        <td>~$3,000/mo</td>
+        <td>$8,000-15,000/mo (Union Square)</td>
+      </tr>
+      <tr>
+        <td>New gym membership, central</td>
+        <td>~$50/mo</td>
+        <td>$200+/mo (Equinox)</td>
+      </tr>
+      <tr>
+        <td>Meat buns (breakfast)</td>
+        <td>40 cents each</td>
+        <td>$3-5 each</td>
+      </tr>
+      <tr>
+        <td>Subway ride</td>
+        <td>~50 cents</td>
+        <td>$2.90 (NYC)</td>
+      </tr>
+      <tr>
+        <td>Ecommerce delivery</td>
+        <td>&lt;$1</td>
+        <td>$5-10</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="note-box"><strong>Robin's note:</strong> "This isn't a 'China is cheap' travel blog. It's evidence that the RMB is suppressed to an extreme degree. If convergence happens, RMB appreciation is part of the equation."</div>
+</div>
+
+<div class="section">
+  <h2><span class="emoji">📦</span> "Amazon at National Scale"</h2>
+  <p>China is operating like early Amazon — constantly reinvesting, forgoing profits, building capacity. The same playbook that crushed retail is now being applied at national scale:</p>
+  <div class="bullet-list">
+    <div class="bullet-item">EVs (BYD now #1 globally)</div>
+    <div class="bullet-item">Solar/renewables (clear global leader)</div>
+    <div class="bullet-item">Drones (DJI dominance)</div>
+    <div class="bullet-item">Biotech (rapidly ascending)</div>
+    <div class="bullet-item">AI (DeepSeek proving frontier competitiveness)</div>
+  </div>
+  <div class="quote-block">"The Chinese government's continued reinvestment through incentives, subsidies, low wages, and a strikingly low exchange rate are operating almost like Amazon at national scale — constantly forgoing profits and consumption, funneling export proceeds back into more factories, more competition, and more capacity."</div>
+</div>
+
+<div class="section">
+  <h2><span class="emoji">🧠</span> Technology as Existential Necessity</h2>
+  <div class="quote-block">"China is not building the future because it wants to. China is building the future because it must."</div>
+  <div class="imperative-grid">
+    <div class="imperative-item">
+      <div class="title">Energy</div>
+      <div class="detail">Without nuclear/solar, dependent on hostile energy exporters.</div>
+    </div>
+    <div class="imperative-item">
+      <div class="title">Semiconductors</div>
+      <div class="detail">Without own ecosystem, at mercy of US export controls.</div>
+    </div>
+    <div class="imperative-item">
+      <div class="title">Payment rails</div>
+      <div class="detail">Without own system, at mercy of US sanctions.</div>
+    </div>
+    <div class="imperative-item">
+      <div class="title">Manufacturing automation</div>
+      <div class="detail">Without it, at mercy of demographics and rising wages.</div>
+    </div>
+  </div>
+  <div class="note-box">This isn't ambition — it's survival. The CCP has a "salvific relationship to technology" because without tech acceleration, China's model implodes (debt, demographics, energy dependence).</div>
+</div>
+
+<div class="section">
+  <h2><span class="emoji">🎭</span> The "Ensemble vs Soloist" Model</h2>
+  <div class="duel-grid">
+    <div class="duel-card">
+      <h3>🇨🇳 China: Ensemble</h3>
+      <ul>
+        <li>Broad participation, intricately choreographed.</li>
+        <li>Mini-Olympics opening ceremony style coordination.</li>
+        <li>System-level execution over individual flair.</li>
+      </ul>
+    </div>
+    <div class="duel-card">
+      <h3>🇺🇸 US: Soloist</h3>
+      <ul>
+        <li>Single representative with abnormal talent.</li>
+        <li>Individual virtuosity, limited planning depth.</li>
+        <li>Breakthroughs without coordinated national choreography.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note-box">Now the models are converging: China is developing its own virtuosos (DeepSeek, BYD's Wang Chuanfu), while the US struggles to rebuild coordinated infrastructure capacity.</div>
+</div>
+
+<div class="section">
+  <h2><span class="emoji">📈</span> The Investment Thesis</h2>
+  <div class="desc">A relative-value call: why China may outperform from this starting point.</div>
+  <div class="bullet-list">
+    <div class="bullet-item">5x discount to US by % of global markets — gap likely to close.</div>
+    <div class="bullet-item">2025 was a sentiment turning point — quiet confidence replacing wolf-warrior bravado.</div>
+    <div class="bullet-item">Policy shifting toward consumption stimulus and capital market development.</div>
+    <div class="bullet-item">Starting point favors China (easier to shift from investment → consumption).</div>
+  </div>
+  <div class="quote-block">"The U.S. is in the middle of blowing a 28-3 lead."</div>
+  <div class="bullet-list">
+    <div class="bullet-item"><strong>Caveat:</strong> US premium is warranted (rule of law, institutions, deep capital markets).</div>
+    <div class="bullet-item"><strong>Caveat:</strong> China's challenges are real (debt, demographics, real estate overhang, party control).</div>
+    <div class="bullet-item"><strong>Caveat:</strong> This is a relative trade, not an absolute call.</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="emoji">💡</span> Robin's Investment Framing</h2>
+  <div class="bullet-list">
+    <div class="bullet-item"><strong>Energy as the bottleneck</strong> — "The pillar which underpins everything is energy. Cheap, abundant, ideally-domestically-produced energy. The lifeblood of any industrial juggernaut and likely to be the defining bottleneck in the AI race." Connects directly to our uranium/nuclear thesis.</div>
+    <div class="bullet-item"><strong>Variant view example</strong> — Consensus: "China is collapsing." Variant: "China just went through a 3-year correction that priced in decoupling. Foundations are strong. Equities are cheap."</div>
+    <div class="bullet-item"><strong>The "harvest mode" warning for US</strong> — Overextraction invites decline. Same pattern as the "don't get greedy" lesson from LLMs vs Marketplaces.</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="emoji">📖</span> Jargon Decoder</h2>
+  <div class="jargon-list">
+    <div class="jargon-def">
+      <div class="term">Harvest mode</div>
+      <div class="definition">Extracting value from existing assets/institutions without reinvesting in foundations.</div>
+    </div>
+    <div class="jargon-def">
+      <div class="term">Balance sheet recession</div>
+      <div class="definition">Economic downturn caused by private sector paying down debt rather than spending.</div>
+    </div>
+    <div class="jargon-def">
+      <div class="term">Performance legitimacy</div>
+      <div class="definition">Government derives authority from economic performance rather than elections.</div>
+    </div>
+    <div class="jargon-def">
+      <div class="term">Decoupling</div>
+      <div class="definition">Unwinding economic interdependence between US and China.</div>
+    </div>
+    <div class="jargon-def">
+      <div class="term">RMB</div>
+      <div class="definition">Chinese Yuan (Renminbi), China's currency.</div>
+    </div>
+    <div class="jargon-def">
+      <div class="term">Wolf warrior diplomacy</div>
+      <div class="definition">Aggressive Chinese diplomatic style of 2020-2021.</div>
+    </div>
+  </div>
+</div>
+
+<div class="source-footer">
+  <a href="https://x.com/PonderingDurian/status/2021236098584936513" target="_blank" rel="noopener">📄 Source Thread: @PonderingDurian →</a>
+  <div class="author">Rawson / Delphi Intelligence · Feb 2026</div>
+</div>
+
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = saved === 'dark' ? '☀️' : '🌙';
+    });
+  }
+})();
+</script>
+</body>
+</html>
