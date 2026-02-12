@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>High Bandwidth Flash (HBF): The New Memory Tier — AI Value Chain</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-alt: #1a1a2e;
+    --surface-hover: #1e1e2a;
+    --border: #1e1e2e;
+    --border-alt: #2a2a4a;
+    --text: #e8e8ed;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-dim: #6b7280;
+    --text-dimmer: #4b5563;
+    --accent: #5ec4b6;
+    --accent-light: #34d399;
+    --accent-glow: rgba(94, 196, 182, 0.12);
+    --highlight-text: #fbbf24;
+    --worth-accent: #a78bfa;
+    --table-current-bg: rgba(94, 196, 182, 0.08);
+    --table-current-text: #5ec4b6;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --text-dimmer: #a5a09a;
+    --accent: #1a8a7d;
+    --accent-light: #059669;
+    --accent-glow: rgba(26, 138, 125, 0.06);
+    --highlight-text: #b45309;
+    --worth-accent: #7c3aed;
+    --table-current-bg: rgba(26, 138, 125, 0.08);
+    --table-current-text: #1a8a7d;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 28px;
+    font-weight: 500;
+  }
+
+  .layer-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    background: var(--accent-glow);
+    border-radius: 999px;
+    padding: 6px 10px;
+    margin-bottom: 12px;
+  }
+
+  .anatomy-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+
+  .section h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  p, li {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  .muted { color: var(--text-muted); }
+
+  .table-wrap { overflow-x: auto; margin-top: 12px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  th {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 2px solid var(--border-alt);
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  .architecture-stack {
+    margin: 14px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .stack-box {
+    width: min(640px, 100%);
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border-alt);
+    background: var(--surface-alt);
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .stack-arrow { color: var(--text-dimmer); font-size: 18px; }
+
+  .risk-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .risk-card {
+    border: 1px solid #7f1d1d;
+    background: rgba(127, 29, 29, 0.13);
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .risk-card h4 {
+    color: #fca5a5;
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+  .risk-card p { color: #fecaca; font-size: 12px; line-height: 1.6; }
+
+  .related-links { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+  .related-links a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    color: var(--text);
+    border: 1px solid var(--border);
+    background: var(--surface-alt);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+  .related-links a:hover { border-color: var(--accent); }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto 0;
+    padding: 0 0 16px 0;
+  }
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border-alt);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  .jargon {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1.5px dotted var(--accent);
+    cursor: pointer;
+  }
+  .jargon-def { scroll-margin-top: 24px; }
+  .jargon-back {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-left: 6px;
+    opacity: 0.7;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  .page-layout {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+  }
+  .content { flex: 1; min-width: 0; }
+  .section-nav {
+    position: sticky;
+    top: 96px;
+    width: 220px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    height: fit-content;
+    max-height: calc(100vh - 140px);
+    overflow: auto;
+  }
+  .section-nav-title {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .section-nav-links { display: flex; flex-direction: column; gap: 6px; }
+  .section-nav a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+  }
+  .section-nav a:hover { color: var(--accent); border-color: var(--border); background: var(--surface-hover); }
+  .section-nav a.active {
+    color: var(--accent);
+    background: var(--accent-glow);
+    border-color: var(--accent);
+  }
+
+  @media (max-width: 768px) {
+    body { padding: 24px 16px; }
+    .page-layout { flex-direction: column; gap: 12px; }
+    .section-nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      padding: 8px;
+      border-radius: 12px;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+    .section-nav-title { display: none; }
+    .section-nav-links { flex-direction: row; gap: 8px; }
+    .section-nav a {
+      white-space: nowrap;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border-color: var(--border);
+      background: var(--surface);
+    }
+    .risk-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page-layout">
+  <nav class="section-nav" aria-label="Section navigation">
+    <div class="section-nav-title">On this page</div>
+    <div class="section-nav-links" id="section-nav-links"></div>
+  </nav>
+
+  <main class="content">
+    <div class="container">
+      <div class="top-bar">
+        <a href="../" class="back-link">← Back to Study Hub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+          <span id="theme-icon">☀️</span>
+        </button>
+      </div>
+
+      <div class="layer-pill">L4 • Memory</div>
+      <h1>⚡ High Bandwidth Flash (HBF): The New Memory Tier</h1>
+      <p class="subtitle">NAND flash engineered for AI inference — near-HBM bandwidth with 8-16x the capacity.</p>
+
+      <section class="section anatomy-card">
+        <h2>1. Robin's TLDR</h2>
+        <p>AI models are hitting a "memory wall" — HBM is too expensive and capacity-limited for TB-scale inference. HBF is a new tier: NAND flash with HBM-like bandwidth (1.6 TB/s) and 8-16x the capacity (512GB per stack) at similar cost. It doesn't replace HBM — it augments it by handling the read-heavy weight streaming while HBM handles latency-sensitive state. Think of it as the "cold tier" that sits right next to the GPU, close enough to stream weights fast but dense enough to fit entire frontier models. SanDisk and SK Hynix are leading, with production expected in 2027.</p>
+      </section>
+
+      <section class="section anatomy-card">
+        <h2>2. Why HBF Exists — The Memory Wall</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Challenge</th><th>Impact</th></tr></thead>
+            <tbody>
+              <tr><td>Model sizes exploding</td><td>1.8T params = 3,600GB for weights alone</td></tr>
+              <tr><td>HBM capacity limited</td><td>Max ~64GB per stack (HBM4)</td></tr>
+              <tr><td>HBM is expensive</td><td>Premium pricing, supply constrained</td></tr>
+              <tr><td>Inference is read-heavy</td><td>Weight streaming is sequential, predictable</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:10px;"><strong>Key insight:</strong> Inference workloads are <strong>bandwidth-limited, not latency-limited</strong> for weight reads. This is the unlock that makes NAND viable — if you can throw enough parallelism at it.</p>
+      </section>
+
+      <section class="section anatomy-card">
+        <h2>3. HBF vs HBM vs SSD — The Memory Hierarchy</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Tier</th><th>Bandwidth</th><th>Capacity</th><th>Latency</th><th>Use Case</th></tr></thead>
+            <tbody>
+              <tr><td><strong>HBM4</strong></td><td>~2 TB/s</td><td>64GB max</td><td>ns</td><td>Training, KV-cache, latency-sensitive</td></tr>
+              <tr style="background:var(--table-current-bg);"><td><strong>HBF Gen1</strong></td><td>1.6 TB/s</td><td>512GB</td><td>µs (pipelined)</td><td>Inference weight streaming</td></tr>
+              <tr><td><strong>NVMe SSD</strong></td><td>~15-30 GB/s</td><td>TB+</td><td>µs-ms</td><td>Storage, checkpoints</td></tr>
+              <tr><td><strong>Kioxia PCIe module</strong></td><td>64 GB/s</td><td>5TB</td><td>µs</td><td>Edge, off-package expansion</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:10px;"><strong>HBF sits in the gap</strong> — on-package like HBM, but dense like SSD.</p>
+      </section>
+
+      <section class="section anatomy-card">
+        <h2>4. SanDisk HBF Architecture</h2>
+        <div class="architecture-stack">
+          <div class="stack-box">[16-die NAND stack with TSVs + micro-bumps]</div>
+          <div class="stack-arrow">↓</div>
+          <div class="stack-box">[Logic/base die: PHY, ECC, scheduling, prefetch]</div>
+          <div class="stack-arrow">↓</div>
+          <div class="stack-box">[Silicon interposer]</div>
+          <div class="stack-arrow">↓</div>
+          <div class="stack-box">[xPU die (GPU/TPU) with HBF controller]</div>
+          <div class="stack-arrow">↓</div>
+          <div class="stack-box">[Package substrate]</div>
+        </div>
+        <ul style="padding-left:18px;margin-top:10px;display:flex;flex-direction:column;gap:6px;">
+          <li>16-high stacking with 256Gb dies = 512GB per stack</li>
+          <li>Uses same physical footprint as HBM</li>
+          <li><strong>NOT drop-in compatible</strong> — same electrical interface but protocol changes required</li>
+          <li>Logic die handles flash-specific behavior (page management, ECC, prefetch)</li>
+          <li>Requires GPU vendors to add controller support</li>
+        </ul>
+      </section>
+
+      <section class="section anatomy-card">
+        <h2>5. Specs & Roadmap</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Generation</th><th>Capacity</th><th>Read Bandwidth</th><th>Energy vs HBM4</th><th>Timeline</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Gen1</strong></td><td>512GB</td><td>1.6 TB/s</td><td>>2x better</td><td>Sampling 2H 2026, production early 2027</td></tr>
+              <tr><td><strong>Gen2</strong></td><td>~768GB (1.5x)</td><td>~2.3 TB/s (1.45x)</td><td>Improved</td><td>TBD</td></tr>
+              <tr><td><strong>Gen3</strong></td><td>~1TB (2x)</td><td>~3.2 TB/s (2x)</td><td>Improved</td><td>TBD</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:10px;"><strong>Performance claim:</strong> SanDisk simulation shows 2.2% delta vs "unlimited HBM" for Llama 3.1 405B weight reads. Caveat: simulation, single workload.</p>
+      </section>
+
+      <section class="section anatomy-card">
+        <h2>6. Ecosystem & Standardization</h2>
+        <ul style="padding-left:18px;display:flex;flex-direction:column;gap:6px;">
+          <li><strong>SanDisk + SK Hynix MOU</strong> — Joint standardization effort</li>
+          <li><strong>SK Hynix "AIN B"</strong> — Their own HBF product using similar stacking</li>
+          <li><strong>Technical Advisory Board:</strong> David Patterson (Google/Berkeley), Raja Koduri (ex-Intel)</li>
+          <li><strong>"HBF Night" at OCP 2025</strong> — Joint ecosystem event, "global big tech" attended (unnamed)</li>
+          <li><strong>FMS 2025 Best of Show</strong> (NAND category)</li>
+        </ul>
+        <p style="margin-top:10px;"><strong>No named design wins yet</strong> — early stage ecosystem building.</p>
+      </section>
+
+      <section class="section anatomy-card">
+        <h2>7. Use Cases</h2>
+        <p><strong>Primary: Data center inference</strong></p>
+        <ul style="padding-left:18px;margin:8px 0 12px;display:flex;flex-direction:column;gap:6px;">
+          <li>Baseline: 8 HBM stacks = 192GB</li>
+          <li>With HBF: Replace 6 stacks with HBF = 3,120GB total</li>
+          <li>Or all 8 HBF stacks = 4,096GB</li>
+          <li>Reduces multi-GPU sharding for capacity reasons</li>
+        </ul>
+        <p><strong>Example math:</strong></p>
+        <ul style="padding-left:18px;margin:8px 0 12px;display:flex;flex-direction:column;gap:6px;">
+          <li>1.8T parameter model @ 16-bit weights = 3,600GB needed</li>
+          <li>Can't fit in HBM alone (would need 56+ stacks)</li>
+          <li>HBF makes single-accelerator inference feasible for frontier models</li>
+        </ul>
+        <p><strong>Secondary: Edge AI</strong></p>
+        <ul style="padding-left:18px;margin-top:8px;"><li>64B parameter MoE @ 8-bit = 64GB</li><li>Could fit in one HBF die (conceptual)</li></ul>
+      </section>
+
+      <section class="section anatomy-card">
+        <h2>8. Key Players & Supply Chain</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Company</th><th>Role</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td><strong>SanDisk (WDC)</strong></td><td>First mover</td><td>BiCS NAND, CBA wafer bonding</td></tr>
+              <tr><td><strong>Kioxia</strong></td><td>50/50 JV partner</td><td>Shared fabs with SanDisk (~30% global NAND)</td></tr>
+              <tr><td><strong>SK Hynix</strong></td><td>Standardization partner</td><td>Can bundle HBM + HBF, own AIN B product</td></tr>
+              <tr><td><strong>Advanced packaging</strong></td><td>Bottleneck</td><td>TSV, interposer, substrate — same constraints as HBM</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:10px;"><strong>Kioxia alternative:</strong> PCIe-attached 5TB/64GB/s module — different approach, off-package, easier integration but lower bandwidth.</p>
+      </section>
+
+      <section class="section anatomy-card">
+        <h2>9. Risks & Open Questions</h2>
+        <div class="risk-grid">
+          <div class="risk-card"><h4>1) Performance under real workloads</h4><p>Simulations are single-workload. What about MoE routing variability, KV-cache pressure, mixed read/write, multi-tenant serving?</p></div>
+          <div class="risk-card"><h4>2) Manufacturing & yield</h4><p>TSVs + 16-high stacking + interposers = same packaging bottleneck as HBM. "Ultra-low die warpage" explicitly flagged as critical.</p></div>
+          <div class="risk-card"><h4>3) Ecosystem adoption</h4><p>Not drop-in. Requires GPU vendors to commit silicon area + validation time. No disclosed design wins.</p></div>
+          <div class="risk-card"><h4>4) Economics</h4><p>"Similar cost to HBM" is vendor claim, not production reality. Need to see real pricing.</p></div>
+          <div class="risk-card"><h4>5) Multi-sourcing</h4><p>Will spec be truly interoperable or vendor-unique?</p></div>
+        </div>
+      </section>
+
+      <section class="section anatomy-card">
+        <h2>10. Investment Implications</h2>
+        <p><strong>If HBF scales, who benefits:</strong></p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Beneficiary</th><th>Why</th></tr></thead>
+            <tbody>
+              <tr><td><strong>SanDisk (WDC)</strong></td><td>First mover, owns the tech + Kioxia JV</td></tr>
+              <tr><td><strong>SK Hynix</strong></td><td>Can bundle HBM + HBF, standardization partner</td></tr>
+              <tr><td><strong>Kioxia</strong></td><td>50/50 JV with SanDisk on fabs</td></tr>
+              <tr><td><strong>Advanced packaging</strong></td><td>TSV, interposer, substrate demand</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:10px;"><strong>Who's NOT at risk:</strong></p>
+        <ul style="padding-left:18px;margin-top:8px;display:flex;flex-direction:column;gap:6px;">
+          <li>HBM demand stays robust — HBF augments, doesn't replace</li>
+          <li>Training still needs HBM</li>
+          <li>Inference still needs some HBM for latency-sensitive state</li>
+        </ul>
+        <p style="margin-top:10px;"><strong>The opportunity:</strong> New high-margin NAND category that didn't exist before. Memory ASPs could increase as NAND moves up the value chain.</p>
+      </section>
+
+      <section class="section anatomy-card">
+        <h2>11. Robin's Investment Framing</h2>
+        <ul style="padding-left:18px;display:flex;flex-direction:column;gap:8px;">
+          <li><strong>Memory hierarchy thesis</strong> — Just like we have L1/L2/L3 cache + DRAM + SSD in traditional compute, AI accelerators are developing their own hierarchy: HBM (hot) → HBF (warm) → SSD (cold). Each tier optimized for different access patterns.</li>
+          <li><strong>Same packaging bottleneck</strong> — HBF doesn't escape the CoWoS/interposer constraints. If you're bullish on advanced packaging, HBF is additive demand.</li>
+          <li><strong>SanDisk as a dark horse</strong> — WDC has been a boring HDD/SSD company. HBF could reposition them as an AI memory player. Worth watching.</li>
+        </ul>
+      </section>
+
+      <section class="section anatomy-card">
+        <h2>12. Jargon Decoder</h2>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div id="jargon-hbf" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;"><p><strong style="color:var(--accent);">HBF (High Bandwidth Flash)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p><p class="muted">NAND flash with HBM-like bandwidth for AI inference.</p></div>
+          <div id="jargon-bics" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;"><p><strong style="color:var(--accent);">BiCS</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p><p class="muted">Bit Cost Scalable — SanDisk/Kioxia's 3D NAND technology.</p></div>
+          <div id="jargon-cba" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;"><p><strong style="color:var(--accent);">CBA (CMOS Bonded Array)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p><p class="muted">Wafer bonding tech for denser NAND.</p></div>
+          <div id="jargon-tsv" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;"><p><strong style="color:var(--accent);">TSV (Through-Silicon Via)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p><p class="muted">Vertical connections through silicon for die stacking.</p></div>
+          <div id="jargon-interposer" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;"><p><strong style="color:var(--accent);">Interposer</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p><p class="muted">Silicon layer that routes connections between dies.</p></div>
+          <div id="jargon-ecc" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;"><p><strong style="color:var(--accent);">ECC</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p><p class="muted">Error Correction Code — critical for NAND reliability.</p></div>
+          <div id="jargon-moe" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;"><p><strong style="color:var(--accent);">MoE (Mixture of Experts)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p><p class="muted">Model architecture with sparse activation, reduces compute but increases memory pressure.</p></div>
+          <div id="jargon-kv" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;"><p><strong style="color:var(--accent);">KV-cache</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p><p class="muted">Key-Value cache — stores attention state during inference, write-heavy.</p></div>
+        </div>
+      </section>
+
+      <section class="section anatomy-card">
+        <h2>13. Related Pages</h2>
+        <div class="related-links">
+          <a href="hbm-memory-layer.html"><span>💾 HBM & Memory Layer (Layer 4)</span><span>→</span></a>
+          <a href="cowos-packaging.html"><span>📦 CoWoS Advanced Packaging</span><span>→</span></a>
+          <a href="silicon-photonics.html"><span>💡 Silicon Photonics</span><span>→</span></a>
+        </div>
+      </section>
+
+      <section class="section anatomy-card">
+        <h2>14. Source</h2>
+        <p><a class="jargon" href="https://x.com/TheValueist/status/2021622992116027735" target="_blank" rel="noopener noreferrer">https://x.com/TheValueist/status/2021622992116027735</a> <span class="muted">(@TheValueist, Feb 2026)</span></p>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = saved === 'dark' ? '☀️' : '🌙';
+    });
+  }
+})();
+
+function slugifyHeading(text) {
+  return text.toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim().replace(/\s+/g, '-').replace(/-+/g, '-');
+}
+
+function initSectionNav() {
+  const navLinks = document.getElementById('section-nav-links');
+  if (!navLinks) return;
+
+  let headings = Array.from(document.querySelectorAll('.section h2'));
+  if (!headings.length) headings = Array.from(document.querySelectorAll('h2'));
+  if (!headings.length) return;
+
+  headings.forEach((heading) => {
+    if (!heading.id) heading.id = slugifyHeading(heading.textContent || '');
+  });
+
+  navLinks.innerHTML = '';
+  headings.forEach((heading) => {
+    const link = document.createElement('a');
+    link.className = 'section-link';
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent || '';
+    navLinks.appendChild(link);
+  });
+
+  const linkMap = new Map();
+  navLinks.querySelectorAll('a').forEach((link) => {
+    const targetId = link.getAttribute('href').slice(1);
+    linkMap.set(targetId, link);
+    link.addEventListener('click', () => setActive(targetId));
+  });
+
+  function setActive(id) {
+    linkMap.forEach((link) => {
+      link.classList.remove('active');
+      link.removeAttribute('aria-current');
+    });
+    const activeLink = linkMap.get(id);
+    if (activeLink) {
+      activeLink.classList.add('active');
+      activeLink.setAttribute('aria-current', 'true');
+    }
+  }
+
+  setActive(headings[0].id);
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      });
+    },
+    { rootMargin: '-20% 0px -65% 0px', threshold: [0, 0.1, 0.5] }
+  );
+
+  headings.forEach((heading) => observer.observe(heading));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initSectionNav();
+});
+</script>
+</body>
+</html>
