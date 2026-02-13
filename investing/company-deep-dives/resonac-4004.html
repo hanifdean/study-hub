@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resonac (4004.T) — Japan Semiconductor Deep Dive</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0f0f14;
+    --surface: #171720;
+    --surface-alt: #1f1f2a;
+    --surface-hover: #242433;
+    --border: #2a2a35;
+    --border-alt: #333344;
+    --text: #ece9e3;
+    --text-secondary: #d5d1c7;
+    --text-muted: #9a9488;
+    --text-dim: #766f64;
+    --text-dimmer: #5b554c;
+    --accent: #f59e0b;
+    --accent-soft: rgba(245, 158, 11, 0.14);
+    --accent-glow: rgba(245, 158, 11, 0.2);
+    --highlight: #fbbf24;
+    --green: #34d399;
+    --red: #f87171;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --text-dimmer: #a5a09a;
+    --accent: #d97706;
+    --accent-soft: rgba(217, 119, 6, 0.1);
+    --accent-glow: rgba(217, 119, 6, 0.15);
+    --highlight: #b45309;
+    --green: #059669;
+    --red: #dc2626;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .page-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+  }
+
+  .content { flex: 1; min-width: 0; }
+  .container { max-width: 980px; }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  h1 {
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--highlight);
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 28px;
+    font-weight: 500;
+  }
+
+  .section {
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s ease-out both;
+  }
+
+  .section h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+  }
+
+  .stat-card .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+  .stat-card .value {
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .stat-card .note {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
+    color: var(--text-muted);
+  }
+
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    text-align: left;
+    padding: 10px 12px;
+    color: var(--text-muted);
+    font-size: 11px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody tr.highlight td { color: var(--highlight); font-weight: 600; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 18px;
+  }
+
+  .list {
+    display: grid;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .list strong { color: var(--text); }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .case-card {
+    border-radius: 14px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .case-card.bull { border-color: rgba(52, 211, 153, 0.4); background: rgba(52, 211, 153, 0.06); }
+  .case-card.bear { border-color: rgba(248, 113, 113, 0.4); background: rgba(248, 113, 113, 0.05); }
+  .case-card h3 { font-size: 14px; margin-bottom: 8px; }
+  .case-card ul { padding-left: 16px; font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+  .verdict {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), transparent);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+  }
+
+  .section-nav {
+    position: sticky;
+    top: 96px;
+    width: 220px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    height: fit-content;
+    max-height: calc(100vh - 140px);
+    overflow: auto;
+  }
+  .section-nav-title {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .section-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .section-nav a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+  }
+  .section-nav a:hover { color: var(--accent); border-color: var(--border); background: var(--surface-hover); }
+  .section-nav a.active { color: var(--accent); background: var(--accent-soft); border-color: var(--accent); }
+
+  html { scroll-behavior: smooth; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .case-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    body { padding: 24px 16px; }
+    .page-layout { flex-direction: column; gap: 12px; }
+    .section-nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      padding: 8px;
+      border-radius: 12px;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+    .section-nav-title { display: none; }
+    .section-nav-links { flex-direction: row; gap: 8px; }
+    .section-nav a {
+      white-space: nowrap;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border-color: var(--border);
+      background: var(--surface);
+    }
+    .section-nav a.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+  }
+</style>
+</head>
+<body>
+<div class="page-layout">
+  <nav class="section-nav" aria-label="Section navigation">
+    <div class="section-nav-title">On this page</div>
+    <div class="section-nav-links" id="section-nav-links"></div>
+  </nav>
+  <main class="content">
+    <div class="container">
+      <div class="top-bar">
+        <a href="./japan-semiconductor-sector.html" class="back-link">← Japan Semiconductor Sector</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+          <span id="theme-icon">☀️</span>
+        </button>
+      </div>
+
+      <h1>Resonac (4004.T) — Advanced Packaging Materials</h1>
+      <p class="subtitle">Critical supplier of semiconductor packaging materials for CoWoS, HBM, and 3D packaging. TSMC's trusted partner.</p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="label">Price</div>
+          <div class="value">¥6,025</div>
+          <div class="note">Feb 2026</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">TSMC Award</div>
+          <div class="value">2025</div>
+          <div class="note">Excellent Performance</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">JOINT3</div>
+          <div class="value">27 members</div>
+          <div class="note">Packaging consortium</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">APLIC Launch</div>
+          <div class="value">2026</div>
+          <div class="note">Prototype line</div>
+        </div>
+      </div>
+
+      <section class="section" id="executive-summary">
+        <h2>🧭 Executive Summary</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>Advanced packaging materials leader.</strong> Resonac (formerly Showa Denko) is a critical supplier of materials used in semiconductor back-end packaging, including CoWoS, HBM, and advanced 3D packaging.</div>
+            <div><strong>TSMC recognition.</strong> Received "2025 TSMC Excellent Performance Award" for technological contributions in advanced packaging materials and high-purity gas localization.</div>
+            <div><strong>JOINT3 consortium.</strong> Leading a 27-member consortium to develop next-generation semiconductor packaging technologies, with prototype production starting 2026.</div>
+            <div><strong>Diversified chemical business.</strong> Semiconductor materials are high-growth segment within broader specialty chemicals portfolio.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="company-overview">
+        <h2>🏢 Company Overview</h2>
+        <div class="card">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            Resonac Holdings Corporation was formed in 2023 through the integration of Showa Denko and Hitachi Chemical. The company is a major specialty chemicals and materials company with strong positions in semiconductor materials, both front-end (wafer processing) and back-end (packaging). Resonac operates the "Packaging Solution Center" with state-of-the-art semiconductor packaging equipment.
+          </p>
+          <div class="pill-row">
+            <span class="pill">Formed 2023 (merger)</span>
+            <span class="pill">HQ: Tokyo, Japan</span>
+            <span class="pill">Showa Denko legacy</span>
+            <span class="pill">Hitachi Chemical legacy</span>
+            <span class="pill">TSMC supplier</span>
+          </div>
+        </div>
+        <div class="table-wrap" style="margin-top:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Product Category</th>
+                <th class="num">Market Position</th>
+                <th class="num">Application</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td>Advanced Packaging Materials</td>
+                <td class="num">Leading supplier</td>
+                <td class="num">CoWoS, HBM, 3D packaging</td>
+              </tr>
+              <tr>
+                <td>Front-end Semiconductor Materials</td>
+                <td class="num">Top tier</td>
+                <td class="num">CMP slurries, photoresists</td>
+              </tr>
+              <tr>
+                <td>High-Purity Gases</td>
+                <td class="num">Top 3 globally</td>
+                <td class="num">Fab process gases</td>
+              </tr>
+              <tr>
+                <td>Hard Disk Media</td>
+                <td class="num">Major supplier</td>
+                <td class="num">Data center storage</td>
+              </tr>
+              <tr>
+                <td>Compound Semiconductors</td>
+                <td class="num">Growing</td>
+                <td class="num">SiC, GaN substrates</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="investment-thesis">
+        <h2>📌 Investment Thesis</h2>
+        <div class="case-grid">
+          <div class="case-card bull">
+            <h3>🐂 Bull Case</h3>
+            <ul>
+              <li><strong>CoWoS capacity expansion:</strong> TSMC tripling CoWoS capacity drives materials demand</li>
+              <li><strong>HBM packaging materials:</strong> Critical supplier for HBM3/HBM4 underfill and adhesives</li>
+              <li><strong>TSMC strategic supplier:</strong> 2025 Award recognition confirms preferred status</li>
+              <li><strong>JOINT3 leadership:</strong> Consortium positions Resonac at forefront of next-gen packaging</li>
+              <li><strong>Compound semi opportunity:</strong> SiC/GaN substrates for EVs and power electronics</li>
+            </ul>
+          </div>
+          <div class="case-card bear">
+            <h3>🐻 Bear Case</h3>
+            <ul>
+              <li><strong>Conglomerate complexity:</strong> Semiconductor materials are one segment in diversified portfolio</li>
+              <li><strong>Graphite electrode weakness:</strong> Legacy business facing structural challenges</li>
+              <li><strong>Margin pressure:</strong> ¥51.4B in non-recurring items impacted recent profits</li>
+              <li><strong>Competition:</strong> Ajinomoto Build-Up Film (ABF), other materials suppliers expanding</li>
+              <li><strong>Execution risk:</strong> JOINT3 and APLIC require successful technology development</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="competitive-position">
+        <h2>🛡️ Competitive Position</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Advanced Packaging Materials</th>
+                <th class="num">Resonac Position</th>
+                <th class="num">Key Competitors</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td>Underfill/Adhesives</td>
+                <td class="num">Top 3 globally</td>
+                <td class="num">Henkel, Namics</td>
+              </tr>
+              <tr>
+                <td>Copper Clad Laminates</td>
+                <td class="num">Major supplier</td>
+                <td class="num">Panasonic, Mitsubishi Gas</td>
+              </tr>
+              <tr>
+                <td>Die Attach Films</td>
+                <td class="num">Leading position</td>
+                <td class="num">Hitachi legacy strength</td>
+              </tr>
+              <tr>
+                <td>CMP Slurries</td>
+                <td class="num">Top tier</td>
+                <td class="num">Cabot, Fujimi</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card" style="margin-top:16px;">
+          <div class="list">
+            <div><strong>TSMC qualification:</strong> Long-standing supplier relationship with track record of quality</div>
+            <div><strong>Vertical integration:</strong> Front-end to back-end materials coverage</div>
+            <div><strong>R&D investment:</strong> Packaging Solution Center enables co-development with customers</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="financials">
+        <h2>📊 Financial Overview</h2>
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Key Metrics</th>
+                <th class="num">Value</th>
+                <th class="num">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Stock Price</td>
+                <td class="num">¥6,025</td>
+                <td class="num">Feb 2026</td>
+              </tr>
+              <tr>
+                <td>Recent Trend</td>
+                <td class="num">-4.9% (24h)</td>
+                <td class="num">Volatile</td>
+              </tr>
+              <tr>
+                <td>Profit Headwinds</td>
+                <td class="num">¥51.4B impact</td>
+                <td class="num">Non-recurring items</td>
+              </tr>
+              <tr class="highlight">
+                <td>Semiconductor Segment</td>
+                <td class="num">High-growth</td>
+                <td class="num">Best performing division</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            <strong>Mixed near-term picture:</strong> Resonac faces challenges in legacy graphite electrode business and weak automobile demand, but semiconductor materials segment is delivering strong growth driven by advanced packaging demand.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="catalysts">
+        <h2>🚀 Key Catalysts</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>APLIC prototype line:</strong> Advanced Packaging Line Innovation Center launching 2026 in Ibaraki Prefecture</div>
+            <div><strong>TSMC CoWoS expansion:</strong> 3x capacity increase through 2026 drives materials demand</div>
+            <div><strong>HBM4 packaging:</strong> Next-gen HBM requires advanced underfill and thermal interface materials</div>
+            <div><strong>JOINT3 progress:</strong> 27-member consortium developing industry-leading 3D packaging solutions</div>
+            <div><strong>Portfolio restructuring:</strong> Potential divestiture of non-core assets could unlock value</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="risks">
+        <h2>⚠️ Key Risks</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>Conglomerate discount:</strong> High-growth semi materials diluted by struggling legacy businesses</div>
+            <div><strong>Graphite electrode exposure:</strong> Steel industry weakness pressures overall profitability</div>
+            <div><strong>Execution risk:</strong> JOINT3/APLIC require successful technology development</div>
+            <div><strong>Competition:</strong> Materials industry seeing new entrants and capacity expansion</div>
+            <div><strong>Currency exposure:</strong> Yen volatility impacts export competitiveness</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="verdict">
+        <h2>✅ Verdict</h2>
+        <div class="card verdict">
+          <p style="font-size:13px;line-height:1.7;color:var(--text-secondary);">
+            <strong>Rating: Hold / Turnaround Watch.</strong> Resonac has excellent positioning in high-growth advanced packaging materials, but conglomerate structure and legacy business challenges create complexity. TSMC Award confirms strategic importance. Best approached as a longer-term turnaround story with potential for sum-of-the-parts value unlock.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="related">
+        <h2>🔗 Related</h2>
+        <div class="card" style="display:flex;flex-direction:column;gap:14px;">
+          <a href="./japan-semiconductor-sector.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">🇯🇵</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Japan Semiconductor Sector Overview</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Full sector analysis and company comparisons.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
+          <a href="./nittobo-3110.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">🔲</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Nittobo (3110.T)</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">T-glass for AI substrates.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const icon = document.getElementById('theme-icon');
+    if (html.getAttribute('data-theme') === 'dark') {
+      html.setAttribute('data-theme', 'light');
+      icon.textContent = '🌙';
+    } else {
+      html.setAttribute('data-theme', 'dark');
+      icon.textContent = '☀️';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.section[id]');
+    const navLinks = document.getElementById('section-nav-links');
+    sections.forEach(sec => {
+      const h2 = sec.querySelector('h2');
+      if (h2) {
+        const a = document.createElement('a');
+        a.href = '#' + sec.id;
+        a.textContent = h2.textContent.replace(/^[\u{1F300}-\u{1F9FF}]/u, '').trim();
+        navLinks.appendChild(a);
+      }
+    });
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        const link = navLinks.querySelector(`a[href="#${e.target.id}"]`);
+        if (link) link.classList.toggle('active', e.isIntersecting);
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => obs.observe(s));
+  });
+</script>
+</body>
+</html>

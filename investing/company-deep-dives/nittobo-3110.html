@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nittobo (3110.T) — Japan Semiconductor Deep Dive</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0f0f14;
+    --surface: #171720;
+    --surface-alt: #1f1f2a;
+    --surface-hover: #242433;
+    --border: #2a2a35;
+    --border-alt: #333344;
+    --text: #ece9e3;
+    --text-secondary: #d5d1c7;
+    --text-muted: #9a9488;
+    --text-dim: #766f64;
+    --text-dimmer: #5b554c;
+    --accent: #f59e0b;
+    --accent-soft: rgba(245, 158, 11, 0.14);
+    --accent-glow: rgba(245, 158, 11, 0.2);
+    --highlight: #fbbf24;
+    --green: #34d399;
+    --red: #f87171;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --text-dimmer: #a5a09a;
+    --accent: #d97706;
+    --accent-soft: rgba(217, 119, 6, 0.1);
+    --accent-glow: rgba(217, 119, 6, 0.15);
+    --highlight: #b45309;
+    --green: #059669;
+    --red: #dc2626;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .page-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+  }
+
+  .content { flex: 1; min-width: 0; }
+  .container { max-width: 980px; }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  h1 {
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--highlight);
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 28px;
+    font-weight: 500;
+  }
+
+  .section {
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s ease-out both;
+  }
+
+  .section h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+  }
+
+  .stat-card .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+  .stat-card .value {
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .stat-card .note {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
+    color: var(--text-muted);
+  }
+
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    text-align: left;
+    padding: 10px 12px;
+    color: var(--text-muted);
+    font-size: 11px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody tr.highlight td { color: var(--highlight); font-weight: 600; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 18px;
+  }
+
+  .list {
+    display: grid;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .list strong { color: var(--text); }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .case-card {
+    border-radius: 14px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .case-card.bull { border-color: rgba(52, 211, 153, 0.4); background: rgba(52, 211, 153, 0.06); }
+  .case-card.bear { border-color: rgba(248, 113, 113, 0.4); background: rgba(248, 113, 113, 0.05); }
+  .case-card h3 { font-size: 14px; margin-bottom: 8px; }
+  .case-card ul { padding-left: 16px; font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+  .verdict {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), transparent);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+  }
+
+  .section-nav {
+    position: sticky;
+    top: 96px;
+    width: 220px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    height: fit-content;
+    max-height: calc(100vh - 140px);
+    overflow: auto;
+  }
+  .section-nav-title {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .section-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .section-nav a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+  }
+  .section-nav a:hover { color: var(--accent); border-color: var(--border); background: var(--surface-hover); }
+  .section-nav a.active { color: var(--accent); background: var(--accent-soft); border-color: var(--accent); }
+
+  html { scroll-behavior: smooth; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .case-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    body { padding: 24px 16px; }
+    .page-layout { flex-direction: column; gap: 12px; }
+    .section-nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      padding: 8px;
+      border-radius: 12px;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+    .section-nav-title { display: none; }
+    .section-nav-links { flex-direction: row; gap: 8px; }
+    .section-nav a {
+      white-space: nowrap;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border-color: var(--border);
+      background: var(--surface);
+    }
+    .section-nav a.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+  }
+</style>
+</head>
+<body>
+<div class="page-layout">
+  <nav class="section-nav" aria-label="Section navigation">
+    <div class="section-nav-title">On this page</div>
+    <div class="section-nav-links" id="section-nav-links"></div>
+  </nav>
+  <main class="content">
+    <div class="container">
+      <div class="top-bar">
+        <a href="./japan-semiconductor-sector.html" class="back-link">← Japan Semiconductor Sector</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+          <span id="theme-icon">☀️</span>
+        </button>
+      </div>
+
+      <h1>Nittobo (3110.T) — The T-Glass AI Bottleneck</h1>
+      <p class="subtitle">Dominant supplier of specialty glass fiber for AI GPU substrates. T-glass shortage constraining NVIDIA and AMD production.</p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="label">Price</div>
+          <div class="value">¥20,460</div>
+          <div class="note">Feb 13, 2026</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Market Cap</div>
+          <div class="value">¥491B</div>
+          <div class="note">~$3.2B USD</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">ATH</div>
+          <div class="value">¥17,840</div>
+          <div class="note">Jan 22, 2026</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Capacity 3x</div>
+          <div class="value">End 2026</div>
+          <div class="note">¥150B investment</div>
+        </div>
+      </div>
+
+      <section class="section" id="executive-summary">
+        <h2>🧭 Executive Summary</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>T-glass dominance.</strong> Nittobo (Nitto Boseki) is the world's leading supplier of T-glass (low-dielectric glass fiber), a critical material for high-performance PCB substrates used in AI GPUs and ASICs.</div>
+            <div><strong>AI supply chain bottleneck.</strong> T-glass shortage is constraining ABF substrate production, indirectly limiting NVIDIA/AMD GPU output. Goldman Sachs flagged this as a key AI infrastructure chokepoint.</div>
+            <div><strong>Massive capacity expansion.</strong> Investing ¥150 billion to triple T-glass production capacity by end of 2026, with additional Nan Ya partnership handling 20% by 2027.</div>
+            <div><strong>Explosive stock performance.</strong> 52-week range ¥3,025–¥17,840 (nearly 6x); now trading above all-time highs on AI demand surge.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="company-overview">
+        <h2>🏢 Company Overview</h2>
+        <div class="card">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            Nitto Boseki Co., Ltd. (Nittobo) was founded in 1918 as a textile company and evolved into a specialty glass fiber and electronic materials manufacturer. The company developed proprietary NE-glass (now T-glass) technology with low dielectric constant (Low-Dk) and low dielectric dissipation factor, essential for high-frequency signal integrity in advanced semiconductor substrates.
+          </p>
+          <div class="pill-row">
+            <span class="pill">Founded 1918</span>
+            <span class="pill">HQ: Tokyo, Japan</span>
+            <span class="pill">T-glass leader</span>
+            <span class="pill">Low-Dk specialty</span>
+            <span class="pill">Nan Ya partnership</span>
+          </div>
+        </div>
+        <div class="table-wrap" style="margin-top:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Business Segment</th>
+                <th class="num">Description</th>
+                <th class="num">AI Relevance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td>Electronic Materials</td>
+                <td class="num">T-glass, NE-glass cloth</td>
+                <td class="num">AI GPU/ASIC substrates</td>
+              </tr>
+              <tr>
+                <td>Medical Business</td>
+                <td class="num">In-vitro diagnostics</td>
+                <td class="num">Diversification</td>
+              </tr>
+              <tr>
+                <td>Composite Materials</td>
+                <td class="num">Glass fiber reinforcement</td>
+                <td class="num">Industrial applications</td>
+              </tr>
+              <tr>
+                <td>Materials & Chemicals</td>
+                <td class="num">Specialty chemicals</td>
+                <td class="num">Legacy business</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="t-glass-explained">
+        <h2>🔬 Why T-Glass Matters for AI</h2>
+        <div class="two-col">
+          <div class="card">
+            <div class="list">
+              <div><strong>Signal integrity:</strong> Low-Dk glass reduces signal loss at high frequencies (10+ GHz)</div>
+              <div><strong>High-temp stability:</strong> Maintains properties through packaging thermal cycles</div>
+              <div><strong>ABF substrate critical:</strong> T-glass is key input for Ajinomoto Build-up Film substrates</div>
+              <div><strong>GPU packaging:</strong> Every NVIDIA H100/H200/B100 uses ABF substrates with T-glass</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="list">
+              <div><strong>Supply shortage:</strong> T-glass constrained → ABF constrained → GPU constrained</div>
+              <div><strong>AI customers prioritized:</strong> Hyperscalers paying premium, starving other segments</div>
+              <div><strong>No easy substitutes:</strong> Standard E-glass lacks required electrical properties</div>
+              <div><strong>2-year lead time:</strong> New capacity takes years to qualify and ramp</div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:16px;border-left:3px solid var(--accent);">
+          <p style="font-size:12px;font-style:italic;color:var(--text-secondary);line-height:1.6;">
+            "AI customers' deep pockets are funneling T-glass into high-end ABF substrates for AI GPUs and ASICs, starving BT substrates of the same material."
+          </p>
+          <p style="font-size:11px;color:var(--text-dim);margin-top:6px;">— Goldman Sachs report, cited by TechNews (Nov 2025)</p>
+        </div>
+      </section>
+
+      <section class="section" id="investment-thesis">
+        <h2>📌 Investment Thesis</h2>
+        <div class="case-grid">
+          <div class="case-card bull">
+            <h3>🐂 Bull Case</h3>
+            <ul>
+              <li><strong>Irreplaceable supply:</strong> No viable substitute for T-glass in high-end AI substrates</li>
+              <li><strong>AI demand secular:</strong> GPU shipments growing 30-50%+ annually through 2027</li>
+              <li><strong>Capacity tripling:</strong> ¥150B investment captures demand when online end 2026</li>
+              <li><strong>Nan Ya partnership:</strong> Additional 20% capacity via Taiwan JV by 2027</li>
+              <li><strong>Pricing power:</strong> Shortage enables premium pricing for AI-grade material</li>
+              <li><strong>J.P. Morgan Buy:</strong> Analyst reaffirmed Buy rating (Feb 2026)</li>
+            </ul>
+          </div>
+          <div class="case-card bear">
+            <h3>🐻 Bear Case</h3>
+            <ul>
+              <li><strong>Capacity glut risk:</strong> 3x expansion could overshoot if AI demand cools</li>
+              <li><strong>Competition:</strong> AGY, PPG developing alternative low-Dk glass</li>
+              <li><strong>Customer concentration:</strong> ABF substrate makers are limited set of buyers</li>
+              <li><strong>Execution risk:</strong> Expansion projects could face delays or cost overruns</li>
+              <li><strong>Valuation stretched:</strong> 6x move in 12 months; pullback risk significant</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="competitive-position">
+        <h2>🛡️ Competitive Position</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Low-Dk Glass Fiber Market</th>
+                <th class="num">Position</th>
+                <th class="num">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td>Nittobo (NE/T-glass)</td>
+                <td class="num">#1 globally</td>
+                <td class="num">Dominant in AI-grade substrates</td>
+              </tr>
+              <tr>
+                <td>AGY (S-2 Glass)</td>
+                <td class="num">Distant #2</td>
+                <td class="num">US-based, limited capacity</td>
+              </tr>
+              <tr>
+                <td>PPG</td>
+                <td class="num">Developing</td>
+                <td class="num">Working on alternatives</td>
+              </tr>
+              <tr>
+                <td>Chinese suppliers</td>
+                <td class="num">Emerging</td>
+                <td class="num">Quality gap remains</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card" style="margin-top:16px;">
+          <div class="list">
+            <div><strong>Proprietary formulation:</strong> NE-glass developed over decades of R&D; hard to replicate</div>
+            <div><strong>Qualification moat:</strong> Substrate makers reluctant to re-qualify new suppliers</div>
+            <div><strong>Vertical integration:</strong> Controls from glass melting through fabric weaving</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="financials">
+        <h2>📊 Financial Overview</h2>
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Key Metrics</th>
+                <th class="num">Value</th>
+                <th class="num">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Stock Price</td>
+                <td class="num">¥20,460</td>
+                <td class="num">+8.9% (Feb 13, 2026)</td>
+              </tr>
+              <tr>
+                <td>Market Cap</td>
+                <td class="num">¥491B</td>
+                <td class="num">~$3.2B USD</td>
+              </tr>
+              <tr>
+                <td>Revenue (TTM)</td>
+                <td class="num">¥109B</td>
+                <td class="num">Growing rapidly</td>
+              </tr>
+              <tr>
+                <td>52-Week Range</td>
+                <td class="num">¥3,025–¥17,840</td>
+                <td class="num">~6x move</td>
+              </tr>
+              <tr class="highlight">
+                <td>CapEx (expansion)</td>
+                <td class="num">¥150B</td>
+                <td class="num">3x capacity by end 2026</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            <strong>Explosive growth trajectory:</strong> Nittobo has transformed from a sleepy industrial company to a high-growth AI infrastructure play. Revenue and margins are expanding rapidly as T-glass demand outstrips supply.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="catalysts">
+        <h2>🚀 Key Catalysts</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>Capacity expansion completion:</strong> 3x capacity online by end 2026 enables revenue step-up</div>
+            <div><strong>Nan Ya partnership ramp:</strong> Additional 20% capacity from Taiwan JV by 2027</div>
+            <div><strong>NVIDIA Blackwell/Rubin:</strong> Next-gen GPUs require more advanced substrates</div>
+            <div><strong>Custom ASIC proliferation:</strong> Google TPU, Amazon Trainium, Microsoft Maia all need T-glass</div>
+            <div><strong>Pricing power realization:</strong> Shortage enables premium pricing negotiations</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="risks">
+        <h2>⚠️ Key Risks</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>Valuation risk:</strong> 6x price appreciation in 12 months; significant pullback possible</div>
+            <div><strong>Capacity overshoot:</strong> If AI demand disappoints, 3x expansion could create oversupply</div>
+            <div><strong>Competition emerging:</strong> AGY, PPG, Chinese suppliers investing in alternatives</div>
+            <div><strong>Customer concentration:</strong> Limited number of ABF substrate makers as buyers</div>
+            <div><strong>Execution risk:</strong> Expansion projects could face delays or yield issues</div>
+            <div><strong>Technology change:</strong> Future packaging architectures might reduce glass content</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="verdict">
+        <h2>✅ Verdict</h2>
+        <div class="card verdict">
+          <p style="font-size:13px;line-height:1.7;color:var(--text-secondary);">
+            <strong>Rating: Buy / High Conviction AI Infrastructure.</strong> Nittobo is the clearest "picks and shovels" Japan play on AI GPU demand — T-glass is literally in every NVIDIA and AMD accelerator substrate. The ¥150B capacity expansion positions the company to capture multi-year AI infrastructure buildout. Key risk is the 6x stock move; best accumulated on pullbacks. J.P. Morgan maintains Buy rating.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="related">
+        <h2>🔗 Related</h2>
+        <div class="card" style="display:flex;flex-direction:column;gap:14px;">
+          <a href="./japan-semiconductor-sector.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">🇯🇵</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Japan Semiconductor Sector Overview</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Full sector analysis and company comparisons.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
+          <a href="./resonac-4004.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">🧪</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Resonac (4004.T)</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Advanced packaging materials.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
+          <a href="./advantest-6857.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">🔬</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Advantest (6857.T)</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Chip testing equipment leader.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const icon = document.getElementById('theme-icon');
+    if (html.getAttribute('data-theme') === 'dark') {
+      html.setAttribute('data-theme', 'light');
+      icon.textContent = '🌙';
+    } else {
+      html.setAttribute('data-theme', 'dark');
+      icon.textContent = '☀️';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.section[id]');
+    const navLinks = document.getElementById('section-nav-links');
+    sections.forEach(sec => {
+      const h2 = sec.querySelector('h2');
+      if (h2) {
+        const a = document.createElement('a');
+        a.href = '#' + sec.id;
+        a.textContent = h2.textContent.replace(/^[\u{1F300}-\u{1F9FF}]/u, '').trim();
+        navLinks.appendChild(a);
+      }
+    });
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        const link = navLinks.querySelector(`a[href="#${e.target.id}"]`);
+        if (link) link.classList.toggle('active', e.isIntersecting);
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => obs.observe(s));
+  });
+</script>
+</body>
+</html>

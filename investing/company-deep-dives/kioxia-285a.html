@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kioxia (285A.T) — Japan Semiconductor Deep Dive</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0f0f14;
+    --surface: #171720;
+    --surface-alt: #1f1f2a;
+    --surface-hover: #242433;
+    --border: #2a2a35;
+    --border-alt: #333344;
+    --text: #ece9e3;
+    --text-secondary: #d5d1c7;
+    --text-muted: #9a9488;
+    --text-dim: #766f64;
+    --text-dimmer: #5b554c;
+    --accent: #f59e0b;
+    --accent-soft: rgba(245, 158, 11, 0.14);
+    --accent-glow: rgba(245, 158, 11, 0.2);
+    --highlight: #fbbf24;
+    --green: #34d399;
+    --red: #f87171;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --text-dimmer: #a5a09a;
+    --accent: #d97706;
+    --accent-soft: rgba(217, 119, 6, 0.1);
+    --accent-glow: rgba(217, 119, 6, 0.15);
+    --highlight: #b45309;
+    --green: #059669;
+    --red: #dc2626;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .page-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+  }
+
+  .content { flex: 1; min-width: 0; }
+
+  .container { max-width: 980px; }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  h1 {
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--highlight);
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 28px;
+    font-weight: 500;
+  }
+
+  .section {
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s ease-out both;
+  }
+
+  .section h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+  }
+
+  .stat-card .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+  .stat-card .value {
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .stat-card .note {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
+    color: var(--text-muted);
+  }
+
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    text-align: left;
+    padding: 10px 12px;
+    color: var(--text-muted);
+    font-size: 11px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody tr.highlight td { color: var(--highlight); font-weight: 600; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 18px;
+  }
+
+  .list {
+    display: grid;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .list strong { color: var(--text); }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .case-card {
+    border-radius: 14px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .case-card.bull { border-color: rgba(52, 211, 153, 0.4); background: rgba(52, 211, 153, 0.06); }
+  .case-card.bear { border-color: rgba(248, 113, 113, 0.4); background: rgba(248, 113, 113, 0.05); }
+  .case-card h3 { font-size: 14px; margin-bottom: 8px; }
+  .case-card ul { padding-left: 16px; font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+  .verdict {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), transparent);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+  }
+
+  .section-nav {
+    position: sticky;
+    top: 96px;
+    width: 220px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    height: fit-content;
+    max-height: calc(100vh - 140px);
+    overflow: auto;
+  }
+  .section-nav-title {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .section-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .section-nav a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+  }
+  .section-nav a:hover { color: var(--accent); border-color: var(--border); background: var(--surface-hover); }
+  .section-nav a.active { color: var(--accent); background: var(--accent-soft); border-color: var(--accent); }
+
+  html { scroll-behavior: smooth; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .case-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    body { padding: 24px 16px; }
+    .page-layout { flex-direction: column; gap: 12px; }
+    .section-nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      padding: 8px;
+      border-radius: 12px;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+    .section-nav-title { display: none; }
+    .section-nav-links { flex-direction: row; gap: 8px; }
+    .section-nav a {
+      white-space: nowrap;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border-color: var(--border);
+      background: var(--surface);
+    }
+    .section-nav a.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+  }
+</style>
+</head>
+<body>
+<div class="page-layout">
+  <nav class="section-nav" aria-label="Section navigation">
+    <div class="section-nav-title">On this page</div>
+    <div class="section-nav-links" id="section-nav-links"></div>
+  </nav>
+  <main class="content">
+    <div class="container">
+      <div class="top-bar">
+        <a href="./japan-semiconductor-sector.html" class="back-link">← Japan Semiconductor Sector</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+          <span id="theme-icon">☀️</span>
+        </button>
+      </div>
+
+      <h1>Kioxia (285A.T) — NAND Flash Memory Pure-Play</h1>
+      <p class="subtitle">Japan's NAND memory champion with Western Digital JV, riding the enterprise SSD surge from AI data centers.</p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="label">Price</div>
+          <div class="value">¥21,175</div>
+          <div class="note">Feb 13, 2026</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Market Cap</div>
+          <div class="value">¥11.4T</div>
+          <div class="note">~$75B USD</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Forward P/E</div>
+          <div class="value">19.2x</div>
+          <div class="note">FY26 estimates</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">1Y Return</div>
+          <div class="value">+1,036%</div>
+          <div class="note">IPO Dec 2024</div>
+        </div>
+      </div>
+
+      <section class="section" id="executive-summary">
+        <h2>🧭 Executive Summary</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>NAND flash pure-play.</strong> Kioxia is the world's second-largest NAND flash manufacturer (behind Samsung), operating BiCS FLASH technology through a strategic JV with Western Digital.</div>
+            <div><strong>AI data center tailwind.</strong> Enterprise SSD demand is surging as AI workloads require massive storage staging. NAND demand expected to grow ~20% annually through 2028.</div>
+            <div><strong>Recent IPO momentum.</strong> Listed December 2024 at ¥1,455; now trading above ¥21,000 — a 14x return as memory supercycle drives re-rating.</div>
+            <div><strong>WD Joint Venture.</strong> Shared R&D and manufacturing with Western Digital in Yokkaichi and Kitakami fabs creates scale advantages and technology co-development.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="company-overview">
+        <h2>🏢 Company Overview</h2>
+        <div class="card">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            Kioxia Holdings Corporation was spun out of Toshiba in 2019 (formerly Toshiba Memory Holdings). The company is the <strong>inventor of NAND flash memory</strong> (1987) and operates the world's most advanced BiCS FLASH 3D NAND technology. Kioxia's joint venture with Western Digital spans two major fabs: Yokkaichi (Mie Prefecture) and Kitakami (Iwate Prefecture), with combined capacity representing ~30% of global NAND supply.
+          </p>
+          <div class="pill-row">
+            <span class="pill">Founded 2019 (spin)</span>
+            <span class="pill">HQ: Tokyo, Japan</span>
+            <span class="pill">~15,000 employees</span>
+            <span class="pill">WD JV partner</span>
+            <span class="pill">BiCS FLASH inventor</span>
+          </div>
+        </div>
+        <div class="table-wrap" style="margin-top:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Product Category</th>
+                <th class="num">Description</th>
+                <th class="num">Key Markets</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>BiCS FLASH</td>
+                <td class="num">3D NAND flash memory</td>
+                <td class="num">Enterprise, consumer, mobile</td>
+              </tr>
+              <tr>
+                <td>Enterprise SSDs</td>
+                <td class="num">Data center storage drives</td>
+                <td class="num">Hyperscalers, AI training</td>
+              </tr>
+              <tr>
+                <td>Client SSDs</td>
+                <td class="num">PC and laptop storage</td>
+                <td class="num">OEMs, retail</td>
+              </tr>
+              <tr>
+                <td>UFS/e-MMC</td>
+                <td class="num">Mobile embedded storage</td>
+                <td class="num">Smartphones, automotive</td>
+              </tr>
+              <tr>
+                <td>XL-FLASH</td>
+                <td class="num">Storage class memory</td>
+                <td class="num">High-performance computing</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="investment-thesis">
+        <h2>📌 Investment Thesis</h2>
+        <div class="case-grid">
+          <div class="case-card bull">
+            <h3>🐂 Bull Case</h3>
+            <ul>
+              <li><strong>AI storage demand:</strong> Enterprise SSD TAM expanding as AI data centers require massive storage for model training and inference</li>
+              <li><strong>NAND supercycle:</strong> Industry-wide capacity discipline post-2023 downturn is supporting pricing recovery</li>
+              <li><strong>Technology leadership:</strong> BiCS FLASH advancement to 218+ layers maintains competitive position</li>
+              <li><strong>WD synergies:</strong> Joint venture provides R&D scale and manufacturing cost advantages</li>
+              <li><strong>Japan government support:</strong> Strategic importance driving potential subsidies for domestic semiconductor capacity</li>
+            </ul>
+          </div>
+          <div class="case-card bear">
+            <h3>🐻 Bear Case</h3>
+            <ul>
+              <li><strong>Cyclical exposure:</strong> NAND is historically boom-bust; current elevated prices may not sustain</li>
+              <li><strong>Samsung competition:</strong> Market leader with superior scale and vertical integration</li>
+              <li><strong>HBM cannibalization:</strong> Investment focus on HBM may slow NAND capacity expansion</li>
+              <li><strong>WD JV uncertainty:</strong> Ongoing structure discussions create governance complexity</li>
+              <li><strong>High valuation:</strong> 19x forward P/E reflects optimistic assumptions on cycle duration</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="competitive-position">
+        <h2>🛡️ Competitive Position</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>NAND Market Share (2025)</th>
+                <th class="num">Share</th>
+                <th class="num">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Samsung</td>
+                <td class="num">~33-35%</td>
+                <td class="num">Market leader, vertically integrated</td>
+              </tr>
+              <tr class="highlight">
+                <td>Kioxia + WD JV</td>
+                <td class="num">~24-26%</td>
+                <td class="num">Combined JV capacity</td>
+              </tr>
+              <tr>
+                <td>SK Hynix + Solidigm</td>
+                <td class="num">~18-20%</td>
+                <td class="num">#2 after Intel acquisition</td>
+              </tr>
+              <tr>
+                <td>Micron</td>
+                <td class="num">~12-14%</td>
+                <td class="num">Focused on enterprise SSDs</td>
+              </tr>
+              <tr>
+                <td>YMTC (China)</td>
+                <td class="num">~5-7%</td>
+                <td class="num">Constrained by export controls</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card" style="margin-top:16px;">
+          <div class="list">
+            <div><strong>Technology advantage:</strong> BiCS FLASH architecture enables competitive layer stacking with strong yields</div>
+            <div><strong>JV scale:</strong> Western Digital partnership provides ~30% of global NAND output</div>
+            <div><strong>Enterprise focus:</strong> Growing share of high-margin enterprise SSD market</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="financials">
+        <h2>📊 Financial Overview</h2>
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Key Metrics (FY ending Mar)</th>
+                <th class="num">Q2 FY26</th>
+                <th class="num">FY26E</th>
+                <th class="num">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Revenue</td>
+                <td class="num">¥448B</td>
+                <td class="num">¥1.8T+</td>
+                <td class="num">Strong QoQ growth</td>
+              </tr>
+              <tr>
+                <td>Market Cap</td>
+                <td class="num">¥11.4T</td>
+                <td class="num">—</td>
+                <td class="num">~$75B USD</td>
+              </tr>
+              <tr>
+                <td>P/E (TTM)</td>
+                <td class="num">73.4x</td>
+                <td class="num">—</td>
+                <td class="num">Cycle trough earnings</td>
+              </tr>
+              <tr class="highlight">
+                <td>Forward P/E</td>
+                <td class="num">—</td>
+                <td class="num">19.2x</td>
+                <td class="num">On recovery earnings</td>
+              </tr>
+              <tr>
+                <td>P/S (TTM)</td>
+                <td class="num">6.4x</td>
+                <td class="num">—</td>
+                <td class="num">Premium valuation</td>
+              </tr>
+              <tr>
+                <td>EV/EBITDA</td>
+                <td class="num">18.5x</td>
+                <td class="num">—</td>
+                <td class="num">—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            <strong>Financial recovery in progress:</strong> After the brutal 2023 downturn, Kioxia's financials are inflecting sharply. Q3 FY25 saw the highest QoQ revenue growth (33.1%) among NAND vendors. The company expects NAND storage demand to grow ~20% annually, driven by AI data center expansion.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="catalysts">
+        <h2>🚀 Key Catalysts</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>AI data center buildout:</strong> Hyperscaler capex driving enterprise SSD demand through 2026+</div>
+            <div><strong>NAND pricing recovery:</strong> Industry capacity discipline supporting ASP improvement</div>
+            <div><strong>BiCS technology advancement:</strong> Next-gen layer stacking improving cost/bit</div>
+            <div><strong>WD partnership evolution:</strong> Potential structure changes could unlock value</div>
+            <div><strong>Japan strategic support:</strong> Government subsidies for domestic semiconductor capacity</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="risks">
+        <h2>⚠️ Key Risks</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>Cycle peak risk:</strong> Memory supercycle may be near peak; elevated prices could normalize rapidly</div>
+            <div><strong>Samsung competition:</strong> Market leader could ramp capacity aggressively if demand softens</div>
+            <div><strong>Technology execution:</strong> BiCS development must keep pace with competitors</div>
+            <div><strong>WD JV complexity:</strong> Partnership governance adds execution uncertainty</div>
+            <div><strong>Valuation premium:</strong> Stock already reflects significant recovery; limited margin for error</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="verdict">
+        <h2>✅ Verdict</h2>
+        <div class="card verdict">
+          <p style="font-size:13px;line-height:1.7;color:var(--text-secondary);">
+            <strong>Rating: Hold / Neutral.</strong> Kioxia offers pure-play NAND exposure with strong AI tailwinds, but the 14x price appreciation since IPO has priced in much of the recovery. At 19x forward P/E, the stock assumes continued cycle strength. Attractive as a Japan semiconductor portfolio diversifier, but entry at pullbacks would improve risk/reward.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="related">
+        <h2>🔗 Related</h2>
+        <div class="card" style="display:flex;flex-direction:column;gap:14px;">
+          <a href="./japan-semiconductor-sector.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">🇯🇵</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Japan Semiconductor Sector Overview</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Full sector analysis and company comparisons.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
+          <a href="./micron-mu.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">💾</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Micron (MU) — Deep Dive</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">US memory competitor with HBM focus.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const icon = document.getElementById('theme-icon');
+    if (html.getAttribute('data-theme') === 'dark') {
+      html.setAttribute('data-theme', 'light');
+      icon.textContent = '🌙';
+    } else {
+      html.setAttribute('data-theme', 'dark');
+      icon.textContent = '☀️';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.section[id]');
+    const navLinks = document.getElementById('section-nav-links');
+    sections.forEach(sec => {
+      const h2 = sec.querySelector('h2');
+      if (h2) {
+        const a = document.createElement('a');
+        a.href = '#' + sec.id;
+        a.textContent = h2.textContent.replace(/^[\u{1F300}-\u{1F9FF}]/u, '').trim();
+        navLinks.appendChild(a);
+      }
+    });
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        const link = navLinks.querySelector(`a[href="#${e.target.id}"]`);
+        if (link) link.classList.toggle('active', e.isIntersecting);
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => obs.observe(s));
+  });
+</script>
+</body>
+</html>

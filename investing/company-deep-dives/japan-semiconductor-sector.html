@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Japan Semiconductor Sector — Deep Dive Overview</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0f0f14;
+    --surface: #171720;
+    --surface-alt: #1f1f2a;
+    --surface-hover: #242433;
+    --border: #2a2a35;
+    --border-alt: #333344;
+    --text: #ece9e3;
+    --text-secondary: #d5d1c7;
+    --text-muted: #9a9488;
+    --text-dim: #766f64;
+    --text-dimmer: #5b554c;
+    --accent: #f59e0b;
+    --accent-soft: rgba(245, 158, 11, 0.14);
+    --accent-glow: rgba(245, 158, 11, 0.2);
+    --highlight: #fbbf24;
+    --green: #34d399;
+    --red: #f87171;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --text-dimmer: #a5a09a;
+    --accent: #d97706;
+    --accent-soft: rgba(217, 119, 6, 0.1);
+    --accent-glow: rgba(217, 119, 6, 0.15);
+    --highlight: #b45309;
+    --green: #059669;
+    --red: #dc2626;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  h1 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--highlight);
+  }
+
+  .subtitle {
+    font-size: 15px;
+    color: var(--text-dim);
+    margin-bottom: 32px;
+    font-weight: 500;
+    max-width: 700px;
+    line-height: 1.6;
+  }
+
+  .section {
+    margin-bottom: 36px;
+    animation: fadeUp 0.6s ease-out both;
+  }
+
+  .section h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+  }
+
+  .stat-card .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+  .stat-card .value {
+    margin-top: 10px;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .stat-card .note {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .company-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .company-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    background: var(--surface);
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.2s, background 0.2s;
+  }
+  .company-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    background: var(--surface-hover);
+  }
+  .company-card .icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+  .company-card .content {
+    flex: 1;
+    min-width: 0;
+  }
+  .company-card .title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .company-card .ticker {
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .company-card .desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .company-card .arrow {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    text-align: left;
+    padding: 12px 14px;
+    color: var(--text-muted);
+    font-size: 11px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody tr.highlight td { color: var(--highlight); font-weight: 600; }
+
+  .list {
+    display: grid;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .list strong { color: var(--text); }
+
+  .thesis-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .thesis-card {
+    border-radius: 14px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .thesis-card.bull { border-color: rgba(52, 211, 153, 0.4); background: rgba(52, 211, 153, 0.06); }
+  .thesis-card.bear { border-color: rgba(248, 113, 113, 0.4); background: rgba(248, 113, 113, 0.05); }
+  .thesis-card h3 { font-size: 15px; margin-bottom: 10px; }
+  .thesis-card ul { padding-left: 18px; font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+
+  html { scroll-behavior: smooth; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .company-grid { grid-template-columns: 1fr; }
+    .thesis-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 24px 16px; }
+    h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="top-bar">
+    <a href="../../" class="back-link">← Back to Study Hub</a>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+      <span id="theme-icon">☀️</span>
+    </button>
+  </div>
+
+  <h1>🇯🇵 Japan Semiconductor Sector</h1>
+  <p class="subtitle">
+    Japan's semiconductor industry is experiencing a renaissance driven by AI infrastructure demand. From memory to equipment to critical materials, Japanese companies hold irreplaceable positions in the global chip supply chain.
+  </p>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="label">Equipment Share</div>
+      <div class="value">~30%</div>
+      <div class="note">Global SPE market</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Materials Share</div>
+      <div class="value">~50%</div>
+      <div class="note">Critical materials</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Key Monopolies</div>
+      <div class="value">3+</div>
+      <div class="note">EUV, coater, T-glass</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">AI Exposure</div>
+      <div class="value">Direct</div>
+      <div class="note">HBM, GPU substrates</div>
+    </div>
+  </div>
+
+  <section class="section">
+    <h2>🏢 Company Deep Dives</h2>
+    <div class="company-grid">
+      <a href="./tokyo-electron-8035.html" class="company-card">
+        <span class="icon">⚙️</span>
+        <div class="content">
+          <div class="title">Tokyo Electron</div>
+          <div class="ticker">8035.T — ¥40,000 | ¥17.4T cap</div>
+          <div class="desc">World's #3 semiconductor equipment maker. 89% global share in coater/developers. The picks-and-shovels play for advanced chipmaking.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a href="./advantest-6857.html" class="company-card">
+        <span class="icon">🔬</span>
+        <div class="content">
+          <div class="title">Advantest</div>
+          <div class="ticker">6857.T — ¥27,135 | AI chip testing</div>
+          <div class="desc">Global leader in chip testing equipment. Triple guidance raise on AI/HBM demand. Every advanced chip must pass through their testers.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a href="./lasertec-6920.html" class="company-card">
+        <span class="icon">🔆</span>
+        <div class="content">
+          <div class="title">Lasertec</div>
+          <div class="ticker">6920.T — ¥30,910 | $21.8B cap</div>
+          <div class="desc">"Japan's ASML." ~100% monopoly in EUV photomask inspection. Without Lasertec, EUV lithography doesn't work.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a href="./kioxia-285a.html" class="company-card">
+        <span class="icon">💾</span>
+        <div class="content">
+          <div class="title">Kioxia</div>
+          <div class="ticker">285A.T — ¥21,175 | ¥11.4T cap</div>
+          <div class="desc">World's #2 NAND flash maker. Western Digital JV partner. BiCS FLASH inventor riding enterprise SSD demand from AI data centers.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a href="./nittobo-3110.html" class="company-card">
+        <span class="icon">🔲</span>
+        <div class="content">
+          <div class="title">Nittobo</div>
+          <div class="ticker">3110.T — ¥20,460 | ¥491B cap</div>
+          <div class="desc">T-glass monopoly constraining AI GPU production. Critical Low-Dk glass fiber for ABF substrates. 3x capacity expansion underway.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a href="./resonac-4004.html" class="company-card">
+        <span class="icon">🧪</span>
+        <div class="content">
+          <div class="title">Resonac</div>
+          <div class="ticker">4004.T — ¥6,025 | TSMC awarded</div>
+          <div class="desc">Advanced packaging materials leader. TSMC's "Excellent Performance Award" for CoWoS and HBM materials. JOINT3 consortium lead.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>📊 Company Comparison</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th class="num">Ticker</th>
+            <th class="num">Price (¥)</th>
+            <th class="num">Market Cap</th>
+            <th class="num">AI Exposure</th>
+            <th class="num">Moat</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tokyo Electron</td>
+            <td class="num">8035.T</td>
+            <td class="num">~40,000</td>
+            <td class="num">¥17.4T</td>
+            <td class="num">High</td>
+            <td class="num">89% coater share</td>
+          </tr>
+          <tr>
+            <td>Advantest</td>
+            <td class="num">6857.T</td>
+            <td class="num">~27,135</td>
+            <td class="num">Large</td>
+            <td class="num">Very High</td>
+            <td class="num">HBM/GPU testing</td>
+          </tr>
+          <tr>
+            <td>Lasertec</td>
+            <td class="num">6920.T</td>
+            <td class="num">~30,910</td>
+            <td class="num">$21.8B</td>
+            <td class="num">High</td>
+            <td class="num">~100% EUV mask</td>
+          </tr>
+          <tr class="highlight">
+            <td>Kioxia</td>
+            <td class="num">285A.T</td>
+            <td class="num">~21,175</td>
+            <td class="num">¥11.4T</td>
+            <td class="num">High</td>
+            <td class="num">NAND #2, WD JV</td>
+          </tr>
+          <tr class="highlight">
+            <td>Nittobo</td>
+            <td class="num">3110.T</td>
+            <td class="num">~20,460</td>
+            <td class="num">¥491B</td>
+            <td class="num">Very High</td>
+            <td class="num">T-glass monopoly</td>
+          </tr>
+          <tr>
+            <td>Resonac</td>
+            <td class="num">4004.T</td>
+            <td class="num">~6,025</td>
+            <td class="num">Mid</td>
+            <td class="num">High</td>
+            <td class="num">Packaging materials</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>🎯 Sector Investment Thesis</h2>
+    <div class="thesis-grid">
+      <div class="thesis-card bull">
+        <h3>🐂 Bull Case for Japan Semi</h3>
+        <ul>
+          <li><strong>Irreplaceable positions:</strong> Multiple monopolies (EUV mask, coater, T-glass) with no viable substitutes</li>
+          <li><strong>AI infrastructure picks & shovels:</strong> Every NVIDIA GPU requires Japan equipment and materials</li>
+          <li><strong>Government support:</strong> Japan investing heavily in domestic semiconductor capacity</li>
+          <li><strong>Yen tailwind potential:</strong> Weak yen benefits export-oriented equipment makers</li>
+          <li><strong>Memory supercycle:</strong> NAND/DRAM recovery benefits Kioxia, equipment demand</li>
+        </ul>
+      </div>
+      <div class="thesis-card bear">
+        <h3>🐻 Bear Case / Risks</h3>
+        <ul>
+          <li><strong>Cyclicality:</strong> Semiconductor equipment is historically volatile</li>
+          <li><strong>Premium valuations:</strong> Many stocks have 2-5x'd; limited margin for error</li>
+          <li><strong>China exposure:</strong> ~20-25% revenue at risk from export controls</li>
+          <li><strong>Yen volatility:</strong> Currency moves impact reported earnings significantly</li>
+          <li><strong>Peak cycle risk:</strong> AI demand may be approaching near-term saturation</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>🗺️ Japan Semi Supply Chain Map</h2>
+    <div class="card">
+      <div class="list">
+        <div><strong>Front-End Equipment:</strong> Tokyo Electron (coater/developer, etch, deposition), Screen Holdings, Kokusai Electric</div>
+        <div><strong>Inspection/Metrology:</strong> Lasertec (EUV mask), Advantest (testing), Hitachi High-Tech</div>
+        <div><strong>Memory:</strong> Kioxia (NAND), Micron Japan fabs</div>
+        <div><strong>Materials — Substrates:</strong> Nittobo (T-glass), Ajinomoto (ABF film), Ibiden (substrates)</div>
+        <div><strong>Materials — Packaging:</strong> Resonac (underfill, die attach), Shin-Etsu (encapsulants)</div>
+        <div><strong>Materials — Chemicals:</strong> JSR (photoresists), TOK, Shin-Etsu (silicon wafers)</div>
+        <div><strong>Optics:</strong> Nikon, Canon (lithography steppers for DUV)</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>📈 Key Sector Catalysts</h2>
+    <div class="card">
+      <div class="list">
+        <div><strong>TSMC Japan fab ramp:</strong> Kumamoto fab driving local equipment and materials demand</div>
+        <div><strong>High-NA EUV adoption:</strong> Next-gen lithography benefits TEL, Lasertec, materials suppliers</div>
+        <div><strong>HBM4 production:</strong> Memory capacity expansion drives Advantest testing equipment</div>
+        <div><strong>Advanced packaging growth:</strong> CoWoS/HBM stacking benefits Resonac, Nittobo</div>
+        <div><strong>AI capex continuation:</strong> Hyperscaler spending sustains demand through 2026+</div>
+        <div><strong>Japan government investment:</strong> Subsidies for domestic semiconductor capacity</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>🔗 Related Research</h2>
+    <div class="company-grid">
+      <a href="./micron-mu.html" class="company-card">
+        <span class="icon">💾</span>
+        <div class="content">
+          <div class="title">Micron (MU)</div>
+          <div class="ticker">US Memory Competitor</div>
+          <div class="desc">HBM-driven memory supercycle analysis. Kioxia's US competitor in enterprise SSDs.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a href="./lumentum-lite.html" class="company-card">
+        <span class="icon">🔆</span>
+        <div class="content">
+          <div class="title">Lumentum (LITE)</div>
+          <div class="ticker">Optical Infrastructure</div>
+          <div class="desc">Data center optics play. Complementary AI infrastructure thesis.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const icon = document.getElementById('theme-icon');
+    if (html.getAttribute('data-theme') === 'dark') {
+      html.setAttribute('data-theme', 'light');
+      icon.textContent = '🌙';
+    } else {
+      html.setAttribute('data-theme', 'dark');
+      icon.textContent = '☀️';
+    }
+  }
+</script>
+</body>
+</html>

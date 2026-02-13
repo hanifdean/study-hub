@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lasertec (6920.T) — Japan Semiconductor Deep Dive</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0f0f14;
+    --surface: #171720;
+    --surface-alt: #1f1f2a;
+    --surface-hover: #242433;
+    --border: #2a2a35;
+    --border-alt: #333344;
+    --text: #ece9e3;
+    --text-secondary: #d5d1c7;
+    --text-muted: #9a9488;
+    --text-dim: #766f64;
+    --text-dimmer: #5b554c;
+    --accent: #f59e0b;
+    --accent-soft: rgba(245, 158, 11, 0.14);
+    --accent-glow: rgba(245, 158, 11, 0.2);
+    --highlight: #fbbf24;
+    --green: #34d399;
+    --red: #f87171;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --text-dimmer: #a5a09a;
+    --accent: #d97706;
+    --accent-soft: rgba(217, 119, 6, 0.1);
+    --accent-glow: rgba(217, 119, 6, 0.15);
+    --highlight: #b45309;
+    --green: #059669;
+    --red: #dc2626;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .page-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+  }
+
+  .content { flex: 1; min-width: 0; }
+  .container { max-width: 980px; }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  h1 {
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--highlight);
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 28px;
+    font-weight: 500;
+  }
+
+  .section {
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s ease-out both;
+  }
+
+  .section h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+  }
+
+  .stat-card .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+  .stat-card .value {
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .stat-card .note {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
+    color: var(--text-muted);
+  }
+
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    text-align: left;
+    padding: 10px 12px;
+    color: var(--text-muted);
+    font-size: 11px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody tr.highlight td { color: var(--highlight); font-weight: 600; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 18px;
+  }
+
+  .list {
+    display: grid;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .list strong { color: var(--text); }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .case-card {
+    border-radius: 14px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .case-card.bull { border-color: rgba(52, 211, 153, 0.4); background: rgba(52, 211, 153, 0.06); }
+  .case-card.bear { border-color: rgba(248, 113, 113, 0.4); background: rgba(248, 113, 113, 0.05); }
+  .case-card h3 { font-size: 14px; margin-bottom: 8px; }
+  .case-card ul { padding-left: 16px; font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+  .verdict {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), transparent);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+  }
+
+  .section-nav {
+    position: sticky;
+    top: 96px;
+    width: 220px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    height: fit-content;
+    max-height: calc(100vh - 140px);
+    overflow: auto;
+  }
+  .section-nav-title {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .section-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .section-nav a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+  }
+  .section-nav a:hover { color: var(--accent); border-color: var(--border); background: var(--surface-hover); }
+  .section-nav a.active { color: var(--accent); background: var(--accent-soft); border-color: var(--accent); }
+
+  html { scroll-behavior: smooth; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .case-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    body { padding: 24px 16px; }
+    .page-layout { flex-direction: column; gap: 12px; }
+    .section-nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      padding: 8px;
+      border-radius: 12px;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+    .section-nav-title { display: none; }
+    .section-nav-links { flex-direction: row; gap: 8px; }
+    .section-nav a {
+      white-space: nowrap;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border-color: var(--border);
+      background: var(--surface);
+    }
+    .section-nav a.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+  }
+</style>
+</head>
+<body>
+<div class="page-layout">
+  <nav class="section-nav" aria-label="Section navigation">
+    <div class="section-nav-title">On this page</div>
+    <div class="section-nav-links" id="section-nav-links"></div>
+  </nav>
+  <main class="content">
+    <div class="container">
+      <div class="top-bar">
+        <a href="./japan-semiconductor-sector.html" class="back-link">← Japan Semiconductor Sector</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+          <span id="theme-icon">☀️</span>
+        </button>
+      </div>
+
+      <h1>Lasertec (6920.T) — Japan's ASML</h1>
+      <p class="subtitle">Global monopoly in EUV photomask inspection. ~100% market share in a critical bottleneck for leading-edge chipmaking.</p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="label">Price</div>
+          <div class="value">¥30,910</div>
+          <div class="note">Feb 2026</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Market Cap</div>
+          <div class="value">$21.8B</div>
+          <div class="note">~¥3.3T</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">EUV Mask Share</div>
+          <div class="value">~100%</div>
+          <div class="note">True monopoly</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Key Customers</div>
+          <div class="value">TSMC, ASML</div>
+          <div class="note">Intel, Samsung</div>
+        </div>
+      </div>
+
+      <section class="section" id="executive-summary">
+        <h2>🧭 Executive Summary</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>EUV mask inspection monopoly.</strong> Lasertec is the only company capable of inspecting EUV photomasks at production throughput. Without Lasertec, EUV lithography doesn't work.</div>
+            <div><strong>"Japan's ASML."</strong> Just as ASML monopolizes EUV lithography, Lasertec monopolizes EUV mask inspection — a symbiotic relationship tied to advanced node adoption.</div>
+            <div><strong>~100% market share.</strong> No viable competitor exists for actinic (EUV-wavelength) mask inspection. KLA competes in DUV inspection but not EUV.</div>
+            <div><strong>ACTIS A300 launch.</strong> Next-generation EUV mask inspection system released March 2024, supporting High-NA EUV roadmap.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="company-overview">
+        <h2>🏢 Company Overview</h2>
+        <div class="card">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            Lasertec Corporation, founded in 1960, is headquartered in Yokohama, Japan. Originally a small semiconductor equipment supplier, the company transformed into a critical EUV enabler by developing actinic (EUV-wavelength) photomask inspection systems. Every leading-edge fab (TSMC, Samsung, Intel) and mask shop must use Lasertec equipment to produce defect-free EUV masks.
+          </p>
+          <div class="pill-row">
+            <span class="pill">Founded 1960</span>
+            <span class="pill">HQ: Yokohama, Japan</span>
+            <span class="pill">EUV monopoly</span>
+            <span class="pill">ASML partner</span>
+            <span class="pill">ACTIS platform</span>
+          </div>
+        </div>
+        <div class="table-wrap" style="margin-top:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Product Line</th>
+                <th class="num">Market Position</th>
+                <th class="num">Application</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td>ACTIS (EUV Mask Inspection)</td>
+                <td class="num">~100% global share</td>
+                <td class="num">Defect inspection for EUV masks</td>
+              </tr>
+              <tr>
+                <td>DUV Mask Inspection</td>
+                <td class="num">Strong position</td>
+                <td class="num">Legacy node mask QC</td>
+              </tr>
+              <tr>
+                <td>Pellicle Inspection</td>
+                <td class="num">Leading supplier</td>
+                <td class="num">EUV pellicle QC (CLIOS)</td>
+              </tr>
+              <tr>
+                <td>FPD Mask Inspection</td>
+                <td class="num">Market leader</td>
+                <td class="num">Display panel photomasks</td>
+              </tr>
+              <tr>
+                <td>Confocal Microscopes</td>
+                <td class="num">Specialty niche</td>
+                <td class="num">Research & metrology</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="investment-thesis">
+        <h2>📌 Investment Thesis</h2>
+        <div class="case-grid">
+          <div class="case-card bull">
+            <h3>🐂 Bull Case</h3>
+            <ul>
+              <li><strong>True monopoly:</strong> ~100% share with no credible competitor developing EUV inspection</li>
+              <li><strong>ASML symbiosis:</strong> Every ASML EUV tool shipped requires Lasertec mask inspection</li>
+              <li><strong>High-NA EUV opportunity:</strong> Next-gen lithography creates new inspection requirements</li>
+              <li><strong>Growing mask complexity:</strong> Multi-patterning increases inspection passes per mask</li>
+              <li><strong>Recurring revenue:</strong> Service contracts and consumables from installed base</li>
+            </ul>
+          </div>
+          <div class="case-card bear">
+            <h3>🐻 Bear Case</h3>
+            <ul>
+              <li><strong>Short-seller scrutiny:</strong> Scorpion Capital report questioned accounting and valuation</li>
+              <li><strong>Customer concentration:</strong> ~3-4 major customers (TSMC, Samsung, Intel mask shops)</li>
+              <li><strong>Small TAM:</strong> EUV mask inspection is a niche market; limited total addressable market</li>
+              <li><strong>Technology risk:</strong> Alternative inspection methods or reduced mask complexity could emerge</li>
+              <li><strong>Valuation volatility:</strong> High-multiple stock sensitive to any demand slowdown</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="competitive-position">
+        <h2>🛡️ Competitive Position</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Mask Inspection Market</th>
+                <th class="num">EUV Share</th>
+                <th class="num">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td>Lasertec</td>
+                <td class="num">~100%</td>
+                <td class="num">Only actinic EUV solution</td>
+              </tr>
+              <tr>
+                <td>KLA</td>
+                <td class="num">0%</td>
+                <td class="num">DUV inspection only</td>
+              </tr>
+              <tr>
+                <td>Applied Materials</td>
+                <td class="num">0%</td>
+                <td class="num">No mask inspection product</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card" style="margin-top:16px;">
+          <div class="list">
+            <div><strong>Actinic advantage:</strong> Only Lasertec uses EUV wavelength (13.5nm) light for inspection, detecting defects DUV systems miss</div>
+            <div><strong>10+ year head start:</strong> Development began early 2010s; competitors would need years to catch up</div>
+            <div><strong>ASML partnership:</strong> Deep collaboration on EUV ecosystem development</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="financials">
+        <h2>📊 Financial Overview</h2>
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Key Metrics</th>
+                <th class="num">Value</th>
+                <th class="num">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Stock Price</td>
+                <td class="num">¥30,910</td>
+                <td class="num">Feb 2026</td>
+              </tr>
+              <tr>
+                <td>Market Cap</td>
+                <td class="num">$21.8B</td>
+                <td class="num">~¥3.3T</td>
+              </tr>
+              <tr>
+                <td>Historical Trading</td>
+                <td class="num">1-2x revenue</td>
+                <td class="num">Before EUV takeoff</td>
+              </tr>
+              <tr class="highlight">
+                <td>Current Valuation</td>
+                <td class="num">Premium</td>
+                <td class="num">Re-rated on monopoly recognition</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            <strong>From penny stock to crown jewel:</strong> Lasertec traded at 1-2x revenue with a $50-100M market cap for years before EUV adoption. Recognition of its monopoly position drove a massive re-rating to current $20B+ valuation.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="catalysts">
+        <h2>🚀 Key Catalysts</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>ASML High-NA EUV ramp:</strong> New generation of lithography tools require new mask inspection solutions</div>
+            <div><strong>EUV layer expansion:</strong> More EUV layers per chip = more mask inspections required</div>
+            <div><strong>Mask shop expansion:</strong> Intel, Samsung, TSMC all expanding mask production capacity</div>
+            <div><strong>ACTIS A300 adoption:</strong> Next-gen system supporting higher throughput and resolution</div>
+            <div><strong>China market potential:</strong> If export restrictions ease, significant pent-up demand</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="risks">
+        <h2>⚠️ Key Risks</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>Short-seller scrutiny:</strong> Scorpion Capital raised accounting questions; controversy may resurface</div>
+            <div><strong>Small TAM ceiling:</strong> Limited number of mask shops caps long-term growth</div>
+            <div><strong>Customer concentration:</strong> Revenue heavily dependent on 3-4 major customers</div>
+            <div><strong>Technology disruption:</strong> Alternative lithography or inspection methods could emerge</div>
+            <div><strong>Valuation risk:</strong> High multiple leaves little room for disappointment</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="verdict">
+        <h2>✅ Verdict</h2>
+        <div class="card verdict">
+          <p style="font-size:13px;line-height:1.7;color:var(--text-secondary);">
+            <strong>Rating: Hold / High Conviction Monopoly.</strong> Lasertec is one of the purest monopolies in semiconductor equipment — ~100% share in a critical EUV enabling technology. The ASML symbiosis is real and durable. Key concerns are small TAM and high valuation. Best for investors who believe EUV adoption will continue expanding aggressively.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="related">
+        <h2>🔗 Related</h2>
+        <div class="card" style="display:flex;flex-direction:column;gap:14px;">
+          <a href="./japan-semiconductor-sector.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">🇯🇵</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Japan Semiconductor Sector Overview</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Full sector analysis and company comparisons.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
+          <a href="./tokyo-electron-8035.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">⚙️</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Tokyo Electron (8035.T)</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Semiconductor equipment giant.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const icon = document.getElementById('theme-icon');
+    if (html.getAttribute('data-theme') === 'dark') {
+      html.setAttribute('data-theme', 'light');
+      icon.textContent = '🌙';
+    } else {
+      html.setAttribute('data-theme', 'dark');
+      icon.textContent = '☀️';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.section[id]');
+    const navLinks = document.getElementById('section-nav-links');
+    sections.forEach(sec => {
+      const h2 = sec.querySelector('h2');
+      if (h2) {
+        const a = document.createElement('a');
+        a.href = '#' + sec.id;
+        a.textContent = h2.textContent.replace(/^[\u{1F300}-\u{1F9FF}]/u, '').trim();
+        navLinks.appendChild(a);
+      }
+    });
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        const link = navLinks.querySelector(`a[href="#${e.target.id}"]`);
+        if (link) link.classList.toggle('active', e.isIntersecting);
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => obs.observe(s));
+  });
+</script>
+</body>
+</html>

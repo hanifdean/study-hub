@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tokyo Electron (8035.T) — Japan Semiconductor Deep Dive</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0f0f14;
+    --surface: #171720;
+    --surface-alt: #1f1f2a;
+    --surface-hover: #242433;
+    --border: #2a2a35;
+    --border-alt: #333344;
+    --text: #ece9e3;
+    --text-secondary: #d5d1c7;
+    --text-muted: #9a9488;
+    --text-dim: #766f64;
+    --text-dimmer: #5b554c;
+    --accent: #f59e0b;
+    --accent-soft: rgba(245, 158, 11, 0.14);
+    --accent-glow: rgba(245, 158, 11, 0.2);
+    --highlight: #fbbf24;
+    --green: #34d399;
+    --red: #f87171;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --text-dimmer: #a5a09a;
+    --accent: #d97706;
+    --accent-soft: rgba(217, 119, 6, 0.1);
+    --accent-glow: rgba(217, 119, 6, 0.15);
+    --highlight: #b45309;
+    --green: #059669;
+    --red: #dc2626;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .page-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+  }
+
+  .content { flex: 1; min-width: 0; }
+  .container { max-width: 980px; }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  h1 {
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--highlight);
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 28px;
+    font-weight: 500;
+  }
+
+  .section {
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s ease-out both;
+  }
+
+  .section h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+  }
+
+  .stat-card .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+  .stat-card .value {
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .stat-card .note {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
+    color: var(--text-muted);
+  }
+
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    text-align: left;
+    padding: 10px 12px;
+    color: var(--text-muted);
+    font-size: 11px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody tr.highlight td { color: var(--highlight); font-weight: 600; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 18px;
+  }
+
+  .list {
+    display: grid;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .list strong { color: var(--text); }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .case-card {
+    border-radius: 14px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .case-card.bull { border-color: rgba(52, 211, 153, 0.4); background: rgba(52, 211, 153, 0.06); }
+  .case-card.bear { border-color: rgba(248, 113, 113, 0.4); background: rgba(248, 113, 113, 0.05); }
+  .case-card h3 { font-size: 14px; margin-bottom: 8px; }
+  .case-card ul { padding-left: 16px; font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+  .verdict {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), transparent);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+  }
+
+  .section-nav {
+    position: sticky;
+    top: 96px;
+    width: 220px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    height: fit-content;
+    max-height: calc(100vh - 140px);
+    overflow: auto;
+  }
+  .section-nav-title {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .section-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .section-nav a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+  }
+  .section-nav a:hover { color: var(--accent); border-color: var(--border); background: var(--surface-hover); }
+  .section-nav a.active { color: var(--accent); background: var(--accent-soft); border-color: var(--accent); }
+
+  html { scroll-behavior: smooth; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .case-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    body { padding: 24px 16px; }
+    .page-layout { flex-direction: column; gap: 12px; }
+    .section-nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      padding: 8px;
+      border-radius: 12px;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+    .section-nav-title { display: none; }
+    .section-nav-links { flex-direction: row; gap: 8px; }
+    .section-nav a {
+      white-space: nowrap;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border-color: var(--border);
+      background: var(--surface);
+    }
+    .section-nav a.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+  }
+</style>
+</head>
+<body>
+<div class="page-layout">
+  <nav class="section-nav" aria-label="Section navigation">
+    <div class="section-nav-title">On this page</div>
+    <div class="section-nav-links" id="section-nav-links"></div>
+  </nav>
+  <main class="content">
+    <div class="container">
+      <div class="top-bar">
+        <a href="./japan-semiconductor-sector.html" class="back-link">← Japan Semiconductor Sector</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+          <span id="theme-icon">☀️</span>
+        </button>
+      </div>
+
+      <h1>Tokyo Electron (8035.T) — Semiconductor Equipment Giant</h1>
+      <p class="subtitle">World's #3 semiconductor equipment maker with 89% global share in coater/developers. The picks-and-shovels play for advanced chipmaking.</p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="label">Price</div>
+          <div class="value">¥40,000</div>
+          <div class="note">Feb 2026</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Market Cap</div>
+          <div class="value">¥17.4T</div>
+          <div class="note">~$115B USD</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Coater Share</div>
+          <div class="value">89%</div>
+          <div class="note">Global dominance</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">1Y Return</div>
+          <div class="value">+43%</div>
+          <div class="note">ATH ¥44,610 (Jan 2026)</div>
+        </div>
+      </div>
+
+      <section class="section" id="executive-summary">
+        <h2>🧭 Executive Summary</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>Global equipment leader.</strong> Tokyo Electron (TEL) is the world's third-largest semiconductor equipment company (behind ASML and Applied Materials), with dominant positions in coater/developers, etch systems, and deposition equipment.</div>
+            <div><strong>Monopolistic position.</strong> TEL holds 89% global market share in photoresist coater/developers — a critical step in chip patterning that every fab requires.</div>
+            <div><strong>Advanced node exposure.</strong> Direct beneficiary of EUV adoption, 3D NAND stacking, and leading-edge logic (TSMC 3nm/2nm, Intel 18A).</div>
+            <div><strong>AI capex wave.</strong> Hyperscaler spending on AI chips drives wafer fab equipment demand through 2026+.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="company-overview">
+        <h2>🏢 Company Overview</h2>
+        <div class="card">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            Tokyo Electron Limited (TEL) was founded in 1963 and is headquartered in Tokyo. The company designs, manufactures, and sells semiconductor production equipment globally. TEL's product portfolio spans the entire front-end wafer fabrication process, from deposition to patterning to etch. The company is the critical "picks and shovels" supplier for TSMC, Samsung, Intel, and every major foundry.
+          </p>
+          <div class="pill-row">
+            <span class="pill">Founded 1963</span>
+            <span class="pill">HQ: Tokyo, Japan</span>
+            <span class="pill">~17,000 employees</span>
+            <span class="pill">#3 global SPE</span>
+            <span class="pill">89% coater share</span>
+          </div>
+        </div>
+        <div class="table-wrap" style="margin-top:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Product Category</th>
+                <th class="num">Market Position</th>
+                <th class="num">Key Applications</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td>Coater/Developers</td>
+                <td class="num">89% global share</td>
+                <td class="num">Photoresist coating for lithography</td>
+              </tr>
+              <tr>
+                <td>Plasma Etch Systems</td>
+                <td class="num">Top 3 globally</td>
+                <td class="num">Pattern transfer, 3D NAND HAR etch</td>
+              </tr>
+              <tr>
+                <td>Deposition (CVD/ALD)</td>
+                <td class="num">Top 3 globally</td>
+                <td class="num">Film deposition for advanced nodes</td>
+              </tr>
+              <tr>
+                <td>Thermal Processing</td>
+                <td class="num">Market leader</td>
+                <td class="num">Diffusion, oxidation, annealing</td>
+              </tr>
+              <tr>
+                <td>Cleaning Equipment</td>
+                <td class="num">Top 3 globally</td>
+                <td class="num">Wafer surface preparation</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="investment-thesis">
+        <h2>📌 Investment Thesis</h2>
+        <div class="case-grid">
+          <div class="case-card bull">
+            <h3>🐂 Bull Case</h3>
+            <ul>
+              <li><strong>Monopolistic moat:</strong> 89% coater/developer share creates pricing power and recurring revenue</li>
+              <li><strong>EUV tailwind:</strong> Each EUV lithography tool requires TEL coater/developers; ASML's success is TEL's success</li>
+              <li><strong>Advanced node complexity:</strong> More patterning steps at 3nm/2nm = more TEL equipment per wafer</li>
+              <li><strong>AI capex cycle:</strong> TSMC, Samsung, Intel fab expansions drive multi-year equipment demand</li>
+              <li><strong>High-NA EUV opportunity:</strong> Next-gen lithography requires new coating solutions (volume 2026+)</li>
+            </ul>
+          </div>
+          <div class="case-card bear">
+            <h3>🐻 Bear Case</h3>
+            <ul>
+              <li><strong>Cyclicality:</strong> SPE market is historically volatile; downcycles can be severe</li>
+              <li><strong>China exposure:</strong> ~25% revenue from China faces geopolitical risk and export controls</li>
+              <li><strong>Valuation premium:</strong> Trading at 86% premium to Morningstar fair value estimate</li>
+              <li><strong>Customer concentration:</strong> Heavy reliance on TSMC, Samsung, Intel capex decisions</li>
+              <li><strong>Competition:</strong> Applied Materials and Lam Research competing aggressively in etch/deposition</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="competitive-position">
+        <h2>🛡️ Competitive Position</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SPE Market Share (2024-25)</th>
+                <th class="num">Revenue</th>
+                <th class="num">Key Strengths</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ASML</td>
+                <td class="num">#1 globally</td>
+                <td class="num">Lithography monopoly (EUV)</td>
+              </tr>
+              <tr>
+                <td>Applied Materials</td>
+                <td class="num">#2 globally</td>
+                <td class="num">Broadest portfolio</td>
+              </tr>
+              <tr class="highlight">
+                <td>Tokyo Electron</td>
+                <td class="num">#3 globally</td>
+                <td class="num">Coater/developer monopoly</td>
+              </tr>
+              <tr>
+                <td>Lam Research</td>
+                <td class="num">#4 globally</td>
+                <td class="num">Etch leader</td>
+              </tr>
+              <tr>
+                <td>KLA</td>
+                <td class="num">#5 globally</td>
+                <td class="num">Inspection/metrology</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card" style="margin-top:16px;">
+          <div class="list">
+            <div><strong>Coater/developer lock-in:</strong> Switching costs are extremely high; customers design processes around TEL tools</div>
+            <div><strong>ASML symbiosis:</strong> Every EUV tool shipped requires TEL coating equipment; tied to lithography roadmap</div>
+            <div><strong>R&D intensity:</strong> Heavy investment in next-gen tools for High-NA EUV and 2nm nodes</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="financials">
+        <h2>📊 Financial Overview</h2>
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Key Metrics</th>
+                <th class="num">Value</th>
+                <th class="num">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Stock Price</td>
+                <td class="num">~¥40,000</td>
+                <td class="num">ATH ¥44,610 (Jan 2026)</td>
+              </tr>
+              <tr>
+                <td>Market Cap</td>
+                <td class="num">¥17.4T</td>
+                <td class="num">~$115B USD</td>
+              </tr>
+              <tr>
+                <td>Morningstar Fair Value</td>
+                <td class="num">¥48,961</td>
+                <td class="num">Nov 2025 estimate</td>
+              </tr>
+              <tr>
+                <td>Premium to Fair Value</td>
+                <td class="num">86%</td>
+                <td class="num">Trading rich</td>
+              </tr>
+              <tr>
+                <td>1Y Return</td>
+                <td class="num">+43%</td>
+                <td class="num">Strong momentum</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            <strong>Elevated valuation reflects AI optimism:</strong> TEL trades at a significant premium as the market prices in sustained equipment demand from AI chip buildout. The company has announced volume deployment of next-gen tools around 2026, with market size forecasts of ¥2B+ for 2027.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="catalysts">
+        <h2>🚀 Key Catalysts</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>TSMC N2/N3 expansion:</strong> Leading-edge capacity buildout drives coater/developer demand</div>
+            <div><strong>High-NA EUV ramp:</strong> Next-gen lithography tools shipping 2025-26 require new TEL solutions</div>
+            <div><strong>Intel foundry comeback:</strong> Intel 18A and beyond driving US equipment orders</div>
+            <div><strong>3D NAND stacking:</strong> 200+ layer NAND requires more etch/deposition steps</div>
+            <div><strong>Advanced packaging:</strong> CoWoS/HBM packaging creates new equipment TAM</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="risks">
+        <h2>⚠️ Key Risks</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>Cycle peak risk:</strong> SPE spending may slow after current expansion wave</div>
+            <div><strong>China restrictions:</strong> Export controls limiting sales to Chinese fabs (~25% exposure)</div>
+            <div><strong>Valuation risk:</strong> Premium multiple leaves limited upside, significant downside if cycle turns</div>
+            <div><strong>Yen appreciation:</strong> Strong yen would pressure export competitiveness and margins</div>
+            <div><strong>Technology disruption:</strong> Alternative patterning techniques (DSA, NIL) could reduce coating steps</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="verdict">
+        <h2>✅ Verdict</h2>
+        <div class="card verdict">
+          <p style="font-size:13px;line-height:1.7;color:var(--text-secondary);">
+            <strong>Rating: Hold / Quality at a Price.</strong> Tokyo Electron is a world-class equipment franchise with monopolistic market positions. However, at 86% premium to fair value, the stock prices in aggressive growth assumptions. Best suited for long-term semiconductor exposure; accumulate on pullbacks during cyclical corrections.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="related">
+        <h2>🔗 Related</h2>
+        <div class="card" style="display:flex;flex-direction:column;gap:14px;">
+          <a href="./japan-semiconductor-sector.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">🇯🇵</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Japan Semiconductor Sector Overview</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Full sector analysis and company comparisons.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
+          <a href="./advantest-6857.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">🔬</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Advantest (6857.T)</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Chip testing equipment leader.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const icon = document.getElementById('theme-icon');
+    if (html.getAttribute('data-theme') === 'dark') {
+      html.setAttribute('data-theme', 'light');
+      icon.textContent = '🌙';
+    } else {
+      html.setAttribute('data-theme', 'dark');
+      icon.textContent = '☀️';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.section[id]');
+    const navLinks = document.getElementById('section-nav-links');
+    sections.forEach(sec => {
+      const h2 = sec.querySelector('h2');
+      if (h2) {
+        const a = document.createElement('a');
+        a.href = '#' + sec.id;
+        a.textContent = h2.textContent.replace(/^[\u{1F300}-\u{1F9FF}]/u, '').trim();
+        navLinks.appendChild(a);
+      }
+    });
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        const link = navLinks.querySelector(`a[href="#${e.target.id}"]`);
+        if (link) link.classList.toggle('active', e.isIntersecting);
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => obs.observe(s));
+  });
+</script>
+</body>
+</html>
