@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory Sector Guide — DRAM, HBM, NAND Explained</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0f0f14;
+    --surface: #171720;
+    --surface-alt: #1f1f2a;
+    --surface-hover: #242433;
+    --border: #2a2a35;
+    --border-alt: #333344;
+    --text: #ece9e3;
+    --text-secondary: #d5d1c7;
+    --text-muted: #9a9488;
+    --text-dim: #766f64;
+    --text-dimmer: #5b554c;
+    --accent: #f59e0b;
+    --accent-soft: rgba(245, 158, 11, 0.14);
+    --accent-glow: rgba(245, 158, 11, 0.2);
+    --highlight: #fbbf24;
+    --green: #34d399;
+    --red: #f87171;
+    --blue: #60a5fa;
+    --purple: #a78bfa;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --text-dimmer: #a5a09a;
+    --accent: #d97706;
+    --accent-soft: rgba(217, 119, 6, 0.1);
+    --accent-glow: rgba(217, 119, 6, 0.15);
+    --highlight: #b45309;
+    --green: #059669;
+    --red: #dc2626;
+    --blue: #2563eb;
+    --purple: #7c3aed;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  .page-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .page-subtitle {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+  }
+
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title .icon { font-size: 20px; }
+
+  h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 20px 0 12px 0;
+  }
+
+  p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+
+  .comparison-table th {
+    background: var(--surface-alt);
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text);
+    border-bottom: 2px solid var(--border);
+  }
+
+  .comparison-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+
+  .comparison-table tr:hover td {
+    background: var(--surface-hover);
+  }
+
+  .highlight-cell {
+    color: var(--accent) !important;
+    font-weight: 600;
+  }
+
+  .hierarchy-visual {
+    background: var(--surface-alt);
+    border-radius: 8px;
+    padding: 20px;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--text-muted);
+    overflow-x: auto;
+  }
+
+  .hierarchy-visual .fast { color: var(--red); }
+  .hierarchy-visual .medium { color: var(--accent); }
+  .hierarchy-visual .slow { color: var(--green); }
+  .hierarchy-visual .label { color: var(--text-dim); font-style: italic; }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+  }
+
+  .info-card {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+
+  .info-card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .info-card-content {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .player-badge {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    margin: 2px 4px 2px 0;
+  }
+
+  .player-badge.leader {
+    background: rgba(52, 211, 153, 0.15);
+    color: var(--green);
+  }
+
+  .tree-map {
+    background: var(--surface-alt);
+    border-radius: 8px;
+    padding: 20px;
+    font-size: 13px;
+  }
+
+  .tree-branch {
+    margin-left: 20px;
+    padding-left: 16px;
+    border-left: 2px solid var(--border);
+  }
+
+  .tree-node {
+    padding: 8px 0;
+    color: var(--text-secondary);
+  }
+
+  .tree-node strong {
+    color: var(--text);
+  }
+
+  .tree-node.highlight {
+    color: var(--accent);
+  }
+
+  .callout {
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px;
+    border-radius: 0 8px 8px 0;
+    margin: 16px 0;
+  }
+
+  .callout-title {
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+
+  .callout-content {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .related-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .related-link {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+    border-radius: 6px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+
+  .related-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .vs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+
+  .vs-table th {
+    background: var(--surface-alt);
+    padding: 10px 12px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .vs-table th:first-child {
+    text-align: left;
+  }
+
+  .vs-table td {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-secondary);
+  }
+
+  .vs-table td:first-child {
+    text-align: left;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .check { color: var(--green); }
+  .cross { color: var(--red); }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="top-bar">
+    <a href="../index.html" class="back-link">← Back to Study Hub</a>
+    <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+  </div>
+
+  <h1 class="page-title">Memory Sector Guide</h1>
+  <p class="page-subtitle">Understanding DRAM, HBM, and NAND — The Complete Mental Map</p>
+
+  <!-- Two Fundamental Types -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">🧠</span> The Two Fundamental Types of Memory</h2>
+    
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>DRAM (includes HBM)</th>
+          <th>NAND</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>What it does</strong></td>
+          <td>Working memory — holds data the CPU/GPU is <strong>actively using</strong></td>
+          <td>Storage — holds data <strong>long-term</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Analogy</strong></td>
+          <td>Your desk (stuff you're working on now)</td>
+          <td>Your filing cabinet (stuff you retrieve when needed)</td>
+        </tr>
+        <tr>
+          <td><strong>Speed</strong></td>
+          <td class="highlight-cell">Blazing fast</td>
+          <td>Slower</td>
+        </tr>
+        <tr>
+          <td><strong>Persistence</strong></td>
+          <td>Volatile (loses data when power off)</td>
+          <td class="highlight-cell">Non-volatile (keeps data without power)</td>
+        </tr>
+        <tr>
+          <td><strong>Cost per GB</strong></td>
+          <td>Expensive</td>
+          <td class="highlight-cell">Cheap</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Memory Hierarchy -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">🔺</span> The Memory Hierarchy (Speed vs. Cost)</h2>
+    
+    <div class="hierarchy-visual">
+<span class="fast">FASTEST / MOST EXPENSIVE</span>
+        ↓
+   ┌─────────────┐
+   │    <span class="fast">SRAM</span>     │  <span class="label">← Inside the chip (CPU cache)</span>
+   └──────┬──────┘
+          ↓
+   ┌─────────────┐
+   │    <span class="fast">HBM</span>      │  <span class="label">← Stacked DRAM, next to GPU (AI's bottleneck) 🔥</span>
+   └──────┬──────┘
+          ↓
+   ┌─────────────┐
+   │    <span class="medium">DRAM</span>     │  <span class="label">← Standard RAM in your computer</span>
+   └──────┬──────┘
+          ↓
+   ┌─────────────┐
+   │    <span class="slow">NAND</span>     │  <span class="label">← SSDs, storage</span>
+   └──────┬──────┘
+          ↓
+   ┌─────────────┐
+   │    <span class="slow">HDD</span>      │  <span class="label">← Spinning disks (legacy)</span>
+   └─────────────┘
+
+<span class="slow">SLOWEST / CHEAPEST</span>
+    </div>
+  </div>
+
+  <!-- HBM Deep Dive -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">🎯</span> HBM: Why It's Special</h2>
+    
+    <p><strong>HBM = High Bandwidth Memory</strong></p>
+    <p>It's still DRAM, but stacked vertically and connected directly to the GPU via silicon interposer. This is the critical bottleneck for AI.</p>
+
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Regular DRAM</th>
+          <th>HBM</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Bandwidth</strong></td>
+          <td>~50 GB/s</td>
+          <td class="highlight-cell">1,000+ GB/s</td>
+        </tr>
+        <tr>
+          <td><strong>Form factor</strong></td>
+          <td>Separate chip on motherboard</td>
+          <td>Stacked, on-package with GPU</td>
+        </tr>
+        <tr>
+          <td><strong>Manufacturing</strong></td>
+          <td>Standard process</td>
+          <td>Advanced 3D stacking + interposer</td>
+        </tr>
+        <tr>
+          <td><strong>Why AI needs it</strong></td>
+          <td>Can't keep up with modern GPUs</td>
+          <td class="highlight-cell">Only HBM can feed massive AI models fast enough</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <div class="callout-title">🔥 The AI Bottleneck</div>
+      <div class="callout-content">
+        NVIDIA's H100/H200/B200 chips are only as fast as the memory feeding them. HBM is the limiting factor — and it's getting more expensive. UBS estimates HBM's share of an NVL72 rack cost will rise from 6% (GB200) to 16% (VR200).
+      </div>
+    </div>
+  </div>
+
+  <!-- Who Makes What -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">🏭</span> Who Makes What</h2>
+    
+    <table class="vs-table">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>DRAM</th>
+          <th>HBM</th>
+          <th>NAND</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Samsung</strong></td>
+          <td><span class="check">✓</span> #1</td>
+          <td><span class="check">✓</span> #2</td>
+          <td><span class="check">✓</span> #1</td>
+        </tr>
+        <tr>
+          <td><strong>SK Hynix</strong></td>
+          <td><span class="check">✓</span> #2</td>
+          <td><span class="check">✓</span> <strong class="highlight-cell">#1</strong></td>
+          <td><span class="check">✓</span> #3</td>
+        </tr>
+        <tr>
+          <td><strong>Micron</strong></td>
+          <td><span class="check">✓</span> #3</td>
+          <td><span class="check">✓</span> #3</td>
+          <td><span class="check">✓</span> #4</td>
+        </tr>
+        <tr>
+          <td><strong>Kioxia</strong></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="check">✓</span> <strong class="highlight-cell">#2</strong> (w/ WD)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top: 16px;"><strong>Key insight:</strong> Kioxia is NAND-only. They don't play in HBM/DRAM at all. Different market, different dynamics.</p>
+  </div>
+
+  <!-- Mental Map -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">🗺️</span> The Mental Map</h2>
+    
+    <div class="tree-map">
+      <div class="tree-node"><strong>MEMORY SECTOR</strong></div>
+      <div class="tree-branch">
+        <div class="tree-node"><strong>DRAM</strong> (volatile, fast)</div>
+        <div class="tree-branch">
+          <div class="tree-node">Standard DRAM — PCs, servers (commoditized)</div>
+          <div class="tree-node highlight"><strong>HBM</strong> — AI GPUs 🔥 (hot, high margin, constrained supply)</div>
+          <div class="tree-branch">
+            <div class="tree-node">Players: <span class="player-badge leader">SK Hynix #1</span> <span class="player-badge">Samsung</span> <span class="player-badge">Micron</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="tree-branch">
+        <div class="tree-node"><strong>NAND</strong> (non-volatile, storage)</div>
+        <div class="tree-branch">
+          <div class="tree-node">Consumer SSDs (commoditized, low margin)</div>
+          <div class="tree-node">Enterprise SSDs (better margins)</div>
+          <div class="tree-branch">
+            <div class="tree-node">Players: <span class="player-badge leader">Samsung #1</span> <span class="player-badge">Kioxia/WD #2</span> <span class="player-badge">SK Hynix</span> <span class="player-badge">Micron</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Demand Chain -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">💰</span> The AI Memory Demand Chain</h2>
+    
+    <div class="card-grid">
+      <div class="info-card">
+        <div class="info-card-title">🚀 AI Training/Inference</div>
+        <div class="info-card-content">
+          Massive models need to be loaded into memory and processed at incredible speeds.
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">⚡ Needs FAST Memory (HBM)</div>
+        <div class="info-card-content">
+          HBM is the bottleneck. Only it can feed GPUs fast enough. This is where the margin is.<br><br>
+          <span class="player-badge leader">SK Hynix</span> <span class="player-badge">Samsung</span> <span class="player-badge">Micron</span>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">💾 Needs LOTS of Storage (NAND)</div>
+        <div class="info-card-content">
+          Training datasets, model checkpoints, inference caching. More AI = more storage needed.<br><br>
+          <span class="player-badge">Kioxia</span> <span class="player-badge">WD</span> <span class="player-badge">Samsung</span> <span class="player-badge">Micron</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">📊 UBS Research (Feb 2026)</div>
+      <div class="callout-content">
+        Memory costs for hyperscalers rising from $53B (2025) → $155B (2026) → $252B (2027). One-third of this year's CAPEX increase is attributable to memory alone. Memory's share of server BOM rising from 4-6% to 6-7%.
+      </div>
+    </div>
+  </div>
+
+  <!-- Investment Hierarchy -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">📈</span> Investment Hierarchy for AI</h2>
+    
+    <h3>HBM Exposure (The AI Play)</h3>
+    <p><strong>1. SK Hynix</strong> — The HBM leader, NVIDIA's primary supplier<br>
+    <strong>2. Micron (MU)</strong> — #3 but catching up, more accessible for US investors<br>
+    <strong>3. Samsung</strong> — Diversified conglomerate, HBM is smaller part of story</p>
+
+    <h3>NAND Exposure (The Storage Play)</h3>
+    <p><strong>1. Kioxia (285A.T)</strong> — Pure-play NAND, Japanese, 12x forward P/E<br>
+    <strong>2. Micron (MU)</strong> — Diversified (DRAM + NAND + HBM)<br>
+    <strong>3. Western Digital</strong> — Kioxia JV partner, also has HDD business</p>
+
+    <div class="callout">
+      <div class="callout-title">💡 TL;DR</div>
+      <div class="callout-content">
+        <strong>HBM</strong> is the AI bottleneck (fast, expensive, high-growth). <strong>NAND</strong> is storage (slower, cheaper, more commoditized). Kioxia only does NAND. The real AI memory play is HBM — SK Hynix is winning that war.
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Pages -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">🔗</span> Related Deep Dives</h2>
+    <div class="related-links">
+      <a href="company-deep-dives/micron-mu.html" class="related-link">Micron (MU)</a>
+      <a href="company-deep-dives/kioxia-285a.html" class="related-link">Kioxia (285A.T)</a>
+      <a href="company-deep-dives/japan-semiconductor-sector.html" class="related-link">Japan Semiconductor Sector</a>
+      <a href="ai-infrastructure-stack.html" class="related-link">AI Infrastructure Stack</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+  localStorage.setItem('theme', current === 'dark' ? 'light' : 'dark');
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+});
+</script>
+</body>
+</html>
