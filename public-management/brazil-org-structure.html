@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brazil in Action — Organizational Structure</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+            padding: 2rem;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+        
+        .legend-line {
+            width: 40px;
+            height: 3px;
+        }
+        
+        .legend-line.solid {
+            background: #4ade80;
+        }
+        
+        .legend-line.dotted {
+            background: repeating-linear-gradient(90deg, #f59e0b, #f59e0b 5px, transparent 5px, transparent 10px);
+        }
+        
+        .org-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow-x: auto;
+        }
+        
+        .org-chart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            min-width: 900px;
+            padding: 1rem;
+        }
+        
+        .level {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            width: 100%;
+            position: relative;
+        }
+        
+        .node {
+            background: linear-gradient(145deg, #2a2a4a, #1e1e3a);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            min-width: 180px;
+            text-align: center;
+            position: relative;
+            border: 2px solid #3a3a5a;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .node:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        .node.presidency {
+            background: linear-gradient(145deg, #4a1942, #2d1028);
+            border-color: #ff6b9d;
+            min-width: 220px;
+        }
+        
+        .node.casa-civil {
+            background: linear-gradient(145deg, #1e3a5f, #152a45);
+            border-color: #60a5fa;
+            min-width: 220px;
+        }
+        
+        .node.ministry {
+            background: linear-gradient(145deg, #1e4a3a, #15352a);
+            border-color: #4ade80;
+        }
+        
+        .node.spi {
+            background: linear-gradient(145deg, #4a3a1e, #352a15);
+            border-color: #fbbf24;
+        }
+        
+        .node.sectoral {
+            background: linear-gradient(145deg, #3a1e4a, #2a1535);
+            border-color: #a78bfa;
+        }
+        
+        .node.implementing {
+            background: linear-gradient(145deg, #2a3a4a, #1e2a35);
+            border-color: #67e8f9;
+        }
+        
+        .node-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .node-person {
+            font-size: 0.85rem;
+            color: #ffd700;
+            margin-bottom: 0.3rem;
+        }
+        
+        .node-role {
+            font-size: 0.75rem;
+            color: #999;
+            font-style: italic;
+        }
+        
+        .connector {
+            position: relative;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .connector::before {
+            content: '';
+            position: absolute;
+            width: 3px;
+            height: 100%;
+            background: #4ade80;
+        }
+        
+        .connector.dotted::before {
+            background: repeating-linear-gradient(180deg, #f59e0b, #f59e0b 5px, transparent 5px, transparent 10px);
+        }
+        
+        .horizontal-group {
+            display: flex;
+            gap: 1rem;
+            position: relative;
+        }
+        
+        .branch-connector {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 180px);
+            height: 3px;
+            background: #4ade80;
+        }
+        
+        .branch-connector::before,
+        .branch-connector::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            height: 15px;
+            background: #4ade80;
+            top: 0;
+        }
+        
+        .branch-connector::before {
+            left: 0;
+        }
+        
+        .branch-connector::after {
+            right: 0;
+        }
+        
+        .section-label {
+            background: rgba(255,255,255,0.1);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #aaa;
+            margin: 0.5rem 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .tooltip {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a2e;
+            border: 1px solid #ffd700;
+            border-radius: 8px;
+            padding: 0.75rem;
+            width: 250px;
+            font-size: 0.8rem;
+            z-index: 100;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+        
+        .node:hover .tooltip {
+            display: block;
+        }
+        
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 8px solid transparent;
+            border-top-color: #ffd700;
+        }
+        
+        .dual-structure {
+            display: flex;
+            gap: 4rem;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .structure-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .column-label {
+            background: rgba(255,255,255,0.05);
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #ffd700;
+            border: 1px dashed #ffd700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .dotted-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            color: #f59e0b;
+            font-size: 0.8rem;
+        }
+        
+        .reporting-note {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .reporting-note h3 {
+            color: #f59e0b;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .reporting-note p {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #ccc;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.4rem;
+            }
+            
+            .dual-structure {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .legend {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>🇧🇷 Brazil in Action — Organizational Structure</h1>
+    <p class="subtitle">Presidency & Secretariat Structure (1996-1999)</p>
+    
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-line solid"></div>
+            <span>Solid line (command reporting)</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-line dotted"></div>
+            <span>Dotted line (functional reporting)</span>
+        </div>
+    </div>
+    
+    <div class="org-container">
+        <div class="org-chart">
+            <!-- Presidency Level -->
+            <div class="level">
+                <div class="node presidency">
+                    <div class="node-title">PRESIDENCY</div>
+                    <div class="node-person">Fernando Henrique Cardoso</div>
+                    <div class="node-role">President of Brazil</div>
+                    <div class="tooltip">
+                        <strong>Role in Brazil in Action:</strong><br>
+                        Political sponsor. Personally reviewed flagged (red) projects. 
+                        His visible commitment gave the program legitimacy and gave Casa Civil the authority to pressure ministries.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="connector"></div>
+            
+            <!-- Dual Structure: Casa Civil + Ministry of Planning -->
+            <div class="section-label">Coordination Layer</div>
+            
+            <div class="dual-structure">
+                <!-- Casa Civil Column -->
+                <div class="structure-column">
+                    <div class="column-label">Political Coordination</div>
+                    <div class="node casa-civil">
+                        <div class="node-title">CASA CIVIL</div>
+                        <div class="node-person">Clóvis Carvalho</div>
+                        <div class="node-role">Chief of Staff</div>
+                        <div class="tooltip">
+                            <strong>Role in Brazil in Action:</strong><br>
+                            Led political coordination. Chaired high-level meetings. Provided political muscle for escalation. 
+                            When SPI flagged problems, Carvalho intervened with ministerial authority.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Ministry of Planning Column -->
+                <div class="structure-column">
+                    <div class="column-label">Technical Coordination</div>
+                    <div class="node ministry">
+                        <div class="node-title">MINISTRY OF PLANNING</div>
+                        <div class="node-person">(MOG/SEPLAN)</div>
+                        <div class="node-role">Strategic Planning & Budget</div>
+                        <div class="tooltip">
+                            <strong>Role in Brazil in Action:</strong><br>
+                            Housed SPI, which ran the technical monitoring and MIS.
+                            Controlled budget allocation and conditional fund release.
+                        </div>
+                    </div>
+                    
+                    <div class="connector"></div>
+                    
+                    <div class="node spi">
+                        <div class="node-title">SPI</div>
+                        <div class="node-person">José Paulo Silveira</div>
+                        <div class="node-role">Secretary - Strategic Planning & Investment</div>
+                        <div class="tooltip">
+                            <strong>Role in Brazil in Action:</strong><br>
+                            Led SPI. Ran the MIS (SIGPLAN/Gerencial).
+                            Case is analyzed from his POV — building the oversight system.
+                        </div>
+                    </div>
+                    
+                    <div class="connector"></div>
+                    
+                    <div class="node spi">
+                        <div class="node-title">Manager for Brazil in Action</div>
+                        <div class="node-person">Ariel Pares (Asti)</div>
+                        <div class="node-role">Program Manager</div>
+                        <div class="tooltip">
+                            <strong>Role in Brazil in Action:</strong><br>
+                            Directly managed the Brazil in Action program within SPI.
+                            Supervised monitors and day-to-day coordination.
+                        </div>
+                    </div>
+                    
+                    <div class="connector"></div>
+                    
+                    <div class="node spi" style="min-width: 200px;">
+                        <div class="node-title">Staffers / Monitors</div>
+                        <div class="node-role">Program Monitors</div>
+                        <div class="tooltip">
+                            <strong>Role in Brazil in Action:</strong><br>
+                            Collected data from project managers.
+                            Updated MIS. Flagged problems.
+                            First line of oversight.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-label" style="margin-top: 2rem;">Implementation Layer</div>
+            
+            <!-- Sectoral Ministries -->
+            <div class="level">
+                <div class="horizontal-group">
+                    <div class="node sectoral">
+                        <div class="node-title">Ministry of Transport</div>
+                        <div class="node-role">Roads, Rail, Ports</div>
+                    </div>
+                    <div class="node sectoral">
+                        <div class="node-title">Ministry of Health</div>
+                        <div class="node-role">Healthcare projects</div>
+                    </div>
+                    <div class="node sectoral">
+                        <div class="node-title">Ministry of Education</div>
+                        <div class="node-role">Education projects</div>
+                    </div>
+                    <div class="node sectoral">
+                        <div class="node-title">Other Ministries...</div>
+                        <div class="node-role">42 priority projects</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="connector"></div>
+            
+            <!-- Executive Secretaries -->
+            <div class="level">
+                <div class="node implementing" style="min-width: 300px;">
+                    <div class="node-title">Executive Secretaries</div>
+                    <div class="node-role">Top administrative position in each ministry (COO)</div>
+                    <div class="tooltip">
+                        <strong>Role in Brazil in Action:</strong><br>
+                        Control ministry operations. Translate pressure from above into action.
+                        Key link between Carvalho's coordination and actual project execution.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="connector"></div>
+            
+            <!-- Project Managers -->
+            <div class="level">
+                <div class="node implementing" style="min-width: 300px;">
+                    <div class="node-title">Project Managers</div>
+                    <div class="node-role">Manage individual priority projects</div>
+                    <div class="tooltip">
+                        <strong>Dual Reporting:</strong><br>
+                        <strong>Solid line:</strong> Executive Secretary → Minister<br>
+                        <strong>Dotted line:</strong> SPI Monitors (Brazil in Action progress only)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="connector"></div>
+            
+            <!-- Executing Agencies -->
+            <div class="level">
+                <div class="horizontal-group">
+                    <div class="node implementing">
+                        <div class="node-title">Executing Agencies</div>
+                        <div class="node-role">e.g., DNER for roads</div>
+                    </div>
+                    <div class="node implementing">
+                        <div class="node-title">State Governments</div>
+                        <div class="node-role">Federal-state projects</div>
+                    </div>
+                    <div class="node implementing">
+                        <div class="node-title">Contractors</div>
+                        <div class="node-role">Private sector delivery</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="reporting-note">
+        <h3>📋 Key Reporting Relationships</h3>
+        <p>
+            <strong>Solid line (command):</strong> Project Managers → Executive Secretary → Minister<br>
+            <strong>Dotted line (functional):</strong> Project Managers → SPI Monitors → Asti → Silveira → (escalate to) Carvalho<br><br>
+            The dotted line is what made Brazil in Action work — functional reporting on the 42 priority projects without restructuring the entire government.
+        </p>
+    </div>
+    
+    <script>
+        // Add click interaction for mobile
+        document.querySelectorAll('.node').forEach(node => {
+            node.addEventListener('click', function() {
+                // On mobile, toggle tooltip visibility
+                const tooltip = this.querySelector('.tooltip');
+                if (tooltip) {
+                    const isVisible = tooltip.style.display === 'block';
+                    // Hide all tooltips first
+                    document.querySelectorAll('.tooltip').forEach(t => t.style.display = 'none');
+                    // Toggle this one
+                    if (!isVisible) {
+                        tooltip.style.display = 'block';
+                    }
+                }
+            });
+        });
+        
+        // Hide tooltips when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.node')) {
+                document.querySelectorAll('.tooltip').forEach(t => t.style.display = 'none');
+            }
+        });
+    </script>
+</body>
+</html>
