@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Japan Photonics Ecosystem — Supply Chain Deep Dive</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0f0f14;
+    --surface: #171720;
+    --surface-alt: #1f1f2a;
+    --surface-hover: #242433;
+    --border: #2a2a35;
+    --border-alt: #333344;
+    --text: #ece9e3;
+    --text-secondary: #d5d1c7;
+    --text-muted: #9a9488;
+    --text-dim: #766f64;
+    --text-dimmer: #5b554c;
+    --accent: #f59e0b;
+    --accent-soft: rgba(245, 158, 11, 0.14);
+    --accent-glow: rgba(245, 158, 11, 0.2);
+    --highlight: #fbbf24;
+    --green: #34d399;
+    --red: #f87171;
+    --blue: #60a5fa;
+    --purple: #a78bfa;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --text-dimmer: #a5a09a;
+    --accent: #d97706;
+    --accent-soft: rgba(217, 119, 6, 0.1);
+    --accent-glow: rgba(217, 119, 6, 0.15);
+    --highlight: #b45309;
+    --green: #059669;
+    --red: #dc2626;
+    --blue: #2563eb;
+    --purple: #7c3aed;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  .page-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .page-subtitle {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+  }
+
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title .icon { font-size: 20px; }
+
+  h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 20px 0 12px 0;
+  }
+
+  h3:first-child { margin-top: 0; }
+
+  p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+
+  ul, ol {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 12px;
+    padding-left: 20px;
+  }
+
+  li { margin-bottom: 4px; }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+
+  .comparison-table th {
+    background: var(--surface-alt);
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text);
+    border-bottom: 2px solid var(--border);
+  }
+
+  .comparison-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+
+  .comparison-table tr:hover td {
+    background: var(--surface-hover);
+  }
+
+  .highlight-cell {
+    color: var(--accent) !important;
+    font-weight: 600;
+  }
+
+  .hierarchy-visual {
+    background: var(--surface-alt);
+    border-radius: 8px;
+    padding: 20px;
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--text-muted);
+    overflow-x: auto;
+  }
+
+  .hierarchy-visual .fast { color: var(--red); }
+  .hierarchy-visual .medium { color: var(--accent); }
+  .hierarchy-visual .slow { color: var(--green); }
+  .hierarchy-visual .label { color: var(--text-dim); font-style: italic; }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+  }
+
+  .info-card {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+
+  .info-card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .info-card-content {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .player-badge {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    margin: 2px 4px 2px 0;
+  }
+
+  .player-badge.leader {
+    background: rgba(52, 211, 153, 0.15);
+    color: var(--green);
+  }
+
+  .player-badge.blue {
+    background: rgba(96, 165, 250, 0.15);
+    color: var(--blue);
+  }
+
+  .player-badge.purple {
+    background: rgba(167, 139, 250, 0.15);
+    color: var(--purple);
+  }
+
+  .tree-map {
+    background: var(--surface-alt);
+    border-radius: 8px;
+    padding: 20px;
+    font-size: 13px;
+  }
+
+  .tree-branch {
+    margin-left: 20px;
+    padding-left: 16px;
+    border-left: 2px solid var(--border);
+  }
+
+  .tree-node {
+    padding: 8px 0;
+    color: var(--text-secondary);
+  }
+
+  .tree-node strong {
+    color: var(--text);
+  }
+
+  .tree-node.highlight {
+    color: var(--accent);
+  }
+
+  .callout {
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px;
+    border-radius: 0 8px 8px 0;
+    margin: 16px 0;
+  }
+
+  .callout-title {
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+
+  .callout-content {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .related-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .related-link {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+    border-radius: 6px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+
+  .related-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .vs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+
+  .vs-table th {
+    background: var(--surface-alt);
+    padding: 10px 12px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .vs-table th:first-child {
+    text-align: left;
+  }
+
+  .vs-table td {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-secondary);
+  }
+
+  .vs-table td:first-child {
+    text-align: left;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .check { color: var(--green); }
+  .cross { color: var(--red); }
+
+  /* Collapsible sections */
+  .collapsible-header {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .collapsible-header .toggle-icon {
+    font-size: 14px;
+    color: var(--text-muted);
+    transition: transform 0.2s;
+  }
+
+  .collapsible-header.open .toggle-icon {
+    transform: rotate(90deg);
+  }
+
+  .collapsible-body {
+    display: none;
+    margin-top: 16px;
+  }
+
+  .collapsible-body.open {
+    display: block;
+  }
+
+  /* Company card header styling */
+  .company-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .company-ticker {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--surface-alt);
+    padding: 3px 10px;
+    border-radius: 6px;
+  }
+
+  .company-mcap {
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .bull-bear {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 12px 0;
+  }
+
+  .bull-case, .bear-case {
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .bull-case {
+    background: rgba(52, 211, 153, 0.08);
+    border: 1px solid rgba(52, 211, 153, 0.2);
+    color: var(--green);
+  }
+
+  .bear-case {
+    background: rgba(248, 113, 113, 0.08);
+    border: 1px solid rgba(248, 113, 113, 0.2);
+    color: var(--red);
+  }
+
+  .bull-case strong, .bear-case strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  @media (max-width: 600px) {
+    .bull-bear { grid-template-columns: 1fr; }
+    .card-grid { grid-template-columns: 1fr; }
+    .page-title { font-size: 24px; }
+    body { padding: 20px 16px; }
+  }
+
+  .fin-mini-table {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 8px;
+    margin: 12px 0;
+  }
+
+  .fin-mini-item {
+    background: var(--surface-alt);
+    border-radius: 6px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .fin-mini-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+  }
+
+  .fin-mini-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .fin-mini-value.accent { color: var(--accent); }
+  .fin-mini-value.green { color: var(--green); }
+  .fin-mini-value.red { color: var(--red); }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="top-bar">
+    <a href="../index.html" class="back-link">← Back to Study Hub</a>
+    <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+  </div>
+
+  <h1 class="page-title">Japan Photonics Ecosystem</h1>
+  <p class="page-subtitle">Mapping Japan's critical role in the global optical & photonics supply chain — from light sources to test equipment</p>
+
+  <!-- Overview -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">🔬</span> Why Japan Photonics Matters</h2>
+    
+    <p>Japan dominates the upstream photonics supply chain in ways that are invisible to most investors but <strong>structurally irreplaceable</strong>. While the market obsesses over TSMC and NVIDIA, Japan quietly controls choke points across the photonics value chain — from Hamamatsu's near-monopoly in photomultiplier tubes to DISCO's ~80% share of semiconductor dicing saws to Sumitomo Electric's compound semiconductor wafers.</p>
+
+    <p>This matters now because <strong>every major secular trend — AI/datacenter buildout, optical networking (800G→1.6T), EV power electronics, advanced packaging — runs through photonics</strong>. Photons, not just electrons, are becoming the bottleneck.</p>
+
+    <div class="callout">
+      <div class="callout-title">🇯🇵 Japan's Semiconductor Renaissance</div>
+      <div class="callout-content">
+        METI has committed <strong>¥10+ trillion through 2030</strong> to semiconductor and AI infrastructure. This includes subsidies for TSMC's Kumamoto fabs (¥476B), Micron's Hiroshima expansion (¥536B), and Rapidus' 2nm project. Japan explicitly targets photonics-electronics convergence as a "game-changing technology" in its national strategy. The government views compound semiconductors (GaN, SiC, InP) — where Japan has deep competitive advantages — as a distinct strategic pillar alongside leading-edge logic.
+      </div>
+    </div>
+
+    <h3>Historical Context</h3>
+    <p>Japan's photonics dominance traces back to the 1960s–80s, when MITI (now METI) funded national projects in optoelectronics, fiber optics, and laser technology. Companies like Hamamatsu (founded 1953), Sumitomo Electric (fiber optics pioneer from the 1970s), and Anritsu (communications test since 1895) built deep moats through decades of R&D in materials science and precision manufacturing. Unlike consumer electronics, these businesses were never commoditized by Korean or Chinese competitors — because the volumes are smaller, the know-how deeper, and the switching costs enormous.</p>
+  </div>
+
+  <!-- Supply Chain Map -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">🗺️</span> Photonics Value Chain Map</h2>
+    
+    <div class="tree-map">
+      <div class="tree-node"><strong>PHOTONICS VALUE CHAIN</strong></div>
+      <div class="tree-branch">
+        <div class="tree-node highlight"><strong>💡 Light Sources & Generation</strong></div>
+        <div class="tree-branch">
+          <div class="tree-node">Lasers, LEDs, UV/IR lamps, photomultiplier tubes</div>
+          <div class="tree-node">
+            <span class="player-badge leader">Hamamatsu Photonics</span>
+            <span class="player-badge">Ushio</span>
+            <span class="player-badge">Sumitomo Electric (LD/LED)</span>
+          </div>
+        </div>
+      </div>
+      <div class="tree-branch">
+        <div class="tree-node highlight"><strong>🔌 Compound Semiconductors & Materials</strong></div>
+        <div class="tree-branch">
+          <div class="tree-node">GaN, GaAs, InP, SiC wafers & epitaxy</div>
+          <div class="tree-node">
+            <span class="player-badge leader">Sumitomo Electric</span>
+            <span class="player-badge">Mitsubishi Electric</span>
+            <span class="player-badge">Furukawa Electric</span>
+          </div>
+        </div>
+      </div>
+      <div class="tree-branch">
+        <div class="tree-node highlight"><strong>📡 Optical Transmission</strong></div>
+        <div class="tree-branch">
+          <div class="tree-node">Optical fiber, transceivers, waveguides, passive components</div>
+          <div class="tree-node">
+            <span class="player-badge leader">Sumitomo Electric</span>
+            <span class="player-badge">Furukawa Electric</span>
+            <span class="player-badge">Kyocera</span>
+          </div>
+        </div>
+      </div>
+      <div class="tree-branch">
+        <div class="tree-node highlight"><strong>📷 Detection & Sensing</strong></div>
+        <div class="tree-branch">
+          <div class="tree-node">Photo detectors, image sensors, PMTs, SiPMs, CMOS sensors</div>
+          <div class="tree-node">
+            <span class="player-badge leader">Hamamatsu Photonics</span>
+            <span class="player-badge">TDK (sensors)</span>
+          </div>
+        </div>
+      </div>
+      <div class="tree-branch">
+        <div class="tree-node highlight"><strong>⚙️ Processing & Packaging</strong></div>
+        <div class="tree-branch">
+          <div class="tree-node">IC substrates, advanced packaging, dicing, grinding, polishing</div>
+          <div class="tree-node">
+            <span class="player-badge leader">DISCO</span>
+            <span class="player-badge leader">Ibiden</span>
+            <span class="player-badge">Kyocera (ceramic pkg)</span>
+          </div>
+        </div>
+      </div>
+      <div class="tree-branch">
+        <div class="tree-node highlight"><strong>🧪 Test & Measurement</strong></div>
+        <div class="tree-branch">
+          <div class="tree-node">Optical network testing, 5G/6G test, signal analysis</div>
+          <div class="tree-node">
+            <span class="player-badge leader">Anritsu</span>
+          </div>
+        </div>
+      </div>
+      <div class="tree-branch">
+        <div class="tree-node highlight"><strong>🏭 Systems & Integration</strong></div>
+        <div class="tree-branch">
+          <div class="tree-node">Factory automation, power electronics, satellite comms, optical devices</div>
+          <div class="tree-node">
+            <span class="player-badge leader">Mitsubishi Electric</span>
+            <span class="player-badge">Nidec (precision motors)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Financial Snapshot Comparison -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">📊</span> Financial Snapshot — All Six at a Glance</h2>
+    <p>All figures in JPY unless noted. Data as of Feb 2026.</p>
+
+    <div style="overflow-x: auto;">
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Ticker</th>
+          <th>Market Cap</th>
+          <th>Revenue (TTM)</th>
+          <th>Op. Margin</th>
+          <th>P/E</th>
+          <th>Rev. Growth</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Hamamatsu Photonics</strong></td>
+          <td>6965.T</td>
+          <td>¥546B</td>
+          <td>¥213B</td>
+          <td>6.7%</td>
+          <td>43x</td>
+          <td class="highlight-cell">+6%</td>
+        </tr>
+        <tr>
+          <td><strong>Sumitomo Electric</strong></td>
+          <td>5802.T</td>
+          <td>¥7.6T</td>
+          <td>¥4.9T</td>
+          <td>7.8%</td>
+          <td>30x</td>
+          <td class="highlight-cell">+7%</td>
+        </tr>
+        <tr>
+          <td><strong>DISCO Corp</strong></td>
+          <td>6146.T</td>
+          <td class="highlight-cell">¥8.0T</td>
+          <td>¥425B</td>
+          <td class="highlight-cell">42%</td>
+          <td>61x</td>
+          <td class="highlight-cell">+13%</td>
+        </tr>
+        <tr>
+          <td><strong>Ibiden</strong></td>
+          <td>4062.T</td>
+          <td>¥2.6T</td>
+          <td>¥398B</td>
+          <td>13.4%</td>
+          <td>67x</td>
+          <td class="highlight-cell">+10%</td>
+        </tr>
+        <tr>
+          <td><strong>Anritsu</strong></td>
+          <td>6754.T</td>
+          <td>¥334B</td>
+          <td>¥113B</td>
+          <td>12.4%</td>
+          <td>31x</td>
+          <td>Flat</td>
+        </tr>
+        <tr>
+          <td><strong>Mitsubishi Electric</strong></td>
+          <td>6503.T</td>
+          <td class="highlight-cell">¥12.0T</td>
+          <td>¥5.7T</td>
+          <td>6.5%</td>
+          <td>32x</td>
+          <td>+4%</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">💡 Standout Observation</div>
+      <div class="callout-content">
+        DISCO is the valuation outlier — trading at 61x earnings with 42% operating margins. The market is pricing it as a structural monopoly, not a cyclical equipment company. Ibiden is also richly valued at 67x P/E, reflecting AI substrate demand expectations. The rest trade at more reasonable 30–43x multiples by Japanese standards.
+      </div>
+    </div>
+  </div>
+
+  <!-- Company Deep Dives -->
+
+  <!-- 1. Hamamatsu Photonics -->
+  <div class="section">
+    <div class="collapsible-header" onclick="toggleSection(this)">
+      <h2 class="section-title" style="margin-bottom:0;">
+        <span class="icon">💡</span>
+        <span>Hamamatsu Photonics</span>
+        <span class="company-ticker">6965.T</span>
+      </h2>
+      <span class="toggle-icon">▶</span>
+    </div>
+    <div class="collapsible-body">
+      <p><strong>The photonics pure-play.</strong> Hamamatsu is the world's dominant manufacturer of photomultiplier tubes (PMTs), opto-semiconductor devices, and imaging/measurement systems. Founded in 1953 in Hamamatsu City, the company motto is "we work for the unknown, using light." It supplies critical components to scientific instruments, medical devices (PET scanners, blood analyzers), industrial inspection, and increasingly to semiconductor equipment.</p>
+
+      <h3>Key Segments</h3>
+      <ul>
+        <li><strong>Electron Tube (PMTs)</strong> — ~20% of revenue. Near-monopoly in photomultiplier tubes used in particle physics (they supplied CERN/Super-Kamiokande), medical imaging, and nuclear detection.</li>
+        <li><strong>Opto-Semiconductor</strong> — ~40% of revenue. Photodiodes, image sensors (InGaAs, Si), laser diodes. Growing semiconductor inspection applications.</li>
+        <li><strong>Imaging & Measurement</strong> — ~25% of revenue. Complete imaging systems for scientific and industrial use.</li>
+        <li><strong>Laser Group</strong> — ~15% of revenue. Laser processing sources for industrial applications.</li>
+      </ul>
+
+      <h3>Financial Snapshot</h3>
+      <div class="fin-mini-table">
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Revenue (FY Sep '25)</div>
+          <div class="fin-mini-value">¥212B</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Op. Profit</div>
+          <div class="fin-mini-value">¥16.2B</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Op. Margin</div>
+          <div class="fin-mini-value red">7.6%</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Market Cap</div>
+          <div class="fin-mini-value">¥546B</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">P/E</div>
+          <div class="fin-mini-value">43x</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Beta</div>
+          <div class="fin-mini-value green">0.54</div>
+        </div>
+      </div>
+
+      <h3>Competitive Moat</h3>
+      <p>Decades of accumulated know-how in photon detection physics. Vertical integration — Hamamatsu manufactures its own glass, semiconductors, and vacuum tubes. Customer switching costs are extreme in scientific instruments (validating new detectors takes years). Global #1 in PMTs with 90%+ share. R&D spend is ~9% of revenue, funding exotic capabilities no competitor matches.</p>
+
+      <div class="bull-bear">
+        <div class="bull-case">
+          <strong>🐂 Bull Case</strong>
+          Semiconductor inspection demand accelerating (EUV metrology). Medical imaging/diagnostics growing. Quantum computing requires photon detectors. Moat is near-impregnable. Shares buying back stock (-3.3% YoY). Low beta (0.54) = defensive quality.
+        </div>
+        <div class="bear-case">
+          <strong>🐻 Bear Case</strong>
+          Margins collapsed from 26% to 7.6% in two years — cyclical downturn in academic/industrial demand post-COVID. Revenue declined from ¥221B peak to ¥212B. At 43x P/E with compressed margins, stock prices in a recovery that may be slow. Niche markets cap total addressable market.
+        </div>
+      </div>
+
+      <h3>Key Risks</h3>
+      <p>Academic budget cycles, yen strength (50%+ revenue from overseas), concentration in niche markets. R&D capex is heavy — ¥18.4B in FY25 on ¥212B revenue.</p>
+
+      <p><strong>ADR:</strong> <span class="player-badge">HPHTY</span> (OTC) — Low liquidity. Also trades as HPHTF. Best accessed via Tokyo directly.</p>
+    </div>
+  </div>
+
+  <!-- 2. Sumitomo Electric -->
+  <div class="section">
+    <div class="collapsible-header" onclick="toggleSection(this)">
+      <h2 class="section-title" style="margin-bottom:0;">
+        <span class="icon">🔌</span>
+        <span>Sumitomo Electric Industries</span>
+        <span class="company-ticker">5802.T</span>
+      </h2>
+      <span class="toggle-icon">▶</span>
+    </div>
+    <div class="collapsible-body">
+      <p><strong>Japan's optical backbone + compound semiconductor powerhouse.</strong> Sumitomo Electric is a diversified industrial giant with ¥4.9T in revenue across five segments, but the photonics-relevant businesses — optical fiber/cable, compound semiconductors (GaN, GaAs, InP), and optical devices — are the strategic jewels that make it critical infrastructure for global communications.</p>
+
+      <h3>Key Segments (Photonics-Relevant)</h3>
+      <ul>
+        <li><strong>Infocommunications</strong> — Optical fiber & cable (global top-3 with Corning and Furukawa), optical transceivers, fiber-to-the-home equipment. Direct beneficiary of datacenter buildout.</li>
+        <li><strong>Electronics (Compound Semiconductors)</strong> — GaN-on-GaN substrates, GaAs/InP epitaxial wafers for laser diodes, photodetectors, and RF devices. Sumitomo is one of the few companies worldwide with vertically integrated compound semiconductor capability from substrate to device.</li>
+        <li><strong>Automotive</strong> — Wiring harnesses (global #1 share ~30%). Massive but low-margin. This funds the optics/semiconductor R&D.</li>
+      </ul>
+
+      <h3>Financial Snapshot</h3>
+      <div class="fin-mini-table">
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Revenue (FY Mar '25)</div>
+          <div class="fin-mini-value">¥4.68T</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Op. Profit</div>
+          <div class="fin-mini-value">¥321B</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Op. Margin</div>
+          <div class="fin-mini-value">6.9%</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Market Cap</div>
+          <div class="fin-mini-value">¥7.6T</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">P/E</div>
+          <div class="fin-mini-value">30x</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">ROE</div>
+          <div class="fin-mini-value green">8.6%</div>
+        </div>
+      </div>
+
+      <h3>Competitive Moat</h3>
+      <p>Unmatched vertical integration in compound semiconductors — from bulk crystal growth to epitaxial wafer to finished device. One of only ~5 companies globally that can produce GaN substrates at scale. Optical fiber manufacturing requires massive capital and decades of process know-how. The automotive harness business (boring but dominant) provides cash flow stability.</p>
+
+      <div class="bull-bear">
+        <div class="bull-case">
+          <strong>🐂 Bull Case</strong>
+          AI datacenter fiber demand accelerating. Compound semiconductors are the future of power electronics (EV), RF (5G/6G), and optical interconnects. Operating profit nearly doubled in two years (¥177B → ¥321B). Improving ROE (8.6%) and reducing cross-shareholdings. Government CHIPS subsidies for compound semiconductor expansion.
+        </div>
+        <div class="bear-case">
+          <strong>🐻 Bear Case</strong>
+          Overall margins still thin (6.9%) — automotive harness drag. Revenue mix heavily tilted to lower-margin businesses. Compound semiconductor is a small fraction of total revenue. Fiber optic market is cyclical. Conglomerate discount may persist.
+        </div>
+      </div>
+
+      <h3>Key Risks</h3>
+      <p>Automotive downturn, copper price exposure, yen volatility, fiber capex cycles. Compound semiconductor is a long-duration bet — may take years to move the needle on a ¥4.7T revenue base.</p>
+
+      <p><strong>ADR:</strong> <span class="player-badge">SMTOY</span> (OTC, ~$62) — Moderate liquidity.</p>
+    </div>
+  </div>
+
+  <!-- 3. DISCO Corporation -->
+  <div class="section">
+    <div class="collapsible-header" onclick="toggleSection(this)">
+      <h2 class="section-title" style="margin-bottom:0;">
+        <span class="icon">⚙️</span>
+        <span>DISCO Corporation</span>
+        <span class="company-ticker">6146.T</span>
+      </h2>
+      <span class="toggle-icon">▶</span>
+    </div>
+    <div class="collapsible-body">
+      <p><strong>The picks-and-shovels monopoly.</strong> DISCO makes the precision dicing saws, grinders, and polishers that cut, thin, and finish virtually every semiconductor wafer on earth. With ~80% global share in dicing saws and leading positions in grinding/polishing, DISCO is as close to a natural monopoly as exists in semiconductor equipment. Every chip — logic, memory, power, photonic — passes through DISCO equipment before packaging.</p>
+
+      <h3>Key Products</h3>
+      <ul>
+        <li><strong>Dicing Saws</strong> — Diamond blade saws that singulate individual dies from wafers. ~80% global share. Used in every fab and OSAT worldwide.</li>
+        <li><strong>Grinders</strong> — Thin wafers to precise thicknesses for advanced packaging (critical for HBM stacking, chiplets). Market share rising with advanced packaging adoption.</li>
+        <li><strong>Laser Saws (KABRA)</strong> — Stealth dicing technology using lasers for ultra-thin, crack-sensitive materials. Growing with SiC/GaN power devices.</li>
+        <li><strong>Consumables (Blades, Wheels)</strong> — High-margin recurring revenue stream. ~30% of sales.</li>
+      </ul>
+
+      <h3>Financial Snapshot</h3>
+      <div class="fin-mini-table">
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Revenue (FY Mar '25)</div>
+          <div class="fin-mini-value accent">¥393B</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Op. Profit</div>
+          <div class="fin-mini-value accent">¥167B</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Op. Margin</div>
+          <div class="fin-mini-value accent">42.4%</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Market Cap</div>
+          <div class="fin-mini-value">¥8.0T</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">P/E</div>
+          <div class="fin-mini-value red">61x</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">ROIC</div>
+          <div class="fin-mini-value green">60%</div>
+        </div>
+      </div>
+
+      <h3>Competitive Moat</h3>
+      <p><strong>Near-impregnable.</strong> Decades of precision diamond tool engineering. Customer qualification cycles take 1–2 years. Proprietary "DISCO Values" culture drives fanatical quality. Consumables create recurring revenue (blades/wheels wear out). Zero debt. 42% operating margins — this is a monopoly hiding in industrial equipment.</p>
+
+      <div class="callout">
+        <div class="callout-title">🔥 Advanced Packaging Tailwind</div>
+        <div class="callout-content">
+          DISCO is a primary beneficiary of the advanced packaging revolution. HBM stacking (wafer thinning/grinding), chiplet singulation, and SiC/GaN dicing all require DISCO's precision equipment. Revenue has grown from ¥183B (FY21) to ¥393B (FY25) — a 115% increase in four years. The FY26 9-month forecast suggests another strong year with ¥287B in sales through December.
+        </div>
+      </div>
+
+      <div class="bull-bear">
+        <div class="bull-case">
+          <strong>🐂 Bull Case</strong>
+          Every secular trend (AI/HBM packaging, SiC/GaN power devices, chiplets) increases DISCO content per wafer. 4 consecutive years of record revenue. 42% operating margin expanding. Zero debt, 60% ROIC. Stock up 60% in 12 months and may still be early.
+        </div>
+        <div class="bear-case">
+          <strong>🐻 Bear Case</strong>
+          At 61x P/E, any growth deceleration gets punished severely. Semiconductor equipment is cyclical — capex downturns can cause 20–30% revenue drops. Laser dicing alternatives could eventually erode blade share (though DISCO makes those too). Valuation demands perfection.
+        </div>
+      </div>
+
+      <h3>Key Risks</h3>
+      <p>Extreme valuation multiple, semiconductor capex cycle exposure, yen appreciation (global revenue base). Single-product-category risk (albeit diversified within cutting/grinding/polishing).</p>
+
+      <p><strong>ADR:</strong> No US-listed ADR. Must trade on Tokyo or via international brokers.</p>
+    </div>
+  </div>
+
+  <!-- 4. Ibiden -->
+  <div class="section">
+    <div class="collapsible-header" onclick="toggleSection(this)">
+      <h2 class="section-title" style="margin-bottom:0;">
+        <span class="icon">📦</span>
+        <span>Ibiden</span>
+        <span class="company-ticker">4062.T</span>
+      </h2>
+      <span class="toggle-icon">▶</span>
+    </div>
+    <div class="collapsible-body">
+      <p><strong>The advanced packaging substrate company.</strong> Ibiden is one of the world's most critical IC substrate manufacturers, producing the high-end packaging substrates that sit between silicon dies and the PCB. If you've heard of "advanced packaging" as an AI theme — Ibiden is making the substrates that enable it. They are a primary supplier to Intel for CPU substrates and are expanding capacity for AI accelerator packaging.</p>
+
+      <h3>Key Segments</h3>
+      <ul>
+        <li><strong>Electronics (IC Substrates)</strong> — ~60% of revenue. FC-BGA (flip-chip ball grid array) substrates for CPUs, GPUs, and AI accelerators. Also printed circuit boards. Ibiden and Shinko Electric are the two Japanese substrate duopolists.</li>
+        <li><strong>Ceramics (DPF/Environmental)</strong> — ~40% of revenue. Diesel particulate filters and catalytic converters. Stable but lower-growth. Cash cow that funds electronics expansion.</li>
+      </ul>
+
+      <h3>Financial Snapshot</h3>
+      <div class="fin-mini-table">
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Revenue (FY Mar '25)</div>
+          <div class="fin-mini-value">¥369B</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Op. Profit</div>
+          <div class="fin-mini-value">¥45.9B</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Op. Margin</div>
+          <div class="fin-mini-value">12.4%</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Market Cap</div>
+          <div class="fin-mini-value">¥2.6T</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">P/E</div>
+          <div class="fin-mini-value red">67x</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">PEG</div>
+          <div class="fin-mini-value green">1.47</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">📢 Recent: Capacity Expansion (Feb 2026)</div>
+        <div class="callout-content">
+          Ibiden announced capital investment for high-performance IC package substrates on February 3, 2026. The company is racing to add capacity for next-gen AI/HPC substrates amid surging demand for advanced packaging. Revenue TTM is recovering to ¥398B, up 10% from the trough. Q3 FY26 (ending Dec 2025) results show accelerating momentum.
+        </div>
+      </div>
+
+      <h3>Competitive Moat</h3>
+      <p>FC-BGA substrates for high-end processors require extremely tight tolerances and multi-layer capability that only ~5 companies worldwide can achieve. Customer qualification takes 12–18 months. Intel has been a core customer for decades. The shift to larger die sizes (AI chips) and more complex packaging (2.5D/3D) increases substrate content per chip.</p>
+
+      <div class="bull-bear">
+        <div class="bull-case">
+          <strong>🐂 Bull Case</strong>
+          AI accelerator packaging requires more and better substrates — each next-gen GPU/AI chip needs larger, more complex substrates. Ibiden is expanding capacity aggressively. Margins recovering from trough. Revenue inflecting upward. Co-packaged optics and chiplets create new substrate demand.
+        </div>
+        <div class="bear-case">
+          <strong>🐻 Bear Case</strong>
+          67x P/E is extremely demanding. Heavy capex cycle — FCF was -¥79B in FY25 as Ibiden invests ahead of demand. Intel concentration risk (Intel is struggling). Samsung/Korean substrate makers may compete on price. DPF/ceramics business faces EV transition headwinds.
+        </div>
+      </div>
+
+      <h3>Key Risks</h3>
+      <p>Massive capex commitments with uncertain returns, Intel customer concentration, P/E valuation requires significant earnings recovery, yen dynamics. Heavy negative free cash flow during investment phase.</p>
+
+      <p><strong>ADR:</strong> No US-listed ADR. Tokyo exchange only.</p>
+    </div>
+  </div>
+
+  <!-- 5. Anritsu -->
+  <div class="section">
+    <div class="collapsible-header" onclick="toggleSection(this)">
+      <h2 class="section-title" style="margin-bottom:0;">
+        <span class="icon">🧪</span>
+        <span>Anritsu Corporation</span>
+        <span class="company-ticker">6754.T</span>
+      </h2>
+      <span class="toggle-icon">▶</span>
+    </div>
+    <div class="collapsible-body">
+      <p><strong>The test & measurement specialist for optical communications.</strong> Anritsu has been in the communications test business since 1895 (originally as a telegraph equipment maker). Today it's a focused T&M company competing with Keysight, Rohde & Schwarz, and Viavi in optical network testing, 5G/6G validation, and high-speed signal integrity analysis. Smaller than peers but deeply specialized in telecom/datacom testing.</p>
+
+      <h3>Key Segments</h3>
+      <ul>
+        <li><strong>Test & Measurement</strong> — ~85% of revenue. Optical spectrum analyzers, bit error rate testers, signal generators for 400G/800G optical transceivers, 5G NR base station testing, PCIe/USB protocol analyzers.</li>
+        <li><strong>Products & Solutions (PQA)</strong> — ~15% of revenue. Food inspection, pharmaceutical quality assurance using optical/X-ray sensing. Niche but stable.</li>
+      </ul>
+
+      <h3>Financial Snapshot</h3>
+      <div class="fin-mini-table">
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Revenue (FY Mar '25)</div>
+          <div class="fin-mini-value">¥113B</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Op. Profit</div>
+          <div class="fin-mini-value">¥12B</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Op. Margin</div>
+          <div class="fin-mini-value">10.6%</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Market Cap</div>
+          <div class="fin-mini-value">¥334B</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">P/E</div>
+          <div class="fin-mini-value">31x</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">FCF Yield</div>
+          <div class="fin-mini-value green">3.2%</div>
+        </div>
+      </div>
+
+      <h3>Competitive Moat</h3>
+      <p>Narrow but defensible. Anritsu has deep telecom operator relationships, especially in Japan and Asia. Optical test equipment requires calibration and certification — switching costs are moderate. Smaller than Keysight (~$5B revenue) but more focused. The food/pharma sensing business provides diversification and optionality.</p>
+
+      <div class="bull-bear">
+        <div class="bull-case">
+          <strong>🐂 Bull Case</strong>
+          800G/1.6T optical transceiver testing demand is ramping. 5G-Advanced and 6G R&D cycles will drive T&M upgrades. AI datacenter buildout requires more optical network testing. Revenue appears to be bottoming — margins improving from 8.6% to 12.4% TTM. Share buybacks (-2.9% YoY). Reasonable 31x P/E.
+        </div>
+        <div class="bear-case">
+          <strong>🐻 Bear Case</strong>
+          Revenue has been essentially flat for 5 years (~¥105–113B range). Smaller scale than Keysight means less R&D firepower. 5G deployment has been slower than expected globally. Operating margin historically peaked at 19% (FY21) — current recovery may stall. Limited pricing power vs. larger competitors.
+        </div>
+      </div>
+
+      <h3>Key Risks</h3>
+      <p>5G/6G capex cycle dependency, competition from much larger Keysight/R&S, limited growth track record, yen sensitivity. The company's relevance depends on telecom infrastructure upgrade cycles.</p>
+
+      <p><strong>ADR:</strong> No US-listed ADR. Tokyo exchange only.</p>
+    </div>
+  </div>
+
+  <!-- 6. Mitsubishi Electric -->
+  <div class="section">
+    <div class="collapsible-header" onclick="toggleSection(this)">
+      <h2 class="section-title" style="margin-bottom:0;">
+        <span class="icon">🏭</span>
+        <span>Mitsubishi Electric</span>
+        <span class="company-ticker">6503.T</span>
+      </h2>
+      <span class="toggle-icon">▶</span>
+    </div>
+    <div class="collapsible-body">
+      <p><strong>Japan's diversified electrical giant with power semiconductor ambitions.</strong> Mitsubishi Electric is the largest company in this coverage universe at ¥12T market cap, spanning factory automation, HVAC, power electronics, satellite communications, and semiconductor devices. For photonics investors, the relevant piece is their power semiconductor business (IGBT modules, SiC devices) and optical/satellite communications systems. MELCO achieved a record 10.2% operating margin in Q3 FY25, signaling its turnaround strategy is working.</p>
+
+      <h3>Key Segments (Photonics-Relevant)</h3>
+      <ul>
+        <li><strong>Semiconductor & Device</strong> — Power modules (IGBT, SiC MOSFET), optical devices, high-frequency devices. Global #3 in power semiconductors behind Infineon and ON Semi. Investing heavily in SiC for EV traction inverters.</li>
+        <li><strong>Electronic Systems (Satellite/Space)</strong> — Satellite communications, radar, optical space communication terminals. Niche but growing as LEO satellite constellations ramp.</li>
+        <li><strong>Factory Automation (FA)</strong> — Servo motors, CNCs, PLCs. #2 globally behind Siemens. Beneficiary of factory re-shoring trends.</li>
+        <li><strong>Infrastructure & Mobility</strong> — Power systems, transportation systems. Steady but cyclical.</li>
+      </ul>
+
+      <h3>Financial Snapshot</h3>
+      <div class="fin-mini-table">
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Revenue (FY Mar '25)</div>
+          <div class="fin-mini-value">¥5.52T</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Op. Profit</div>
+          <div class="fin-mini-value">¥377B</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Op. Margin</div>
+          <div class="fin-mini-value">6.8%</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Market Cap</div>
+          <div class="fin-mini-value">¥12.0T</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">P/E</div>
+          <div class="fin-mini-value">32x</div>
+        </div>
+        <div class="fin-mini-item">
+          <div class="fin-mini-label">Op. Margin (Q3)</div>
+          <div class="fin-mini-value green">10.2%</div>
+        </div>
+      </div>
+
+      <h3>Competitive Moat</h3>
+      <p>Scale and diversification. In power semiconductors specifically, Mitsubishi has deep automotive relationships (Toyota, Honda) and decades of IGBT module engineering. The FA business provides steady cash flow. Brand trust in Japan is extremely high. They are aggressively investing in SiC production — Mitsubishi opened a new SiC wafer fab in Kumamoto in 2024.</p>
+
+      <div class="bull-bear">
+        <div class="bull-case">
+          <strong>🐂 Bull Case</strong>
+          Margin turnaround is working — from 5.2% (FY23) to 6.8% (FY25) and 10.2% in latest quarter. SiC power semiconductors for EV market is a ¥multi-trillion TAM. FA business benefits from manufacturing re-shoring. Satellite optical comms is a new growth vector. Share buybacks active (-1.6% YoY). TSE governance reforms driving change.
+        </div>
+        <div class="bear-case">
+          <strong>🐻 Bear Case</strong>
+          Classic conglomerate — photonics/semiconductor is a small piece of total revenue. Overall margins still low by global peer standards. China competition in FA/industrial equipment. Power semiconductor market getting crowded (Infineon, STMicro, ON Semi, Rohm all investing in SiC). Data falsification scandal in 2021 hurt governance credibility.
+        </div>
+      </div>
+
+      <h3>Key Risks</h3>
+      <p>Conglomerate discount persists, power semiconductor commoditization risk, China industrial slowdown, governance questions post-scandal. The investment thesis requires sustained margin expansion to drive re-rating.</p>
+
+      <p><strong>ADR:</strong> <span class="player-badge">MIELY</span> (OTC, ~$74) — Moderate liquidity.</p>
+    </div>
+  </div>
+
+  <!-- Cross-Cutting Themes -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">🔗</span> Cross-Cutting Investment Themes</h2>
+    
+    <div class="card-grid">
+      <div class="info-card">
+        <div class="info-card-title">🤖 AI / Datacenter Photonics</div>
+        <div class="info-card-content">
+          AI clusters require massive optical interconnect bandwidth. 800G and 1.6T transceivers need compound semiconductor lasers (Sumitomo), precision dicing (DISCO), IC substrates (Ibiden), and optical test equipment (Anritsu). Co-packaged optics — integrating optics directly into switch/GPU packages — is the next frontier, playing directly into Ibiden and DISCO's strengths.
+          <br><br>
+          <span class="player-badge leader">DISCO</span>
+          <span class="player-badge leader">Ibiden</span>
+          <span class="player-badge">Sumitomo Electric</span>
+          <span class="player-badge">Anritsu</span>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">⚡ Compound Semiconductor Advantage</div>
+        <div class="info-card-content">
+          Japan has decades-long advantages in GaN, SiC, and InP — compound semiconductors critical for power electronics, RF devices, and photonic ICs. Unlike silicon, these materials can't be easily replicated by foundries. Sumitomo Electric, Mitsubishi Electric, and Furukawa Electric own proprietary crystal growth and epitaxy technology that gives Japan a structural edge.
+          <br><br>
+          <span class="player-badge leader">Sumitomo Electric</span>
+          <span class="player-badge">Mitsubishi Electric</span>
+          <span class="player-badge">Furukawa Electric</span>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">📦 Advanced Packaging Ecosystem</div>
+        <div class="info-card-content">
+          The shift from "shrink the transistor" to "package smarter" (chiplets, 2.5D/3D, HBM stacking) creates a parallel equipment/materials cycle. DISCO provides wafer thinning and dicing. Ibiden makes the substrates. Together with Shinko Electric and Resonac, Japan controls critical nodes of the advanced packaging supply chain.
+          <br><br>
+          <span class="player-badge leader">DISCO</span>
+          <span class="player-badge leader">Ibiden</span>
+          <span class="player-badge">Shinko Electric</span>
+          <span class="player-badge">Resonac</span>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">📡 Optical Networking Buildout</div>
+        <div class="info-card-content">
+          The transition from 400G to 800G to 1.6T Ethernet in datacenters requires entirely new transceiver architectures. Each speed generation demands better lasers (InP-based), higher-precision components, and more extensive testing. This is a multi-year capex cycle benefiting the full chain from Sumitomo's InP wafers to Anritsu's test equipment.
+          <br><br>
+          <span class="player-badge leader">Sumitomo Electric</span>
+          <span class="player-badge">Anritsu</span>
+          <span class="player-badge">Furukawa Electric</span>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">🇯🇵 Government Industrial Strategy</div>
+        <div class="info-card-content">
+          Japan's ¥10T+ semiconductor investment through 2030 explicitly targets photonics-electronics convergence. METI views compound semiconductors as a distinct strategic pillar. TSMC (Kumamoto), Micron (Hiroshima), and Rapidus (Hokkaido) fabs create local demand for Japan's photonics/equipment supply chain. LSTC (Leading-edge Semiconductor Technology Center) is researching photonic computing.
+          <br><br>
+          <span class="player-badge blue">TSMC Kumamoto</span>
+          <span class="player-badge blue">Rapidus</span>
+          <span class="player-badge blue">LSTC</span>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">🔋 Power Semiconductor / EV</div>
+        <div class="info-card-content">
+          SiC and GaN power devices are replacing silicon IGBTs in EVs and industrial applications. Mitsubishi Electric is building SiC fabs in Kumamoto. Sumitomo Electric makes GaN-on-GaN substrates for power devices. DISCO's laser saws are critical for cutting SiC wafers (which are harder than silicon). Japan has material advantages in this transition.
+          <br><br>
+          <span class="player-badge leader">Mitsubishi Electric</span>
+          <span class="player-badge">Sumitomo Electric</span>
+          <span class="player-badge">DISCO</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Investment Relevance -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">💰</span> Investment Relevance & Access</h2>
+    
+    <table class="vs-table">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Ticker</th>
+          <th>ADR</th>
+          <th>Liquidity</th>
+          <th>Pure-Play?</th>
+          <th>Best For</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Hamamatsu</strong></td>
+          <td>6965.T</td>
+          <td>HPHTY (OTC)</td>
+          <td>Low</td>
+          <td><span class="check">✓</span> Yes</td>
+          <td>Photonics pure-play</td>
+        </tr>
+        <tr>
+          <td><strong>Sumitomo Electric</strong></td>
+          <td>5802.T</td>
+          <td>SMTOY (OTC)</td>
+          <td>Moderate</td>
+          <td><span class="cross">✗</span> Diversified</td>
+          <td>Fiber + compound semi</td>
+        </tr>
+        <tr>
+          <td><strong>DISCO</strong></td>
+          <td>6146.T</td>
+          <td><span class="cross">✗</span> None</td>
+          <td class="highlight-cell">High (TSE)</td>
+          <td><span class="check">✓</span> Yes</td>
+          <td>Adv. packaging monopoly</td>
+        </tr>
+        <tr>
+          <td><strong>Ibiden</strong></td>
+          <td>4062.T</td>
+          <td><span class="cross">✗</span> None</td>
+          <td>Moderate</td>
+          <td>Partial</td>
+          <td>AI substrate capex</td>
+        </tr>
+        <tr>
+          <td><strong>Anritsu</strong></td>
+          <td>6754.T</td>
+          <td><span class="cross">✗</span> None</td>
+          <td>Low</td>
+          <td><span class="check">✓</span> Yes</td>
+          <td>Optical T&M recovery</td>
+        </tr>
+        <tr>
+          <td><strong>Mitsubishi Electric</strong></td>
+          <td>6503.T</td>
+          <td>MIELY (OTC)</td>
+          <td>Moderate</td>
+          <td><span class="cross">✗</span> Conglomerate</td>
+          <td>Power semi + FA turnaround</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>How to Get Exposure</h3>
+    <ul>
+      <li><strong>Direct Tokyo access:</strong> Interactive Brokers, Saxo Markets, and some Schwab/Fidelity international accounts allow direct TSE trading. DISCO (6146.T) is the highest-liquidity name and the most straightforward to trade.</li>
+      <li><strong>OTC ADRs:</strong> HPHTY, SMTOY, and MIELY trade on US OTC markets. Spreads can be wide and liquidity thin — use limit orders.</li>
+      <li><strong>ETF exposure:</strong> Japan semiconductor ETFs (e.g., 2644.T — Nikkei Semiconductor ETF) include DISCO and some of these names. WisdomTree Japan SmallCap (DFJ) has some exposure to mid-cap names.</li>
+      <li><strong>Basket approach:</strong> For a thematic position, consider DISCO + Sumitomo Electric as a core pair — you get the high-margin equipment monopoly plus the compound semiconductor/fiber backbone.</li>
+    </ul>
+  </div>
+
+  <!-- Additional Companies -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">🔎</span> Other Names on the Radar</h2>
+    
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Ticker</th>
+          <th>Relevance</th>
+          <th>Why It Matters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Ushio</strong></td>
+          <td>6925.T</td>
+          <td>UV/IR Sources</td>
+          <td>Lithography lamps, UV curing, excimer lasers for semiconductor processing. Niche but critical.</td>
+        </tr>
+        <tr>
+          <td><strong>Furukawa Electric</strong></td>
+          <td>5801.T</td>
+          <td>Fiber + III-V Semi</td>
+          <td>Optical fiber (peer to Sumitomo), InP-based laser diodes for telecom, compound semiconductor devices.</td>
+        </tr>
+        <tr>
+          <td><strong>Kyocera</strong></td>
+          <td>6971.T</td>
+          <td>Ceramic Packaging</td>
+          <td>Ceramic IC packages, optical components, crystal devices. Diversified but with photonics-relevant segments.</td>
+        </tr>
+        <tr>
+          <td><strong>TDK</strong></td>
+          <td>6762.T</td>
+          <td>Sensors + Passives</td>
+          <td>MEMS sensors, passive components for optical modules. Magnetic sensors for industrial/auto applications.</td>
+        </tr>
+        <tr>
+          <td><strong>Nidec</strong></td>
+          <td>6594.T</td>
+          <td>Precision Motors</td>
+          <td>Spindle motors for HDDs, precision motors for optical equipment, EV traction motors. Adjacent to photonics.</td>
+        </tr>
+        <tr>
+          <td><strong>Shinko Electric</strong></td>
+          <td>6967.T</td>
+          <td>IC Substrates</td>
+          <td>Fujitsu subsidiary. FC-BGA substrates competing/complementing Ibiden. Being taken private by Fujitsu (tender offer).</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Key Risks -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">⚠️</span> Key Risks for Japan Photonics</h2>
+    
+    <div class="card-grid">
+      <div class="info-card">
+        <div class="info-card-title">💴 Yen Dynamics</div>
+        <div class="info-card-content">
+          Most of these companies earn 40–60% of revenue overseas. A strong yen compresses reported earnings and reduces export competitiveness. USD/JPY has been volatile (130–155 range). For foreign investors, yen weakness = cheaper entry but currency drag on returns. Hedging decision matters.
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">🇨🇳 China Competition</div>
+        <div class="info-card-content">
+          Chinese companies are investing heavily in domestic photonics/optics capabilities. Optical fiber, basic test equipment, and some semiconductor equipment are already facing Chinese price competition. The risk is lower for high-end/precision products (Hamamatsu PMTs, DISCO dicing) but real for commoditized segments (fiber cable, basic substrates).
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">📉 Cyclicality</div>
+        <div class="info-card-content">
+          Semiconductor equipment and materials are cyclical. Hamamatsu saw margins collapse from 26% to 7.6% in two years. DISCO's record streak will eventually break. Anritsu has been flat for 5 years during a 5G deployment slowdown. These are not buy-and-forget stories — timing and cycle awareness matter.
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">🏛️ Governance & Returns</div>
+        <div class="info-card-content">
+          Japanese companies historically under-return capital. Cross-shareholdings, low dividends, and empire-building are endemic. TSE governance reforms are driving improvement (share buybacks accelerating) but progress is uneven. Hamamatsu and DISCO have best governance profiles. Sumitomo and Mitsubishi Electric are improving.
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">🔒 Geopolitical / Export Controls</div>
+        <div class="info-card-content">
+          US-led export restrictions on semiconductor equipment to China affect Japan directly. DISCO, in particular, faces scrutiny on selling dicing equipment to Chinese chipmakers. Japan has aligned with US/NL restrictions but enforcement and scope remain uncertain. China represents significant revenue for several of these companies.
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">📊 Valuation Stretch</div>
+        <div class="info-card-content">
+          DISCO at 61x P/E and Ibiden at 67x P/E are priced for perfection. A semiconductor capex downturn could cause 30–50% drawdowns in these names. Even "cheap" names like Sumitomo (30x) and Mitsubishi Electric (32x) aren't traditionally cheap by global standards — they reflect Japan's structural re-rating.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TL;DR -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">🎯</span> TL;DR — How to Think About This Basket</h2>
+    
+    <div class="hierarchy-visual">
+<span class="fast">HIGHEST CONVICTION / MOST DIFFERENTIATED</span>
+        ↓
+   ┌──────────────────────┐
+   │    <span class="fast">DISCO (6146)</span>      │  <span class="label">← Near-monopoly, 42% margins, adv. packaging tailwind</span>
+   └──────────┬───────────┘
+              ↓
+   ┌──────────────────────┐
+   │ <span class="fast">Hamamatsu (6965)</span>    │  <span class="label">← Photonics pure-play, impregnable moat, cyclical trough?</span>
+   └──────────┬───────────┘
+              ↓
+   ┌──────────────────────┐
+   │ <span class="medium">Sumitomo Elec (5802)</span>│  <span class="label">← Compound semi + fiber backbone, improving returns</span>
+   └──────────┬───────────┘
+              ↓
+   ┌──────────────────────┐
+   │    <span class="medium">Ibiden (4062)</span>     │  <span class="label">← AI substrate play, heavy capex, high valuation</span>
+   └──────────┬───────────┘
+              ↓
+   ┌──────────────────────┐
+   │ <span class="slow">Mitsubishi E (6503)</span> │  <span class="label">← Conglomerate, power semi + FA, turnaround story</span>
+   └──────────┬───────────┘
+              ↓
+   ┌──────────────────────┐
+   │   <span class="slow">Anritsu (6754)</span>    │  <span class="label">← Optical T&M, niche, waiting for 5G/6G cycle</span>
+   └──────────────────────┘
+
+<span class="slow">MOST SPECULATIVE / CYCLE-DEPENDENT</span>
+    </div>
+
+    <div class="callout" style="margin-top: 20px;">
+      <div class="callout-title">💡 Investment Framework</div>
+      <div class="callout-content">
+        <strong>If you can only own one:</strong> DISCO — the structural monopoly with expanding TAM.<br>
+        <strong>If you want a pair trade:</strong> DISCO + Hamamatsu — monopoly equipment + photonics pure-play at cyclical trough.<br>
+        <strong>If you want broad exposure:</strong> DISCO + Sumitomo Electric + Ibiden — covers equipment, materials, and packaging.<br>
+        <strong>If you want value:</strong> Sumitomo Electric or Mitsubishi Electric — reasonable P/Es with improving fundamentals and compound semiconductor optionality.
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Pages -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">🔗</span> Related Deep Dives</h2>
+    <div class="related-links">
+      <a href="memory-sector-guide.html" class="related-link">Memory Sector Guide</a>
+      <a href="ai-infrastructure-stack.html" class="related-link">AI Infrastructure Stack</a>
+      <a href="company-deep-dives/japan-semiconductor-sector.html" class="related-link">Japan Semiconductor Sector</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+  localStorage.setItem('theme', current === 'dark' ? 'light' : 'dark');
+}
+
+function toggleSection(header) {
+  header.classList.toggle('open');
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+});
+</script>
+</body>
+</html>

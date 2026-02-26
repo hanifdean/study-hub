@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory Supercycle Tracker — Structural vs Cyclical</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0f0f14;
+    --surface: #171720;
+    --surface-alt: #1f1f2a;
+    --surface-hover: #242433;
+    --border: #2a2a35;
+    --border-alt: #333344;
+    --text: #ece9e3;
+    --text-secondary: #d5d1c7;
+    --text-muted: #9a9488;
+    --text-dim: #766f64;
+    --text-dimmer: #5b554c;
+    --accent: #f59e0b;
+    --accent-soft: rgba(245, 158, 11, 0.14);
+    --accent-glow: rgba(245, 158, 11, 0.2);
+    --highlight: #fbbf24;
+    --green: #34d399;
+    --green-soft: rgba(52, 211, 153, 0.12);
+    --red: #f87171;
+    --red-soft: rgba(248, 113, 113, 0.12);
+    --blue: #60a5fa;
+    --purple: #a78bfa;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --text-dimmer: #a5a09a;
+    --accent: #d97706;
+    --accent-soft: rgba(217, 119, 6, 0.1);
+    --accent-glow: rgba(217, 119, 6, 0.15);
+    --highlight: #b45309;
+    --green: #059669;
+    --green-soft: rgba(5, 150, 105, 0.1);
+    --red: #dc2626;
+    --red-soft: rgba(220, 38, 38, 0.1);
+    --blue: #2563eb;
+    --purple: #7c3aed;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  .page-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .page-subtitle {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+  }
+
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title .icon { font-size: 20px; }
+
+  h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 20px 0 12px 0;
+  }
+
+  p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+
+  /* Scorecard Gauge */
+  .gauge-container {
+    background: var(--surface-alt);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .gauge-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .gauge-bar {
+    height: 16px;
+    background: linear-gradient(to right, var(--red) 0%, var(--accent) 50%, var(--green) 100%);
+    border-radius: 8px;
+    position: relative;
+    margin: 0 auto 12px;
+    max-width: 400px;
+  }
+
+  .gauge-marker {
+    position: absolute;
+    top: -6px;
+    width: 4px;
+    height: 28px;
+    background: var(--text);
+    border-radius: 2px;
+    transform: translateX(-50%);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+
+  .gauge-labels {
+    display: flex;
+    justify-content: space-between;
+    max-width: 420px;
+    margin: 0 auto;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .gauge-reading {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent);
+    margin-top: 16px;
+  }
+
+  .gauge-reading-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .gauge-subtext {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* Scorecard Grid */
+  .scorecard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 640px) {
+    .scorecard-grid { grid-template-columns: 1fr; }
+  }
+
+  .scorecard-column {
+    border-radius: 10px;
+    padding: 16px;
+  }
+
+  .scorecard-column.structural {
+    background: var(--green-soft);
+    border: 1px solid rgba(52, 211, 153, 0.25);
+  }
+
+  .scorecard-column.cyclical {
+    background: var(--red-soft);
+    border: 1px solid rgba(248, 113, 113, 0.25);
+  }
+
+  .scorecard-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .structural .scorecard-header { color: var(--green); }
+  .cyclical .scorecard-header { color: var(--red); }
+
+  .indicator-list {
+    list-style: none;
+  }
+
+  .indicator-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .indicator-item:last-child { border-bottom: none; }
+
+  .indicator-status {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    margin-top: 1px;
+  }
+
+  .indicator-status.active {
+    background: var(--green-soft);
+    color: var(--green);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+  }
+
+  .indicator-status.inactive {
+    background: var(--surface-alt);
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+  }
+
+  .indicator-status.warning {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+  }
+
+  .indicator-status.danger {
+    background: var(--red-soft);
+    color: var(--red);
+    border: 1px solid rgba(248, 113, 113, 0.3);
+  }
+
+  .indicator-text {
+    flex: 1;
+  }
+
+  .indicator-note {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  /* Data Cards */
+  .data-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .data-card {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+
+  .data-card-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+
+  .data-card-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .data-card-context {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* Indicator Tracker Table */
+  .tracker-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+
+  .tracker-table th {
+    background: var(--surface-alt);
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text);
+    border-bottom: 2px solid var(--border);
+  }
+
+  .tracker-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+    vertical-align: top;
+  }
+
+  .tracker-table tr:hover td {
+    background: var(--surface-hover);
+  }
+
+  .frequency-badge {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  /* Execution Cards */
+  .execution-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .execution-card {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+
+  .execution-card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .execution-card-content {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .ticker {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'SF Mono', 'Monaco', monospace;
+  }
+
+  /* Kill Conditions */
+  .kill-list {
+    list-style: none;
+  }
+
+  .kill-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .kill-item:last-child { border-bottom: none; }
+
+  .kill-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    background: var(--red-soft);
+    border: 1px solid rgba(248, 113, 113, 0.3);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  .kill-text {
+    flex: 1;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .kill-status {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+
+  .kill-status.clear {
+    background: var(--green-soft);
+    color: var(--green);
+  }
+
+  .kill-status.watch {
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  .kill-status.triggered {
+    background: var(--red-soft);
+    color: var(--red);
+  }
+
+  /* Callout */
+  .callout {
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px;
+    border-radius: 0 8px 8px 0;
+    margin: 16px 0;
+  }
+
+  .callout-title {
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+
+  .callout-content {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* Related Links */
+  .related-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .related-link {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+    border-radius: 6px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+
+  .related-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* Last Updated */
+  .last-updated {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="top-bar">
+    <a href="../index.html" class="back-link">← Back to Study Hub</a>
+    <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+  </div>
+
+  <h1 class="page-title">Memory Supercycle Tracker</h1>
+  <p class="page-subtitle">Is memory "AI's oil" (structural) or another boom-bust (cyclical)?</p>
+
+  <!-- Thesis Gauge -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">📊</span> Structural vs Cyclical Scorecard</h2>
+    
+    <div class="gauge-container">
+      <div class="gauge-label">Current Assessment</div>
+      <div class="gauge-bar">
+        <div class="gauge-marker" style="left: 60%;"></div>
+      </div>
+      <div class="gauge-labels">
+        <span>100% Cyclical</span>
+        <span>Neutral</span>
+        <span>100% Structural</span>
+      </div>
+      <div class="gauge-reading">60/40 Structural</div>
+      <div class="gauge-reading-label">Our Read</div>
+      <div class="gauge-subtext">Market pricing ~30/70 structural → potential edge if we're right</div>
+    </div>
+
+    <div class="scorecard-grid">
+      <div class="scorecard-column structural">
+        <div class="scorecard-header">
+          <span>🟢</span> Structural Indicators (Bullish)
+        </div>
+        <ul class="indicator-list">
+          <li class="indicator-item">
+            <span class="indicator-status active">✓</span>
+            <div class="indicator-text">
+              Additive AI demand (not substitutional)
+              <div class="indicator-note">New workloads, not replacing old ones</div>
+            </div>
+          </li>
+          <li class="indicator-item">
+            <span class="indicator-status active">✓</span>
+            <div class="indicator-text">
+              HBM supply constraints persist 3+ years
+              <div class="indicator-note">Phison CEO: imbalance until 2030+</div>
+            </div>
+          </li>
+          <li class="indicator-item">
+            <span class="indicator-status active">✓</span>
+            <div class="indicator-text">
+              Oligopoly pricing power holds
+              <div class="indicator-note">Samsung, SK Hynix, Micron — 3 players</div>
+            </div>
+          </li>
+          <li class="indicator-item">
+            <span class="indicator-status warning">~</span>
+            <div class="indicator-text">
+              Efficiency gains don't crush demand
+              <div class="indicator-note">Watch for Jevons paradox</div>
+            </div>
+          </li>
+          <li class="indicator-item">
+            <span class="indicator-status active">✓</span>
+            <div class="indicator-text">
+              Hyperscaler capex sustains/grows
+              <div class="indicator-note">UBS: $827B/$915B for 2026/2027</div>
+            </div>
+          </li>
+          <li class="indicator-item">
+            <span class="indicator-status active">✓</span>
+            <div class="indicator-text">
+              Multi-year cash prepayments
+              <div class="indicator-note">Unprecedented — 3-year prepayments confirmed</div>
+            </div>
+          </li>
+          <li class="indicator-item">
+            <span class="indicator-status active">✓</span>
+            <div class="indicator-text">
+              Memory migrating to "intelligent logic"
+              <div class="indicator-note">From dumb storage to active compute role</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="scorecard-column cyclical">
+        <div class="scorecard-header">
+          <span>🔴</span> Cyclical Indicators (Bearish)
+        </div>
+        <ul class="indicator-list">
+          <li class="indicator-item">
+            <span class="indicator-status inactive">○</span>
+            <div class="indicator-text">
+              Overbuild signals
+              <div class="indicator-note">Not yet visible in supply data</div>
+            </div>
+          </li>
+          <li class="indicator-item">
+            <span class="indicator-status inactive">○</span>
+            <div class="indicator-text">
+              Demand pulled forward
+              <div class="indicator-note">No evidence of inventory stuffing</div>
+            </div>
+          </li>
+          <li class="indicator-item">
+            <span class="indicator-status inactive">○</span>
+            <div class="indicator-text">
+              China catches up on HBM
+              <div class="indicator-note">CXMT progress slow, sanctions holding</div>
+            </div>
+          </li>
+          <li class="indicator-item">
+            <span class="indicator-status inactive">○</span>
+            <div class="indicator-text">
+              Efficiency breakthroughs reduce memory needs
+              <div class="indicator-note">Model compression not keeping pace</div>
+            </div>
+          </li>
+          <li class="indicator-item">
+            <span class="indicator-status inactive">○</span>
+            <div class="indicator-text">
+              Hyperscaler capex cuts
+              <div class="indicator-note">No signals from MSFT, META, GOOG, AMZN</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Data Points -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">📈</span> Key Data Points</h2>
+    
+    <div class="data-grid">
+      <div class="data-card">
+        <div class="data-card-label">Samsung + SK Hynix Combined OP</div>
+        <div class="data-card-value">$388B</div>
+        <div class="data-card-context">Projected by 2027</div>
+      </div>
+      <div class="data-card">
+        <div class="data-card-label">HBM TAM Growth</div>
+        <div class="data-card-value">$35B → $100B</div>
+        <div class="data-card-context">2025 → 2028 (~3x)</div>
+      </div>
+      <div class="data-card">
+        <div class="data-card-label">Memory Share of NVL72 BOM</div>
+        <div class="data-card-value">6% → 16%</div>
+        <div class="data-card-context">GB200 → VR200</div>
+      </div>
+      <div class="data-card">
+        <div class="data-card-label">Supply-Demand Imbalance</div>
+        <div class="data-card-value">Until 2030</div>
+        <div class="data-card-context">Phison CEO: possibly 10 years</div>
+      </div>
+      <div class="data-card">
+        <div class="data-card-label">HBM4 Risk Production</div>
+        <div class="data-card-value">Feb 2026</div>
+        <div class="data-card-context">Shipping to early customers</div>
+      </div>
+      <div class="data-card">
+        <div class="data-card-label">UBS Hyperscaler Capex</div>
+        <div class="data-card-value">$827B / $915B</div>
+        <div class="data-card-context">2026 / 2027 estimates</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leading Indicators -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">🔍</span> Leading Indicators to Track</h2>
+    
+    <table class="tracker-table">
+      <thead>
+        <tr>
+          <th>Indicator</th>
+          <th>Source</th>
+          <th>Frequency</th>
+          <th>What to Watch</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>DRAM/NAND Pricing</strong></td>
+          <td>TrendForce</td>
+          <td><span class="frequency-badge">Quarterly</span></td>
+          <td>Price direction, QoQ % change, contract vs spot spread</td>
+        </tr>
+        <tr>
+          <td><strong>Memory Earnings</strong></td>
+          <td>Samsung, SK Hynix, Micron</td>
+          <td><span class="frequency-badge">Quarterly</span></td>
+          <td>HBM revenue mix, gross margin, forward guidance</td>
+        </tr>
+        <tr>
+          <td><strong>NVIDIA HBM Commentary</strong></td>
+          <td>NVDA Earnings</td>
+          <td><span class="frequency-badge">Quarterly</span></td>
+          <td>Supply constraints, next-gen HBM roadmap, demand signals</td>
+        </tr>
+        <tr>
+          <td><strong>Hyperscaler Capex</strong></td>
+          <td>META, MSFT, GOOG, AMZN</td>
+          <td><span class="frequency-badge">Quarterly</span></td>
+          <td>YoY capex growth, AI-specific spend, guidance changes</td>
+        </tr>
+        <tr>
+          <td><strong>CXMT Progress</strong></td>
+          <td>Industry reports, sanctions news</td>
+          <td><span class="frequency-badge">Ongoing</span></td>
+          <td>HBM qualification status, yield improvements, export controls</td>
+        </tr>
+        <tr>
+          <td><strong>Memory Inventory Levels</strong></td>
+          <td>Company reports, channel checks</td>
+          <td><span class="frequency-badge">Quarterly</span></td>
+          <td>Days of inventory, customer stockpiling, destock signals</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Execution Ideas -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">💡</span> Execution Ideas</h2>
+    
+    <div class="execution-grid">
+      <div class="execution-card">
+        <div class="execution-card-title">
+          <span>🇰🇷</span> Korean ETF Deep OTM Calls
+        </div>
+        <div class="execution-card-content">
+          <span class="ticker">EWY</span> captures Samsung + SK Hynix exposure.<br><br>
+          <strong>Vol arb opportunity:</strong> Korean index IV ~32% vs component stocks 65-80%. Cheap convexity if memory thesis plays out.
+        </div>
+      </div>
+      <div class="execution-card">
+        <div class="execution-card-title">
+          <span>🎯</span> Direct Exposure
+        </div>
+        <div class="execution-card-content">
+          <span class="ticker">MU</span> — US-listed, direct DRAM/HBM play<br>
+          <span class="ticker">000660.KS</span> — SK Hynix, HBM leader<br>
+          <span class="ticker">005930.KS</span> — Samsung, diversified<br><br>
+          SK Hynix = purest HBM play but Korea listing.
+        </div>
+      </div>
+      <div class="execution-card">
+        <div class="execution-card-title">
+          <span>📊</span> Vol Arb Mechanics
+        </div>
+        <div class="execution-card-content">
+          Index vol consistently lower than weighted component vol. If memory stocks move big, EWY catches it with cheaper premium.<br><br>
+          <strong>Risk:</strong> Correlation breakdown, currency (KRW).
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">💰 Edge Summary</div>
+      <div class="callout-content">
+        Our read: ~60/40 structural. Market pricing: ~30/70 structural. If correct, memory names are mispriced for a multi-year structural shift. Key to being right: HBM supply stays constrained AND hyperscaler capex sustains.
+      </div>
+    </div>
+  </div>
+
+  <!-- Kill Conditions -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">🚨</span> Kill Conditions</h2>
+    <p style="margin-bottom: 16px;">If any of these trigger, reassess the thesis immediately:</p>
+    
+    <ul class="kill-list">
+      <li class="kill-item">
+        <div class="kill-icon">⚠️</div>
+        <div class="kill-text">
+          <strong>2+ hyperscalers cut capex >15%</strong><br>
+          <span style="color: var(--text-dim); font-size: 12px;">Watch MSFT, META, GOOG, AMZN quarterly guidance</span>
+        </div>
+        <span class="kill-status clear">Clear</span>
+      </li>
+      <li class="kill-item">
+        <div class="kill-icon">⚠️</div>
+        <div class="kill-text">
+          <strong>CXMT ships competitive HBM product</strong><br>
+          <span style="color: var(--text-dim); font-size: 12px;">China breaks through on advanced HBM manufacturing</span>
+        </div>
+        <span class="kill-status clear">Clear</span>
+      </li>
+      <li class="kill-item">
+        <div class="kill-icon">⚠️</div>
+        <div class="kill-text">
+          <strong>TrendForce shows 2 consecutive quarters of DRAM price decline >10%</strong><br>
+          <span style="color: var(--text-dim); font-size: 12px;">Signals oversupply, cycle turning</span>
+        </div>
+        <span class="kill-status clear">Clear</span>
+      </li>
+      <li class="kill-item">
+        <div class="kill-icon">⚠️</div>
+        <div class="kill-text">
+          <strong>Samsung breaks supply discipline</strong><br>
+          <span style="color: var(--text-dim); font-size: 12px;">Aggressive capacity expansion to regain share destroys pricing</span>
+        </div>
+        <span class="kill-status clear">Clear</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Related Pages -->
+  <div class="section">
+    <h2 class="section-title"><span class="icon">🔗</span> Related Deep Dives</h2>
+    <div class="related-links">
+      <a href="memory-sector-guide.html" class="related-link">Memory Sector Guide</a>
+      <a href="company-deep-dives/micron-mu.html" class="related-link">Micron (MU)</a>
+      <a href="ai-infrastructure-stack.html" class="related-link">AI Infrastructure Stack</a>
+    </div>
+  </div>
+
+  <div class="last-updated">
+    Last updated: February 2026 · Review quarterly with earnings
+  </div>
+
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+  localStorage.setItem('theme', current === 'dark' ? 'light' : 'dark');
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>x402: Internet-Native Payments for Agents — AI Value Chain</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-alt: #1a1a2e;
+    --surface-hover: #1e1e2a;
+    --border: #1e1e2e;
+    --border-alt: #2a2a4a;
+    --text: #e8e8ed;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-dim: #6b7280;
+    --text-dimmer: #4b5563;
+    --accent: #5ec4b6;
+    --accent-light: #34d399;
+    --accent-glow: rgba(94, 196, 182, 0.12);
+    --highlight-text: #fbbf24;
+    --worth-accent: #a78bfa;
+    --table-current-bg: rgba(94, 196, 182, 0.08);
+    --table-current-text: #5ec4b6;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --text-dimmer: #a5a09a;
+    --accent: #1a8a7d;
+    --accent-light: #059669;
+    --accent-glow: rgba(26, 138, 125, 0.06);
+    --highlight-text: #b45309;
+    --worth-accent: #7c3aed;
+    --table-current-bg: rgba(26, 138, 125, 0.08);
+    --table-current-text: #1a8a7d;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px;
+    min-height: 100vh;
+  
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 36px;
+    font-weight: 500;
+  }
+  
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .emoji { font-size: 20px; }
+
+  .section {
+    margin-bottom: 32px;
+  }
+
+  /* === BIG PICTURE === */
+  .big-picture {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
+    overflow-x: auto;
+  }
+  
+  .flow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: nowrap;
+    min-width: 900px;
+  }
+  
+  .flow-node {
+    background: var(--surface-alt);
+    border: 1.5px solid var(--border-alt);
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-align: center;
+    min-width: 120px;
+    flex-shrink: 0;
+  }
+  .flow-node .label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .flow-node .name { font-size: 14px; font-weight: 700; margin-top: 4px; }
+  .flow-node.highlight {
+    border-color: #38bdf8;
+    background: #0f1a2a;
+    box-shadow: 0 0 24px rgba(56, 189, 248, 0.2);
+  }
+  .flow-node.highlight .name { color: #7dd3fc; }
+  .flow-node.dim { opacity: 0.5; }
+  
+  .flow-arrow {
+    font-size: 18px;
+    color: var(--text-dimmer);
+    padding: 0 6px;
+    flex-shrink: 0;
+  }
+
+  /* === CARDS === */
+  .anatomy-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+
+  .anatomy-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .key-numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .key-num {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .key-num .num {
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .key-num .desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+  .comparison-table th {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 2px solid var(--border-alt);
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .comparison-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 500;
+    vertical-align: top;
+  }
+  .comparison-table tr.highlight-row {
+    background: var(--table-current-bg);
+  }
+  .comparison-table tr.highlight-row td { color: var(--table-current-text); font-weight: 600; }
+
+  .code-block {
+    background: #0d1117;
+    border: 1px solid var(--border-alt);
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 12px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    color: #c9d1d9;
+    overflow-x: auto;
+  }
+  [data-theme="light"] .code-block {
+    background: #f4f2ee;
+    color: #1f2937;
+  }
+
+  .pill-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .pill-card {
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .pill-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .pill-card p {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .worth-knowing {
+    background: var(--surface);
+    border: 1px solid var(--border-alt);
+    border-left: 3px solid var(--worth-accent);
+    border-radius: 0 12px 12px 0;
+    padding: 24px;
+    margin-top: 32px;
+  }
+  
+  .worth-knowing h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--worth-accent);
+    margin-bottom: 12px;
+  }
+  
+  .worth-knowing ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .worth-knowing li {
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+  .worth-knowing li:last-child { border-bottom: none; }
+  .worth-knowing li strong { color: var(--text); }
+
+  /* === MOBILE RESPONSIVE === */
+  @media (max-width: 600px) {
+    body { padding: 20px 12px; font-size: 15px; }
+    h1 { font-size: 22px; }
+    .subtitle { font-size: 13px; margin-bottom: 24px; }
+    .section-title { font-size: 16px; }
+    
+    .big-picture { padding: 20px 14px; overflow-x: visible; }
+    .flow-row {
+      min-width: auto;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+    .flow-node { min-width: auto; width: 100%; padding: 12px 14px; }
+    .flow-node .name { font-size: 14px; }
+    .flow-arrow {
+      text-align: center;
+      padding: 4px 0;
+      font-size: 16px;
+      transform: rotate(90deg);
+    }
+    
+    .anatomy-card { padding: 20px 14px; }
+    .anatomy-card h3 { font-size: 15px; }
+
+    .key-numbers { grid-template-columns: 1fr; gap: 12px; }
+    .key-num { padding: 16px; }
+    .key-num .num { font-size: 24px; }
+    .key-num .desc { font-size: 12px; }
+
+    .pill-grid { grid-template-columns: 1fr; }
+
+    .comparison-table { font-size: 12px; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .comparison-table th { padding: 8px 10px; font-size: 10px; white-space: nowrap; }
+    .comparison-table td { padding: 8px 10px; white-space: nowrap; }
+
+    .code-block { font-size: 11px; }
+
+    .worth-knowing { padding: 20px 16px; }
+    .worth-knowing li { font-size: 14px; line-height: 1.7; padding: 8px 0; }
+    
+    p { font-size: 14px; }
+  }
+
+  @media (max-width: 360px) {
+    body { padding: 16px 8px; }
+    .big-picture { padding: 16px 10px; }
+    .anatomy-card { padding: 16px 10px; }
+    .key-num .num { font-size: 22px; }
+  }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto 0;
+    padding: 0 0 16px 0;
+  }
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border-alt);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Inline jargon links */
+  .jargon {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1.5px dotted var(--accent);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .jargon:hover {
+    color: var(--teal, var(--accent-light, #2dd4bf));
+    border-color: var(--teal, var(--accent-light, #2dd4bf));
+  }
+  .jargon-def {
+    scroll-margin-top: 24px;
+  }
+  .jargon-def:target {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 10px;
+    animation: jargon-flash 1.2s ease;
+  }
+  @keyframes jargon-flash {
+    0%, 100% { outline-color: transparent; }
+    20%, 80% { outline-color: var(--accent); }
+  }
+  .jargon-back {
+    font-size: 11px;
+    color: var(--muted, var(--text-muted, #9ca3af));
+    text-decoration: none;
+    margin-left: 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .jargon-back:hover { opacity: 1; color: var(--accent); }
+
+  html { scroll-behavior: smooth; }
+
+  .page-layout {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+  }
+  .content { flex: 1; min-width: 0; }
+  .section-nav {
+    position: sticky;
+    top: 96px;
+    width: 220px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    height: fit-content;
+    max-height: calc(100vh - 140px);
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .section-nav-title {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .section-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .section-nav a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+  }
+  .section-nav a:hover {
+    color: var(--accent);
+    border-color: var(--border);
+    background: var(--surface-hover);
+  }
+  .section-nav a.active {
+    color: var(--accent);
+    background: var(--accent-glow);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent-glow) inset;
+  }
+  .section-nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  @media (max-width: 768px) {
+    body { padding: 24px 16px; }
+    .top-bar { max-width: 100%; padding-bottom: 12px; }
+    .page-layout { flex-direction: column; gap: 12px; }
+    .section-nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      padding: 8px;
+      border-radius: 12px;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+    .section-nav-title { display: none; }
+    .section-nav-links {
+      flex-direction: row;
+      gap: 8px;
+    }
+    .section-nav a {
+      white-space: nowrap;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border-color: var(--border);
+      background: var(--surface);
+    }
+    .section-nav a.active {
+      border-color: var(--accent);
+      background: var(--accent-glow);
+      color: var(--accent);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .section { animation: none; }
+  }
+
+</style>
+</head>
+<body>
+<div class="page-layout">
+  <nav class="section-nav" aria-label="Section navigation">
+    <div class="section-nav-title">On this page</div>
+    <div class="section-nav-links" id="section-nav-links"></div>
+  </nav>
+  <main class="content">
+<div class="container">
+<div class="top-bar">
+  <a href="../" class="back-link">← Back to Study Hub</a>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+    <span id="theme-icon">☀️</span>
+  </button>
+</div>
+
+  <h1>💳 x402: Internet-Native Payments for Agents</h1>
+  <p class="subtitle">Coinbase’s open standard that turns HTTP 402 into programmable, pay-per-request commerce</p>
+
+  <!-- ========== 1. WHERE THIS SITS ========== -->
+  <section class="section">
+    <div class="big-picture">
+      <div class="section-title"><span class="emoji">🗺️</span> Where This Sits in the AI Value Chain</div>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">x402 is the <strong style="color:#7dd3fc;">payment layer for agents</strong> — sitting between <a class="jargon" href="layer7-cloud-compute.html">Layer 7 (Cloud & Compute)</a> and <a class="jargon" href="layer8-ai-labs.html">Layer 8 (AI Labs)</a>. It lets agents pay for APIs, data, and tools on-demand with no accounts, API keys, or human checkout flows.</p>
+      <div class="flow-row">
+        <div class="flow-node dim"><div class="label">Layer 6-7</div><div class="name">⚡ Compute & Infra</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node highlight"><div class="label">Payment Layer</div><div class="name">💳 x402</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node dim"><div class="label">Layer 8-9</div><div class="name">🤖 AI Labs & Apps</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node dim"><div class="label">Agent Economy</div><div class="name">🧠 Agent-to-Agent Commerce</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 2. THE PROBLEM ========== -->
+  <section class="section">
+    <div class="anatomy-card">
+      <h2 class="section-title">🚫 The Problem: Internet Payments Are Broken</h2>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Today’s payment rails were built for humans, not software agents. Credit cards and subscription billing are high-friction, expensive, and unprogrammable at scale.</p>
+      <div class="pill-grid">
+        <div class="pill-card">
+          <h4>High friction</h4>
+          <p>Accounts, KYC, and API keys create weeks-long onboarding just to pay for a tiny API call.</p>
+        </div>
+        <div class="pill-card">
+          <h4>Bad economics</h4>
+          <p>Card fees + chargebacks make micro-payments uneconomical. Minimums force “all you can eat” pricing.</p>
+        </div>
+        <div class="pill-card">
+          <h4>Not programmable</h4>
+          <p>Agents can’t autonomously pay or settle. No native mechanism to pay per request in-band with HTTP.</p>
+        </div>
+        <div class="pill-card">
+          <h4>Opaque access</h4>
+          <p>Usage caps, credits, and quotas live outside the request itself. No standard price discovery.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 3. HTTP 402 HISTORY ========== -->
+  <section class="section">
+    <div class="anatomy-card">
+      <h2 class="section-title">📜 HTTP 402 — The Status Code That Never Got Used</h2>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;"><a href="#jargon-402" class="jargon">HTTP 402</a> (Payment Required) has existed since HTTP/1.1, but it was never standardized. The result: no canonical way for servers to say “pay me for this resource” and no universal client behavior for handling it.</p>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">x402 fills that missing protocol gap: it standardizes how a server responds with payment requirements and how a client supplies <a href="#jargon-proof" class="jargon">payment proof</a> — making pay-per-request a first-class HTTP primitive.</p>
+    </div>
+  </section>
+
+  <!-- ========== 4. HOW x402 WORKS ========== -->
+  <section class="section">
+    <div class="anatomy-card">
+      <h2 class="section-title">🔁 How x402 Works (Request → 402 → Pay → Retry)</h2>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">It’s a 2-step handshake baked into HTTP. The first request returns a 402 with a payment quote; the second request includes proof of payment.</p>
+      <div class="flow-row" style="min-width: 980px;">
+        <div class="flow-node"><div class="label">1. Client</div><div class="name">GET /resource</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node"><div class="label">2. Server</div><div class="name">402 + Quote</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node"><div class="label">3. Client</div><div class="name">Pay (USDC)</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node"><div class="label">4. Client</div><div class="name">Retry + Proof</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node highlight"><div class="label">5. Server</div><div class="name">200 OK</div></div>
+      </div>
+      <p style="font-size:12px;color:var(--text-dim);margin-top:12px;text-align:center;">Payment proof is attached as a header. Server verifies it, then serves the resource.</p>
+    </div>
+  </section>
+
+  <!-- ========== 5. KEY TERMS ========== -->
+  <section class="section">
+    <div class="anatomy-card">
+      <h2 class="section-title">🧩 Key Terms & Roles</h2>
+      <p style="font-size:12px;color:var(--text-dim);margin-bottom:12px;">Each request involves a <a href="#jargon-resource" class="jargon">resource server</a>, a <a href="#jargon-402" class="jargon">402</a> response, and a <a href="#jargon-facilitator" class="jargon">facilitator</a> to verify the payment proof.</p>
+      <div class="pill-grid">
+        <div class="pill-card">
+          <h4>Resource</h4>
+          <p>The content or API endpoint being requested (data, inference, tool access).</p>
+        </div>
+        <div class="pill-card">
+          <h4>Client</h4>
+          <p>The agent or app making the HTTP call and paying for access.</p>
+        </div>
+        <div class="pill-card">
+          <h4>Resource Server</h4>
+          <p>The server that owns the resource and enforces payment requirements.</p>
+        </div>
+        <div class="pill-card">
+          <h4>Facilitator</h4>
+          <p>A payment service that helps verify and settle the on-chain payment proof.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 6. SUPPORTED NETWORKS ========== -->
+  <section class="section">
+    <div class="anatomy-card">
+      <h2 class="section-title">🌐 Supported Networks & Tokens</h2>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">x402 is chain-agnostic. The first implementations focus on stablecoins for predictable pricing.</p>
+      <div class="pill-grid">
+        <div class="pill-card">
+          <h4>Base (USDC)</h4>
+          <p>Coinbase’s L2. Fast finality, low fees. Default network for many demos.</p>
+        </div>
+        <div class="pill-card">
+          <h4>Solana (USDC)</h4>
+          <p>High throughput, low latency. Great for real-time or high-frequency API calls.</p>
+        </div>
+        <div class="pill-card">
+          <h4>Other chains</h4>
+          <p>Extensible to any chain with stablecoins and payment proofs.</p>
+        </div>
+        <div class="pill-card">
+          <h4>Fiat rails (future)</h4>
+          <p>The protocol can wrap fiat settlement; crypto is just the first implementation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 7. INTEGRATION EXAMPLES ========== -->
+  <section class="section">
+    <div class="anatomy-card">
+      <h2 class="section-title">🧰 Integration: 1-Line Server Middleware + 1-Function Client</h2>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">The core idea: x402 feels like HTTP middleware, not a payment product. SDKs exist for TypeScript, Python, and Go.</p>
+
+      <p style="font-size:12px;color:var(--text-secondary);margin-bottom:6px;font-weight:600;">Server (Express / Next.js / Hono)</p>
+      <div class="code-block">import { x402 } from '@coinbase/x402-express';
+
+app.use(x402({
+  price: '0.10',
+  token: 'USDC',
+  network: 'base'
+}));</div>
+
+      <p style="font-size:12px;color:var(--text-secondary);margin:12px 0 6px;font-weight:600;">Client (fetch wrapper)</p>
+      <div class="code-block">import { withX402 } from '@coinbase/x402-client';
+
+const fetchPaid = withX402(fetch, {
+  wallet: agentWallet,
+  network: 'base'
+});
+
+const res = await fetchPaid('https://api.example.com/data');</div>
+    </div>
+  </section>
+
+  <!-- ========== 8. COMPARISON ========== -->
+  <section class="section">
+    <div class="anatomy-card">
+      <h2 class="section-title">⚖️ Old Way vs x402</h2>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Step</th>
+            <th>Old Way (Accounts & API Keys)</th>
+            <th>x402 (Request → Pay → Access)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Create account → KYC → billing setup</td>
+            <td>Send HTTP request</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Buy credits or add payment method</td>
+            <td>Receive 402 with payment quote</td>
+          </tr>
+          <tr class="highlight-row">
+            <td>3</td>
+            <td>Issue API key & integrate SDKs</td>
+            <td>Agent pays in-band (USDC)</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Usage tracked out-of-band</td>
+            <td>Retry with proof → access granted</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ========== 9. WHY THIS MATTERS ========== -->
+  <section class="section">
+    <div class="anatomy-card">
+      <h2 class="section-title">🤖 Why This Matters for AI Agents</h2>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Agents need to buy data, tools, and inference endpoints autonomously. x402 makes every API endpoint a potential marketplace — with instant pricing and settlement.</p>
+      <ul style="font-size:13px;color:var(--text-secondary);line-height:1.7;padding-left:18px;">
+        <li><strong>Autonomous spend</strong> — agents can pay per request without human approval.</li>
+        <li><strong>Programmable micro-economies</strong> — thousands of small payments replace monolithic subscriptions.</li>
+        <li><strong>Agent-to-agent commerce</strong> — one agent sells data or compute to another directly.</li>
+        <li><strong>Unlocks new supply</strong> — APIs can monetize long-tail, low-demand endpoints on-demand.</li>
+      </ul>
+      <p style="font-size:12px;color:var(--text-dim);margin-top:10px;">This is the missing payment rail for an agentic economy.</p>
+    </div>
+  </section>
+
+  <!-- ========== 10. KEY NUMBERS ========== -->
+  <section class="section">
+    <div class="section-title"><span class="emoji">🔢</span> Key Numbers</div>
+    <div class="key-numbers">
+      <div class="key-num">
+        <div class="num">75M+</div>
+        <div class="desc">Transactions processed through x402</div>
+      </div>
+      <div class="key-num">
+        <div class="num">$24M+</div>
+        <div class="desc">Payment volume settled on-chain</div>
+      </div>
+      <div class="key-num">
+        <div class="num">94K</div>
+        <div class="desc">Buyers (clients) using the protocol</div>
+      </div>
+      <div class="key-num">
+        <div class="num">22K</div>
+        <div class="desc">Sellers (resource servers)</div>
+      </div>
+      <div class="key-num">
+        <div class="num">3 SDKs</div>
+        <div class="desc">TypeScript, Python, Go</div>
+      </div>
+      <div class="key-num">
+        <div class="num">1 Line</div>
+        <div class="desc">Server middleware integration</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 11. ECOSYSTEM / INVESTMENT ANGLE ========== -->
+  <section class="section">
+    <div class="anatomy-card">
+      <h2 class="section-title">🧭 Ecosystem Map & Investment Implications</h2>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">x402 shifts value to whoever enables fast, cheap, compliant payment flows for agents.</p>
+      <div class="pill-grid">
+        <div class="pill-card">
+          <h4>Stablecoin issuers</h4>
+          <p>USDC and other stablecoins become the “API currency.” Increased velocity → higher float and revenue.</p>
+        </div>
+        <div class="pill-card">
+          <h4>L2s & high-throughput chains</h4>
+          <p>Base, Solana, and other networks benefit from transaction fees and developer adoption.</p>
+        </div>
+        <div class="pill-card">
+          <h4>API providers</h4>
+          <p>Instant monetization for any endpoint. No billing department required.</p>
+        </div>
+        <div class="pill-card">
+          <h4>Agent platforms</h4>
+          <p>Agents become economic actors, buying tools and data without human intervention.</p>
+        </div>
+      </div>
+      <p style="font-size:12px;color:var(--text-dim);margin-top:10px;">The big bet: agentic commerce becomes a new payment volume category, measured in API calls instead of shopping carts.</p>
+    </div>
+  </section>
+
+  <!-- JARGON DECODER -->
+  <section class="section">
+    <div class="anatomy-card">
+      <h2 class="section-title">📖 Jargon Decoder</h2>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+          <div id="jargon-402" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+            <p style="font-size:13px;"><strong style="color:var(--accent);">HTTP 402 (Payment Required)</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+            <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A reserved HTTP status code intended for payment but never standardized. x402 makes it usable.</p>
+          </div>
+          <div id="jargon-proof" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+            <p style="font-size:13px;"><strong style="color:var(--accent);">Payment Proof</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+            <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A cryptographic receipt (on-chain transaction or signed claim) attached to the HTTP request.</p>
+          </div>
+          <div id="jargon-facilitator" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+            <p style="font-size:13px;"><strong style="color:var(--accent);">Facilitator</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+            <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">A service that verifies payment proof and settles funds between client and resource server.</p>
+          </div>
+          <div id="jargon-resource" class="jargon-def" style="padding:10px;background:var(--surface-alt, var(--surface-2, #1a1a2e));border-radius:10px;">
+            <p style="font-size:13px;"><strong style="color:var(--accent);">Resource Server</strong> <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a></p>
+            <p style="font-size:12px;color:var(--text-muted, var(--muted, #9ca3af));margin-top:4px;">The server that hosts the paid content and enforces payment checks.</p>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="worth-knowing">
+    <h3>📌 Worth Knowing</h3>
+    <ul>
+      <li><strong>Open standard, open source</strong> — the spec lives at <a class="jargon" href="https://x402.org" target="_blank" rel="noopener">x402.org</a> with code at <a class="jargon" href="https://github.com/coinbase/x402" target="_blank" rel="noopener">github.com/coinbase/x402</a>.</li>
+      <li><strong>Designed for micro-payments</strong> — the protocol shines when payments are tiny and frequent, making pay-per-request viable.</li>
+      <li><strong>Compatible with existing APIs</strong> — 402 is just another HTTP response, so existing infrastructure (CDNs, gateways) can integrate gradually.</li>
+      <li><strong>Strategic for Coinbase</strong> — x402 expands stablecoin usage and positions Coinbase as the default payment facilitator for agents.</li>
+    </ul>
+  </div>
+
+</div>
+</main>
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = saved === 'dark' ? '☀️' : '🌙';
+    });
+  }
+})();
+
+function slugifyHeading(text) {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
+
+function initSectionNav() {
+  const navLinks = document.getElementById('section-nav-links');
+  if (!navLinks) return;
+
+  let headings = Array.from(document.querySelectorAll('.section h2'));
+  if (!headings.length) {
+    headings = Array.from(document.querySelectorAll('.section-title, h2'));
+  }
+  if (!headings.length) return;
+
+  headings.forEach((heading) => {
+    if (!heading.id) {
+      heading.id = slugifyHeading(heading.textContent || '');
+    }
+  });
+
+  navLinks.innerHTML = '';
+  headings.forEach((heading) => {
+    const link = document.createElement('a');
+    link.className = 'section-link';
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent || '';
+    navLinks.appendChild(link);
+  });
+
+  const linkMap = new Map();
+  navLinks.querySelectorAll('a').forEach((link) => {
+    const targetId = link.getAttribute('href').slice(1);
+    linkMap.set(targetId, link);
+    link.addEventListener('click', () => setActive(targetId));
+  });
+
+  function setActive(id) {
+    linkMap.forEach((link) => {
+      link.classList.remove('active');
+      link.removeAttribute('aria-current');
+    });
+    const activeLink = linkMap.get(id);
+    if (activeLink) {
+      activeLink.classList.add('active');
+      activeLink.setAttribute('aria-current', 'true');
+    }
+  }
+
+  setActive(headings[0].id);
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActive(entry.target.id);
+        }
+      });
+    },
+    { rootMargin: '-20% 0px -65% 0px', threshold: [0, 0.1, 0.5] }
+  );
+
+  headings.forEach((heading) => observer.observe(heading));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initSectionNav();
+});
+
+</script>
+</body>
+</html>
