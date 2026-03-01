@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 17 — Revising Style: Telling Your Story Clearly</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --warm-white: #FFFDF9;
+    --ink: #2C2420;
+    --ink-light: #5C5550;
+    --ink-faint: #9A948F;
+    --accent-blue: #3D6B8E;
+    --accent-blue-light: #E8F0F6;
+    --accent-red: #C4523B;
+    --accent-red-light: #FCEEE8;
+    --accent-green: #4A7C59;
+    --accent-green-light: #EBF5EE;
+    --accent-amber: #B88B2B;
+    --accent-amber-light: #FDF6E3;
+    --accent-purple: #7B5EA7;
+    --accent-purple-light: #F3EFF8;
+    --border: #E8E2DB;
+    --shadow: rgba(44, 36, 32, 0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Sans 3', -apple-system, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 56px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+    margin-bottom: 16px;
+  }
+
+  .header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .header .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink-light);
+  }
+
+  .header .source {
+    font-size: 13px;
+    color: var(--ink-faint);
+    margin-top: 12px;
+  }
+
+  /* Sections */
+  .section {
+    margin-bottom: 48px;
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--ink);
+    display: inline-block;
+  }
+
+  p {
+    margin-bottom: 14px;
+    color: var(--ink-light);
+  }
+
+  strong { color: var(--ink); font-weight: 600; }
+
+  /* Core Problem Card */
+  .problem-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 28px 24px;
+    margin-bottom: 32px;
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+
+  .problem-card .label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-red);
+    margin-bottom: 10px;
+  }
+
+  .problem-card p {
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.65;
+    margin-bottom: 12px;
+  }
+
+  .problem-card p:last-child { margin-bottom: 0; }
+
+  /* Style Spectrum */
+  .spectrum {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 28px 0 32px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+
+  .spectrum-item {
+    flex: 1;
+    padding: 20px 16px;
+    text-align: center;
+  }
+
+  .spectrum-item.bad-left {
+    background: var(--accent-red-light);
+    border-right: 1px solid var(--border);
+  }
+
+  .spectrum-item.good {
+    background: var(--accent-green-light);
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+
+  .spectrum-item.bad-right {
+    background: var(--accent-amber-light);
+  }
+
+  .spectrum-emoji { font-size: 24px; margin-bottom: 6px; }
+
+  .spectrum-label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .spectrum-item.bad-left .spectrum-label { color: var(--accent-red); }
+  .spectrum-item.good .spectrum-label { color: var(--accent-green); }
+  .spectrum-item.bad-right .spectrum-label { color: var(--accent-amber); }
+
+  .spectrum-desc {
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.5;
+  }
+
+  .spectrum-item.good::after {
+    content: '✓ AIM HERE';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent-green);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 3px 12px;
+    border-radius: 8px 8px 0 0;
+  }
+
+  /* Principle Cards */
+  .principle {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px var(--shadow);
+    overflow: hidden;
+  }
+
+  .principle-header {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .principle-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .principle-title {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .principle-body {
+    padding: 0 24px 24px;
+  }
+
+  .principle-body p {
+    font-size: 15.5px;
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+
+  .principle-body p:last-child { margin-bottom: 0; }
+
+  /* Color variants */
+  .principle.blue .principle-header { border-bottom: 2px solid var(--accent-blue); }
+  .principle.blue .principle-num { background: var(--accent-blue); }
+
+  .principle.green .principle-header { border-bottom: 2px solid var(--accent-green); }
+  .principle.green .principle-num { background: var(--accent-green); }
+
+  .principle.amber .principle-header { border-bottom: 2px solid var(--accent-amber); }
+  .principle.amber .principle-num { background: var(--accent-amber); }
+
+  .principle.purple .principle-header { border-bottom: 2px solid var(--accent-purple); }
+  .principle.purple .principle-num { background: var(--accent-purple); }
+
+  /* Example boxes */
+  .example-box {
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin: 16px 0;
+    font-size: 14.5px;
+    line-height: 1.65;
+  }
+
+  .example-box.bad {
+    background: var(--accent-red-light);
+    border-left: 3px solid var(--accent-red);
+  }
+
+  .example-box.good {
+    background: var(--accent-green-light);
+    border-left: 3px solid var(--accent-green);
+  }
+
+  .example-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .example-box.bad .example-label { color: var(--accent-red); }
+  .example-box.good .example-label { color: var(--accent-green); }
+
+  .example-text {
+    color: var(--ink);
+    font-style: italic;
+  }
+
+  /* Nuance callout */
+  .nuance {
+    background: var(--accent-amber-light);
+    border: 1px solid #E8D9A8;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink-light);
+  }
+
+  .nuance strong { color: var(--accent-amber); }
+
+  /* Voice Section */
+  .voice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  .voice-card {
+    border-radius: 10px;
+    padding: 18px;
+    border: 1px solid var(--border);
+  }
+
+  .voice-card.passive {
+    background: var(--accent-blue-light);
+    border-color: #C5D9E8;
+  }
+
+  .voice-card.active {
+    background: var(--accent-green-light);
+    border-color: #C0DCC8;
+  }
+
+  .voice-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .voice-card.passive h4 { color: var(--accent-blue); }
+  .voice-card.active h4 { color: var(--accent-green); }
+
+  .voice-card p {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-light);
+    margin-bottom: 0;
+  }
+
+  /* Workflow diagram */
+  .workflow {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 24px;
+    margin: 24px 0;
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+
+  .workflow-title {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .workflow-steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+
+  .workflow-step {
+    text-align: center;
+    padding: 14px 18px;
+    border-radius: 10px;
+    min-width: 150px;
+  }
+
+  .workflow-step.draft { background: var(--accent-blue-light); }
+  .workflow-step.check-start { background: var(--accent-green-light); }
+  .workflow-step.check-end { background: var(--accent-purple-light); }
+
+  .workflow-step .step-icon { font-size: 22px; margin-bottom: 4px; }
+
+  .workflow-step .step-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .workflow-step.draft .step-label { color: var(--accent-blue); }
+  .workflow-step.check-start .step-label { color: var(--accent-green); }
+  .workflow-step.check-end .step-label { color: var(--accent-purple); }
+
+  .workflow-step .step-desc {
+    font-size: 12.5px;
+    color: var(--ink-light);
+    line-height: 1.45;
+  }
+
+  .workflow-arrow {
+    font-size: 20px;
+    color: var(--ink-faint);
+    padding: 0 6px;
+  }
+
+  /* Key Takeaway */
+  .takeaway {
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 12px;
+    padding: 28px;
+    margin-top: 40px;
+    text-align: center;
+  }
+
+  .takeaway .label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-amber);
+    margin-bottom: 10px;
+  }
+
+  .takeaway p {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--cream);
+    margin-bottom: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .container { padding: 32px 16px 60px; }
+    .header h1 { font-size: 28px; }
+    .spectrum { flex-direction: column; }
+    .spectrum-item.good::after { display: none; }
+    .voice-grid { grid-template-columns: 1fr; }
+    .workflow-steps { flex-direction: column; gap: 8px; }
+    .workflow-arrow { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-label">MG402 · Week 7 Reading</div>
+    <h1>Revising Style:<br>Telling Your Story Clearly</h1>
+    <div class="subtitle">The Craft of Research, Chapter 17</div>
+    <div class="source">Booth, Colomb & Williams · 3rd Edition</div>
+  </div>
+
+  <!-- The Core Problem -->
+  <div class="section">
+    <div class="section-title">The Core Problem</div>
+
+    <div class="problem-card">
+      <div class="label">⚠️ Why You Can't Self-Diagnose</div>
+      <p>You already know what you <em>meant</em> to say — so when you reread your own writing, you automatically read meaning <em>into</em> your sentences, even when the words on the page don't actually convey it clearly.</p>
+      <p>This means impressionistic labels like <em>"this feels dense"</em> or <em>"this seems unclear"</em> don't help you <strong>fix</strong> the problem. You need concrete, mechanical principles that identify what's wrong <em>on the page</em> — not just how you <em>feel</em> reading it.</p>
+    </div>
+
+    <p>So what does good prose sound like? Booth gives us a spectrum:</p>
+
+    <div class="spectrum">
+      <div class="spectrum-item bad-left">
+        <div class="spectrum-emoji">🤖</div>
+        <div class="spectrum-label">Too Dense</div>
+        <div class="spectrum-desc">Machine talking to a machine. Over-academic, abstract, impenetrable.</div>
+      </div>
+      <div class="spectrum-item good">
+        <div class="spectrum-emoji">🤝</div>
+        <div class="spectrum-label">Just Right</div>
+        <div class="spectrum-desc">One colleague speaking to another. Clear, direct, mature.</div>
+      </div>
+      <div class="spectrum-item bad-right">
+        <div class="spectrum-emoji">👶</div>
+        <div class="spectrum-label">Too Simple</div>
+        <div class="spectrum-desc">Adult speaking slowly to a child. Choppy, patronizing.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Four Principles -->
+  <div class="section">
+    <div class="section-title">The Four Principles</div>
+
+    <!-- Principle 1 -->
+    <div class="principle blue">
+      <div class="principle-header">
+        <div class="principle-num">1</div>
+        <div class="principle-title">Characters as Subjects</div>
+      </div>
+      <div class="principle-body">
+        <p>Every story has <strong>characters</strong> — the people, groups, or things the story is <em>about</em>. In clear writing, those characters should appear as the <strong>grammatical subjects</strong> of your sentences.</p>
+        <p>The problem in academic writing is that real characters get buried inside prepositional phrases or turned into modifiers, while <strong>abstract nouns</strong> like <em>"the reason,"</em> <em>"the presence,"</em> or <em>"the nature of"</em> occupy the subject slot. The reader is left asking: <em>who is actually doing something here?</em></p>
+        <p>Subjects should be <strong>short, specific, and concrete</strong>. If your subject is longer than 6-7 words, it's probably too abstract.</p>
+
+        <div class="example-box bad">
+          <div class="example-label">❌ Characters buried</div>
+          <div class="example-text">"The reason for Locke's frequent repetition lies in his distrust of the naming power of words."</div>
+        </div>
+        <div class="example-box good">
+          <div class="example-label">✅ Characters as subjects</div>
+          <div class="example-text">"Locke frequently repeated himself because he did not trust the power of words to name things accurately."</div>
+        </div>
+
+        <p>Notice how the second version has <strong>Locke</strong> and <strong>he</strong> as subjects — the actual doer. The first version has <em>"the reason"</em> as the subject, which doesn't <em>do</em> anything.</p>
+      </div>
+    </div>
+
+    <!-- Principle 2 -->
+    <div class="principle green">
+      <div class="principle-header">
+        <div class="principle-num">2</div>
+        <div class="principle-title">Actions as Verbs (Not Nouns)</div>
+      </div>
+      <div class="principle-body">
+        <p>When you take a strong verb and turn it into a noun, that's called a <strong>nominalization</strong>: <em>decide → decision, resist → resistance, fail → failure, measure → measurement.</em></p>
+        <p>The problem? Once you've turned the action into a noun, you need a <strong>vague replacement verb</strong> like <em>make, have, do, provide, ensure</em> to carry the sentence. The real action disappears, and so does the character doing it.</p>
+
+        <div class="example-box bad">
+          <div class="example-label">❌ Actions hidden in nouns</div>
+          <div class="example-text">"Our standardization of an index for the measurement of thought disorders has made possible the quantification of response."</div>
+        </div>
+        <div class="example-box good">
+          <div class="example-label">✅ Actions as verbs</div>
+          <div class="example-text">"Now that we have standardized an index to measure thought disorders, we can quantify how patients respond."</div>
+        </div>
+
+        <p>Count the nominalizations in the first version: <em>standardization, measurement, quantification.</em> In the second, those are verbs: <em>standardized, measure, quantify.</em> The sentence becomes shorter, clearer, and more direct.</p>
+
+        <div class="nuance">
+          <strong>⚡ Nuance:</strong> Don't mechanically convert every abstract noun into a verb. If the abstraction <em>is</em> your central subject (e.g., in philosophy or theory), keep it. The rule is: don't surround one necessary abstraction with unnecessary additional ones.
+        </div>
+      </div>
+    </div>
+
+    <!-- Principle 3 -->
+    <div class="principle amber">
+      <div class="principle-header">
+        <div class="principle-num">3</div>
+        <div class="principle-title">Old Before New</div>
+      </div>
+      <div class="principle-body">
+        <p>Start each sentence with <strong>familiar information</strong> — something already mentioned, or easily inferred from context. Save <strong>new, complex, or surprising information</strong> for the end.</p>
+        <p>This is what creates the feeling of <strong>"flow"</strong> in writing. When a sentence opens with something the reader recognizes, they have a stable anchor to process whatever comes next. When it opens with something unfamiliar, they feel lost before the sentence even gets going.</p>
+        <p>Think of it as a <strong>bridge</strong>: each sentence should start by connecting to what came before, then carry the reader to something new.</p>
+
+        <div class="example-box bad">
+          <div class="example-label">❌ New information first (disorienting)</div>
+          <div class="example-text">"A pattern of explosive demographic growth that exacerbates existing economic disparities characterizes many developing nations."</div>
+        </div>
+        <div class="example-box good">
+          <div class="example-label">✅ Old before new (flows naturally)</div>
+          <div class="example-text">"Many developing nations are characterized by a pattern of explosive demographic growth that exacerbates existing economic disparities."</div>
+        </div>
+
+        <div class="nuance">
+          <strong>⚡ Priority rule:</strong> If you ever have to choose between this principle and Principle 1 (characters as subjects), <strong>this one wins.</strong> Flow matters more than having a character in the subject position.
+        </div>
+      </div>
+    </div>
+
+    <!-- Principle 4 -->
+    <div class="principle purple">
+      <div class="principle-header">
+        <div class="principle-num">4</div>
+        <div class="principle-title">Complexity Last</div>
+      </div>
+      <div class="principle-body">
+        <p>The <strong>end of a sentence</strong> carries the most emphasis — it's what lingers in the reader's mind. Place your heaviest, most complex, or most important information there.</p>
+        <p>This matters in <strong>three specific situations:</strong></p>
+
+        <p style="margin-bottom: 8px;"><strong>① Introducing new technical terms</strong><br>
+        <span style="color: var(--ink-light);">Let familiar context come first, then land the new term at the end so the reader absorbs the definition before the jargon.</span></p>
+
+        <p style="margin-bottom: 8px;"><strong>② Introducing long, complex information</strong><br>
+        <span style="color: var(--ink-light);">Keep the subject short and familiar (even using passive voice if needed), so the dense material arrives after the reader is oriented.</span></p>
+
+        <p><strong>③ Introducing what follows</strong><br>
+        <span style="color: var(--ink-light);">End the first sentence of a paragraph with the key concept the rest of the paragraph will develop — it acts as a signpost.</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Active vs Passive -->
+  <div class="section">
+    <div class="section-title">Active vs. Passive Voice</div>
+
+    <p>The standard advice <em>"always use active voice"</em> is <strong>too blunt</strong>. The real question isn't "is this active or passive?" — it's <strong>"does this sentence begin with familiar information?"</strong></p>
+    <p>Sometimes passive voice is the <em>right</em> choice because it lets you move familiar information to the front.</p>
+
+    <div class="voice-grid">
+      <div class="voice-card passive">
+        <h4>Use Passive When…</h4>
+        <p>Describing <strong>processes anyone could repeat</strong> (methods, procedures). Or when the "old" information is the object, not the agent — passive lets you keep the flow.</p>
+        <p style="margin-top: 8px; font-style: italic; font-size: 12.5px;">"The samples were tested at 37°C…"</p>
+      </div>
+      <div class="voice-card active">
+        <h4>Use Active When…</h4>
+        <p>The action is something <strong>only you</strong> as the researcher can do: interpreting results, making arguments, drawing conclusions. Own your claims.</p>
+        <p style="margin-top: 8px; font-style: italic; font-size: 12.5px;">"We conclude that the policy failed…"</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Revision Workflow -->
+  <div class="section">
+    <div class="section-title">The Revision Workflow</div>
+
+    <p><strong>Critical rule:</strong> Don't apply these principles <em>while drafting</em> — you'll freeze up and tie yourself in knots. <strong>Write freely first, then revise systematically.</strong></p>
+    <p>Start with the passages that were <strong>hardest to write</strong> — those tend to be the most tangled stylistically.</p>
+
+    <div class="workflow">
+      <div class="workflow-title">When Revising, Check Every Sentence:</div>
+      <div class="workflow-steps">
+        <div class="workflow-step draft">
+          <div class="step-icon">✍️</div>
+          <div class="step-label">Draft First</div>
+          <div class="step-desc">Write freely without worrying about style</div>
+        </div>
+        <div class="workflow-arrow">→</div>
+        <div class="workflow-step check-start">
+          <div class="step-icon">🔍</div>
+          <div class="step-label">Check First 5-7 Words</div>
+          <div class="step-desc">Concrete character as subject? Real verb? Familiar info?</div>
+        </div>
+        <div class="workflow-arrow">→</div>
+        <div class="workflow-step check-end">
+          <div class="step-icon">🎯</div>
+          <div class="step-label">Check Last 4-5 Words</div>
+          <div class="step-desc">Most important/complex info here? New terms land here?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Takeaway -->
+  <div class="takeaway">
+    <div class="label">💡 Key Takeaway</div>
+    <p>Clear writing isn't about dumbing things down — it's about <strong>making your characters visible, your actions vivid, your flow natural, and your emphasis deliberate.</strong> Get the first and last few words of each sentence right, and the rest will follow.</p>
+  </div>
+
+</div>
+
+</body>
+</html>
