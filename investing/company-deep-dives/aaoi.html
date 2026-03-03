@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Applied Optoelectronics (AAOI) — Company Deep Dive</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0f0f14;
+    --surface: #171720;
+    --surface-alt: #1f1f2a;
+    --surface-hover: #242433;
+    --border: #2a2a35;
+    --border-alt: #333344;
+    --text: #ece9e3;
+    --text-secondary: #d5d1c7;
+    --text-muted: #9a9488;
+    --text-dim: #766f64;
+    --text-dimmer: #5b554c;
+    --accent: #f59e0b;
+    --accent-soft: rgba(245, 158, 11, 0.14);
+    --accent-glow: rgba(245, 158, 11, 0.2);
+    --highlight: #fbbf24;
+    --green: #34d399;
+    --red: #f87171;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f6f2;
+    --surface: #ffffff;
+    --surface-alt: #f5f3ef;
+    --surface-hover: #faf8f5;
+    --border: #e5e0d8;
+    --border-alt: #d5d0c8;
+    --text: #2c2a26;
+    --text-secondary: #4a4640;
+    --text-muted: #6b6560;
+    --text-dim: #8a8580;
+    --text-dimmer: #a5a09a;
+    --accent: #d97706;
+    --accent-soft: rgba(217, 119, 6, 0.1);
+    --accent-glow: rgba(217, 119, 6, 0.15);
+    --highlight: #b45309;
+    --green: #059669;
+    --red: #dc2626;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .page-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+  }
+
+  .content { flex: 1; min-width: 0; }
+
+  .container { max-width: 980px; }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  h1 {
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--highlight);
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 28px;
+    font-weight: 500;
+  }
+
+  .section {
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s ease-out both;
+  }
+
+  .section h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+  }
+
+  .stat-card .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+  .stat-card .value {
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .stat-card .note {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-alt);
+    color: var(--text-muted);
+  }
+
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    text-align: left;
+    padding: 10px 12px;
+    color: var(--text-muted);
+    font-size: 11px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody tr.highlight td { color: var(--highlight); font-weight: 600; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 18px;
+  }
+
+  .list {
+    display: grid;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .list strong { color: var(--text); }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .case-card {
+    border-radius: 14px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .case-card.bull { border-color: rgba(52, 211, 153, 0.4); background: rgba(52, 211, 153, 0.06); }
+  .case-card.bear { border-color: rgba(248, 113, 113, 0.4); background: rgba(248, 113, 113, 0.05); }
+  .case-card h3 { font-size: 14px; margin-bottom: 8px; }
+  .case-card ul { padding-left: 16px; font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+  .verdict {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), transparent);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+  }
+
+  .jargon {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1.5px dotted var(--accent);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .jargon:hover { color: var(--highlight); border-color: var(--highlight); }
+  .jargon-def { scroll-margin-top: 24px; }
+  .jargon-def:target {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 10px;
+    animation: jargon-flash 1.2s ease;
+  }
+  @keyframes jargon-flash {
+    0%, 100% { outline-color: transparent; }
+    20%, 80% { outline-color: var(--accent); }
+  }
+  .jargon-back {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-left: 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .jargon-back:hover { opacity: 1; color: var(--accent); }
+
+  .section-nav {
+    position: sticky;
+    top: 96px;
+    width: 220px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    height: fit-content;
+    max-height: calc(100vh - 140px);
+    overflow: auto;
+  }
+  .section-nav-title {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .section-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .section-nav a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+  }
+  .section-nav a:hover { color: var(--accent); border-color: var(--border); background: var(--surface-hover); }
+  .section-nav a.active { color: var(--accent); background: var(--accent-soft); border-color: var(--accent); }
+
+  html { scroll-behavior: smooth; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .case-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    body { padding: 24px 16px; }
+    .page-layout { flex-direction: column; gap: 12px; }
+    .section-nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      padding: 8px;
+      border-radius: 12px;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+    .section-nav-title { display: none; }
+    .section-nav-links { flex-direction: row; gap: 8px; }
+    .section-nav a {
+      white-space: nowrap;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border-color: var(--border);
+      background: var(--surface);
+    }
+    .section-nav a.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+  }
+</style>
+</head>
+<body>
+<div class="page-layout">
+  <nav class="section-nav" aria-label="Section navigation">
+    <div class="section-nav-title">On this page</div>
+    <div class="section-nav-links" id="section-nav-links"></div>
+  </nav>
+  <main class="content">
+    <div class="container">
+      <div class="top-bar">
+        <a href="../../" class="back-link">← Back to Study Hub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+          <span id="theme-icon">☀️</span>
+        </button>
+      </div>
+
+      <h1>Applied Optoelectronics (AAOI) — Company Deep Dive</h1>
+      <p class="subtitle">Vertically integrated photonics play on the AI datacenter optical interconnect supercycle. Sugar Land, TX fab. Proprietary MBE laser tech. 800G/1.6T transceivers sold out through mid-2027.</p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="label">Price</div>
+          <div class="value">~$96</div>
+          <div class="note">Mar 3, 2026</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Market Cap</div>
+          <div class="value">~$5.8B</div>
+          <div class="note">~68M shares outstanding</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">FY2025 Revenue</div>
+          <div class="value">$456M</div>
+          <div class="note">+83% YoY (record)</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">2027 Run-Rate Target</div>
+          <div class="value">$4.5B+</div>
+          <div class="note">$378M/month by mid-2027</div>
+        </div>
+      </div>
+
+      <!-- EXECUTIVE SUMMARY -->
+      <section class="section" id="executive-summary">
+        <h2>🧭 Executive Summary</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>Photonics inflection point.</strong> AAOI is a vertically integrated optical transceiver manufacturer riding the transition from 400G to <a href="#jargon-800g" class="jargon">800G</a>/<a href="#jargon-16t" class="jargon">1.6T</a> datacenter interconnects — the bandwidth backbone of AI infrastructure.</div>
+            <div><strong>Demand exceeds capacity through mid-2027.</strong> Management confirmed that at least 2–3 hyperscaler customers want to buy ALL 800G and 1.6T transceivers AAOI can produce. Growth is supply-constrained, not demand-constrained.</div>
+            <div><strong>10x revenue trajectory.</strong> From $456M in FY2025, management targets $1B+ in 2026 and a $378M/month run-rate by mid-2027 (~$4.5B annualized) — a potential 10x in under two years.</div>
+            <div><strong>"Made in America" moat.</strong> Sugar Land, TX fab with proprietary <a href="#jargon-mbe" class="jargon">MBE</a> laser fabrication — unique in the industry. Tariff-proof domestic production as geopolitical premium for hyperscalers vs. Chinese competitors like <a href="#jargon-innolight" class="jargon">Innolight</a> and Eoptolink.</div>
+          </div>
+          <div style="padding:12px 16px;border-left:3px solid var(--accent);background:var(--surface-alt);border-radius:0 10px 10px 0;margin-top:12px;">
+            <p style="font-size:12px;font-style:italic;color:var(--text-secondary);line-height:1.6;">
+              "Right now, more than one customer, at least two or even three, they would like to buy all the transceiver we can make for 800G and 1.6T. Because Applied Optoelectronics laser. And right now, it is limited by our capacity and the manpower and the supply chain."
+            </p>
+            <p style="font-size:11px;color:var(--text-dim);margin-top:6px;">— CEO Thompson Lin, Q4 2025 Earnings Call (Feb 26, 2026)</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- VARIANT VIEW -->
+      <section class="section" id="variant-view">
+        <h2>🎯 Variant View — Where We Disagree with Consensus</h2>
+        <div class="card" style="border-left:3px solid var(--accent);">
+          <div style="display:grid;gap:14px;font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            <div>
+              <strong style="color:var(--text);">What consensus believes:</strong>
+              <ul style="margin-top:8px;padding-left:18px;">
+                <li>AAOI is a speculative small-cap that has never sustained profitability. GAAP net loss of $38M in FY2025.</li>
+                <li>The $4.5B run-rate target is aspirational — 10x in 2 years is unrealistic for a company this size.</li>
+                <li>Chinese competitors (Innolight, Eoptolink) will flood the 800G market and compress ASPs.</li>
+                <li>Customer concentration (top 3 = 91% of revenue) is a single-point-of-failure risk.</li>
+              </ul>
+            </div>
+            <div>
+              <strong style="color:var(--text);">Why we think consensus is wrong:</strong>
+              <ol style="margin-top:8px;padding-left:18px;">
+                <li><strong>This is SNDK 2.0 — the photonics version of memory's commodity-to-structural shift.</strong> Just as NAND/DRAM went from cyclical commodity to structural AI demand, optical interconnects are undergoing the same transformation. Data movement is becoming the bottleneck, not compute. ISSCC 2026 validated this thesis — photonics is the next critical layer.</li>
+                <li><strong>"Made in America" is a structural tariff moat, not a marketing slogan.</strong> With tariff uncertainty on Chinese optics imports, hyperscalers are actively diversifying supply chains toward domestic producers. Less than 10% of AAOI's 800G/1.6T component value comes from China, and they're targeting near-zero. Innolight can't offer this.</li>
+                <li><strong>Vertical integration + proprietary MBE = defensible tech moat.</strong> AAOI's Molecular Beam Epitaxy process is unique in the industry — competitors use MOCVD. MBE produces superior laser performance (lower threshold currents, better efficiency, longer life). This isn't a commodity assembler; it's a chip-to-module vertically integrated manufacturer.</li>
+                <li><strong>The capacity ramp is funded and underway.</strong> $300M Sugar Land expansion with 500 new jobs. 800G production already at ~90K units/month, targeting 500K+ combined 800G/1.6T units/month by year-end. This isn't a PowerPoint projection — it's shovels in the ground.</li>
+              </ol>
+            </div>
+            <div>
+              <strong style="color:var(--text);">The evidence:</strong>
+              <ul style="margin-top:8px;padding-left:18px;">
+                <li>4th volume 800G order from a major hyperscaler (Q4 2025); firmware qualification expected March 2026.</li>
+                <li>Management has "almost two years of loading forecast from more than one customer" for 800G.</li>
+                <li>Q1 2026 guide: $150–165M revenue (sequential growth of ~17% at midpoint).</li>
+                <li>Full-year 2026 guide: $1B+ revenue and $120M+ non-GAAP operating profit.</li>
+                <li>By Q2 2027: $378M/month revenue potential ($90M from 100G/400G, $217M from 800G, $71M from 1.6T).</li>
+                <li>$250M ATM equity offering announced — funding the capacity buildout.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPANY OVERVIEW -->
+      <section class="section" id="company-overview">
+        <h2>🏢 Company Overview</h2>
+        <div class="card">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            Applied Optoelectronics is a <strong>vertically integrated provider of fiber-optic networking products</strong>, founded in 1997 by Dr. Thompson Lin and headquartered in Sugar Land, Texas. The company designs and manufactures the full stack — from semiconductor laser chips (using proprietary <a href="#jargon-mbe" class="jargon">MBE</a> fabrication) to optical subassemblies to complete transceiver modules. AAOI serves three markets: <strong>internet data centers</strong> (56% of Q4 revenue), <strong>CATV/broadband</strong> (40%), and <strong>telecom/FTTH</strong> (4%). The data center segment is the growth engine, driven by <a href="#jargon-800g" class="jargon">800G</a> and <a href="#jargon-16t" class="jargon">1.6T</a> optical transceivers for AI infrastructure.
+          </p>
+          <div class="pill-row">
+            <span class="pill">Founded 1997</span>
+            <span class="pill">HQ: Sugar Land, TX</span>
+            <span class="pill">NASDAQ: AAOI</span>
+            <span class="pill">Fabs: Texas, Taiwan, China</span>
+            <span class="pill">R&D: Atlanta, GA</span>
+            <span class="pill">Proprietary MBE lasers</span>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+          <h3 style="font-size:14px;margin-bottom:10px;">Why Photonics Matters for AI</h3>
+          <div class="list">
+            <div><strong>Data movement > compute as the bottleneck.</strong> AI clusters are scaling to millions of GPUs. The limiting factor is no longer compute speed — it's how fast you can move data between GPUs, between racks, and between data centers. Optical interconnects solve this.</div>
+            <div><strong>ISSCC 2026 validation.</strong> The International Solid-State Circuits Conference (Feb 2026) featured photonics as a breakout theme — the semiconductor industry's top conference acknowledged optical I/O as the next critical infrastructure layer.</div>
+            <div><strong>800G → 1.6T → 3.2T progression.</strong> Each AI generation requires 2x more interconnect bandwidth. This creates a multi-year upgrade cycle where transceivers are consumed like razor blades — recurring, high-volume, and non-discretionary.</div>
+            <div><strong>NVIDIA collaboration.</strong> AAOI is a named collaborator on the NVIDIA Spectrum-X platform for AI factories, including co-packaged optics (CPO) and silicon photonics applications.</div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+          <h3 style="font-size:14px;margin-bottom:10px;">Vertical Integration: Chip to Module</h3>
+          <div class="list">
+            <div><strong>Layer 1 — Laser chips:</strong> Proprietary MBE-grown semiconductor lasers at Sugar Land fab. Atomic-level crystal control, lower threshold currents, superior efficiency vs. MOCVD competitors.</div>
+            <div><strong>Layer 2 — Optical subassemblies:</strong> In-house design and manufacturing of transmit/receive optical subassemblies (TOSAs/ROSAs).</div>
+            <div><strong>Layer 3 — Complete modules:</strong> Finished 100G/400G/800G/1.6T transceiver modules with firmware, tested and qualified for hyperscaler specifications.</div>
+            <div><strong>Layer 4 — Equipment:</strong> CATV amplifiers, headend equipment, and Quantum Link software suite for remote network management.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BUSINESS MODEL -->
+      <section class="section" id="business-model">
+        <h2>💡 Business Model</h2>
+        <div class="two-col">
+          <div class="card">
+            <h3 style="font-size:14px;margin-bottom:10px;">Data Center (56% of Q4 Rev)</h3>
+            <div class="list">
+              <div><strong>Products:</strong> 100G, 400G, 800G, and 1.6T optical transceiver modules for AI datacenter interconnect.</div>
+              <div><strong>Customers:</strong> 3 hyperscalers (widely understood to be Microsoft, Amazon, and a third — likely Google or Meta). Top 2 DC customers = 52% of total Q4 revenue.</div>
+              <div><strong>Growth:</strong> Q4 DC revenue $74.9M (+69% YoY, +70% QoQ). 400G sales +141% YoY. 800G ramping from qualification to volume.</div>
+              <div><strong>Architecture:</strong> "Open system" approach — modules work independently of server/switch vendors, avoiding lock-in. This is what hyperscalers want.</div>
+            </div>
+          </div>
+          <div class="card">
+            <h3 style="font-size:14px;margin-bottom:10px;">CATV / Broadband (40% of Q4 Rev)</h3>
+            <div class="list">
+              <div><strong>Products:</strong> 1.8 GHz amplifiers, headend equipment, Quantum Link software for MSOs.</div>
+              <div><strong>Customers:</strong> Charter (largest), other cable operators upgrading to DOCSIS 4.0.</div>
+              <div><strong>Growth:</strong> FY2025 CATV revenue nearly tripled to $245M, driven by Charter's network upgrade cycle.</div>
+              <div><strong>Outlook:</strong> Lumpy but significant — CATV provides cash flow base while data center ramps.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SUPPLY CHAIN POSITION -->
+      <section class="section" id="supply-chain">
+        <h2>⛓️ Supply Chain Position</h2>
+        <div class="card">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:14px;">
+            AAOI sits at a critical juncture in the AI value chain — between upstream substrate/component suppliers and downstream hyperscaler customers. Unlike most optical transceiver companies that are essentially assemblers, AAOI controls the full vertical stack from laser epitaxy to finished module.
+          </p>
+          <div class="table-wrap" style="padding:12px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Layer</th>
+                  <th>Players</th>
+                  <th>AAOI's Position</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Substrates & Materials</td>
+                  <td>AXTI, IQE, II-VI (Coherent)</td>
+                  <td>Buyer — sources InP/GaAs wafers</td>
+                </tr>
+                <tr>
+                  <td>Laser Chips (EML/DFB)</td>
+                  <td>AAOI, Lumentum, Coherent, Broadcom</td>
+                  <td><strong>Manufacturer</strong> — proprietary MBE</td>
+                </tr>
+                <tr>
+                  <td>Optical Subassemblies</td>
+                  <td>AAOI, Foxconn, Innolight</td>
+                  <td><strong>Manufacturer</strong> — in-house</td>
+                </tr>
+                <tr class="highlight">
+                  <td>Transceiver Modules</td>
+                  <td>AAOI, Innolight, Coherent, LITE</td>
+                  <td><strong>Manufacturer</strong> — full integration</td>
+                </tr>
+                <tr>
+                  <td>Networking Equipment</td>
+                  <td>Cisco, Arista, NVIDIA, Broadcom</td>
+                  <td>Supplier — open architecture</td>
+                </tr>
+                <tr>
+                  <td>End Customers</td>
+                  <td>Microsoft, Amazon, Google, Meta</td>
+                  <td>Direct sales — hyperscaler qualified</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- RECENT FINANCIALS -->
+      <section class="section" id="recent-financials">
+        <h2>📊 Recent Financials</h2>
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Q4 2025 (Feb 26, 2026)</th>
+                <th class="num">Q4 2025</th>
+                <th class="num">Q3 2025</th>
+                <th class="num">Q4 2024</th>
+                <th class="num">QoQ</th>
+                <th class="num">YoY</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Revenue</td>
+                <td class="num">$134.3M</td>
+                <td class="num">$118.8M</td>
+                <td class="num">$100.3M</td>
+                <td class="num">+13%</td>
+                <td class="num">+34%</td>
+              </tr>
+              <tr>
+                <td>Data Center Revenue</td>
+                <td class="num">$74.9M</td>
+                <td class="num">$44.1M</td>
+                <td class="num">$44.3M</td>
+                <td class="num">+70%</td>
+                <td class="num">+69%</td>
+              </tr>
+              <tr>
+                <td>CATV Revenue</td>
+                <td class="num">$54.0M</td>
+                <td class="num">$71.0M</td>
+                <td class="num">$52.4M</td>
+                <td class="num">-24%</td>
+                <td class="num">+3%</td>
+              </tr>
+              <tr>
+                <td>GAAP Gross Margin</td>
+                <td class="num">31.2%</td>
+                <td class="num">30.5%</td>
+                <td class="num">28.7%</td>
+                <td class="num">+70 bps</td>
+                <td class="num">+250 bps</td>
+              </tr>
+              <tr>
+                <td>Non-GAAP Gross Margin</td>
+                <td class="num">31.4%</td>
+                <td class="num">—</td>
+                <td class="num">28.9%</td>
+                <td class="num">—</td>
+                <td class="num">+250 bps</td>
+              </tr>
+              <tr>
+                <td>Non-GAAP Net Loss</td>
+                <td class="num">($0.6M)</td>
+                <td class="num">—</td>
+                <td class="num">—</td>
+                <td class="num">—</td>
+                <td class="num">—</td>
+              </tr>
+              <tr>
+                <td>Non-GAAP EPS</td>
+                <td class="num">($0.01)</td>
+                <td class="num">—</td>
+                <td class="num">—</td>
+                <td class="num">—</td>
+                <td class="num">Beat est by 90%</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:10px;">Revenue beat consensus ($132.2M). EPS came in at -$0.01 vs. estimate of -$0.11 — near breakeven signals operating leverage kicking in.</p>
+        </div>
+
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Full Year 2025</th>
+                <th class="num">FY2025</th>
+                <th class="num">FY2024</th>
+                <th class="num">YoY</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Revenue</td>
+                <td class="num">$455.7M</td>
+                <td class="num">$249.3M</td>
+                <td class="num">+83%</td>
+              </tr>
+              <tr>
+                <td>Data Center Revenue</td>
+                <td class="num">$196M</td>
+                <td class="num">$148M</td>
+                <td class="num">+32%</td>
+              </tr>
+              <tr>
+                <td>CATV Revenue</td>
+                <td class="num">$245M</td>
+                <td class="num">~$85M</td>
+                <td class="num">~3x</td>
+              </tr>
+              <tr>
+                <td>GAAP Gross Margin</td>
+                <td class="num">30.0%</td>
+                <td class="num">—</td>
+                <td class="num">—</td>
+              </tr>
+              <tr>
+                <td>GAAP Net Loss</td>
+                <td class="num">($38.2M)</td>
+                <td class="num">—</td>
+                <td class="num">Narrowing</td>
+              </tr>
+              <tr>
+                <td>R&D Spending (Q4)</td>
+                <td class="num">$25.8M</td>
+                <td class="num">$16.7M</td>
+                <td class="num">+55%</td>
+              </tr>
+              <tr>
+                <td>CapEx (Full Year)</td>
+                <td class="num">$209M</td>
+                <td class="num">—</td>
+                <td class="num">Above $120-150M guide</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Forward Guidance</th>
+                <th class="num">Metric</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Q1 2026 Revenue</td>
+                <td class="num">$150M – $165M</td>
+              </tr>
+              <tr>
+                <td>Q1 2026 Non-GAAP Gross Margin</td>
+                <td class="num">29% – 31%</td>
+              </tr>
+              <tr>
+                <td>Q1 2026 Non-GAAP Net Loss</td>
+                <td class="num">($7M) – ($0.3M)</td>
+              </tr>
+              <tr class="highlight">
+                <td>Full Year 2026 Revenue</td>
+                <td class="num">$1B+ (mgmt target)</td>
+              </tr>
+              <tr class="highlight">
+                <td>Full Year 2026 Non-GAAP Op Profit</td>
+                <td class="num">$120M+</td>
+              </tr>
+              <tr class="highlight">
+                <td>Mid-2027 Monthly Revenue Run-Rate</td>
+                <td class="num">$378M/month (~$4.5B ann.)</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:10px;">The mid-2027 run-rate breakdown: $90M/month from 100G/400G, $217M/month from 800G, $71M/month from 1.6T. Supply chain and manufacturing are the bottlenecks — not demand.</p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Balance Sheet (Dec 31, 2025)</th>
+                <th class="num">Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Cash & Equivalents</td>
+                <td class="num">$216M</td>
+              </tr>
+              <tr>
+                <td>Inventory</td>
+                <td class="num">$183M</td>
+              </tr>
+              <tr>
+                <td>Debt-to-Equity</td>
+                <td class="num">0.23</td>
+              </tr>
+              <tr>
+                <td>Current Ratio</td>
+                <td class="num">2.31</td>
+              </tr>
+              <tr>
+                <td>ATM Equity Offering</td>
+                <td class="num">$250M announced</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- COMPETITIVE POSITION -->
+      <section class="section" id="competitive-position">
+        <h2>🛡️ Competitive Position</h2>
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Optical Transceiver Competitive Landscape</th>
+                <th class="num">Market Cap</th>
+                <th class="num">Rev (Latest FY)</th>
+                <th class="num">Key Strength</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Coherent (COHR)</td>
+                <td class="num">~$34.5B</td>
+                <td class="num">$5.2B</td>
+                <td class="num">Broadest portfolio, 800G leader</td>
+              </tr>
+              <tr>
+                <td>Lumentum (LITE)</td>
+                <td class="num">~$27.1B</td>
+                <td class="num">$2.9B</td>
+                <td class="num">50-60% EML share, optical leader</td>
+              </tr>
+              <tr>
+                <td>Innolight (300502.SZ)</td>
+                <td class="num">—</td>
+                <td class="num">~$3B+</td>
+                <td class="num">Low-cost Chinese volumes</td>
+              </tr>
+              <tr class="highlight">
+                <td>AAOI</td>
+                <td class="num">~$5.8B</td>
+                <td class="num">$456M</td>
+                <td class="num">Vertically integrated, MBE, U.S. fab</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+          <h3 style="font-size:14px;margin-bottom:10px;">Moats & Strategic Advantages</h3>
+          <div class="list">
+            <div><strong>Proprietary MBE laser fabrication:</strong> Only transceiver company using Molecular Beam Epitaxy instead of MOCVD. Produces lasers with superior efficiency, lower threshold currents, and longer operating life. This process cannot be easily replicated.</div>
+            <div><strong>"Made in America" tariff moat:</strong> Sugar Land, TX fab with ~31% of 800G production in U.S. (targeting 25% from Texas at scale). Stefan Murry: "The one place where I am pretty confident in saying it is not going to be tariffed is product that is made in the U.S." Less than 10% China content, targeting near-zero.</div>
+            <div><strong>Full vertical integration:</strong> Laser chip → subassembly → finished module. Simplified supply chain for hyperscalers. Faster product development and customization vs. assemblers.</div>
+            <div><strong>Open system architecture:</strong> Modules work independently of server/switch vendors — exactly what hyperscalers want to avoid lock-in. Named collaborator on NVIDIA Spectrum-X platform.</div>
+            <div><strong>800G/1.6T same production line:</strong> Management confirmed 800G and 1.6T transceivers can be manufactured on the same lines due to similar processes — smooth transition path.</div>
+            <div><strong>Multi-year demand visibility:</strong> "Almost two years of loading forecast from more than one customer" for 800G orders. This is exceptional forward visibility for a hardware company.</div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:16px;border-left:3px solid var(--accent);">
+          <h3 style="font-size:14px;margin-bottom:10px;">The SNDK Analogy — Photonics' Commodity-to-Structural Shift</h3>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            <strong>The bull case for AAOI mirrors what happened in memory.</strong> NAND flash was once a volatile commodity market with brutal ASP declines. Then structural demand (smartphones → cloud → AI) transformed it into a must-have infrastructure layer. SanDisk rode this wave from commodity player to strategic asset (acquired by WD at a premium).
+          </p>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-top:10px;">
+            Optical transceivers are undergoing the same shift. Once a low-margin commodity, 800G/1.6T modules are now <strong>critical path items</strong> for AI datacenter buildouts. Supply is constrained, demand is multi-year, and the "Made in America" premium adds a structural pricing advantage that didn't exist before. AAOI could be the photonics version of SNDK — the small player that rode a structural shift to category leadership.
+          </p>
+        </div>
+      </section>
+
+      <!-- FINANCIAL PROJECTIONS -->
+      <section class="section" id="financial-projections">
+        <h2>📈 Financial Projections & Valuation Scenarios</h2>
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Revenue Trajectory</th>
+                <th class="num">FY2024</th>
+                <th class="num">FY2025</th>
+                <th class="num">FY2026E</th>
+                <th class="num">H2 2027 ARR</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Revenue</td>
+                <td class="num">$249M</td>
+                <td class="num">$456M</td>
+                <td class="num">$1B+</td>
+                <td class="num">$4.5B+</td>
+              </tr>
+              <tr>
+                <td>YoY Growth</td>
+                <td class="num">—</td>
+                <td class="num">+83%</td>
+                <td class="num">~120%</td>
+                <td class="num">~350%+</td>
+              </tr>
+              <tr>
+                <td>Gross Margin (est.)</td>
+                <td class="num">~27%</td>
+                <td class="num">30%</td>
+                <td class="num">32-35%</td>
+                <td class="num">35-40%</td>
+              </tr>
+              <tr>
+                <td>Operating Profit</td>
+                <td class="num">Negative</td>
+                <td class="num">Negative</td>
+                <td class="num">$120M+</td>
+                <td class="num">$800M–$1.2B</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:10px;">H2 2027 projections assume management's $378M/month run-rate target is achieved. These are aspirational — see risks section for what could go wrong.</p>
+        </div>
+
+        <div class="card" style="margin-bottom:16px;">
+          <h3 style="font-size:14px;margin-bottom:10px;">Valuation Scenarios — Forward P/E Analysis</h3>
+          <div class="table-wrap" style="padding:12px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Scenario</th>
+                  <th class="num">2027 Rev</th>
+                  <th class="num">Net Margin</th>
+                  <th class="num">Net Income</th>
+                  <th class="num">EPS (68M sh)</th>
+                  <th class="num">15x P/E</th>
+                  <th class="num">20x P/E</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Conservative (50% of target)</td>
+                  <td class="num">$2.25B</td>
+                  <td class="num">15%</td>
+                  <td class="num">$338M</td>
+                  <td class="num">$4.97</td>
+                  <td class="num">$75</td>
+                  <td class="num">$99</td>
+                </tr>
+                <tr>
+                  <td>Base (75% of target)</td>
+                  <td class="num">$3.4B</td>
+                  <td class="num">18%</td>
+                  <td class="num">$612M</td>
+                  <td class="num">$9.00</td>
+                  <td class="num">$135</td>
+                  <td class="num">$180</td>
+                </tr>
+                <tr class="highlight">
+                  <td>Management Target</td>
+                  <td class="num">$4.5B</td>
+                  <td class="num">20%</td>
+                  <td class="num">$900M</td>
+                  <td class="num">$13.24</td>
+                  <td class="num">$199</td>
+                  <td class="num">$265</td>
+                </tr>
+                <tr>
+                  <td>Bull (target + ASP hikes)</td>
+                  <td class="num">$5.5B</td>
+                  <td class="num">22%</td>
+                  <td class="num">$1.21B</td>
+                  <td class="num">$17.79</td>
+                  <td class="num">$267</td>
+                  <td class="num">$356</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:10px;">Note: Share count may increase due to the $250M ATM offering. At $96/share, that's ~2.6M additional shares, bringing total to ~71M — modest dilution. EPS scenarios assume ~68M shares for simplicity.</p>
+        </div>
+
+        <div class="card" style="border-left:3px solid var(--accent);">
+          <h3 style="font-size:14px;margin-bottom:10px;">The LITE Comparison — Why AAOI Could Be Undervalued</h3>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            <strong>Lumentum (LITE)</strong> trades at ~$27B market cap on ~$2.9B FY2026 revenue (9.3x P/S). If AAOI hits its $1B 2026 target at the same multiple, the stock would be worth ~$9.3B or ~$137/share. If it hits the 2027 run-rate targets, the valuation gap becomes even more striking.
+          </p>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-top:10px;">
+            At current ~$5.8B market cap on $1B+ 2026 guided revenue, AAOI trades at ~5.8x forward P/S — a discount to peers. The market is skeptical of the 10x ramp. If execution proves out even partially, significant re-rating is likely.
+          </p>
+        </div>
+      </section>
+
+      <!-- GROWTH DRIVERS -->
+      <section class="section" id="growth-drivers">
+        <h2>🚀 Growth Drivers</h2>
+        <div class="card" style="margin-bottom:14px;">
+          <h3 style="font-size:14px;margin-bottom:8px;">800G Transceiver Ramp — The Main Event</h3>
+          <div class="list">
+            <div><strong>4th volume order</strong> from a major hyperscaler received in Q4 2025.</div>
+            <div><strong>Firmware qualification</strong> expected completion: March 2026. Volume shipments ramp from Q2 2026.</div>
+            <div><strong>Production capacity:</strong> ~90K units/month at year-end 2025 → targeting 500K+ combined 800G/1.6T by year-end 2026.</div>
+            <div><strong>Revenue potential:</strong> $217M/month from 800G alone by mid-2027 (management projection).</div>
+            <div><strong>Demand visibility:</strong> "Almost two years of loading forecast from more than one customer."</div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3 style="font-size:14px;margin-bottom:8px;">1.6T Next-Gen Transceivers</h3>
+          <div class="list">
+            <div><strong>Same production lines as 800G</strong> — smooth transition, low incremental CapEx.</div>
+            <div><strong>Demand already outpacing capacity</strong> through mid-2027.</div>
+            <div><strong>Revenue potential:</strong> $71M/month by mid-2027 (management projection).</div>
+            <div><strong>Higher ASPs</strong> than 800G — mix shift is margin-accretive.</div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3 style="font-size:14px;margin-bottom:8px;">Sugar Land, TX Expansion</h3>
+          <div class="list">
+            <div><strong>$300M investment</strong> with groundbreaking ceremony held Feb 2026.</div>
+            <div><strong>500 new jobs</strong> planned.</div>
+            <div><strong>Doubles U.S. manufacturing footprint</strong> — positions AAOI for increased "Made in America" premium.</div>
+            <div><strong>Tariff insulation:</strong> Domestic production cannot be tariffed regardless of trade policy changes.</div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3 style="font-size:14px;margin-bottom:8px;">400G Continued Strength</h3>
+          <div class="list">
+            <div><strong>400G revenue surged</strong> from $4M to $31M QoQ in Q4 — driven by two hyperscaler customers (believed to be Amazon and Microsoft).</div>
+            <div><strong>Expected to remain firm</strong> particularly from Amazon demand.</div>
+            <div><strong>Bridge product</strong> providing cash flow while 800G ramps to full volume.</div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3 style="font-size:14px;margin-bottom:8px;">CATV Upgrade Cycle</h3>
+          <div class="list">
+            <div><strong>DOCSIS 4.0 upgrade</strong> driving 1.8 GHz amplifier demand.</div>
+            <div><strong>Charter</strong> is the primary customer — multi-year network upgrade commitment.</div>
+            <div><strong>FY2025 CATV revenue nearly tripled</strong> to $245M.</div>
+            <div><strong>Lumpy but significant:</strong> Provides diversification and cash flow stability.</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="font-size:14px;margin-bottom:8px;">Silicon Photonics & CPO</h3>
+          <div class="list">
+            <div><strong>400mW pump laser</strong> developed for silicon photonics and co-packaged optics (CPO) in AI data centers.</div>
+            <div><strong>Samples available,</strong> volume production expected 2026.</div>
+            <div><strong>NVIDIA Spectrum-X platform</strong> collaboration positions AAOI for next-gen optical architectures.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RISKS -->
+      <section class="section" id="risks">
+        <h2>⚠️ Risks</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>Execution risk on 10x ramp:</strong> Going from $456M to $4.5B in ~2 years is unprecedented for a company this size. Manufacturing, supply chain, and hiring all need to scale flawlessly. <em>Counter:</em> Expansion is underway with $300M committed and construction started.</div>
+            <div><strong>Customer concentration:</strong> Top 3 customers = 91% of Q4 revenue. Loss of any one hyperscaler would be devastating. <em>Counter:</em> Multiple customers fighting for allocation; demand exceeds supply through 2027.</div>
+            <div><strong>Still GAAP unprofitable:</strong> FY2025 GAAP net loss of $38.2M. GAAP profitability not yet proven at scale. <em>Counter:</em> Q4 non-GAAP loss was just $0.6M; operating leverage is clearly inflecting. 2026 guide: $120M+ non-GAAP operating profit.</div>
+            <div><strong>Competition from LITE/COHR:</strong> Lumentum and Coherent are larger, more established optical players with deeper resources. <em>Counter:</em> AAOI's vertical integration and MBE technology provide differentiation; hyperscalers want supply chain diversity.</div>
+            <div><strong>Chinese competitor pricing:</strong> Innolight and Eoptolink could flood the market if tariff barriers don't hold. <em>Counter:</em> Geopolitical trends favor domestic supply; "Made in America" premium is structural.</div>
+            <div><strong>Tariff complexity:</strong> Management noted "tariff rates and equipment import mix may cause future results to vary materially." Taiwan and China fab exposure creates uncertainty. <em>Counter:</em> Actively reducing China content to near-zero; expanding U.S. footprint.</div>
+            <div><strong>Firmware delays:</strong> 800G revenue in Q4 was below expectations due to firmware optimizations. <em>Counter:</em> Qualification expected March 2026; one-time delay, not structural.</div>
+            <div><strong>Capital intensity:</strong> $209M CapEx in FY2025 (above $120-150M guide) + $300M Sugar Land expansion. Cash burn risk if demand softens. <em>Counter:</em> $216M cash + $250M ATM offering provides runway.</div>
+            <div><strong>Dilution risk:</strong> $250M ATM equity offering will dilute shareholders. <em>Counter:</em> At ~$96/share, that's only ~2.6M shares — modest dilution to fund a potentially transformative capacity buildout.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INVESTMENT THESIS -->
+      <section class="section" id="investment-thesis">
+        <h2>📌 Investment Thesis — Narrative Scenarios</h2>
+        <div style="display:grid;gap:14px;">
+          <div class="case-card bull">
+            <h3>🐂 Bull Case — $200+ (100%+ upside)</h3>
+            <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+              AAOI executes on its 800G/1.6T ramp and hits 75-100% of the $378M/month run-rate by mid-2027. At $3.4-4.5B annualized revenue with 35-40% gross margins and 18-22% net margins, earnings power reaches $600M-$1B+. At a 15-20x P/E (appropriate for a high-growth photonics company in a structural demand cycle), the stock is worth $135-265. The SNDK analogy plays out — AAOI is re-rated from speculative small-cap to strategic infrastructure compounder. "Made in America" premium holds as tariff policy tightens on Chinese optics.
+            </p>
+            <div style="margin-top:10px;font-size:12px;color:var(--text-dim);">
+              <strong>Key assumptions:</strong> 800G firmware qualification completes on time (March 2026), capacity expansion meets targets, hyperscaler demand sustains, gross margins expand with mix shift to higher-speed products.
+            </div>
+          </div>
+          <div class="case-card" style="border-color:var(--accent);background:var(--accent-soft);">
+            <h3>📊 Base Case — $120-150 (25-55% upside)</h3>
+            <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+              AAOI hits its $1B+ 2026 revenue target but the 2027 ramp is slower than projected — reaching 50% of the $378M/month target (~$2.25B annualized). Margins improve to 32-35% gross, but net profitability is lower than bull case due to continued heavy CapEx. Stock re-rates from current ~5.8x forward P/S to 7-9x as execution proves out, reaching $120-150. Competition from LITE/COHR limits upside but AAOI maintains its niche.
+            </p>
+            <div style="margin-top:10px;font-size:12px;color:var(--text-dim);">
+              <strong>Key assumptions:</strong> 2026 execution solid but 2027 targets partially missed, no major tariff surprises, margins improve modestly.
+            </div>
+          </div>
+          <div class="case-card bear">
+            <h3>🐻 Bear Case — $25-50 (50-75% downside)</h3>
+            <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+              800G ramp stalls due to persistent firmware issues or a hyperscaler pulling allocation. Chinese competitors flood the market and ASPs compress 30-40%. The $300M Sugar Land expansion becomes a capital albatross if demand doesn't materialize. CATV revenue declines as Charter's upgrade cycle matures. Stock reverts to historical trading range of $10-50 where it spent most of 2023-2024. The "10x moment" turns out to be a peak hype moment.
+            </p>
+            <div style="margin-top:10px;font-size:12px;color:var(--text-dim);">
+              <strong>Key assumptions:</strong> Execution failure on 800G, loss of a major customer, tariff barriers don't protect against Chinese competition, broader AI capex slowdown.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- KILL CONDITIONS -->
+      <section class="section" id="kill-conditions">
+        <h2>☠️ Kill Conditions — When to Exit</h2>
+        <div class="card">
+          <div style="display:grid;gap:14px;">
+            <div style="padding:14px;border-left:3px solid var(--red);border-radius:0 10px 10px 0;background:rgba(248,113,113,0.05);">
+              <strong style="color:var(--red);">Kill #1: Q1 2026 revenue misses below $140M</strong>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">Guide is $150-165M. A miss below $140M would signal the 800G ramp is stalling and the 10x trajectory is broken. This is the most critical near-term proof point. <strong>Action: Exit 50% of position.</strong></p>
+            </div>
+            <div style="padding:14px;border-left:3px solid var(--red);border-radius:0 10px 10px 0;background:rgba(248,113,113,0.05);">
+              <strong style="color:var(--red);">Kill #2: Loss of a top-3 hyperscaler customer</strong>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">With 91% concentration in 3 customers, losing any one is existential. If a major customer reduces orders by >50% or publicly qualifies a competitor for the same volumes, the thesis is broken. <strong>Action: Full exit.</strong></p>
+            </div>
+            <div style="padding:14px;border-left:3px solid var(--red);border-radius:0 10px 10px 0;background:rgba(248,113,113,0.05);">
+              <strong style="color:var(--red);">Kill #3: Gross margin drops below 25% for 2+ quarters</strong>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">Current trajectory is 30-31% and improving. If ASP compression from Chinese competition or mix shift pushes margins below 25% sustainably, the operating leverage thesis is dead. <strong>Action: Exit 75% of position.</strong></p>
+            </div>
+            <div style="padding:14px;border-left:3px solid var(--red);border-radius:0 10px 10px 0;background:rgba(248,113,113,0.05);">
+              <strong style="color:var(--red);">Kill #4: 800G firmware qualification delayed past June 2026</strong>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">Expected March 2026. A 3+ month delay would push volume shipments to H2 2026 and make the 2027 run-rate targets unreachable. Suggests deeper technical issues. <strong>Action: Exit 50%, reassess.</strong></p>
+            </div>
+            <div style="padding:14px;border-left:3px solid var(--red);border-radius:0 10px 10px 0;background:rgba(248,113,113,0.05);">
+              <strong style="color:var(--red);">Kill #5: Management reduces 2026 revenue guide below $800M</strong>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">The $1B+ target is the cornerstone of the re-rating thesis. A downward revision to sub-$800M would mean the capacity buildout is ahead of demand — a dangerous position for a capital-intensive company. <strong>Action: Full exit.</strong></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RISK/REWARD ASYMMETRY -->
+      <section class="section" id="asymmetry">
+        <h2>⚖️ Risk/Reward Asymmetry</h2>
+        <div class="card" style="border:1px solid var(--accent);background:linear-gradient(135deg,var(--accent-soft),transparent 60%);">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <div style="padding:14px;border-radius:12px;background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.4);">
+              <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-muted);font-weight:700;">Upside (Base Case)</div>
+              <div style="font-size:20px;font-weight:700;margin-top:8px;color:var(--green);">$135 target</div>
+              <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">~41% upside from ~$96</div>
+            </div>
+            <div style="padding:14px;border-radius:12px;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.4);">
+              <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-muted);font-weight:700;">Downside (Bear Case)</div>
+              <div style="font-size:20px;font-weight:700;margin-top:8px;color:var(--red);">$38 floor</div>
+              <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">~60% downside (midpoint $25-50)</div>
+            </div>
+          </div>
+          <div style="margin-top:16px;font-size:13px;color:var(--text-secondary);line-height:1.7;">
+            <strong>Risk/Reward at ~$96: 0.68:1.</strong> At current price, the probability-weighted R/R is unfavorable — you're risking more downside than realistic upside on base case alone. BUT the bull case ($200+) offers 2:1+ R/R, which is why this is a <strong>high-conviction, small-position</strong> opportunity. The key variable is execution: if Q1 2026 delivers and 800G firmware qualifies on time, R/R improves dramatically. <strong>Ideal entry: $60-75 range</strong> where base case R/R crosses 1.5:1+. Size accordingly — this is a <strong>call option on photonics infrastructure</strong>, not a core position.
+          </div>
+        </div>
+      </section>
+
+      <!-- VERDICT -->
+      <section class="section" id="verdict">
+        <h2>✅ Verdict / Rating</h2>
+        <div class="card verdict" style="margin-bottom:16px;">
+          <p style="font-size:13px;line-height:1.7;color:var(--text-secondary);">
+            <strong>Rating: Speculative Buy / High Conviction, Small Size.</strong> AAOI is the most asymmetric photonics play in the market. The thesis is compelling: vertically integrated U.S. manufacturer with proprietary laser tech, sold-out capacity, multi-year hyperscaler demand visibility, and a management team projecting a 10x revenue ramp. If even half of this materializes, the stock is significantly undervalued.
+          </p>
+          <p style="font-size:13px;line-height:1.7;color:var(--text-secondary);margin-top:10px;">
+            <strong>But execution risk is extreme.</strong> The company has never operated at this scale, is still GAAP unprofitable, and is betting everything on an 800G/1.6T ramp that hasn't fully started yet. Customer concentration (91% in 3 names) means any single defection is catastrophic. Position size accordingly — this is a call option, not a core holding. Watch Q1 2026 earnings (May 7, 2026) as the critical proof point.
+          </p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Rating Framework</th>
+                <th class="num">Score</th>
+                <th class="num">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Structural Demand</td>
+                <td class="num">9.5/10</td>
+                <td class="num">AI optical interconnect is non-discretionary</td>
+              </tr>
+              <tr>
+                <td>Technology Moat</td>
+                <td class="num">8/10</td>
+                <td class="num">MBE + vertical integration is unique</td>
+              </tr>
+              <tr>
+                <td>Financial Momentum</td>
+                <td class="num">7/10</td>
+                <td class="num">83% growth, near breakeven, but still unprofitable</td>
+              </tr>
+              <tr>
+                <td>Execution Confidence</td>
+                <td class="num">5.5/10</td>
+                <td class="num">10x ramp is unprecedented; prove it</td>
+              </tr>
+              <tr>
+                <td>Valuation</td>
+                <td class="num">7/10</td>
+                <td class="num">Cheap vs. peers if execution delivers</td>
+              </tr>
+              <tr>
+                <td>Risk Profile</td>
+                <td class="num">4/10</td>
+                <td class="num">Extreme concentration, unproven at scale</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- RECENT NEWS -->
+      <section class="section" id="recent-news">
+        <h2>🗓️ Recent News & Catalysts</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Event</th>
+                <th class="num">Source</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Mar 3, 2026</td>
+                <td>Stock surges another ~33% on continued momentum; short squeeze dynamics (75% institutional, tight float)</td>
+                <td class="num">Benzinga / 24/7 Wall St</td>
+              </tr>
+              <tr>
+                <td>Mar 1, 2026</td>
+                <td>B. Riley upgrades to Buy on 400G strength; Northland rates Market Perform</td>
+                <td class="num">Investing.com</td>
+              </tr>
+              <tr>
+                <td>Feb 27, 2026</td>
+                <td>Stock surges 55%+ post-earnings; groundbreaking ceremony at Sugar Land, TX expansion ($300M, 500 jobs)</td>
+                <td class="num">Timothy Sykes / Reuters</td>
+              </tr>
+              <tr>
+                <td>Feb 26, 2026</td>
+                <td>Q4 2025 earnings: Record $456M full-year revenue (+83% YoY), Q1 guide $150-165M, 2026 guide $1B+</td>
+                <td class="num">AAOI IR / Motley Fool</td>
+              </tr>
+              <tr>
+                <td>Feb 26, 2026</td>
+                <td>$250M at-the-market equity offering announced to fund capacity expansion</td>
+                <td class="num">Yahoo Finance</td>
+              </tr>
+              <tr>
+                <td>Q4 2025</td>
+                <td>4th volume 800G order from a major hyperscaler; 400G revenue surges from $4M to $31M QoQ</td>
+                <td class="num">AAOI Earnings Call</td>
+              </tr>
+              <tr>
+                <td>Upcoming</td>
+                <td>OFC Conference investor session — Mar 17, 2026 (Los Angeles); Q1 2026 earnings — May 7, 2026</td>
+                <td class="num">AAOI IR</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- RELATED CONTEXT -->
+      <section class="section" id="related-context">
+        <h2>🔗 Related Context</h2>
+        <div class="card" style="display:flex;flex-direction:column;gap:14px;">
+          <a href="lumentum-lite.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">🔦</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Lumentum (LITE) — Deep Dive</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">AI optical infrastructure leader. 50–60% EML share. AAOI's closest comp and key competitive reference.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
+          <a href="micron-mu.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">🧠</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Micron (MU) — Deep Dive</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Memory supercycle peer — similar "commodity-to-structural" thesis in a different AI infrastructure layer.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
+          <a href="../../ai-value-chain/hbm-memory-layer.html" style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:var(--surface-alt);border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+            <span style="font-size:24px;">⛓️</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">AI Value Chain — HBM & Memory</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Adjacent infrastructure layer. Photonics (data movement) and memory (data storage) are the two pillars of AI scaling.</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-dim);font-size:14px;">→</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- JARGON DECODER -->
+      <section class="section" id="jargon">
+        <h2>📖 Jargon Decoder</h2>
+        <div class="card">
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div id="jargon-800g" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">800G</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Optical transceiver module supporting 800 gigabits per second data transmission. The current-gen standard for AI datacenter interconnects.</div>
+            </div>
+            <div id="jargon-16t" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">1.6T</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Next-gen 1.6 terabit per second optical transceiver. Double 800G bandwidth. Already in demand ahead of volume production.</div>
+            </div>
+            <div id="jargon-mbe" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">MBE (Molecular Beam Epitaxy)</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">AAOI's proprietary semiconductor laser fabrication process. Uses solid-phase materials in ultra-high vacuum at lower temperatures than MOCVD. Produces superior lasers with atomic-level crystal control.</div>
+            </div>
+            <div id="jargon-mocvd" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">MOCVD</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Metal Organic Chemical Vapor Deposition — the standard laser fabrication method used by virtually all AAOI competitors. AAOI's MBE approach is unique in the industry.</div>
+            </div>
+            <div id="jargon-eml" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">EML (Electro-absorption Modulated Laser)</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">A type of semiconductor laser critical for high-speed optical transmission. AAOI and Lumentum are key EML suppliers.</div>
+            </div>
+            <div id="jargon-innolight" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">Innolight</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">InnoLight Technology — Chinese optical transceiver manufacturer and AAOI's primary low-cost competitor. Tariff exposure makes Innolight less attractive to U.S. hyperscalers.</div>
+            </div>
+            <div id="jargon-cpo" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">CPO (Co-Packaged Optics)</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Next-gen optical architecture integrating photonic components directly with switch ASICs. Reduces power consumption and latency. AAOI developing pump lasers for CPO applications.</div>
+            </div>
+            <div id="jargon-catv" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">CATV</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Cable television networking products. AAOI supplies amplifiers and equipment to MSOs like Charter for broadband upgrades.</div>
+            </div>
+            <div id="jargon-asp" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">ASP (Average Selling Price)</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">The average price per unit sold. Higher-speed transceivers (800G, 1.6T) command significantly higher ASPs than legacy products.</div>
+            </div>
+            <div id="jargon-atm" class="jargon-def" style="padding:10px;background:var(--surface-alt);border-radius:10px;">
+              <strong style="color:var(--accent);">ATM (At-The-Market) Offering</strong>
+              <a href="#" class="jargon-back" onclick="history.back();return false;">↩ back</a>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">A mechanism for issuing new shares gradually at prevailing market prices. AAOI announced a $250M ATM to fund capacity expansion.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <p style="font-size:11px;color:var(--text-dimmer);margin-top:20px;">Sources: AAOI IR, Motley Fool, Yahoo Finance, 24/7 Wall St, Seeking Alpha, Investing.com, StockTitan (as of Mar 3, 2026). This is research, not financial advice.</p>
+    </div>
+  </main>
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = saved === 'dark' ? '☀️' : '🌙';
+    });
+  }
+})();
+
+function slugifyHeading(text) {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
+
+function initSectionNav() {
+  const navLinks = document.getElementById('section-nav-links');
+  if (!navLinks) return;
+
+  let headings = Array.from(document.querySelectorAll('.section h2'));
+  if (!headings.length) {
+    headings = Array.from(document.querySelectorAll('h2'));
+  }
+  if (!headings.length) return;
+
+  headings.forEach((heading) => {
+    if (!heading.id) {
+      heading.id = slugifyHeading(heading.textContent || '');
+    }
+  });
+
+  navLinks.innerHTML = '';
+  headings.forEach((heading) => {
+    const link = document.createElement('a');
+    link.className = 'section-link';
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent || '';
+    navLinks.appendChild(link);
+  });
+
+  const linkMap = new Map();
+  navLinks.querySelectorAll('a').forEach((link) => {
+    const targetId = link.getAttribute('href').slice(1);
+    linkMap.set(targetId, link);
+    link.addEventListener('click', () => setActive(targetId));
+  });
+
+  function setActive(id) {
+    linkMap.forEach((link) => {
+      link.classList.remove('active');
+      link.removeAttribute('aria-current');
+    });
+    const activeLink = linkMap.get(id);
+    if (activeLink) {
+      activeLink.classList.add('active');
+      activeLink.setAttribute('aria-current', 'true');
+    }
+  }
+
+  setActive(headings[0].id);
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActive(entry.target.id);
+        }
+      });
+    },
+    { rootMargin: '-20% 0px -65% 0px', threshold: [0, 0.1, 0.5] }
+  );
+
+  headings.forEach((heading) => observer.observe(heading));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initSectionNav();
+});
+</script>
+</body>
+</html>
