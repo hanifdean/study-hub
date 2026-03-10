@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Blackstone Project — Case Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --warm-white: #FFFDF9;
+    --ink: #2C2420;
+    --ink-light: #5C5550;
+    --ink-faint: #9A948F;
+    --accent-blue: #3D6B8E;
+    --accent-blue-light: #E8F0F6;
+    --accent-red: #C4523B;
+    --accent-red-light: #FCEEE8;
+    --accent-green: #4A7C59;
+    --accent-green-light: #EBF5EE;
+    --accent-amber: #B88B2B;
+    --accent-amber-light: #FDF6E3;
+    --accent-purple: #7B5EA7;
+    --accent-purple-light: #F3EFF8;
+    --accent-teal: #2D8E8E;
+    --accent-teal-light: #E6F5F5;
+    --border: #E8E2DB;
+    --shadow: rgba(44, 36, 32, 0.06);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Source Sans 3', -apple-system, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 760px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  /* Header */
+  .header { text-align: center; margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+  .header-label { font-size: 12px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent-blue); margin-bottom: 16px; }
+  .header h1 { font-family: 'Fraunces', serif; font-size: 34px; font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 8px; }
+  .header .subtitle { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 300; font-style: italic; color: var(--ink-light); }
+  .header .source { font-size: 13px; color: var(--ink-faint); margin-top: 12px; }
+
+  /* TOC */
+  .toc {
+    background: var(--warm-white); border: 1px solid var(--border); border-radius: 12px;
+    padding: 24px 28px; margin-bottom: 48px; box-shadow: 0 2px 12px var(--shadow);
+  }
+  .toc h3 { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 700; margin-bottom: 12px; color: var(--ink); }
+  .toc ol { padding-left: 20px; }
+  .toc li { margin-bottom: 6px; }
+  .toc a { color: var(--accent-blue); text-decoration: none; font-size: 15px; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* Sections */
+  .section { margin-bottom: 52px; }
+  .section-title {
+    font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700; color: var(--ink);
+    margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--ink); display: inline-block;
+  }
+  .subsection-title {
+    font-family: 'Fraunces', serif; font-size: 19px; font-weight: 700; color: var(--ink);
+    margin: 24px 0 12px;
+  }
+  p { margin-bottom: 14px; color: var(--ink-light); }
+  strong { color: var(--ink); font-weight: 600; }
+  em { font-style: italic; }
+
+  /* Cards */
+  .card {
+    background: var(--warm-white); border: 1px solid var(--border); border-radius: 12px;
+    padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 12px var(--shadow);
+  }
+  .card .card-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;
+  }
+  .card p { font-size: 15.5px; margin-bottom: 10px; }
+  .card p:last-child { margin-bottom: 0; }
+
+  /* Color variants */
+  .card.blue { border-left: 4px solid var(--accent-blue); }
+  .card.blue .card-label { color: var(--accent-blue); }
+  .card.red { border-left: 4px solid var(--accent-red); }
+  .card.red .card-label { color: var(--accent-red); }
+  .card.green { border-left: 4px solid var(--accent-green); }
+  .card.green .card-label { color: var(--accent-green); }
+  .card.amber { border-left: 4px solid var(--accent-amber); }
+  .card.amber .card-label { color: var(--accent-amber); }
+  .card.purple { border-left: 4px solid var(--accent-purple); }
+  .card.purple .card-label { color: var(--accent-purple); }
+  .card.teal { border-left: 4px solid var(--accent-teal); }
+  .card.teal .card-label { color: var(--accent-teal); }
+
+  /* Tables */
+  .table-wrap { overflow-x: auto; margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  th {
+    background: var(--ink); color: var(--cream); padding: 10px 14px; text-align: left;
+    font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--ink-light); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) { background: var(--warm-white); }
+
+  /* Quote */
+  .quote {
+    border-left: 3px solid var(--accent-amber); background: var(--accent-amber-light);
+    padding: 14px 18px; margin: 16px 0; border-radius: 0 8px 8px 0; font-style: italic;
+    font-size: 15px; color: var(--ink); line-height: 1.6;
+  }
+  .quote .attr { font-style: normal; font-size: 13px; color: var(--ink-faint); margin-top: 6px; }
+
+  /* Challenge boxes */
+  .challenge {
+    background: var(--accent-red-light); border-radius: 8px; padding: 14px 18px;
+    margin: 12px 0; font-size: 14.5px; line-height: 1.6;
+  }
+  .challenge strong { color: var(--accent-red); }
+
+  /* Lesson boxes */
+  .lesson {
+    background: var(--accent-green-light); border-radius: 8px; padding: 14px 18px;
+    margin: 12px 0; font-size: 14.5px; line-height: 1.6;
+  }
+  .lesson strong { color: var(--accent-green); }
+
+  /* Nuance */
+  .nuance {
+    background: var(--accent-amber-light); border: 1px solid #E8D9A8; border-radius: 8px;
+    padding: 14px 18px; margin: 16px 0; font-size: 14px; line-height: 1.6; color: var(--ink-light);
+  }
+  .nuance strong { color: var(--accent-amber); }
+
+  /* Pipeline diagram */
+  .pipeline {
+    display: flex; align-items: stretch; gap: 0; margin: 24px 0;
+    border-radius: 12px; overflow: hidden; border: 1px solid var(--border);
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+  .pipeline-item { flex: 1; padding: 16px 12px; text-align: center; border-right: 1px solid var(--border); }
+  .pipeline-item:last-child { border-right: none; }
+  .pipeline-item .num { font-family: 'Fraunces', serif; font-weight: 700; font-size: 20px; margin-bottom: 4px; }
+  .pipeline-item .label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .pipeline-item .desc { font-size: 12px; color: var(--ink-light); line-height: 1.4; }
+  .p-blue { background: var(--accent-blue-light); }
+  .p-blue .num, .p-blue .label { color: var(--accent-blue); }
+  .p-green { background: var(--accent-green-light); }
+  .p-green .num, .p-green .label { color: var(--accent-green); }
+  .p-amber { background: var(--accent-amber-light); }
+  .p-amber .num, .p-amber .label { color: var(--accent-amber); }
+  .p-purple { background: var(--accent-purple-light); }
+  .p-purple .num, .p-purple .label { color: var(--accent-purple); }
+  .p-teal { background: var(--accent-teal-light); }
+  .p-teal .num, .p-teal .label { color: var(--accent-teal); }
+
+  /* Takeaway */
+  .takeaway {
+    background: var(--ink); color: var(--cream); border-radius: 12px; padding: 28px; margin-top: 40px; text-align: center;
+  }
+  .takeaway .label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-amber); margin-bottom: 10px; }
+  .takeaway p { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 300; line-height: 1.6; color: var(--cream); margin-bottom: 0; }
+
+  @media (max-width: 600px) {
+    .container { padding: 32px 16px 60px; }
+    .header h1 { font-size: 26px; }
+    .pipeline { flex-direction: column; }
+    .pipeline-item { border-right: none; border-bottom: 1px solid var(--border); }
+    .pipeline-item:last-child { border-bottom: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-label">MG402 · Case Study Guide</div>
+    <h1>The Blackstone Project</h1>
+    <div class="subtitle">Preventing Pollution in Massachusetts</div>
+    <div class="source">Harvard Kennedy School Case · Esther Scott for Michael Barzelay · 1993</div>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <h3>Contents</h3>
+    <ol>
+      <li><a href="#overview">Case Overview</a></li>
+      <li><a href="#problem">The Core Problem: Pollution Shell Game</a></li>
+      <li><a href="#innovation">The Innovation</a></li>
+      <li><a href="#overhaul">Overhauling DEQE → DEP</a></li>
+      <li><a href="#born">The Blackstone Project Is Born</a></li>
+      <li><a href="#challenges">Seven Implementation Challenges</a></li>
+      <li><a href="#interagency">Interagency Relations: The Snitch Problem</a></li>
+      <li><a href="#firms">Relations with Regulated Firms</a></li>
+      <li><a href="#stanton">Stanton's Task</a></li>
+      <li><a href="#simon-design">Framework: Herbert Simon's Design Cycle</a></li>
+      <li><a href="#diagnostic">Framework: Robert Simons' Diagnostic Controls</a></li>
+      <li><a href="#cross-case">Cross-Case Synthesis: Brazil, Kumbh Mela, E-JUST</a></li>
+      <li><a href="#takeaway">Key Takeaway</a></li>
+    </ol>
+  </div>
+
+  <!-- 1. Overview -->
+  <div class="section" id="overview">
+    <div class="section-title">1. Case Overview</div>
+    <p>In 1989, the Massachusetts Department of Environmental Protection (DEP) launched a pilot <strong>"cross-media" inspection program</strong> called the Blackstone Project. The goal: fundamentally change how the state conducted environmental inspections — shifting from medium-specific, compliance-oriented inspections to <strong>whole-facility, cross-media inspections oriented toward pollution prevention at the source</strong>.</p>
+    <p>The case ends at the <strong>decision point</strong>: Assistant Commissioner Pat Stanton must design the operational plan to make this work. The unresolved question IS the case.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Key People</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Patricia Deese Stanton</strong></td><td>Assistant Commissioner for Waste Prevention; must design the operational plan</td></tr>
+          <tr><td><strong>Daniel Greenbaum</strong></td><td>DEP Commissioner; drove the DEQE → DEP reorganization</td></tr>
+          <tr><td><strong>Nikki Roy</strong></td><td>Source reduction policy coordinator; originated the cross-media idea</td></tr>
+          <tr><td><strong>Barry Fogel</strong></td><td>Director, Central Regional Office (Worcester); only regional director willing to host</td></tr>
+          <tr><td><strong>Tom Cusson</strong></td><td>Air quality section chief; 21-year veteran; most vocal skeptic</td></tr>
+          <tr><td><strong>Michael Maher</strong></td><td>Regional engineer, Central Regional Office</td></tr>
+          <tr><td><strong>Tim Greiner</strong></td><td>OTA staff; articulated the trust/confidentiality concern</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 2. Core Problem -->
+  <div class="section" id="problem">
+    <div class="section-title">2. The Core Problem: The Pollution Shell Game</div>
+    <p>Environmental regulation was organized in <strong>silos</strong> — air, water, and hazardous waste inspected separately by different inspectors under different federal laws. They didn't share reports, had different file systems, and sat next to each other but "knew very, very little about what the other program did."</p>
+    <p>This created the <strong>"pollution shell game"</strong>:</p>
+
+    <div class="pipeline">
+      <div class="pipeline-item p-blue">
+        <div class="num">1</div>
+        <div class="label">Air</div>
+        <div class="desc">Smokestack scrubber removes air pollution using water</div>
+      </div>
+      <div class="pipeline-item p-amber">
+        <div class="num">2</div>
+        <div class="label">Water</div>
+        <div class="desc">Scrubber creates contaminated water</div>
+      </div>
+      <div class="pipeline-item p-purple">
+        <div class="num">3</div>
+        <div class="label">Waste</div>
+        <div class="desc">Treating water produces hazardous sludge</div>
+      </div>
+      <div class="pipeline-item p-teal">
+        <div class="num">4</div>
+        <div class="label">Land</div>
+        <div class="desc">Sludge goes to landfill</div>
+      </div>
+    </div>
+
+    <p>Pollution wasn't being <em>reduced</em> — just <strong>shuffled between media</strong>. Each program declared compliance within its silo while the total pollution remained the same.</p>
+
+    <div class="quote">
+      "We had done the 80 percent that was easy. The last 20 percent was very expensive."
+      <div class="attr">— Patricia Deese Stanton, on why end-of-pipe control had hit diminishing returns</div>
+    </div>
+  </div>
+
+  <!-- 3. Innovation -->
+  <div class="section" id="innovation">
+    <div class="section-title">3. The Innovation</div>
+    <p><strong>Nikki Roy</strong> proposed combining two ideas:</p>
+
+    <div class="card blue">
+      <div class="card-label">🔍 Cross-Media Inspections</div>
+      <p>One team examines air, water, AND waste at a facility in a single visit — seeing the whole picture instead of isolated slices. This catches media transfers that single-medium inspections miss.</p>
+    </div>
+
+    <div class="card green">
+      <div class="card-label">🌱 Source Reduction</div>
+      <p>Instead of asking "how do you treat this waste?" → ask <strong>"do you need to create this waste at all?"</strong> Shift enforcement actions toward preventing pollution at its origin, not controlling it after creation.</p>
+    </div>
+
+    <div class="card purple">
+      <div class="card-label">🤝 DEP-OTA Partnership</div>
+      <p>An unprecedented alliance between the <strong>regulator</strong> (DEP / "bad cop") and the <strong>technical assistance provider</strong> (OTA / "good cop"). DEP inspectors refer non-compliant companies to OTA for free help in source reduction, instead of just punishing them.</p>
+    </div>
+  </div>
+
+  <!-- 4. Overhaul -->
+  <div class="section" id="overhaul">
+    <div class="section-title">4. Overhauling DEQE → DEP</div>
+    <p><strong>DEQE</strong> (Department of Environmental Quality Engineering) was Massachusetts' original environmental regulatory agency. It had a terrible reputation — <em>"a dirty word"</em> among regulated companies. The Tsongas Commission found it lacked a "clear sense of mission" and was too reactive.</p>
+
+    <p>In <strong>September 1988</strong>, new Commissioner <strong>Daniel Greenbaum</strong> restructured everything:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>New Bureau</th><th>Focus</th><th>Metaphor</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Bureau of Waste Site Cleanup</strong></td><td>Cleaning up existing contamination</td><td>"Past sins"</td></tr>
+          <tr><td><strong>Bureau of Waste Prevention</strong></td><td>Stopping ongoing pollution</td><td>"Present sins"</td></tr>
+          <tr><td><strong>Bureau of Resource Protection</strong></td><td>Preventing future damage</td><td>"Future sins"</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The reorganization created the institutional home (Bureau of Waste Prevention) and the leadership position (Stanton as Assistant Commissioner) that made the Blackstone pilot possible.</p>
+  </div>
+
+  <!-- 5. Born -->
+  <div class="section" id="born">
+    <div class="section-title">5. The Blackstone Project Is Born</div>
+
+    <div class="subsection-title">Roy's Struggle (1987-1989)</div>
+    <p>Roy had been pushing since her <strong>March 1987 memo</strong>. She formed a Source Reduction Policy Advisory Committee, got endorsement — then the pilot was put "on hold for a year." Her first EPA grant application was <strong>rejected</strong>. Eventually DEM secured a $289K EPA grant, and DEP added positions via the National Governors Association.</p>
+    <p><strong>Total resources: 4 new staff positions.</strong> That's all.</p>
+
+    <div class="subsection-title">Site Selection</div>
+    <p>Only <strong>1 of 4 regional directors</strong> (Barry Fogel in Worcester) was willing to host. The <strong>Blackstone River area</strong> was chosen: heavy concentration of electroplating, metal finishing, and electronics manufacturing polluting into Narragansett Bay. Good mix of large and small companies.</p>
+  </div>
+
+  <!-- 6. Challenges -->
+  <div class="section" id="challenges">
+    <div class="section-title">6. Seven Implementation Challenges</div>
+
+    <div class="challenge">
+      <strong>1. Silo Identity</strong> — Inspectors identified deeply with their program. They "grew to like and become more expert in" their area and didn't want to change. Programs didn't share reports, had different file systems and inspection styles.
+    </div>
+
+    <div class="challenge">
+      <strong>2. Expertise Concerns</strong> — Tom Cusson argued it takes a full year to train an air inspector. "Two file drawers full of laws." His medical analogy: <em>"You need heart surgery, you go to a heart specialist. The environmental area is pretty much the same kind of thing."</em>
+    </div>
+
+    <div class="challenge">
+      <strong>3. Quality Accountability</strong> — Section chiefs were responsible for inspection reports but reports would now come from inspectors outside their program. "I'm on the hook for a report written by someone who doesn't know my regulations."
+    </div>
+
+    <div class="challenge">
+      <strong>4. Culture Clash</strong> — Hazardous waste = black and white ("it's there or not"). Air quality = more discretion. Wastewater = gray areas. These weren't just procedural differences — they were philosophical differences about what enforcement means.
+    </div>
+
+    <div class="challenge">
+      <strong>5. EPA Bean-Counting</strong> — EPA grants required specific inspection numbers per medium. Cross-media visits didn't fit the counting system. 25% of DEP's budget (55% of air quality) depended on satisfying these requirements.
+    </div>
+
+    <div class="challenge">
+      <strong>6. DEP-OTA Trust</strong> — OTA built industry trust through confidentiality (legally protected by TURA). Partnering with the enforcer threatened to destroy that trust. See Interagency Relations section below.
+    </div>
+
+    <div class="challenge">
+      <strong>7. Impact on Firms</strong> — Four inspectors at a small electroplating shop = terrifying. Four inspectors at Wyman-Gordon (2,500 employees) = manageable but disrupts established relationships. See Relations with Firms section below.
+    </div>
+  </div>
+
+  <!-- 7. Interagency -->
+  <div class="section" id="interagency">
+    <div class="section-title">7. Interagency Relations: The Snitch Problem</div>
+
+    <div class="card red">
+      <div class="card-label">🎯 The Core Dilemma</div>
+      <p>OTA could only help companies if companies <strong>trusted</strong> OTA wouldn't report to DEP. But partnering with DEP threatened that trust. TURA law explicitly banned OTA from sharing information with DEP.</p>
+    </div>
+
+    <div class="quote">
+      "We had spent a lot of time building trust among firms who thought, 'The only reason government comes to our plants is to inspect us and fine us.' And we said, 'No, we're here to provide technical assistance. We do not report anything to DEP.'"
+      <div class="attr">— Tim Greiner, OTA</div>
+    </div>
+
+    <div class="quote">
+      "DEP could really muff it up if we interacted with them. They could ruin the trust we built with industry."
+      <div class="attr">— Tim Greiner, OTA</div>
+    </div>
+
+    <p><strong>The real incidents:</strong> DEP inspectors would visit a site recently visited by OTA and find serious violations. The company would say: <em>"Someone from the state was already here and they didn't say anything about this."</em> This created tension on both sides — DEP felt OTA was protecting violators; companies suspected OTA was tipping off DEP.</p>
+
+    <p>Greenbaum called it the <strong>"good guy-bad guy, white hat-black hat syndrome."</strong></p>
+  </div>
+
+  <!-- 8. Firms -->
+  <div class="section" id="firms">
+    <div class="section-title">8. Relations with Regulated Firms</div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Expected Benefits</th><th>Expected Concerns</th></tr></thead>
+        <tbody>
+          <tr><td>Fewer inspections per year (one visit covers all media)</td><td>4 inspectors at once could terrify small firms</td></tr>
+          <tr><td>Fewer contradictory requirements</td><td>Disrupts established inspector-company relationships at large firms</td></tr>
+          <tr><td>Faster answers from DEP</td><td>Companies had organized their own environmental depts to mirror DEP's silos</td></tr>
+          <tr><td>Small firms get OTA referrals for free help</td><td>Sophisticated firms may resist generalist inspectors</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="quote">
+      "We're going to send all four inspectors to the same plant on the same day? Isn't that going to scare the bejesus out of them?"
+      <div class="attr">— Daniel Greenbaum, DEP Commissioner</div>
+    </div>
+  </div>
+
+  <!-- 9. Stanton -->
+  <div class="section" id="stanton">
+    <div class="section-title">9. Stanton's Task</div>
+
+    <div class="card amber">
+      <div class="card-label">⚡ The Central Tension</div>
+      <p><strong>Stanton has the responsibility but not the authority.</strong> She's the HQ official with direct responsibility for air quality, industrial wastewater, and hazardous waste programs. But she does NOT have direct line authority over the regional offices and inspectors who will execute the pilot. Regional offices report to the Deputy Commissioner for Operations — a completely different chain of command.</p>
+    </div>
+
+    <p><strong>Her background:</strong> 2.5 years as director of DEP's Division of Water Supply; previously a project manager at Arthur D. Little consulting — experience that would serve her well. She beat Barry Fogel (who's hosting the pilot) for the assistant commissioner job.</p>
+
+    <p><strong>She must design an operational plan that:</strong></p>
+    <ul style="padding-left: 20px; color: var(--ink-light); margin-bottom: 14px;">
+      <li>Gets section chiefs on board despite their resistance</li>
+      <li>Structures cross-media teams despite the expertise gap</li>
+      <li>Satisfies EPA's program-specific requirements</li>
+      <li>Makes the DEP-OTA partnership work without destroying trust</li>
+      <li>Doesn't overwhelm small businesses</li>
+      <li>All without direct line authority</li>
+    </ul>
+  </div>
+
+  <!-- 10. Herbert Simon -->
+  <div class="section" id="simon-design">
+    <div class="section-title">10. Framework: Herbert Simon's Design Cycle</div>
+    <p><em>From Chapter 3 of Public Management: Recovering Designs through Case Study Research</em></p>
+
+    <div class="subsection-title">The Design Cycle Applied to Blackstone</div>
+    <p>The Blackstone Project IS an endeavor to develop an innovative system. Simon's design cycle maps onto it:</p>
+
+    <div class="pipeline">
+      <div class="pipeline-item p-blue">
+        <div class="label">Analysis</div>
+        <div class="desc">Roy identifying media transfers, regulatory gaps</div>
+      </div>
+      <div class="pipeline-item p-green">
+        <div class="label">Synthesis</div>
+        <div class="desc">Imagining cross-media + OTA partnership</div>
+      </div>
+      <div class="pipeline-item p-amber">
+        <div class="label">Testing</div>
+        <div class="desc">The pilot itself</div>
+      </div>
+      <div class="pipeline-item p-purple">
+        <div class="label">Evaluation</div>
+        <div class="desc">Did it catch transfers? Did referrals work?</div>
+      </div>
+      <div class="pipeline-item p-teal">
+        <div class="label">Decision</div>
+        <div class="desc">Adopt statewide, modify, or abandon?</div>
+      </div>
+    </div>
+
+    <p><strong>Satisficing principle:</strong> Stanton doesn't need the perfect system — she needs one <em>good enough</em> to pilot, learn from, and iterate.</p>
+
+    <div class="subsection-title">Where Simon Falls Short</div>
+
+    <div class="card blue">
+      <div class="card-label">Gap 1: Management ≠ Just Decision-Making</div>
+      <p>Simon only includes management at the decision-making stage. But Blackstone's hardest challenges are <strong>directing</strong> (mobilizing section chiefs, regional offices, OTA) and <strong>programming</strong> (designing operational protocols). These require authority, persuasion, and coordination that Simon doesn't address. <em>Fix: Fayol/POSDCORB adds directing + programming as management tasks within the design cycle.</em></p>
+    </div>
+
+    <div class="card green">
+      <div class="card-label">Gap 2: Design Stages Matter</div>
+      <p>The <strong>conceptual design</strong> is done (cross-media + source reduction + OTA). Stanton's job is <strong>embodiment and detailed design</strong> — translating the concept into specific team structures, reporting flows, and referral protocols. That's a different kind of work from creative synthesis. <em>Fix: Pahl & Beitz distinguish conceptual → embodiment → detailed design.</em></p>
+    </div>
+
+    <div class="card amber">
+      <div class="card-label">Gap 3: Time Constraints Are Specific</div>
+      <p>Simon says "search until good enough or time runs out." But Blackstone has EPA grant periods, training timelines, and political windows. Stanton needs <strong>timely resolution</strong> — a workable plan early enough that implementation can happen. <em>Fix: work backwards from deadlines, not just forward from ideas.</em></p>
+    </div>
+  </div>
+
+  <!-- 11. Robert Simons -->
+  <div class="section" id="diagnostic">
+    <div class="section-title">11. Framework: Robert Simons' Diagnostic Controls</div>
+    <p><em>A diagnostic control system needs: (1) measurable outputs, (2) predetermined standards, (3) correction mechanisms.</em></p>
+
+    <div class="subsection-title">Three Layers of Diagnostic Control for Blackstone</div>
+
+    <div class="card blue">
+      <div class="card-label">Layer 1: Satisfy Existing EPA System</div>
+      <p>EPA counts inspections by medium. <strong>Don't fight these metrics — translate into them.</strong> Each cross-media visit must be documented to count as separate air, water, AND hazwaste inspections. Create a dual reporting template: one cross-media report internally, plus medium-specific extracts for EPA. If program counts fall behind, supplement with traditional inspections.</p>
+    </div>
+
+    <div class="card green">
+      <div class="card-label">Layer 2: Build New Cross-Media Metrics</div>
+      <p>Track what matters for the pilot: <strong>media transfers identified, OTA referrals made, source reduction plans adopted, time-to-inspection, cross-training hours.</strong> Set modest Year 1 targets to build credibility. Monthly review meetings between Stanton, Fogel, and Maher.</p>
+    </div>
+
+    <div class="card purple">
+      <div class="card-label">Layer 3: Monitor the Interagency Relationship</div>
+      <p>Track DEP-OTA referral volume, OTA response time, company willingness to work with OTA, and <strong>trust incidents</strong> (confidentiality breaches or companies complaining). Zero tolerance on confidentiality breaches. Quarterly joint DEP-OTA reviews.</p>
+    </div>
+
+    <div class="nuance">
+      <strong>⚡ Why this solves Stanton's authority problem:</strong> She can't order section chiefs to comply — but she CAN define what gets measured. Whoever controls the metrics controls behavior. By making pilot performance visible to the Commissioner and legislature, everyone has incentive to hit targets regardless of reporting lines. Diagnostic controls create <strong>authority through systems, not org charts</strong>.
+    </div>
+  </div>
+
+  <!-- 12. Cross-Case -->
+  <div class="section" id="cross-case">
+    <div class="section-title">12. Cross-Case Synthesis</div>
+    <p><em>How do lessons from Brazil in Action, the Kumbh Mela, and E-JUST apply to Blackstone?</em></p>
+
+    <div class="card green">
+      <div class="card-label">🇧🇷 Brazil in Action → Authority Without Hierarchy</div>
+      <p><strong>The parallel:</strong> SPI had ~30 staff, no formal authority over ministries — identical to Stanton's position.</p>
+      <p><strong>Lesson 1:</strong> Build accountability through information. Brazil created the MIS making performance visible. Stanton should create a <strong>transparent monitoring system</strong> for the pilot.</p>
+      <p><strong>Lesson 2:</strong> Use conditional resource mechanisms. Brazil tied fund release to milestones. Stanton controls 4 new staff positions — <strong>allocate them conditionally</strong> based on pilot progress.</p>
+      <p><strong>Lesson 3:</strong> Invest in relationships, not directives. SPI succeeded by becoming a trusted partner. Stanton should work <strong>alongside</strong> Fogel and Maher, not issue plans from HQ.</p>
+      <p><strong>Warning:</strong> SPI worked because it had presidential backing. Stanton needs Commissioner Greenbaum to <strong>visibly signal</strong> this matters.</p>
+    </div>
+
+    <div class="card amber">
+      <div class="card-label">🇮🇳 Kumbh Mela → Design Through Test-Iterate Cycles</div>
+      <p><strong>The parallel:</strong> Both are developing innovative systems that don't exist yet under time pressure.</p>
+      <p><strong>Lesson 1:</strong> Separate directing from programming. Ashish Goel directed; Saloni Goel programmed. Stanton should <strong>direct</strong> (mobilize resources, clear obstacles) while delegating <strong>programming</strong> (operational details) to someone in the regional office.</p>
+      <p><strong>Lesson 2:</strong> Use the pilot as a design test. The Magh Mela was a real-world test before the full Kumbh. Blackstone is embodiment design + testing — <strong>expect iteration</strong>. The first cross-media inspection will be messy. That's the point.</p>
+      <p><strong>Lesson 3:</strong> Timely resolution. Launch imperfectly early rather than perfectly late. Start with a few willing companies, learn, refine, expand.</p>
+    </div>
+
+    <div class="card red">
+      <div class="card-label">🇪🇬🇯🇵 E-JUST → Specify Governance Before Launch</div>
+      <p><strong>The parallel:</strong> E-JUST's R/D was detailed on academics but vague on governance — the Blackstone idea is well-articulated but operational management arrangements are underspecified.</p>
+      <p><strong>Lesson 1:</strong> Don't repeat the governance gap. E-JUST launched without standard operating procedures for management → soft opening off-track. Stanton must <strong>specify management arrangements before launch</strong>.</p>
+      <p><strong>Lesson 2:</strong> Don't let one person become a bottleneck. Khairy's centralized style paralyzed E-JUST. Stanton must <strong>delegate operational authority to Fogel and Maher</strong> while retaining strategic oversight.</p>
+      <p><strong>Lesson 3:</strong> Design the collaboration explicitly. E-JUST assumed the Egyptian-Japanese partnership would work itself out. It didn't. The DEP-OTA modus operandi must be <strong>explicitly designed</strong> — when to refer, what's shared, what happens when violations are found.</p>
+    </div>
+
+    <div class="subsection-title">Three Meta-Lessons for Blackstone</div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Lesson</th><th>Source</th><th>Application</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Authority comes from systems, not org charts</strong></td>
+            <td>Brazil in Action</td>
+            <td>Build monitoring and resource mechanisms that create accountability without hierarchical authority</td>
+          </tr>
+          <tr>
+            <td><strong>Design through test-iterate, not perfect plans</strong></td>
+            <td>Kumbh Mela</td>
+            <td>Treat the pilot as a design test. Launch early, learn fast, iterate. Separate directing from programming</td>
+          </tr>
+          <tr>
+            <td><strong>Specify governance before launch</strong></td>
+            <td>E-JUST</td>
+            <td>Don't assume operational arrangements will work themselves out. Design team structures, reporting flows, and interagency protocols explicitly</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Takeaway -->
+  <div class="takeaway" id="takeaway">
+    <div class="label">💡 The Integrating Insight</div>
+    <p>Every case shows that the <strong>gap between policy vision and operational reality</strong> is where endeavors succeed or fail. Brazil bridged it with MIS + conditional funding. Kumbh Mela bridged it with management tasks coupled to technical tasks. E-JUST <em>failed</em> to bridge it because governance was underspecified. Stanton's operational plan IS the bridge — and it needs to address authority, design process, and management specification simultaneously.</p>
+  </div>
+
+</div>
+</body>
+</html>
