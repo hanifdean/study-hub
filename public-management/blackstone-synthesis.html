@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blackstone Synthesis — MG4F8 Public Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f5f0;
+    --surface: #ffffff;
+    --text: #1c1917;
+    --text-secondary: #57534e;
+    --text-muted: #a8a29e;
+    --border: #e7e5e4;
+    --border-light: #f0eeeb;
+
+    /* Case colors — muted, sophisticated */
+    --ejust: #b45309;
+    --ejust-bg: #fef3c7;
+    --ejust-border: #fde68a;
+    --ejust-surface: #fffbeb;
+
+    --brazil: #0d7c66;
+    --brazil-bg: #d1fae5;
+    --brazil-border: #a7f3d0;
+    --brazil-surface: #ecfdf5;
+
+    --kumbh: #7c3aed;
+    --kumbh-bg: #ede9fe;
+    --kumbh-border: #ddd6fe;
+    --kumbh-surface: #f5f3ff;
+
+    --blackstone: #1d4ed8;
+    --blackstone-bg: #dbeafe;
+    --blackstone-border: #bfdbfe;
+    --blackstone-surface: #eff6ff;
+
+    --simon: #be123c;
+    --simon-bg: #ffe4e6;
+    --simon-border: #fecdd3;
+    --simon-surface: #fff1f2;
+
+    --nav-active: #1c1917;
+    --nav-inactive: #a8a29e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ---- HEADER ---- */
+  .page-header {
+    padding: 3rem 1.5rem 2rem;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .page-header .breadcrumb {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .page-header .breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .page-header .breadcrumb a:hover { color: var(--text-secondary); }
+  .page-header .breadcrumb span { margin: 0 0.4rem; }
+  .page-header h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.02em;
+  }
+  .page-header .subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 560px;
+    line-height: 1.55;
+  }
+  .page-header .meta {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .page-header .meta-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+  }
+
+  /* ---- NAV ---- */
+  .nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    transition: box-shadow 0.2s ease;
+  }
+  .nav-wrap.scrolled {
+    box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+  }
+  .nav {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    padding: 0.75rem 1rem;
+    border: none;
+    background: transparent;
+    color: var(--nav-inactive);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.15s ease;
+    white-space: nowrap;
+    position: relative;
+    letter-spacing: 0.01em;
+  }
+  .nav-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1rem;
+    right: 1rem;
+    height: 2px;
+    background: transparent;
+    border-radius: 2px 2px 0 0;
+    transition: background 0.15s ease;
+  }
+  .nav-btn.active { color: var(--nav-active); }
+  .nav-btn.active::after { background: var(--nav-active); }
+  .nav-btn:hover:not(.active) { color: var(--text-secondary); }
+
+  /* Color indicators on nav */
+  .nav-btn .dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 0.4rem;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+
+  /* ---- CONTAINER ---- */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 5rem;
+  }
+
+  /* ---- SECTIONS ---- */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  .section-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    line-height: 1.6;
+  }
+
+  /* ---- CARDS ---- */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: box-shadow 0.15s ease;
+  }
+  .card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+  }
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .card-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    font-weight: 600;
+  }
+  .card-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.35;
+  }
+  .card-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+  }
+
+  /* ---- HIGHLIGHT BOXES ---- */
+  .callout {
+    border-radius: 10px;
+    padding: 1.15rem 1.25rem;
+    margin: 1.25rem 0;
+    border-left: 3px solid;
+  }
+  .callout .callout-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .callout p, .callout li {
+    font-size: 0.84rem;
+    line-height: 1.6;
+    color: var(--text);
+  }
+
+  .callout-ejust { background: var(--ejust-surface); border-color: var(--ejust); }
+  .callout-ejust .callout-label { color: var(--ejust); }
+  .callout-brazil { background: var(--brazil-surface); border-color: var(--brazil); }
+  .callout-brazil .callout-label { color: var(--brazil); }
+  .callout-kumbh { background: var(--kumbh-surface); border-color: var(--kumbh); }
+  .callout-kumbh .callout-label { color: var(--kumbh); }
+  .callout-blackstone { background: var(--blackstone-surface); border-color: var(--blackstone); }
+  .callout-blackstone .callout-label { color: var(--blackstone); }
+  .callout-simon { background: var(--simon-surface); border-color: var(--simon); }
+  .callout-simon .callout-label { color: var(--simon); }
+
+  /* ---- KEY CONCEPT ---- */
+  .key-concept {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    position: relative;
+  }
+  .key-concept::before {
+    content: 'Key Concept';
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    position: absolute;
+    top: -0.55rem;
+    left: 1.25rem;
+    background: var(--bg);
+    padding: 0 0.5rem;
+  }
+  .key-concept p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+  .key-concept strong {
+    color: var(--text);
+  }
+
+  /* ---- LISTS ---- */
+  ul, ol {
+    padding-left: 1.25rem;
+    margin: 0.6rem 0;
+  }
+  li {
+    margin-bottom: 0.35rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  li strong { color: var(--text); }
+
+  /* ---- PERSON TAG ---- */
+  .person {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: var(--border-light);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+  .person-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--text-muted);
+  }
+
+  /* ---- TABLES ---- */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 1.25rem 0;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  thead { background: var(--bg); }
+  th {
+    font-weight: 600;
+    text-align: left;
+    padding: 0.7rem 0.9rem;
+    color: var(--text);
+    border-bottom: 1.5px solid var(--border);
+    font-size: 0.68rem;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  td {
+    padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-secondary);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(0,0,0,0.01); }
+
+  /* Case color tags in tables */
+  .case-tag {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+  }
+  .case-tag-ejust { background: var(--ejust-bg); color: var(--ejust); }
+  .case-tag-brazil { background: var(--brazil-bg); color: var(--brazil); }
+  .case-tag-kumbh { background: var(--kumbh-bg); color: var(--kumbh); }
+  .case-tag-blackstone { background: var(--blackstone-bg); color: var(--blackstone); }
+
+  /* ---- FLOW DIAGRAM ---- */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+  }
+  .flow-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .flow-arrow {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  /* ---- GAP CARD ---- */
+  .gap-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-top: 3px solid var(--simon);
+  }
+  .gap-number {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.8rem;
+    color: var(--simon);
+    line-height: 1;
+    margin-bottom: 0.35rem;
+  }
+  .gap-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+  }
+  .gap-desc {
+    font-size: 0.84rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ---- SYNTHESIS ARROW ---- */
+  .synthesis-block {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+    align-items: start;
+  }
+  .synthesis-source {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 0.5rem 0;
+    border-radius: 4px;
+    text-align: center;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .synthesis-content {
+    font-size: 0.84rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .synthesis-content strong { color: var(--text); }
+
+  /* ---- META LESSONS TABLE ---- */
+  .meta-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  @media (min-width: 640px) {
+    .meta-grid { grid-template-columns: 1fr 1fr 1fr; }
+  }
+  .meta-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    border-top: 3px solid;
+  }
+  .meta-card-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .meta-card-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+  .meta-card p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  /* ---- DIVIDER ---- */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 2rem 0;
+  }
+
+  /* ---- SECTION SPACER ---- */
+  .spacer { height: 1.5rem; }
+
+  /* ---- TWO COL ---- */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  @media (min-width: 640px) {
+    .two-col { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ---- TIMELINE ---- */
+  .timeline {
+    position: relative;
+    padding-left: 1.75rem;
+    margin: 1.25rem 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 2px;
+    border-radius: 2px;
+  }
+  .timeline-item {
+    position: relative;
+    padding-bottom: 1.25rem;
+  }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -1.75rem;
+    top: 0.5rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 2px solid var(--bg);
+  }
+  .timeline-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .timeline-text {
+    font-size: 0.84rem;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
+    line-height: 1.55;
+  }
+
+  /* Timeline color variants */
+  .timeline-ejust::before { background: var(--ejust-bg); }
+  .timeline-ejust .timeline-item::before { background: var(--ejust); }
+  .timeline-ejust .timeline-date { color: var(--ejust); }
+
+  /* ---- FOOTER ---- */
+  .footer {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    border-top: 1px solid var(--border);
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .footer p {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .footer a {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+  .footer a:hover { color: var(--text); }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 640px) {
+    .page-header { padding: 2rem 1rem 1.5rem; }
+    .page-header h1 { font-size: 1.6rem; }
+    .container { padding: 1.5rem 1rem 4rem; }
+    .card { padding: 1.15rem; }
+    .nav-btn { padding: 0.65rem 0.75rem; font-size: 0.72rem; }
+    .synthesis-block { grid-template-columns: 1fr; }
+    .synthesis-source {
+      writing-mode: horizontal-tb;
+      transform: none;
+      min-height: auto;
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
+      width: fit-content;
+    }
+  }
+
+  /* Print styles */
+  @media print {
+    .nav-wrap { display: none; }
+    .section { display: block !important; page-break-inside: avoid; }
+    .section + .section { margin-top: 2rem; border-top: 2px solid #ccc; padding-top: 1rem; }
+    body { background: white; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="breadcrumb">
+    <a href="../index.html">Study Hub</a>
+    <span>/</span>
+    <a href="brazil-in-action-study-guide.html">Public Management</a>
+    <span>/</span>
+    Blackstone Synthesis
+  </div>
+  <h1>Blackstone Project &amp; Case Synthesis</h1>
+  <p class="subtitle">Cross-case analysis for MG4F8 — How Brazil in Action, Kumbh Mela, and E-JUST inform the Massachusetts Blackstone pollution prevention pilot.</p>
+  <div class="meta">
+    <span class="meta-item">MG4F8 Public Management</span>
+    <span class="meta-item">Prof. Barzelay</span>
+    <span class="meta-item">LSE Lent Term 2025</span>
+  </div>
+</header>
+
+<nav class="nav-wrap" id="navWrap">
+  <div class="nav" id="nav">
+    <button class="nav-btn active" data-section="overview"><span class="dot" style="background:var(--text)"></span>Overview</button>
+    <button class="nav-btn" data-section="ejust"><span class="dot" style="background:var(--ejust)"></span>E-JUST</button>
+    <button class="nav-btn" data-section="brazil"><span class="dot" style="background:var(--brazil)"></span>Brazil in Action</button>
+    <button class="nav-btn" data-section="kumbh"><span class="dot" style="background:var(--kumbh)"></span>Kumbh Mela</button>
+    <button class="nav-btn" data-section="blackstone"><span class="dot" style="background:var(--blackstone)"></span>Blackstone</button>
+    <button class="nav-btn" data-section="simon"><span class="dot" style="background:var(--simon)"></span>Simon Gaps</button>
+  </div>
+</nav>
+
+<main class="container">
+
+<!-- ============================================================ -->
+<!-- OVERVIEW -->
+<!-- ============================================================ -->
+<div class="section active" id="section-overview">
+  <span class="section-label" style="color:var(--text-muted)">Cross-Case Comparison</span>
+  <h2 class="section-title">Case Comparison Matrix</h2>
+  <p class="section-desc">How four cases illuminate the recurring challenge of getting things done when you have mandate but not command.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th><span class="case-tag case-tag-ejust">E-JUST</span></th>
+          <th><span class="case-tag case-tag-brazil">Brazil</span></th>
+          <th><span class="case-tag case-tag-kumbh">Kumbh Mela</span></th>
+          <th><span class="case-tag case-tag-blackstone">Blackstone</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Authority Problem</strong></td>
+          <td>Bilateral agreement with no shared governance structure</td>
+          <td>Central unit (SPI) has no authority over line ministries</td>
+          <td>Temporary mega-event requiring coordination across agencies</td>
+          <td>Policy authority but no line authority over EPA regional offices</td>
+        </tr>
+        <tr>
+          <td><strong>Core Challenge</strong></td>
+          <td>R/D detailed academics, left governance vague; one person became bottleneck</td>
+          <td>Coordinating 42 projects across sovereign ministries without hierarchy</td>
+          <td>Delivering complex infrastructure + services on immovable religious deadline</td>
+          <td>Launching cross-media pollution prevention pilot through reluctant regional staff</td>
+        </tr>
+        <tr>
+          <td><strong>Form of Functioning</strong></td>
+          <td>Centralized control by President (Prof. Khairy)</td>
+          <td>Effective central oversight WITHOUT formal hierarchical authority</td>
+          <td>Timely resolution through directing + programming cycles</td>
+          <td>TBD &mdash; Stanton must design this</td>
+        </tr>
+        <tr>
+          <td><strong>What Worked</strong></td>
+          <td>Japanese academic model delivered; students enrolled on time</td>
+          <td>MIS + conditional fund release created accountability; 85% completion</td>
+          <td>Design cycle approach; distinguishing directing from programming roles</td>
+          <td>N/A &mdash; synthesis case (forward-looking)</td>
+        </tr>
+        <tr>
+          <td><strong>What Didn't</strong></td>
+          <td>Governance gap led to Japanese exclusion from management; collaboration collapsed</td>
+          <td>Worked only because presidency backed SPI; fragile to political change</td>
+          <td>Extreme time pressure; success partly due to Mela Officer's authority</td>
+          <td>N/A &mdash; Stanton must avoid pitfalls from other cases</td>
+        </tr>
+        <tr>
+          <td><strong>Key Lesson for Blackstone</strong></td>
+          <td>Specify governance BEFORE launch; don't let one person be bottleneck</td>
+          <td>Build accountability through information systems, not hierarchy</td>
+          <td>Distinguish directing from programming; use pilot-as-test-cycle</td>
+          <td>Synthesize all three into a workable design</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="key-concept">
+    <p>The <strong>unifying thread</strong> across all four cases: How do you achieve coordinated action when you have <strong>mandate without command</strong>? Each case reveals a different mechanism &mdash; information systems (Brazil), design cycles (Kumbh Mela), governance protocols (E-JUST) &mdash; and Blackstone must combine them.</p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- E-JUST -->
+<!-- ============================================================ -->
+<div class="section" id="section-ejust">
+  <span class="section-label" style="color:var(--ejust)">Case C</span>
+  <h2 class="section-title">E-JUST: Egypt-Japan University of Science &amp; Technology</h2>
+  <p class="section-desc">A bilateral development cooperation project to create a Japanese-style postgraduate technology university in Egypt &mdash; where detailed academic planning masked a governance vacuum.</p>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--ejust-bg);color:var(--ejust)">R/D</div>
+        <div>
+          <div class="card-title">The Record of Discussions</div>
+          <div class="card-subtitle">Bilateral agreement framework</div>
+        </div>
+      </div>
+      <ul>
+        <li><strong>Detailed on:</strong> Academic programs, curriculum structure, research areas, student intake targets</li>
+        <li><strong>Vague on:</strong> Governance structures, decision-making authority, management protocols, collaboration mechanisms</li>
+        <li>This asymmetry became the root cause of subsequent dysfunction</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--ejust-bg);color:var(--ejust)">T</div>
+        <div>
+          <div class="card-title">Impossible Timeline</div>
+          <div class="card-subtitle">Less than 1 year from R/D to students</div>
+        </div>
+      </div>
+      <ul>
+        <li>R/D signed late 2008</li>
+        <li>First students arriving <strong>September 2009</strong></li>
+        <li>Under 12 months to build governance, recruit faculty, develop curriculum, prepare facilities</li>
+        <li>Timeline pressure made governance shortcuts feel necessary &mdash; but they became structural weaknesses</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout callout-ejust">
+    <div class="callout-label">Core Tension</div>
+    <p><strong>Prof. Khairy's centralized management style</strong> vs. the <strong>Japanese collaborative approach.</strong> The Egyptian side kept Japanese counterparts out of internal management decisions, undermining the bilateral nature of the project. One person became the bottleneck for all decision-making.</p>
+  </div>
+
+  <h3 style="font-size:0.92rem;font-weight:700;margin:1.5rem 0 0.75rem;">Key People</h3>
+  <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+    <span class="person"><span class="person-dot" style="background:var(--ejust)"></span>Prof. Khairy &mdash; E-JUST President (Egyptian side)</span>
+    <span class="person"><span class="person-dot" style="background:var(--ejust)"></span>Dr. Tsunoda &mdash; Japanese coordination lead</span>
+    <span class="person"><span class="person-dot" style="background:var(--ejust)"></span>Prof. Miki &mdash; Japanese academic advisor</span>
+  </div>
+
+  <div class="card">
+    <div class="card-title">What Went Wrong: Governance by Omission</div>
+    <ul>
+      <li><strong>No shared governance protocol:</strong> The R/D assumed goodwill would fill governance gaps &mdash; it didn't</li>
+      <li><strong>Centralized bottleneck:</strong> Prof. Khairy controlled all decisions; Japanese side had no formal channel to influence internal management</li>
+      <li><strong>Cultural mismatch amplified:</strong> Egyptian hierarchical tradition vs. Japanese consensus-building became unresolvable without structural frameworks</li>
+      <li><strong>Bilateral in name only:</strong> Japanese expertise on governance/management was systematically excluded from where it was most needed</li>
+    </ul>
+  </div>
+
+  <div class="callout callout-ejust">
+    <div class="callout-label">Lesson for Blackstone</div>
+    <p>Specify governance and management arrangements <strong>before</strong> launch. Don't let one person become the bottleneck. Design collaboration protocols explicitly &mdash; don't assume they'll emerge naturally from shared goals.</p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- BRAZIL IN ACTION -->
+<!-- ============================================================ -->
+<div class="section" id="section-brazil">
+  <span class="section-label" style="color:var(--brazil)">Cross-Reference</span>
+  <h2 class="section-title">Brazil in Action</h2>
+  <p class="section-desc">SPI's coordination of 42 priority infrastructure projects without formal authority over line ministries. <a href="brazil-in-action-study-guide.html" style="color:var(--brazil);text-decoration:underline;font-weight:600;">Full study guide &rarr;</a></p>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:var(--brazil-bg);color:var(--brazil)">SPI</div>
+      <div>
+        <div class="card-title">The Authority Paradox</div>
+        <div class="card-subtitle">Coordinating without commanding</div>
+      </div>
+    </div>
+    <ul>
+      <li><strong>SPI</strong> (Secretariat of Strategic Projects) sat in the presidency but had <strong>no formal authority</strong> over the ministries implementing the 42 projects</li>
+      <li>Ministries were sovereign in their domains &mdash; SPI couldn't direct them, fire their staff, or override their decisions</li>
+      <li>Challenge: How do you get 42 projects done on time when you can't tell anyone what to do?</li>
+    </ul>
+  </div>
+
+  <div class="callout callout-brazil">
+    <div class="callout-label">Form of Functioning</div>
+    <p>"Effective central oversight WITHOUT formal hierarchical authority"</p>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Mechanism 1: MIS</div>
+      <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;">Management Information System that made project status <strong>transparent</strong>. Every ministry had to report progress on standardized metrics. This created visibility &mdash; and visibility created accountability. Nobody wants to be the one with red indicators in front of the presidency.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Mechanism 2: Conditional Fund Release</div>
+      <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;">Budget tranches were tied to milestone completion. This wasn't punishment &mdash; it was <strong>structural alignment</strong> of incentives. Ministries had sovereignty over execution but resources flowed conditional on demonstrated progress.</p>
+    </div>
+  </div>
+
+  <div class="callout callout-brazil">
+    <div class="callout-label">Lesson for Blackstone</div>
+    <p>Build accountability through <strong>information systems</strong>, not hierarchy. Use <strong>conditional resource mechanisms</strong> to align incentives without requiring command authority. Make performance visible so that social and political pressure does the enforcement work.</p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- KUMBH MELA -->
+<!-- ============================================================ -->
+<div class="section" id="section-kumbh">
+  <span class="section-label" style="color:var(--kumbh)">Chapter 3 &mdash; DRC Extended Illustration</span>
+  <h2 class="section-title">Kumbh Mela</h2>
+  <p class="section-desc">Managing the world's largest temporary gathering through design cycles, with Herbert Simon's framework as analytical lens and Pahl &amp; Beitz as the operational model.</p>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:var(--kumbh-bg);color:var(--kumbh)">F</div>
+      <div>
+        <div class="card-title">Analytical Frameworks Applied</div>
+        <div class="card-subtitle">Simon + Fayol/POSDCORB + Pahl &amp; Beitz</div>
+      </div>
+    </div>
+    <ul>
+      <li><strong>Herbert Simon:</strong> Decision-making as the core of management &mdash; but his framework alone is insufficient (see Simon Gaps section)</li>
+      <li><strong>Fayol / POSDCORB:</strong> Classical management functions (Planning, Organizing, Staffing, Directing, Coordinating, Reporting, Budgeting) &mdash; provides vocabulary but misses design process</li>
+      <li><strong>Pahl &amp; Beitz (adapted):</strong> Engineering design methodology applied to public management &mdash; conceptual design, embodiment design, detailed design</li>
+    </ul>
+  </div>
+
+  <div class="callout callout-kumbh">
+    <div class="callout-label">Form of Functioning</div>
+    <p>"Timely resolution" &mdash; The Mela has an <strong>immovable deadline</strong> (religious calendar). Everything must work by a specific date. This forces a different management logic than open-ended programs.</p>
+  </div>
+
+  <h3 style="font-size:0.92rem;font-weight:700;margin:1.5rem 0 0.75rem;">Key People &amp; Roles</h3>
+  <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.25rem;">
+    <span class="person"><span class="person-dot" style="background:var(--kumbh)"></span>Ashish Goel &mdash; Directing (Mela Officer)</span>
+    <span class="person"><span class="person-dot" style="background:var(--kumbh)"></span>Saloni Goel &mdash; Programming</span>
+  </div>
+
+  <div class="key-concept">
+    <p>The distinction between <strong>directing</strong> and <strong>programming</strong> is critical. Directing = setting intentions and resolving conflicts at the top. Programming = translating those intentions into operational sequences that teams can execute. These are <em>different functions</em> requiring different skills, often done by different people.</p>
+  </div>
+
+  <h3 style="font-size:0.92rem;font-weight:700;margin:1.5rem 0 0.75rem;">Design Cycles</h3>
+  <div class="flow">
+    <div class="flow-step" style="border-color:var(--kumbh-border);background:var(--kumbh-surface)">Conceptual Design</div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-step" style="border-color:var(--kumbh-border);background:var(--kumbh-surface)">Embodiment Design</div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-step" style="border-color:var(--kumbh-border);background:var(--kumbh-surface)">Detailed Design</div>
+  </div>
+  <div class="card" style="margin-top:0.75rem;">
+    <ul>
+      <li><strong>Conceptual:</strong> What are we trying to achieve? What's the overall approach? (e.g., "create a temporary city for 30 million pilgrims")</li>
+      <li><strong>Embodiment:</strong> What are the major subsystems and how do they relate? (e.g., water supply, sanitation, crowd management, road layout)</li>
+      <li><strong>Detailed:</strong> Specific operational plans, schedules, resource allocations for each subsystem</li>
+      <li>These stages aren't strictly sequential &mdash; there are feedback loops between them, but the <strong>distinction matters</strong> for management</li>
+    </ul>
+  </div>
+
+  <div class="callout callout-kumbh">
+    <div class="callout-label">Lesson for Blackstone</div>
+    <p>Distinguish <strong>directing from programming</strong>. Use the <strong>pilot-as-test-cycle</strong> approach &mdash; treat the Blackstone pilot as an embodiment design that will generate feedback for detailed design. <strong>Timely resolution matters</strong> &mdash; set clear milestones and let the deadline discipline the process.</p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- BLACKSTONE -->
+<!-- ============================================================ -->
+<div class="section" id="section-blackstone">
+  <span class="section-label" style="color:var(--blackstone)">Synthesis Case</span>
+  <h2 class="section-title">Massachusetts Blackstone Project</h2>
+  <p class="section-desc">Stanton's challenge: designing a cross-media pollution prevention pilot at EPA Region 1 with policy authority but no line authority over the people who need to do the work.</p>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:var(--blackstone-bg);color:var(--blackstone)">S</div>
+      <div>
+        <div class="card-title">Stanton's Situation</div>
+        <div class="card-subtitle">The authority gap</div>
+      </div>
+    </div>
+    <ul>
+      <li><strong>Policy authority:</strong> Stanton has been given a mandate to run a cross-media pollution prevention pilot in the Blackstone River Valley</li>
+      <li><strong>No line authority:</strong> The regional office staff who need to implement the pilot don't report to Stanton</li>
+      <li><strong>Cross-media challenge:</strong> Pollution prevention cuts across air, water, and waste divisions &mdash; each with their own culture, metrics, and priorities</li>
+      <li>This is the <strong>same structural problem</strong> seen in Brazil (SPI vs ministries), E-JUST (bilateral vs centralized), and Kumbh Mela (Mela Officer vs line departments)</li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3 style="font-size:0.92rem;font-weight:700;margin:0 0 1rem;">Synthesis: Applying Case Lessons</h3>
+
+  <div class="synthesis-block">
+    <div class="synthesis-source" style="background:var(--brazil-bg);color:var(--brazil);">Brazil</div>
+    <div class="synthesis-content">
+      <p><strong>Build accountability through information systems, not hierarchy.</strong> Stanton should create a shared MIS for the Blackstone pilot &mdash; making progress visible across divisions. <strong>Use conditional resource mechanisms:</strong> tie additional project resources (budget, staffing, equipment) to demonstrated cross-media collaboration. Don't try to command; create structural incentives that make cooperation the rational choice.</p>
+    </div>
+  </div>
+
+  <div class="synthesis-block">
+    <div class="synthesis-source" style="background:var(--kumbh-bg);color:var(--kumbh);">Kumbh Mela</div>
+    <div class="synthesis-content">
+      <p><strong>Distinguish directing from programming.</strong> Stanton needs to be clear about which role she's playing and when. Setting the pilot's strategic direction (directing) requires different engagement than designing the operational workflow (programming). <strong>Use pilot-as-test-cycle:</strong> treat Blackstone as an embodiment design &mdash; a structured experiment that generates feedback for future detailed design. <strong>Timely resolution matters:</strong> set clear milestones tied to meaningful deadlines, not open-ended "when we get to it" timelines.</p>
+    </div>
+  </div>
+
+  <div class="synthesis-block">
+    <div class="synthesis-source" style="background:var(--ejust-bg);color:var(--ejust);">E-JUST</div>
+    <div class="synthesis-content">
+      <p><strong>Specify governance and management BEFORE launch.</strong> Don't repeat E-JUST's mistake of leaving governance vague and hoping goodwill fills the gaps. <strong>Don't let one person be the bottleneck:</strong> design decision-making protocols that distribute authority appropriately. <strong>Design collaboration protocols explicitly:</strong> spell out how cross-media teams will work together, resolve conflicts, and make joint decisions. Don't assume shared goals produce shared action.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3 style="font-size:0.92rem;font-weight:700;margin:0 0 1rem;">Three Meta-Lessons</h3>
+
+  <div class="meta-grid">
+    <div class="meta-card" style="border-top-color:var(--brazil);">
+      <div class="meta-card-num" style="color:var(--brazil);">Meta-Lesson 1</div>
+      <div class="meta-card-title">Accountability Without Authority</div>
+      <p>You don't need command to get compliance. <strong>Information transparency + conditional resources</strong> can substitute for hierarchical control. Make performance visible; let social and political dynamics do the enforcement.</p>
+    </div>
+    <div class="meta-card" style="border-top-color:var(--kumbh);">
+      <div class="meta-card-num" style="color:var(--kumbh);">Meta-Lesson 2</div>
+      <div class="meta-card-title">Design Before Doing</div>
+      <p>Distinguish between <strong>conceptual, embodiment, and detailed design</strong> stages. Separate directing from programming roles. Use pilots as structured experiments with feedback loops, not just smaller versions of the full program.</p>
+    </div>
+    <div class="meta-card" style="border-top-color:var(--ejust);">
+      <div class="meta-card-num" style="color:var(--ejust);">Meta-Lesson 3</div>
+      <div class="meta-card-title">Governance Is Infrastructure</div>
+      <p>Governance structures are not overhead &mdash; they are <strong>load-bearing infrastructure</strong>. Specify them explicitly, distribute decision-making, and design collaboration protocols before launch. Vagueness on governance is not flexibility; it's a structural defect.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SIMON GAPS -->
+<!-- ============================================================ -->
+<div class="section" id="section-simon">
+  <span class="section-label" style="color:var(--simon)">Framework Analysis</span>
+  <h2 class="section-title">Where Herbert Simon Falls Short</h2>
+  <p class="section-desc">Three gaps in Simon's decision-making framework exposed by applying it to the Blackstone case.</p>
+
+  <div class="gap-card">
+    <div class="gap-number">1</div>
+    <div class="gap-title">Management Work Is Not Just Decision-Making</div>
+    <div class="gap-desc">
+      <p>Simon's framework treats management as decision-making: identifying alternatives, evaluating consequences, choosing. But the Kumbh Mela case reveals that management also involves <strong>directing</strong> (setting intentions, resolving conflicts, maintaining commitment) and <strong>programming</strong> (translating intentions into operational sequences). These are distinct activities that don't reduce to "choosing among alternatives." Stanton doesn't just need to make decisions &mdash; she needs to direct a cross-media effort and program operational workflows for regional staff.</p>
+    </div>
+  </div>
+
+  <div class="gap-card">
+    <div class="gap-number">2</div>
+    <div class="gap-title">Design Stages Matter</div>
+    <div class="gap-desc">
+      <p>Simon distinguishes "programmed" from "non-programmed" decisions but doesn't account for the <strong>design process</strong> through which complex solutions evolve. Pahl &amp; Beitz show that design moves through conceptual, embodiment, and detailed stages &mdash; each with different requirements, constraints, and types of decisions. Stanton's Blackstone pilot isn't a single decision; it's a <strong>design process</strong> that needs to move through these stages deliberately. Confusing embodiment-level questions with detailed-design questions (or vice versa) leads to dysfunction.</p>
+    </div>
+  </div>
+
+  <div class="gap-card">
+    <div class="gap-number">3</div>
+    <div class="gap-title">Time and External Constraints</div>
+    <div class="gap-desc">
+      <p>Simon's framework is relatively silent on <strong>timely resolution</strong> &mdash; the reality that many management situations have hard deadlines driven by external factors (religious calendars for Kumbh Mela, political cycles for Brazil in Action, student arrival dates for E-JUST). Time doesn't just constrain the search for alternatives; it fundamentally shapes <em>what kind of management work is possible</em>. The Blackstone pilot must operate within political windows &mdash; if it takes too long to show results, support evaporates. Timely resolution is a management imperative, not just a practical constraint.</p>
+    </div>
+  </div>
+
+  <div class="key-concept" style="margin-top:2rem;">
+    <p>These three gaps don't invalidate Simon &mdash; they <strong>extend</strong> him. Simon gives us the analytical starting point (bounded rationality, satisficing, programmed vs. non-programmed decisions). But for public management practice, we need the additional lenses of <strong>directing/programming</strong> (from Fayol + Kumbh Mela analysis), <strong>design stages</strong> (from Pahl &amp; Beitz), and <strong>timely resolution</strong> (from the cases themselves) to fully understand what Stanton must do.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3 style="font-size:0.92rem;font-weight:700;margin:0 0 1rem;">Summary: Simon + Extensions</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Aspect</th>
+          <th>What Simon Covers</th>
+          <th>What's Missing</th>
+          <th>Source of Extension</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Nature of management</strong></td>
+          <td>Decision-making (alternatives, consequences, choice)</td>
+          <td>Directing + programming as distinct management functions</td>
+          <td>Fayol / POSDCORB; Kumbh Mela analysis</td>
+        </tr>
+        <tr>
+          <td><strong>Problem-solving process</strong></td>
+          <td>Programmed vs. non-programmed decisions</td>
+          <td>Design stages (conceptual / embodiment / detailed)</td>
+          <td>Pahl &amp; Beitz; engineering design methodology</td>
+        </tr>
+        <tr>
+          <td><strong>Temporal dimension</strong></td>
+          <td>Bounded rationality (time limits search)</td>
+          <td>Timely resolution as a management imperative</td>
+          <td>Cross-case evidence (Kumbh, Brazil, E-JUST)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+  <p>MG4F8 Public Management &mdash; Prof. Barzelay &mdash; LSE</p>
+  <p style="margin-top:0.35rem;"><a href="../index.html">&larr; Back to Study Hub</a></p>
+</footer>
+
+<script>
+(function() {
+  const nav = document.getElementById('nav');
+  const navWrap = document.getElementById('navWrap');
+  const sections = document.querySelectorAll('.section');
+  const buttons = document.querySelectorAll('.nav-btn');
+
+  // Tab navigation
+  nav.addEventListener('click', function(e) {
+    const btn = e.target.closest('.nav-btn');
+    if (!btn) return;
+    const target = btn.dataset.section;
+    buttons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    sections.forEach(s => {
+      s.classList.toggle('active', s.id === 'section-' + target);
+    });
+    window.scrollTo({ top: navWrap.offsetTop, behavior: 'smooth' });
+  });
+
+  // Sticky shadow
+  let ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        navWrap.classList.toggle('scrolled', window.scrollY > navWrap.offsetTop - 2);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  // Keyboard nav
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      const active = document.querySelector('.nav-btn.active');
+      const all = Array.from(buttons);
+      const idx = all.indexOf(active);
+      let next;
+      if (e.key === 'ArrowRight') {
+        next = all[(idx + 1) % all.length];
+      } else {
+        next = all[(idx - 1 + all.length) % all.length];
+      }
+      next.click();
+    }
+  });
+})();
+</script>
+</body>
+</html>
