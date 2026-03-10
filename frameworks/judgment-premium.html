@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Judgment Premium — Zack Shapiro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f5f0;
+    --surface: #ffffff;
+    --text: #1c1917;
+    --text-secondary: #57534e;
+    --text-muted: #a8a29e;
+    --border: #e7e5e4;
+    --border-light: #f0eeeb;
+
+    --production: #0d7c66;
+    --production-bg: #d1fae5;
+    --production-border: #a7f3d0;
+    --production-surface: #ecfdf5;
+
+    --judgment: #b45309;
+    --judgment-bg: #fef3c7;
+    --judgment-border: #fde68a;
+    --judgment-surface: #fffbeb;
+
+    --crisis: #be123c;
+    --crisis-bg: #ffe4e6;
+    --crisis-border: #fecdd3;
+    --crisis-surface: #fff1f2;
+
+    --connection: #1d4ed8;
+    --connection-bg: #dbeafe;
+    --connection-border: #bfdbfe;
+    --connection-surface: #eff6ff;
+
+    --nav-active: #1c1917;
+    --nav-inactive: #a8a29e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ---- HEADER ---- */
+  .page-header {
+    padding: 3rem 1.5rem 2rem;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .page-header .breadcrumb {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .page-header .breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .page-header .breadcrumb a:hover { color: var(--text-secondary); }
+  .page-header .breadcrumb span { margin: 0 0.4rem; }
+  .page-header h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.02em;
+  }
+  .page-header .subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    line-height: 1.55;
+  }
+  .page-header .meta {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .page-header .meta-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+  }
+
+  /* ---- NAV ---- */
+  .nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    transition: box-shadow 0.2s ease;
+  }
+  .nav-wrap.scrolled {
+    box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+  }
+  .nav {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    padding: 0.75rem 1rem;
+    border: none;
+    background: transparent;
+    color: var(--nav-inactive);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.15s ease;
+    white-space: nowrap;
+    position: relative;
+    letter-spacing: 0.01em;
+  }
+  .nav-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1rem;
+    right: 1rem;
+    height: 2px;
+    background: transparent;
+    border-radius: 2px 2px 0 0;
+    transition: background 0.15s ease;
+  }
+  .nav-btn.active { color: var(--nav-active); }
+  .nav-btn.active::after { background: var(--nav-active); }
+  .nav-btn:hover:not(.active) { color: var(--text-secondary); }
+  .nav-btn .dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 0.4rem;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+
+  /* ---- CONTAINER ---- */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 5rem;
+  }
+
+  /* ---- SECTIONS ---- */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  .section-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    line-height: 1.6;
+  }
+
+  /* ---- CARDS ---- */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: box-shadow 0.15s ease;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.04); }
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .card-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    font-weight: 600;
+  }
+  .card-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.35;
+  }
+  .card-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+  }
+
+  /* ---- HIGHLIGHT BOXES ---- */
+  .callout {
+    border-radius: 10px;
+    padding: 1.15rem 1.25rem;
+    margin: 1.25rem 0;
+    border-left: 3px solid;
+  }
+  .callout .callout-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .callout p, .callout li {
+    font-size: 0.84rem;
+    line-height: 1.6;
+    color: var(--text);
+  }
+
+  .callout-production { background: var(--production-surface); border-color: var(--production); }
+  .callout-production .callout-label { color: var(--production); }
+  .callout-judgment { background: var(--judgment-surface); border-color: var(--judgment); }
+  .callout-judgment .callout-label { color: var(--judgment); }
+  .callout-crisis { background: var(--crisis-surface); border-color: var(--crisis); }
+  .callout-crisis .callout-label { color: var(--crisis); }
+  .callout-connection { background: var(--connection-surface); border-color: var(--connection); }
+  .callout-connection .callout-label { color: var(--connection); }
+
+  /* ---- KEY CONCEPT ---- */
+  .key-concept {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    position: relative;
+  }
+  .key-concept::before {
+    content: attr(data-label);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    position: absolute;
+    top: -0.55rem;
+    left: 1.25rem;
+    background: var(--bg);
+    padding: 0 0.5rem;
+  }
+  .key-concept p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+  .key-concept strong { color: var(--text); }
+
+  /* ---- LISTS ---- */
+  ul, ol {
+    padding-left: 1.25rem;
+    margin: 0.6rem 0;
+  }
+  li {
+    margin-bottom: 0.35rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  li strong { color: var(--text); }
+
+  /* ---- TABLES ---- */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 1.25rem 0;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  thead { background: var(--bg); }
+  th {
+    font-weight: 600;
+    text-align: left;
+    padding: 0.7rem 0.9rem;
+    color: var(--text);
+    border-bottom: 1.5px solid var(--border);
+    font-size: 0.68rem;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  td {
+    padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-secondary);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(0,0,0,0.01); }
+
+  /* ---- BLOCKQUOTE ---- */
+  blockquote {
+    border-left: 3px solid var(--border);
+    padding: 0.75rem 1.25rem;
+    margin: 1.25rem 0;
+    background: var(--surface);
+    border-radius: 0 10px 10px 0;
+  }
+  blockquote p {
+    font-size: 0.88rem;
+    font-style: italic;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  blockquote cite {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.72rem;
+    font-style: normal;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+  }
+
+  /* ---- STAT GRID ---- */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  @media (min-width: 640px) {
+    .stat-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.15rem;
+    text-align: center;
+  }
+  .stat-number {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.6rem;
+    color: var(--crisis);
+    line-height: 1;
+    margin-bottom: 0.35rem;
+  }
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.35;
+  }
+
+  /* ---- TWO COL ---- */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  @media (min-width: 640px) {
+    .two-col { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ---- DIVIDER ---- */
+  .divider { height: 1px; background: var(--border); margin: 2rem 0; }
+
+  /* ---- SPECTRUM BAR ---- */
+  .spectrum {
+    margin: 1.5rem 0;
+    position: relative;
+  }
+  .spectrum-bar {
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(to right, var(--production) 0%, var(--production) 40%, var(--text-muted) 50%, var(--judgment) 60%, var(--judgment) 100%);
+    margin-bottom: 0.5rem;
+  }
+  .spectrum-labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .spectrum-labels .left { color: var(--production); }
+  .spectrum-labels .right { color: var(--judgment); }
+  .spectrum-annotation {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-top: 0.4rem;
+  }
+
+  /* ---- META GRID ---- */
+  .meta-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  @media (min-width: 640px) {
+    .meta-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .meta-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    border-top: 3px solid;
+  }
+  .meta-card-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .meta-card-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+  .meta-card p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  /* ---- FOOTER ---- */
+  .footer {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    border-top: 1px solid var(--border);
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .footer p {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .footer a {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+  .footer a:hover { color: var(--text); }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 640px) {
+    .page-header { padding: 2rem 1rem 1.5rem; }
+    .page-header h1 { font-size: 1.6rem; }
+    .container { padding: 1.5rem 1rem 4rem; }
+    .card { padding: 1.15rem; }
+    .nav-btn { padding: 0.65rem 0.75rem; font-size: 0.72rem; }
+  }
+
+  @media print {
+    .nav-wrap { display: none; }
+    .section { display: block !important; page-break-inside: avoid; }
+    .section + .section { margin-top: 2rem; border-top: 2px solid #ccc; padding-top: 1rem; }
+    body { background: white; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="breadcrumb">
+    <a href="../index.html">Study Hub</a>
+    <span>/</span>
+    Frameworks
+    <span>/</span>
+    The Judgment Premium
+  </div>
+  <h1>The Judgment Premium</h1>
+  <p class="subtitle">Why AI is splitting professional work into two categories &mdash; and why the gap between them is widening exponentially.</p>
+  <div class="meta">
+    <span class="meta-item">Zack Shapiro</span>
+    <span class="meta-item">March 2026</span>
+    <span class="meta-item">Frameworks &amp; Mental Models</span>
+  </div>
+</header>
+
+<nav class="nav-wrap" id="navWrap">
+  <div class="nav" id="nav">
+    <button class="nav-btn active" data-section="core"><span class="dot" style="background:var(--text)"></span>The Split</button>
+    <button class="nav-btn" data-section="distinctions"><span class="dot" style="background:var(--judgment)"></span>Key Distinctions</button>
+    <button class="nav-btn" data-section="crisis"><span class="dot" style="background:var(--crisis)"></span>Training Crisis</button>
+    <button class="nav-btn" data-section="pushback"><span class="dot" style="background:var(--production)"></span>Pushback</button>
+    <button class="nav-btn" data-section="connections"><span class="dot" style="background:var(--connection)"></span>Connections</button>
+  </div>
+</nav>
+
+<main class="container">
+
+<!-- ============================================================ -->
+<!-- THE SPLIT -->
+<!-- ============================================================ -->
+<div class="section active" id="section-core">
+  <span class="section-label" style="color:var(--text-muted)">Core Framework</span>
+  <h2 class="section-title">Two Kinds of Professional Knowing</h2>
+  <p class="section-desc">There are two fundamentally different kinds of professional work. AI is rapidly commoditizing one while making the other exponentially more valuable.</p>
+
+  <div class="spectrum">
+    <div class="spectrum-bar"></div>
+    <div class="spectrum-labels">
+      <span class="left">Production</span>
+      <span class="right">Judgment</span>
+    </div>
+    <p class="spectrum-annotation">AI compresses this gap &mdash; commoditizing the left, amplifying the right</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th style="color:var(--production)">Production</th>
+          <th style="color:var(--judgment)">Judgment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>What it is</strong></td>
+          <td>Research, drafting, analysis, pattern-matching, synthesis</td>
+          <td>Deciding what to do when the answer isn't clear, with real stakes</td>
+        </tr>
+        <tr>
+          <td><strong>AI impact</strong></td>
+          <td>Commoditized at extraordinary speed</td>
+          <td>Getting more expensive</td>
+        </tr>
+        <tr>
+          <td><strong>Moat</strong></td>
+          <td>Temporary (months)</td>
+          <td>Structural (years of consequential reps)</td>
+        </tr>
+        <tr>
+          <td><strong>Example</strong></td>
+          <td>AI maps every redline across 5 legal docs in minutes (a full day for a junior lawyer)</td>
+          <td>A 3-sentence email telling a founder which terms to fight and which to concede &mdash; your reputation on the line</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="key-concept" data-label="The Core Insight">
+    <p>The world has never had a shortage of plausible-sounding analysis. What it has always been short of is <strong>people willing to stake something real on a specific course of action</strong>. AI produces taste without commitment. Recognition without stakes. That gap is the judgment premium.</p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- KEY DISTINCTIONS -->
+<!-- ============================================================ -->
+<div class="section" id="section-distinctions">
+  <span class="section-label" style="color:var(--judgment)">Unbundling</span>
+  <h2 class="section-title">Three Distinctions That Matter</h2>
+  <p class="section-desc">Shapiro doesn't just identify the split &mdash; he unbundles the concepts that people conflate, revealing where the real defensibility lies.</p>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:var(--judgment-bg);color:var(--judgment)">1</div>
+      <div>
+        <div class="card-title">Taste vs. Judgment</div>
+        <div class="card-subtitle">Silicon Valley's favorite word, decomposed</div>
+      </div>
+    </div>
+    <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;margin-bottom:0.75rem;">"Taste" actually bundles two different things:</p>
+    <div class="two-col">
+      <div class="callout callout-production" style="margin:0">
+        <div class="callout-label">Pattern Recognition on Quality</div>
+        <p>Knowing what "good" looks like across massive examples. AI is getting very good at this. It can tell you which design is better, which brief is sharper, which pitch deck has stronger narrative flow.</p>
+      </div>
+      <div class="callout callout-judgment" style="margin:0">
+        <div class="callout-label">Commitment to Act Under Stakes</div>
+        <p>Deciding what to <em>do</em> in a specific situation where the consequences are yours. This is judgment. The signature on the brief IS the product. Strip away the commitment and you have an opinion.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:var(--judgment-bg);color:var(--judgment)">2</div>
+      <div>
+        <div class="card-title">Why Stakes ARE the Product</div>
+        <div class="card-subtitle">The signature, not the analysis</div>
+      </div>
+    </div>
+    <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;">A lawyer's advice isn't an analytical exercise &mdash; it's a <strong>commitment</strong>. The signature on the brief IS the product. Strip away the commitment and you have an opinion. Opinions are abundant and cheap.</p>
+    <blockquote style="margin-top:1rem;">
+      <p>The world has never had a shortage of plausible-sounding analysis. What it has always been short of is people willing to stake something real on a specific course of action.</p>
+      <cite>&mdash; Zack Shapiro</cite>
+    </blockquote>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:var(--judgment-bg);color:var(--judgment)">3</div>
+      <div>
+        <div class="card-title">The Anti-Portfolio Concept</div>
+        <div class="card-subtitle">Scar tissue as competitive advantage</div>
+      </div>
+    </div>
+    <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;">The best investors track deals they <em>passed on</em> and study their error patterns. AI doesn't have this &mdash; it generates each answer fresh, without scar tissue from past mistakes.</p>
+    <div class="callout callout-judgment" style="margin-top:1rem;">
+      <div class="callout-label">Why This Matters</div>
+      <p>Your scar tissue &mdash; the mistakes you carry, the near-misses you remember, the times you were wrong and it cost you &mdash; is among the most valuable things you possess. <strong>Judgment is taste + stakes + scar tissue.</strong> That's a sharper formulation than most people use.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- TRAINING CRISIS -->
+<!-- ============================================================ -->
+<div class="section" id="section-crisis">
+  <span class="section-label" style="color:var(--crisis)">The Uncomfortable Part</span>
+  <h2 class="section-title">The Judgment Training Crisis</h2>
+  <p class="section-desc">If AI automates the entry-level work that historically <em>built</em> judgment, how does the next generation develop expertise?</p>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-number">67%</div>
+      <div class="stat-label">Drop in entry-level tech postings</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">50%</div>
+      <div class="stat-label">Junior hiring reduction at major tech firms</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">27.5%</div>
+      <div class="stat-label">Fall in US programmer employment (2023&ndash;2025)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">~20%</div>
+      <div class="stat-label">Young developer employment decline since late 2022</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">The Vacancy Chain Is Breaking</div>
+    <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;margin-top:0.5rem;">Entry-level work &mdash; doc review, first drafts, research memos, junior analyst modeling &mdash; was never just grunt work. It was the <strong>training ground</strong> where people developed pattern recognition through thousands of reps.</p>
+    <ul style="margin-top:0.75rem;">
+      <li><strong>Doc review</strong> taught junior lawyers what good contracts look like</li>
+      <li><strong>Financial modeling</strong> taught analysts how businesses actually work</li>
+      <li><strong>First drafts</strong> taught writers how to structure arguments</li>
+      <li><strong>Code review</strong> taught engineers to read before they could write</li>
+    </ul>
+    <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;margin-top:0.75rem;">If these reps disappear, the pipeline that produces people with judgment <em>also</em> disappears.</p>
+  </div>
+
+  <div class="callout callout-crisis">
+    <div class="callout-label">Shapiro's Warning</div>
+    <p>The firms that solve this problem &mdash; how to build judgment in a world where the traditional training ladder is dissolving &mdash; <strong>will have a structural advantage that compounds for decades</strong>. The firms that don't will find themselves with senior leaders who can't be replaced because nobody was trained to replace them.</p>
+  </div>
+
+  <div class="key-concept" data-label="The Monopoly Risk">
+    <p>If the ladder rungs dissolve, the people who <em>already have</em> judgment become a monopoly. Great for them. Terrible for everyone climbing. This is the most actionable and urgent part of Shapiro's argument &mdash; and the part that affects your generation most directly.</p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PUSHBACK -->
+<!-- ============================================================ -->
+<div class="section" id="section-pushback">
+  <span class="section-label" style="color:var(--production)">Critical Analysis</span>
+  <h2 class="section-title">Where to Push Back</h2>
+  <p class="section-desc">Three areas where the judgment premium thesis deserves scrutiny.</p>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:var(--production-bg);color:var(--production)">1</div>
+      <div>
+        <div class="card-title">The Stakes Argument Has a Shelf Life</div>
+      </div>
+    </div>
+    <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;">Right now, AI can't sign a brief or a prescription. But that's a <em>regulatory</em> barrier, not a structural one. When autonomous vehicles get liability frameworks, when AI medical devices get FDA clearance with statistical confidence intervals &mdash; the "someone must be accountable" argument shifts from "a human must sign" to "an insurer must underwrite."</p>
+    <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;margin-top:0.5rem;"><strong>The judgment premium is real for the next 5&ndash;10 years. Beyond that, the regulatory architecture evolves.</strong></p>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:var(--production-bg);color:var(--production)">2</div>
+      <div>
+        <div class="card-title">He Undersells the Information Gap Closing</div>
+      </div>
+    </div>
+    <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;">Shapiro says "information asymmetry is a temporary moat" but then builds his whole argument on tacit knowledge that <em>feels</em> different from information but might not be. If you can record every negotiation, every hallway conversation, every deal outcome &mdash; and train a model on 10,000 lawyers' careers instead of one &mdash; at what point does statistical pattern matching across sufficient data become functionally equivalent to "judgment"?</p>
+    <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;margin-top:0.5rem;">He'd say never. Worth questioning that assumption.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:var(--production-bg);color:var(--production)">3</div>
+      <div>
+        <div class="card-title">The Training Crisis Is the Real Insight &mdash; and He Buries It</div>
+      </div>
+    </div>
+    <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;">The most actionable and urgent part of this piece is the last section &mdash; the vacancy chains breaking, the junior reps disappearing. This is a problem that affects this generation directly. If the ladder rungs dissolve, the people who already have judgment become a monopoly.</p>
+    <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;margin-top:0.5rem;"><strong>This should have been the headline, not a conclusion.</strong></p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- CONNECTIONS -->
+<!-- ============================================================ -->
+<div class="section" id="section-connections">
+  <span class="section-label" style="color:var(--connection)">Synthesis</span>
+  <h2 class="section-title">How This Connects</h2>
+  <p class="section-desc">The judgment premium doesn't exist in isolation &mdash; it intersects with several other frameworks and ideas worth exploring together.</p>
+
+  <div class="meta-grid">
+    <div class="meta-card" style="border-top-color:var(--judgment);">
+      <div class="meta-card-num" style="color:var(--judgment);">Becoming an Artist</div>
+      <div class="meta-card-title">Taste, Judgment, Influence</div>
+      <p>Shapiro's "judgment" = the Dan Hock framework's "taste + influence." Both say the same thing: <strong>AI absorbs verifiable work. What's left is the human layer.</strong> Shapiro just names it more precisely &mdash; it's not just taste (pattern recognition) but taste plus the willingness to stake your reputation on a call.</p>
+    </div>
+    <div class="meta-card" style="border-top-color:var(--crisis);">
+      <div class="meta-card-num" style="color:var(--crisis);">High Agency Framework</div>
+      <div class="meta-card-title">Disagreeability = Judgment</div>
+      <p>The third skill in the high agency triad &mdash; disagreeability, the willingness to act on your view even when others push back &mdash; IS the judgment premium. Maintaining conviction through friction and the messy middle is exactly what Shapiro describes as "staking something real."</p>
+    </div>
+    <div class="meta-card" style="border-top-color:var(--connection);">
+      <div class="meta-card-num" style="color:var(--connection);">Cambridge MBA</div>
+      <div class="meta-card-title">Training Environments Still Matter</div>
+      <p>The training crisis means an MBA is <em>more</em> valuable, not less. It's one of the few remaining environments for "consequential reps" with real stakes &mdash; case method, live projects, peer pressure. The classroom may be one of the last judgment gyms.</p>
+    </div>
+    <div class="meta-card" style="border-top-color:var(--production);">
+      <div class="meta-card-num" style="color:var(--production);">Your Career Arc</div>
+      <div class="meta-card-title">Are You Seeking Consequential Reps?</div>
+      <p>You have enough professional reps (cross-functional leadership, investing, building) to be developing real judgment. The question Shapiro poses is: are you actively seeking the <strong>consequential reps</strong> &mdash; the ones where you're wrong and it costs you something &mdash; or the comfortable ones?</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="callout callout-connection">
+    <div class="callout-label">Shapiro's Advice, Distilled</div>
+    <p>Use AI for the <em>hardest</em> thing you do, not the easiest. The places where AI is subtly wrong are exactly the places where judgment is required. Every encounter with those edges sharpens your capacity. <strong>The reps at the frontier matter more than the reps in the center.</strong></p>
+  </div>
+
+  <div class="key-concept" data-label="Related Reading" style="margin-top:1.5rem;">
+    <p><strong>Latent Demand</strong> (Boris Cherny) &mdash; the product-building corollary to judgment. People only adopt things that make existing behavior easier. Judgment tells you <em>which</em> existing behavior to target. <a href="latent-demand-boris-cherny.html" style="color:var(--connection);font-weight:600;">Read the synthesis &rarr;</a></p>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+  <p>Source: Zack Shapiro &mdash; "The Judgment Premium" (March 2026)</p>
+  <p style="margin-top:0.35rem;"><a href="../index.html">&larr; Back to Study Hub</a></p>
+</footer>
+
+<script>
+(function() {
+  const nav = document.getElementById('nav');
+  const navWrap = document.getElementById('navWrap');
+  const sections = document.querySelectorAll('.section');
+  const buttons = document.querySelectorAll('.nav-btn');
+
+  nav.addEventListener('click', function(e) {
+    const btn = e.target.closest('.nav-btn');
+    if (!btn) return;
+    const target = btn.dataset.section;
+    buttons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    sections.forEach(s => {
+      s.classList.toggle('active', s.id === 'section-' + target);
+    });
+    window.scrollTo({ top: navWrap.offsetTop, behavior: 'smooth' });
+  });
+
+  let ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        navWrap.classList.toggle('scrolled', window.scrollY > navWrap.offsetTop - 2);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      const active = document.querySelector('.nav-btn.active');
+      const all = Array.from(buttons);
+      const idx = all.indexOf(active);
+      let next;
+      if (e.key === 'ArrowRight') {
+        next = all[(idx + 1) % all.length];
+      } else {
+        next = all[(idx - 1 + all.length) % all.length];
+      }
+      next.click();
+    }
+  });
+})();
+</script>
+</body>
+</html>

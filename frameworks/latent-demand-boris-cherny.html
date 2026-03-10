@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latent Demand &amp; Building What People Already Do — Boris Cherny</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f5f0;
+    --surface: #ffffff;
+    --text: #1c1917;
+    --text-secondary: #57534e;
+    --text-muted: #a8a29e;
+    --border: #e7e5e4;
+    --border-light: #f0eeeb;
+
+    --principle: #1d4ed8;
+    --principle-bg: #dbeafe;
+    --principle-border: #bfdbfe;
+    --principle-surface: #eff6ff;
+
+    --example: #0d7c66;
+    --example-bg: #d1fae5;
+    --example-border: #a7f3d0;
+    --example-surface: #ecfdf5;
+
+    --builder: #b45309;
+    --builder-bg: #fef3c7;
+    --builder-border: #fde68a;
+    --builder-surface: #fffbeb;
+
+    --spicy: #be123c;
+    --spicy-bg: #ffe4e6;
+    --spicy-border: #fecdd3;
+    --spicy-surface: #fff1f2;
+
+    --nav-active: #1c1917;
+    --nav-inactive: #a8a29e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .page-header {
+    padding: 3rem 1.5rem 2rem;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .page-header .breadcrumb {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .page-header .breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .page-header .breadcrumb a:hover { color: var(--text-secondary); }
+  .page-header .breadcrumb span { margin: 0 0.4rem; }
+  .page-header h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.02em;
+  }
+  .page-header .subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    line-height: 1.55;
+  }
+  .page-header .meta {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .page-header .meta-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+  }
+
+  .nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    transition: box-shadow 0.2s ease;
+  }
+  .nav-wrap.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.04); }
+  .nav {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    padding: 0.75rem 1rem;
+    border: none;
+    background: transparent;
+    color: var(--nav-inactive);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.15s ease;
+    white-space: nowrap;
+    position: relative;
+    letter-spacing: 0.01em;
+  }
+  .nav-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1rem;
+    right: 1rem;
+    height: 2px;
+    background: transparent;
+    border-radius: 2px 2px 0 0;
+    transition: background 0.15s ease;
+  }
+  .nav-btn.active { color: var(--nav-active); }
+  .nav-btn.active::after { background: var(--nav-active); }
+  .nav-btn:hover:not(.active) { color: var(--text-secondary); }
+  .nav-btn .dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 0.4rem;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 5rem;
+  }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  .section-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    line-height: 1.6;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: box-shadow 0.15s ease;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.04); }
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .card-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    font-weight: 600;
+  }
+  .card-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.35;
+  }
+  .card-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+  }
+
+  .callout {
+    border-radius: 10px;
+    padding: 1.15rem 1.25rem;
+    margin: 1.25rem 0;
+    border-left: 3px solid;
+  }
+  .callout .callout-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .callout p, .callout li {
+    font-size: 0.84rem;
+    line-height: 1.6;
+    color: var(--text);
+  }
+
+  .callout-principle { background: var(--principle-surface); border-color: var(--principle); }
+  .callout-principle .callout-label { color: var(--principle); }
+  .callout-example { background: var(--example-surface); border-color: var(--example); }
+  .callout-example .callout-label { color: var(--example); }
+  .callout-builder { background: var(--builder-surface); border-color: var(--builder); }
+  .callout-builder .callout-label { color: var(--builder); }
+  .callout-spicy { background: var(--spicy-surface); border-color: var(--spicy); }
+  .callout-spicy .callout-label { color: var(--spicy); }
+
+  .key-concept {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    position: relative;
+  }
+  .key-concept::before {
+    content: attr(data-label);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    position: absolute;
+    top: -0.55rem;
+    left: 1.25rem;
+    background: var(--bg);
+    padding: 0 0.5rem;
+  }
+  .key-concept p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+  .key-concept strong { color: var(--text); }
+
+  ul, ol { padding-left: 1.25rem; margin: 0.6rem 0; }
+  li {
+    margin-bottom: 0.35rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  li strong { color: var(--text); }
+
+  blockquote {
+    border-left: 3px solid var(--border);
+    padding: 0.75rem 1.25rem;
+    margin: 1.25rem 0;
+    background: var(--surface);
+    border-radius: 0 10px 10px 0;
+  }
+  blockquote p {
+    font-size: 0.88rem;
+    font-style: italic;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  blockquote cite {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.72rem;
+    font-style: normal;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    margin: 1.25rem 0;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  thead { background: var(--bg); }
+  th {
+    font-weight: 600;
+    text-align: left;
+    padding: 0.7rem 0.9rem;
+    color: var(--text);
+    border-bottom: 1.5px solid var(--border);
+    font-size: 0.68rem;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  td {
+    padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-secondary);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(0,0,0,0.01); }
+
+  /* ---- FLOW ---- */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+  }
+  .flow-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .flow-arrow {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  /* ---- THREE COL ---- */
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  @media (min-width: 640px) {
+    .three-col { grid-template-columns: 1fr 1fr 1fr; }
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  @media (min-width: 640px) {
+    .two-col { grid-template-columns: 1fr 1fr; }
+  }
+
+  .divider { height: 1px; background: var(--border); margin: 2rem 0; }
+
+  /* ---- DEMAND TYPE CARDS ---- */
+  .demand-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    border-top: 3px solid;
+    text-align: center;
+  }
+  .demand-card-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+  .demand-card p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    border-top: 1px solid var(--border);
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .footer p {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .footer a {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+  .footer a:hover { color: var(--text); }
+
+  @media (max-width: 640px) {
+    .page-header { padding: 2rem 1rem 1.5rem; }
+    .page-header h1 { font-size: 1.6rem; }
+    .container { padding: 1.5rem 1rem 4rem; }
+    .card { padding: 1.15rem; }
+    .nav-btn { padding: 0.65rem 0.75rem; font-size: 0.72rem; }
+  }
+
+  @media print {
+    .nav-wrap { display: none; }
+    .section { display: block !important; page-break-inside: avoid; }
+    body { background: white; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="breadcrumb">
+    <a href="../index.html">Study Hub</a>
+    <span>/</span>
+    Frameworks
+    <span>/</span>
+    Latent Demand
+  </div>
+  <h1>Latent Demand &amp; Building What People Already Do</h1>
+  <p class="subtitle">Boris Cherny's single biggest product principle &mdash; and how Claude Code, Plan Mode, and Claude.md all emerged from watching existing behavior.</p>
+  <div class="meta">
+    <span class="meta-item">Boris Cherny (Creator of Claude Code)</span>
+    <span class="meta-item">Light Cone Interview, Feb 2026</span>
+    <span class="meta-item">Product &amp; Building</span>
+  </div>
+</header>
+
+<nav class="nav-wrap" id="navWrap">
+  <div class="nav" id="nav">
+    <button class="nav-btn active" data-section="principle"><span class="dot" style="background:var(--principle)"></span>The Principle</button>
+    <button class="nav-btn" data-section="claude-code"><span class="dot" style="background:var(--example)"></span>Claude Code Origins</button>
+    <button class="nav-btn" data-section="builder"><span class="dot" style="background:var(--builder)"></span>Builder Rules</button>
+    <button class="nav-btn" data-section="spicy"><span class="dot" style="background:var(--spicy)"></span>Spicy Takes</button>
+  </div>
+</nav>
+
+<main class="container">
+
+<!-- ============================================================ -->
+<!-- THE PRINCIPLE -->
+<!-- ============================================================ -->
+<div class="section active" id="section-principle">
+  <span class="section-label" style="color:var(--principle)">Core Principle</span>
+  <h2 class="section-title">People Will Only Do a Thing They Already Do</h2>
+  <p class="section-desc">Boris Cherny's definition of latent demand and why it's the single most important product principle he's ever learned.</p>
+
+  <blockquote>
+    <p>People will only do a thing they already do. You can't get people to do a new thing. If people are trying to do a thing and you make it easier &mdash; that's a good idea.</p>
+    <cite>&mdash; Boris Cherny, Creator of Claude Code</cite>
+  </blockquote>
+
+  <div class="three-col" style="margin-top:1.5rem;">
+    <div class="demand-card" style="border-top-color:var(--principle);">
+      <div class="demand-card-title">Latent Demand</div>
+      <p>People <em>want</em> something but aren't searching for it because they don't know a solution exists, can't articulate it, or have adapted to the bad status quo.</p>
+    </div>
+    <div class="demand-card" style="border-top-color:var(--example);">
+      <div class="demand-card-title">Expressed Demand</div>
+      <p>People actively Googling, comparing, requesting quotes. Easy to measure, but everyone's already competing for it. Crowded by definition.</p>
+    </div>
+    <div class="demand-card" style="border-top-color:var(--spicy);">
+      <div class="demand-card-title">No Demand</div>
+      <p>People genuinely don't want or need it. The graveyard of startups that confused "latent" with "nonexistent."</p>
+    </div>
+  </div>
+
+  <div class="key-concept" data-label="The Classic Example">
+    <p>Nobody asked for Uber. But everyone was already trying to get from A to B and <strong>hating the taxi experience</strong>. The demand was latent &mdash; invisible in surveys, obvious in frustration. Your job isn't to create new behavior. It's to <strong>remove friction from existing behavior</strong>.</p>
+  </div>
+
+  <div class="card" style="margin-top:1.5rem;">
+    <div class="card-title">Why Latent Demand Beats New Behavior</div>
+    <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;margin-top:0.5rem;">Three reasons latent demand is where asymmetric opportunities live:</p>
+    <ul style="margin-top:0.75rem;">
+      <li><strong>No competition signal:</strong> Expressed demand shows up in keyword tools, market reports, RFPs. Everyone sees it. Latent demand is invisible &mdash; you find it by watching what people hack together, not by reading reports.</li>
+      <li><strong>Adoption is frictionless:</strong> You're not convincing anyone to change behavior. You're making their existing behavior effortless. The "aha" moment is instant.</li>
+      <li><strong>Defensibility through insight:</strong> Finding latent demand requires taste and judgment (seeing what others don't). This is inherently harder to copy than following expressed demand signals.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- CLAUDE CODE ORIGINS -->
+<!-- ============================================================ -->
+<div class="section" id="section-claude-code">
+  <span class="section-label" style="color:var(--example)">Case Study</span>
+  <h2 class="section-title">How Claude Code Emerged from Latent Demand</h2>
+  <p class="section-desc">Every major Claude Code feature was built by watching what users were already doing &mdash; and making it native.</p>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:var(--example-bg);color:var(--example)">1</div>
+      <div>
+        <div class="card-title">Claude Code Itself</div>
+        <div class="card-subtitle">Accidental product from a personal CLI</div>
+      </div>
+    </div>
+    <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;">Boris built Claude Code as a personal CLI to test the API. He shared it with teammates. They started using it for real work. It went viral internally. The terminal form factor stuck because "we didn't know what the right UI was yet" &mdash; and it turned out the terminal <em>was</em> the right UI.</p>
+    <div class="callout callout-example" style="margin-top:0.75rem;">
+      <div class="callout-label">Latent Demand</div>
+      <p>Engineers were already opening terminals to write code. They were already talking to Claude in the browser. Boris just merged the two things they were already doing.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:var(--example-bg);color:var(--example)">2</div>
+      <div>
+        <div class="card-title">Plan Mode</div>
+        <div class="card-subtitle">People were already doing this in the browser</div>
+      </div>
+    </div>
+    <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;">Before Plan Mode existed, users were opening Claude in the browser to talk through specs and architecture before coding in the terminal. Boris watched this behavior and moved the planning step into the CLI itself.</p>
+    <div class="callout callout-principle" style="margin-top:0.75rem;">
+      <div class="callout-label">Boris on Plan Mode's Future</div>
+      <p>"Plan mode probably has a limited lifespan... maybe in a month the model figures it out on its own." He's already anticipating the model absorbing the feature &mdash; building for the model 6 months from now, not today.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:var(--example-bg);color:var(--example)">3</div>
+      <div>
+        <div class="card-title">Claude.md / CLAUDE.md</div>
+        <div class="card-subtitle">Users were already writing markdown files for themselves</div>
+      </div>
+    </div>
+    <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;">People were writing markdown files with project context, style guides, and instructions &mdash; then manually having the model read them at the start of each session. Boris just formalized what users had hacked together.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:var(--example-bg);color:var(--example)">4</div>
+      <div>
+        <div class="card-title">Co-Work Mode</div>
+        <div class="card-subtitle">Non-technical users jumping through hoops</div>
+      </div>
+    </div>
+    <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;">Non-technical users at Anthropic &mdash; finance, design, data science &mdash; were "jumping through hoops to install a terminal app." They wanted Claude Code's power but not the terminal interface. So Boris built a GUI wrapper. The demand was latent: people were already trying to do the thing, just badly.</p>
+  </div>
+
+  <div class="key-concept" data-label="The Pattern">
+    <p>In every case, the process was the same: <strong>watch what people hack together</strong> &rarr; <strong>formalize it</strong> &rarr; <strong>ship it natively</strong>. The product emerged from observing behavior, not from imagining features.</p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- BUILDER RULES -->
+<!-- ============================================================ -->
+<div class="section" id="section-builder">
+  <span class="section-label" style="color:var(--builder)">Frameworks for Builders</span>
+  <h2 class="section-title">Three Rules from the Interview</h2>
+  <p class="section-desc">Beyond latent demand, Boris articulated three principles that inform how he builds at Anthropic.</p>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:var(--builder-bg);color:var(--builder)">1</div>
+      <div>
+        <div class="card-title">Build for the Model 6 Months from Now</div>
+        <div class="card-subtitle">The most counterintuitive product advice</div>
+      </div>
+    </div>
+    <blockquote style="margin-top:0.5rem;">
+      <p>At Anthropic, we don't build for the model of today. We build for the model 6 months from now. Just try to think about what frontier the model is not very good at today &mdash; it's going to get good at it.</p>
+      <cite>&mdash; Boris Cherny</cite>
+    </blockquote>
+    <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;margin-top:0.75rem;">This means your product strategy should target the <em>future capabilities</em> of the model, not its current limitations. If something is hard for the model today, that's where you build &mdash; because the model will catch up, and your product will be ready.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:var(--builder-bg);color:var(--builder)">2</div>
+      <div>
+        <div class="card-title">The Bitter Lesson</div>
+        <div class="card-subtitle">Never bet against the model</div>
+      </div>
+    </div>
+    <blockquote style="margin-top:0.5rem;">
+      <p>Never bet against the model. You could build scaffolding to improve performance 10&ndash;20%... or just wait a few months and the model does it for free.</p>
+      <cite>&mdash; Boris Cherny</cite>
+    </blockquote>
+    <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;margin-top:0.75rem;">This echoes Rich Sutton's "Bitter Lesson" from RL research: approaches that leverage computation always win over human-engineered cleverness. Build thin scaffolding, not thick frameworks.</p>
+    <div class="callout callout-builder" style="margin-top:0.75rem;">
+      <div class="callout-label">Practical Implication</div>
+      <p>There's no part of Claude Code that was around 6 months ago. It's constantly rewritten. ~80% of the codebase is less than 2 months old. <strong>Scaffolding has a shelf life measured in months, not years.</strong></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:var(--builder-bg);color:var(--builder)">3</div>
+      <div>
+        <div class="card-title">Hiring Signal: Can You Be Wrong?</div>
+        <div class="card-subtitle">Judgment in action</div>
+      </div>
+    </div>
+    <blockquote style="margin-top:0.5rem;">
+      <p>I sometimes ask 'what's an example of when you were wrong?' &mdash; can they recognize mistakes, claim credit for them, and learn?</p>
+      <cite>&mdash; Boris Cherny</cite>
+    </blockquote>
+    <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.6;margin-top:0.75rem;">This connects directly to the anti-portfolio concept from the Judgment Premium &mdash; the best performers track their errors. The ability to be wrong, own it, and extract signal from it is the meta-skill.</p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SPICY TAKES -->
+<!-- ============================================================ -->
+<div class="section" id="section-spicy">
+  <span class="section-label" style="color:var(--spicy)">Predictions &amp; Spicy Takes</span>
+  <h2 class="section-title">What Boris Sees Coming</h2>
+  <p class="section-desc">Forward-looking claims from the interview, plus productivity numbers from inside Anthropic.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Claim</th>
+          <th>Quote / Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>No IDE needed</strong></td>
+          <td>"I uninstalled my IDE. I don't edit a single line of code by hand. 100% Claude Code + Opus. I land 20 PRs a day."</td>
+        </tr>
+        <tr>
+          <td><strong>Plan mode dying</strong></td>
+          <td>"Plan mode probably has a limited lifespan... maybe in a month the model figures it out on its own."</td>
+        </tr>
+        <tr>
+          <td><strong>1000x productivity</strong></td>
+          <td>Steve Yegge's claim: Anthropic engineers are 1000x more productive than peak Google engineers.</td>
+        </tr>
+        <tr>
+          <td><strong>150% gain</strong></td>
+          <td>Since Claude Code launched, productivity per engineer at Anthropic grew 150%.</td>
+        </tr>
+        <tr>
+          <td><strong>Constant rewrites</strong></td>
+          <td>"There's no part of Claude Code that was around 6 months ago. It's just constantly rewritten."</td>
+        </tr>
+        <tr>
+          <td><strong>Code shelf life</strong></td>
+          <td>~80% of the codebase is less than 2 months old.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3 style="font-size:0.92rem;font-weight:700;margin-bottom:1rem;">Predictions for This Year</h3>
+
+  <div class="two-col">
+    <div class="card" style="margin:0;">
+      <div class="card-title" style="color:var(--example);">Likely</div>
+      <ul style="margin-top:0.5rem;">
+        <li><strong>Coding "generally solved"</strong> for everyone, not just power users</li>
+        <li><strong>Everyone codes:</strong> PMs, designers, EMs, finance &mdash; already happening at Anthropic</li>
+        <li><strong>"Software engineer"</strong> as a title may give way to "builder" or "PM"</li>
+      </ul>
+    </div>
+    <div class="card" style="margin:0;">
+      <div class="card-title" style="color:var(--spicy);">Upper Bound</div>
+      <ul style="margin-top:0.5rem;">
+        <li><strong>ASL4</strong> (recursively self-improving models) becomes a real consideration</li>
+        <li>Agent frameworks matter more than raw model capability</li>
+        <li>Open-source models compete with frontier via scaffolding</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="callout callout-principle">
+    <div class="callout-label">Connection: The Latent Demand Rule</div>
+    <p>Every new client or user interaction should start with ONE thing they already do. No pitch. Just: <strong>"What takes you 15 minutes every morning?"</strong> Deliver that. Then expand. The product should emerge from watching what people hack together.</p>
+  </div>
+
+  <div class="key-concept" data-label="Related Reading" style="margin-top:1.5rem;">
+    <p><strong>The Judgment Premium</strong> (Zack Shapiro) &mdash; if latent demand tells you <em>what</em> to build, judgment tells you <em>which</em> latent demand to target and when to stake your reputation on it. <a href="judgment-premium.html" style="color:var(--principle);font-weight:600;">Read the synthesis &rarr;</a></p>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+  <p>Source: Boris Cherny &mdash; Light Cone Interview (Feb 2026)</p>
+  <p style="margin-top:0.35rem;"><a href="../index.html">&larr; Back to Study Hub</a></p>
+</footer>
+
+<script>
+(function() {
+  const nav = document.getElementById('nav');
+  const navWrap = document.getElementById('navWrap');
+  const sections = document.querySelectorAll('.section');
+  const buttons = document.querySelectorAll('.nav-btn');
+
+  nav.addEventListener('click', function(e) {
+    const btn = e.target.closest('.nav-btn');
+    if (!btn) return;
+    const target = btn.dataset.section;
+    buttons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    sections.forEach(s => {
+      s.classList.toggle('active', s.id === 'section-' + target);
+    });
+    window.scrollTo({ top: navWrap.offsetTop, behavior: 'smooth' });
+  });
+
+  let ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        navWrap.classList.toggle('scrolled', window.scrollY > navWrap.offsetTop - 2);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      const active = document.querySelector('.nav-btn.active');
+      const all = Array.from(buttons);
+      const idx = all.indexOf(active);
+      let next;
+      if (e.key === 'ArrowRight') next = all[(idx + 1) % all.length];
+      else next = all[(idx - 1 + all.length) % all.length];
+      next.click();
+    }
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solstice Advanced Materials (SOLS) — Company Deep Dive</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0f0f14; --surface: #171720; --surface-alt: #1f1f2a; --surface-hover: #242433;
+    --border: #2a2a35; --border-alt: #333344; --text: #ece9e3; --text-secondary: #d5d1c7;
+    --text-muted: #9a9488; --text-dim: #766f64; --accent: #f59e0b; --accent-soft: rgba(245,158,11,.14);
+    --highlight: #fbbf24; --green: #34d399; --red: #f87171;
+  }
+  [data-theme="light"] {
+    --bg: #f8f6f2; --surface: #fff; --surface-alt: #f5f3ef; --surface-hover: #faf8f5;
+    --border: #e5e0d8; --border-alt: #d5d0c8; --text: #2c2a26; --text-secondary: #4a4640;
+    --text-muted: #6b6560; --text-dim: #8a8580; --accent: #d97706; --accent-soft: rgba(217,119,6,.1);
+    --highlight: #b45309; --green: #059669; --red: #dc2626;
+  }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); padding: 40px 24px; }
+  .page-layout { max-width: 1200px; margin: 0 auto; display: flex; gap: 28px; align-items: flex-start; }
+  .content { flex: 1; min-width: 0; } .container { max-width: 980px; }
+  .top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .back-link { font-size: 13px; color: var(--text-muted); text-decoration: none; } .back-link:hover { color: var(--accent); }
+  .theme-toggle { background: none; border: 1.5px solid var(--border); border-radius: 8px; padding: 6px 10px; cursor: pointer; color: var(--text-muted); }
+  h1 { font-size: 30px; font-weight: 800; margin-bottom: 8px; color: var(--highlight); }
+  .subtitle { font-size: 14px; color: var(--text-dim); margin-bottom: 28px; font-weight: 500; }
+  .section { margin-bottom: 30px; }
+  .section h2 { font-size: 18px; margin-bottom: 12px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px; }
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; }
+  .label { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
+  .value { margin-top: 8px; font-size: 20px; font-weight: 700; }
+  .note { margin-top: 6px; font-size: 12px; color: var(--text-dim); }
+  .list { display: grid; gap: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+  .list strong { color: var(--text); }
+  .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 10px; font-size: 11px; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border); }
+  td { padding: 11px 10px; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: none; }
+  td.num { text-align: right; }
+  tr.highlight td { color: var(--highlight); font-weight: 600; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .timeline { display: grid; gap: 10px; }
+  .timeline .item { border-left: 3px solid var(--accent); padding: 8px 0 8px 12px; color: var(--text-secondary); font-size: 13px; }
+  .section-nav { position: sticky; top: 96px; width: 220px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; height: fit-content; }
+  .section-nav-title { font-size: 11px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; font-weight: 700; }
+  .section-nav-links { display: flex; flex-direction: column; gap: 6px; }
+  .section-nav a { color: var(--text-muted); text-decoration: none; font-size: 13px; padding: 6px 8px; border-radius: 8px; }
+  .section-nav a:hover, .section-nav a.active { color: var(--accent); background: var(--accent-soft); }
+  @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .two-col { grid-template-columns: 1fr; } }
+  @media (max-width: 768px) { body { padding: 24px 16px; } .page-layout { flex-direction: column; } .section-nav { width: 100%; top: 0; } }
+</style>
+</head>
+<body>
+<div class="page-layout">
+  <nav class="section-nav" aria-label="Section navigation">
+    <div class="section-nav-title">On this page</div>
+    <div class="section-nav-links" id="section-nav-links"></div>
+  </nav>
+  <main class="content">
+    <div class="container">
+      <div class="top-bar">
+        <a href="../../" class="back-link">← Back to Study Hub</a>
+        <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
+      </div>
+
+      <h1>Solstice Advanced Materials (SOLS) — Deep Dive</h1>
+      <p class="subtitle">Honeywell spin-off with a hidden monopoly-like U.S. uranium conversion asset (Metropolis Works). Key debate: cyclical specialty materials stock or strategic nuclear toll collector?</p>
+
+      <div class="stats-grid">
+        <div class="stat-card"><div class="label">Spin-off Date</div><div class="value">30 Oct 2025</div><div class="note">From Honeywell Advanced Materials</div></div>
+        <div class="stat-card"><div class="label">Strategic Asset</div><div class="value">Metropolis Works</div><div class="note">Only operating U.S. UF6 conversion site</div></div>
+        <div class="stat-card"><div class="label">2026 UF6 Output</div><div class="value">&gt;10 kt</div><div class="note">~20% above planned 2024 level</div></div>
+        <div class="stat-card"><div class="label">AES Backlog</div><div class="value">&gt;$2B</div><div class="note">Long-term utility-heavy orderbook</div></div>
+      </div>
+
+      <section class="section" id="company-overview">
+        <h2>🏢 1) Company Overview</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>What SOLS is:</strong> A post-spin specialty materials company (refrigerants, semicon materials, healthcare films, fibers) plus an underappreciated nuclear fuel conversion business.</div>
+            <div><strong>Spin context:</strong> Honeywell distributed SOLS shares 1-for-4 on Oct 30, 2025. Typical spin mechanics likely created <strong>forced selling</strong> by holders who wanted industrial automation/aerospace exposure, not a smaller specialty-materials + nuclear mix.</div>
+            <div><strong>Why this matters:</strong> If non-nuclear segments are valued at normal materials multiples, the market may still be underpricing the uranium conversion economics.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="value-chain">
+        <h2>⛓️ 2) Uranium Value Chain Position (Toll-Collector Economics)</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Stage</th><th>What Happens</th><th class="num">Economics</th></tr></thead>
+            <tbody>
+              <tr><td>1. Mining</td><td>U3O8 ore concentrate production</td><td class="num">Commodity-like, cost curve exposed</td></tr>
+              <tr class="highlight"><td>2. Conversion (SOLS)</td><td>U3O8 → UF6 gas at Metropolis</td><td class="num">Fee-for-service / toll-like</td></tr>
+              <tr><td>3. Enrichment</td><td>UF6 isotopic upgrade (U-235)</td><td class="num">Strategic capacity bottleneck</td></tr>
+              <tr><td>4. Fabrication</td><td>Fuel assemblies for reactors</td><td class="num">Manufacturing + qualification</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card" style="margin-top:12px;">
+          <p class="list"><span><strong>Why conversion can be superior:</strong> SOLS usually does not own the uranium feedstock; it charges to process it. That means less commodity delta risk and stronger operating leverage when contract prices reset higher.</span></p>
+        </div>
+      </section>
+
+      <section class="section" id="thesis">
+        <h2>🎯 3) Core Thesis</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>Legacy pricing disconnect:</strong> Some contracts were signed near ~$20/kgU during weak-cycle years.</div>
+            <div><strong>Spot benchmark:</strong> Conversion spot referenced around ~$64/kgU in the @Citrini7 framework.</div>
+            <div><strong>Mechanics:</strong> If conversion cash cost is roughly unchanged, repricing legacy book toward market can drive disproportionate EBIT expansion.</div>
+            <div><strong>Timeline:</strong> Contract roll-off expected through 2028 (and potentially into 2029 in some scenarios), creating a visible earnings bridge.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="valuation-gap">
+        <h2>💰 4) Valuation Gap</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Company</th><th class="num">Multiple (thread framing)</th><th class="num">Interpretation</th></tr></thead>
+            <tbody>
+              <tr class="highlight"><td>SOLS</td><td class="num">~7.5x</td><td class="num">Priced as cyclical materials + uncertainty</td></tr>
+              <tr><td>Centrus (LEU)</td><td class="num">~33x</td><td class="num">Pure-play strategic nuclear premium</td></tr>
+              <tr><td>Cameco (CCJ)</td><td class="num">~40x</td><td class="num">Uranium/nuclear franchise premium</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="two-col" style="margin-top:12px;">
+          <div class="card"><div class="list"><div><strong>Why the discount exists:</strong> conglomerate residue from spin, mixed business segments, uncertainty on contract cadence, and skepticism around “100% to EBIT” assumptions.</div></div></div>
+          <div class="card"><div class="list"><div><strong>Why it may be too wide:</strong> strategic scarcity (only operating U.S. converter), long-duration demand tailwind, and high-visibility backlog/repricing path.</div></div></div>
+        </div>
+      </section>
+
+      <section class="section" id="competitive-position">
+        <h2>🛡️ 5) Competitive Position</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>Strategic choke point:</strong> Metropolis Works is the only operating domestic U.S. UF6 conversion facility.</div>
+            <div><strong>Global relevance:</strong> ~20% of global conversion nameplate (per cited thread framing), making it systemically important.</div>
+            <div><strong>Policy tailwind:</strong> U.S. goal to expand nuclear capacity by 2050 plus Western de-risking away from Russian supply.</div>
+            <div><strong>Regulatory duration:</strong> NRC license validity through 2060 (per company release).</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="risks">
+        <h2>⚠️ 6) Risks</h2>
+        <div class="card">
+          <div class="list">
+            <div><strong>Contract reality risk:</strong> Roll-off may be slower/less lucrative than bulls assume; fixed-vs-indexed formulas matter.</div>
+            <div><strong>Regulatory/operational risk:</strong> Single-asset concentration at Metropolis; downtime, safety, permitting, or compliance disruptions hit earnings hard.</div>
+            <div><strong>Political risk:</strong> subsidy/tariff/DOE policy changes can alter market economics.</div>
+            <div><strong>Demand timing risk:</strong> Reactor build delays or enrichment bottlenecks could shift conversion demand rightward.</div>
+            <div><strong>Valuation trap risk:</strong> If market views SOLS as “mostly non-nuclear materials,” multiple rerating may lag despite EBIT growth.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="catalyst-timeline">
+        <h2>🗓️ 7) Catalyst Timeline Through 2028</h2>
+        <div class="card timeline">
+          <div class="item"><strong>2026:</strong> Output &gt;10 kt UF6, debottleneck progress, and disclosure on repriced contract tranches.</div>
+          <div class="item"><strong>2026–2027:</strong> Each renewal cycle should show higher realized conversion pricing and widening AES margins.</div>
+          <div class="item"><strong>2027:</strong> Evidence of sustained throughput near/above 10 kt and clarity on expansion study outcomes.</div>
+          <div class="item"><strong>2028:</strong> Majority of legacy book expected to be repriced; key year for testing full earnings power versus current valuation.</div>
+        </div>
+      </section>
+
+      <section class="section" id="verdict">
+        <h2>✅ Bottom Line</h2>
+        <div class="card" style="border:1px solid rgba(245,158,11,.4); background:linear-gradient(135deg,var(--accent-soft),transparent);">
+          <p style="font-size:13px; line-height:1.7; color:var(--text-secondary);">
+            <strong>Variant view:</strong> SOLS may be mispriced as a plain spin-off materials company when its uranium conversion segment has strategic scarcity and step-function repricing potential.
+            The thesis is strongest if quarterly disclosures keep proving: (1) legacy roll-off, (2) higher realized $/kgU, and (3) operating leverage dropping into EBIT.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="sources">
+        <h2>📚 Sources</h2>
+        <div class="card">
+          <div class="list">
+            <div>Primary thesis input: recent <strong>@Citrini7</strong> SOLS thread / Citrini Research write-up (“Atoms vs Bits”).</div>
+            <div>Solstice PR (Feb 2026): Metropolis output expansion, backlog &gt;$2B, DOE-backed expansion work.</div>
+            <div>Solstice spin-off release (Oct 30, 2025): distribution mechanics and standalone positioning.</div>
+            <div style="font-size:12px;color:var(--text-dim);">Note: valuation multiples and contract repricing assumptions above follow the cited thread framing and should be refreshed against latest filings/call transcripts.</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+<script>
+function toggleTheme(){const h=document.documentElement;const i=document.getElementById('theme-icon');const c=h.getAttribute('data-theme');if(c==='dark'){h.setAttribute('data-theme','light');i.textContent='🌙';localStorage.setItem('studyhub-theme','light');}else{h.setAttribute('data-theme','dark');i.textContent='☀️';localStorage.setItem('studyhub-theme','dark');}}
+(function initTheme(){const s=localStorage.getItem('studyhub-theme')||'dark';document.documentElement.setAttribute('data-theme',s);const i=document.getElementById('theme-icon');if(i)i.textContent=s==='dark'?'☀️':'🌙';})();
+(function initNav(){const links=document.getElementById('section-nav-links');const secs=[...document.querySelectorAll('.section[id]')];secs.forEach(s=>{const a=document.createElement('a');a.href='#'+s.id;a.textContent=s.querySelector('h2')?.textContent.replace(/^[^\w]+/,'').trim()||s.id;links.appendChild(a);});const obs=new IntersectionObserver(es=>{es.forEach(e=>{const a=links.querySelector(`a[href="#${e.target.id}"]`);if(a&&e.isIntersecting){links.querySelectorAll('a').forEach(x=>x.classList.remove('active'));a.classList.add('active');}});},{rootMargin:'-35% 0px -55% 0px',threshold:0.01});secs.forEach(s=>obs.observe(s));})();
+</script>
+</body>
+</html>
