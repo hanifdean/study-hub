@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design-Focused Business Problem-Solving — Chapters 2, 3 & 7</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2; --warm-white: #FFFDF9; --ink: #2C2420; --ink-light: #5C5550; --ink-faint: #9A948F;
+    --accent-blue: #3D6B8E; --accent-blue-light: #E8F0F6;
+    --accent-red: #C4523B; --accent-red-light: #FCEEE8;
+    --accent-green: #4A7C59; --accent-green-light: #EBF5EE;
+    --accent-amber: #B88B2B; --accent-amber-light: #FDF6E3;
+    --accent-purple: #7B5EA7; --accent-purple-light: #F3EFF8;
+    --accent-teal: #2D8E8E; --accent-teal-light: #E6F5F5;
+    --border: #E8E2DB; --shadow: rgba(44, 36, 32, 0.06);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Source Sans 3', sans-serif; background: var(--cream); color: var(--ink); line-height: 1.7; font-size: 17px; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 760px; margin: 0 auto; padding: 48px 24px 80px; }
+  .header { text-align: center; margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+  .header-label { font-size: 12px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent-blue); margin-bottom: 16px; }
+  .header h1 { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 8px; }
+  .header .subtitle { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 300; font-style: italic; color: var(--ink-light); }
+  .header .source { font-size: 13px; color: var(--ink-faint); margin-top: 12px; }
+  .section { margin-bottom: 52px; }
+  .section-title { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700; color: var(--ink); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--ink); display: inline-block; }
+  .subsection-title { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 700; color: var(--ink); margin: 24px 0 12px; }
+  p { margin-bottom: 14px; color: var(--ink-light); }
+  strong { color: var(--ink); font-weight: 600; }
+  ul, ol { padding-left: 20px; color: var(--ink-light); margin-bottom: 14px; }
+  li { margin-bottom: 6px; }
+  .card { background: var(--warm-white); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 12px var(--shadow); }
+  .card .card-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .card p { font-size: 15.5px; margin-bottom: 10px; }
+  .card p:last-child { margin-bottom: 0; }
+  .card.blue { border-left: 4px solid var(--accent-blue); } .card.blue .card-label { color: var(--accent-blue); }
+  .card.red { border-left: 4px solid var(--accent-red); } .card.red .card-label { color: var(--accent-red); }
+  .card.green { border-left: 4px solid var(--accent-green); } .card.green .card-label { color: var(--accent-green); }
+  .card.amber { border-left: 4px solid var(--accent-amber); } .card.amber .card-label { color: var(--accent-amber); }
+  .card.purple { border-left: 4px solid var(--accent-purple); } .card.purple .card-label { color: var(--accent-purple); }
+  .card.teal { border-left: 4px solid var(--accent-teal); } .card.teal .card-label { color: var(--accent-teal); }
+  .table-wrap { overflow-x: auto; margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  th { background: var(--ink); color: var(--cream); padding: 10px 14px; text-align: left; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--ink-light); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) { background: var(--warm-white); }
+  .pipeline { display: flex; align-items: stretch; gap: 0; margin: 24px 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 2px 12px var(--shadow); }
+  .pipeline-item { flex: 1; padding: 16px 12px; text-align: center; border-right: 1px solid var(--border); }
+  .pipeline-item:last-child { border-right: none; }
+  .pipeline-item .num { font-family: 'Fraunces', serif; font-weight: 700; font-size: 20px; margin-bottom: 4px; }
+  .pipeline-item .label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .pipeline-item .desc { font-size: 12px; color: var(--ink-light); line-height: 1.4; }
+  .p-blue { background: var(--accent-blue-light); } .p-blue .num, .p-blue .label { color: var(--accent-blue); }
+  .p-green { background: var(--accent-green-light); } .p-green .num, .p-green .label { color: var(--accent-green); }
+  .p-amber { background: var(--accent-amber-light); } .p-amber .num, .p-amber .label { color: var(--accent-amber); }
+  .p-purple { background: var(--accent-purple-light); } .p-purple .num, .p-purple .label { color: var(--accent-purple); }
+  .p-teal { background: var(--accent-teal-light); } .p-teal .num, .p-teal .label { color: var(--accent-teal); }
+  .nuance { background: var(--accent-amber-light); border: 1px solid #E8D9A8; border-radius: 8px; padding: 14px 18px; margin: 16px 0; font-size: 14px; line-height: 1.6; color: var(--ink-light); }
+  .nuance strong { color: var(--accent-amber); }
+  .diagram { background: var(--warm-white); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin: 20px 0; box-shadow: 0 2px 12px var(--shadow); text-align: center; }
+  .diagram .diagram-title { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+  .diagram .flow { font-family: 'Source Sans 3', monospace; font-size: 14px; color: var(--ink-light); line-height: 2; }
+  .takeaway { background: var(--ink); color: var(--cream); border-radius: 12px; padding: 28px; margin-top: 40px; text-align: center; }
+  .takeaway .label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-amber); margin-bottom: 10px; }
+  .takeaway p { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 300; line-height: 1.6; color: var(--cream); margin-bottom: 0; }
+  @media (max-width: 600px) {
+    .container { padding: 32px 16px 60px; } .header h1 { font-size: 26px; }
+    .pipeline { flex-direction: column; }
+    .pipeline-item { border-right: none; border-bottom: 1px solid var(--border); }
+    .pipeline-item:last-child { border-bottom: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="header-label">MG402 · Methodology Reading</div>
+    <h1>Design-Focused Business<br>Problem-Solving</h1>
+    <div class="subtitle">Chapters 2, 3 & 7</div>
+    <div class="source">From the BPS Methodology Handbook</div>
+  </div>
+
+  <!-- Chapter 2 -->
+  <div class="section">
+    <div class="section-title">Chapter 2: Problem-Solving Projects in Organizations</div>
+
+    <div class="subsection-title">The Regulative Cycle</div>
+    <p>BPS projects follow the <strong>Regulative Cycle</strong> (Van Strien, 1997) — five process steps:</p>
+    <div class="pipeline">
+      <div class="pipeline-item p-blue"><div class="num">1</div><div class="label">Problem Definition</div><div class="desc">What's the problem? Whose problem?</div></div>
+      <div class="pipeline-item p-green"><div class="num">2</div><div class="label">Analysis & Diagnosis</div><div class="desc">What causes it? What are consequences?</div></div>
+      <div class="pipeline-item p-amber"><div class="num">3</div><div class="label">Plan of Action</div><div class="desc">Solution design + change plan</div></div>
+      <div class="pipeline-item p-purple"><div class="num">4</div><div class="label">Intervention</div><div class="desc">Implement the changes</div></div>
+      <div class="pipeline-item p-teal"><div class="num">5</div><div class="label">Evaluation</div><div class="desc">Did it work? Learning & adaptation</div></div>
+    </div>
+
+    <div class="subsection-title">Three Parts of a Full BPS Project</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Part</th><th>What Happens</th><th>Steps</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Design</strong></td><td>Redesign the system + create change plan + build organizational support</td><td>Steps 1, 2, 3</td></tr>
+          <tr><td><strong>Change</strong></td><td>Implement through changing roles, routines, tools</td><td>Step 4</td></tr>
+          <tr><td><strong>Learning</strong></td><td>Organization adapts; people relearn how to work effectively</td><td>Step 5</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Students typically leave after the <strong>design part</strong> — they have an <strong>effort commitment</strong> but not a <strong>result commitment</strong> (can't commit organizational resources).</p>
+
+    <div class="subsection-title">Characteristics of Business Problems</div>
+    <div class="card red">
+      <div class="card-label">⚠️ Business Problems Are Not Research Problems</div>
+      <p><strong>Not given, but chosen</strong> — problems emerge from a "mess" of issues; stakeholders choose which to work on based on power, interest, and feasibility</p>
+      <p><strong>Perception-based</strong> — stakeholders compare their perception of performance against norms and declare a gap</p>
+      <p><strong>Open-ended</strong> — multiple good solutions exist (not one right answer)</p>
+      <p><strong>Value-laden</strong> — charged with interests, power, politics</p>
+      <p><strong>Satisficing</strong> — solved "good enough" within time/effort constraints</p>
+      <p><strong>"Change muddle"</strong> — even sound designs face interference during implementation; improvisation always needed</p>
+    </div>
+
+    <div class="nuance">
+      <strong>⚡ Watch out for:</strong> <strong>Perception problems</strong> (gap based on inaccurate information — performance is actually fine) and <strong>Target problems</strong> (gap based on unattainable norms — the standard is unrealistic). Only work on <strong>real problems</strong>.
+    </div>
+  </div>
+
+  <!-- Chapter 3 -->
+  <div class="section">
+    <div class="section-title">Chapter 3: Design-Focused Problem-Solving</div>
+
+    <div class="subsection-title">Builds on Simon, But Differs in Two Key Ways</div>
+
+    <div class="card blue">
+      <div class="card-label">Difference 1: Not Purely Technical</div>
+      <p>BPS isn't just about a smart solution — it's about <strong>realizing actual performance improvement</strong>, which always involves organizational change. Following Tichy (1983), significant change must be managed across three subsystems simultaneously:</p>
+      <p>• <strong>Technical</strong> — the system/process itself<br>
+      • <strong>Political</strong> — interests, power, stakeholders<br>
+      • <strong>Cultural</strong> — values, perceptions, attitudes</p>
+      <p>Rational problem-solving only handles the technical. This methodology adds political and cultural.</p>
+    </div>
+
+    <div class="card green">
+      <div class="card-label">Difference 2: Flexible Process, Not Rigid Phases</div>
+      <p>Classical approaches demand finishing each phase before starting the next. This methodology uses <strong>flexible process steps</strong> with:</p>
+      <p>• <strong>Iterations</strong> — jumping back to previous steps<br>
+      • <strong>Explorations</strong> — jumping ahead to test ideas before analysis is complete</p>
+      <p><em>Example: Problem definition → first analysis → explore possible solutions → back to detailed analysis → back to solution design → maybe redefine the problem entirely</em></p>
+    </div>
+
+    <div class="subsection-title">Four Problem-Solving Strategies</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th></th><th>Content-Focused (Expert)</th><th>Process-Focused (Facilitator)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Design approach</strong> (one-go)</td><td>✅ This methodology — expert designs solution, then implements</td><td>Consultant facilitates, client designs</td></tr>
+          <tr><td><strong>Development approach</strong> (step-by-step)</td><td>Quinn's logical incrementalism</td><td>Action research — learn through iteration</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>Design</strong> = learning-before-doing &nbsp;|&nbsp; <strong>Development</strong> = learning-by-doing</p>
+    <p>In practice, you often <strong>combine</strong> them — design a pilot, learn from it, then scale.</p>
+
+    <div class="subsection-title">Analysis vs. Design</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Analysis</th><th>Design</th></tr></thead>
+        <tbody>
+          <tr><td>Logic: question → answer</td><td>Logic: solution → does it solve the problem?</td></tr>
+          <tr><td>One good answer typically</td><td>Multiple good solutions (open-ended)</td></tr>
+          <tr><td>Predefinable route</td><td><strong>Creative leap</strong> required</td></tr>
+          <tr><td>Deductive</td><td>Synthesis + evaluation iterations</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Chapter 7 -->
+  <div class="section">
+    <div class="section-title">Chapter 7: Solution Design</div>
+
+    <div class="subsection-title">Project Deliverables</div>
+    <ol>
+      <li>Problem definition</li>
+      <li>Problem analysis & diagnosis of causes</li>
+      <li>Exploration of potential solutions</li>
+      <li>Detailed solution design + change plan</li>
+      <li><strong>Organizational support</strong> for the solution — the "social product" (actual buy-in, not just a document)</li>
+    </ol>
+
+    <div class="subsection-title">The Core Design Loop: Synthesis-Evaluation Iterations</div>
+    <div class="diagram">
+      <div class="diagram-title">The Design Process</div>
+      <div class="flow">
+        Problem Analysis → Develop Specifications →<br>
+        ⬇️<br>
+        <strong style="color: var(--accent-purple);">CREATIVE LEAP (Synthesis)</strong> → Proposed Solution →<br>
+        ⬇️<br>
+        Evaluation: Does it solve the problem?<br>
+        ⬇️<br>
+        <span style="color: var(--accent-green);">YES → Done</span> &nbsp;|&nbsp; <span style="color: var(--accent-red);">NO → Back to Synthesis</span>
+      </div>
+    </div>
+
+    <p>The <strong>creative leap</strong> can't be prescribed — but you can manage its inputs: good problem analysis, clear specifications, knowledge of similar cases, and relevant literature/precedents.</p>
+
+    <div class="card purple">
+      <div class="card-label">🎯 Idealized Design (Ackoff)</div>
+      <p><strong>Step 1:</strong> Design the <strong>ideal</strong> solution — technically, economically, socially viable — BUT <strong>ignoring</strong> all implementation constraints. Not science fiction, but not constrained by "how do we get from here to there."</p>
+      <p><strong>Step 2:</strong> Then assess: how much of this ideal can actually be implemented given real constraints?</p>
+      <p>Normal design approaches from present → what can we change?<br>
+      Idealized design approaches from ideal → what's possible?</p>
+    </div>
+
+    <div class="subsection-title">Evaluating Your Design</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>System Type</th><th>Evaluation Method</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Technical-dominant</strong> (inventory, scheduling)</td><td>Mathematical modelling, simulation</td></tr>
+          <tr><td><strong>Social-dominant</strong> (organizational change, management)</td><td><strong>Case-based reasoning</strong> — find similar realized cases, predict performance by comparison</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Case-based reasoning is what your professor means by <strong>"design precedents"</strong> — using E-JUST's TV Conference to evaluate whether a proposed Blackstone meeting system would work.</p>
+  </div>
+
+  <!-- Connections -->
+  <div class="section">
+    <div class="section-title">Connections to Course Frameworks</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>BPS Concept</th><th>Course Equivalent</th></tr></thead>
+        <tbody>
+          <tr><td>Regulative cycle</td><td>Simon's design cycle (analysis → synthesis → testing → evaluation → decision)</td></tr>
+          <tr><td>Satisficing</td><td>Same Simon concept — "good enough" within constraints</td></tr>
+          <tr><td>Design vs. development</td><td>Pahl & Beitz: conceptual → embodiment → detailed design</td></tr>
+          <tr><td>Idealized design</td><td>TRIZ's Ideal Final Result — design from the ideal backward</td></tr>
+          <tr><td>Case-based reasoning</td><td>Design precedents (E-JUST → Blackstone)</td></tr>
+          <tr><td>Technical + political + cultural</td><td>Why Stanton can't just write a technical plan — she needs buy-in and culture change</td></tr>
+          <tr><td>Creative leap (synthesis)</td><td>Simon's synthesis — tacit judgment + creativity, distinct from analysis</td></tr>
+          <tr><td>Effort vs. result commitment</td><td>Stanton's authority gap — she can design but can't commit regional resources</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Takeaway -->
+  <div class="takeaway">
+    <div class="label">💡 Key Takeaway</div>
+    <p>Solving real organizational problems requires a <strong>creative leap</strong> that analysis alone cannot produce — plus managing the <strong>technical, political, and cultural</strong> dimensions simultaneously. Even brilliant designs face the "change muddle." Design satisfices, iterates, and accepts that implementation will be messy — but a sound design still dramatically improves the odds.</p>
+  </div>
+
+</div>
+</body>
+</html>
