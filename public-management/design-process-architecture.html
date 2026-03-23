@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Process in Architecture — Makstutis Summary</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2; --warm-white: #FFFDF9; --ink: #2C2420; --ink-light: #5C5550; --ink-faint: #9A948F;
+    --accent-blue: #3D6B8E; --accent-blue-light: #E8F0F6;
+    --accent-red: #C4523B; --accent-red-light: #FCEEE8;
+    --accent-green: #4A7C59; --accent-green-light: #EBF5EE;
+    --accent-amber: #B88B2B; --accent-amber-light: #FDF6E3;
+    --accent-purple: #7B5EA7; --accent-purple-light: #F3EFF8;
+    --accent-teal: #2D8E8E; --accent-teal-light: #E6F5F5;
+    --border: #E8E2DB; --shadow: rgba(44, 36, 32, 0.06);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Source Sans 3', sans-serif; background: var(--cream); color: var(--ink); line-height: 1.7; font-size: 17px; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 760px; margin: 0 auto; padding: 48px 24px 80px; }
+  .header { text-align: center; margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+  .header-label { font-size: 12px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent-blue); margin-bottom: 16px; }
+  .header h1 { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 8px; }
+  .header .subtitle { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 300; font-style: italic; color: var(--ink-light); }
+  .header .source { font-size: 13px; color: var(--ink-faint); margin-top: 12px; }
+  .section { margin-bottom: 52px; }
+  .section-title { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700; color: var(--ink); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--ink); display: inline-block; }
+  .subsection-title { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 700; color: var(--ink); margin: 24px 0 12px; }
+  p { margin-bottom: 14px; color: var(--ink-light); }
+  strong { color: var(--ink); font-weight: 600; }
+  ul, ol { padding-left: 20px; color: var(--ink-light); margin-bottom: 14px; }
+  li { margin-bottom: 6px; }
+  .card { background: var(--warm-white); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 12px var(--shadow); }
+  .card .card-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .card p { font-size: 15.5px; margin-bottom: 10px; }
+  .card p:last-child { margin-bottom: 0; }
+  .card.blue { border-left: 4px solid var(--accent-blue); } .card.blue .card-label { color: var(--accent-blue); }
+  .card.green { border-left: 4px solid var(--accent-green); } .card.green .card-label { color: var(--accent-green); }
+  .card.amber { border-left: 4px solid var(--accent-amber); } .card.amber .card-label { color: var(--accent-amber); }
+  .card.purple { border-left: 4px solid var(--accent-purple); } .card.purple .card-label { color: var(--accent-purple); }
+  .card.teal { border-left: 4px solid var(--accent-teal); } .card.teal .card-label { color: var(--accent-teal); }
+  .card.red { border-left: 4px solid var(--accent-red); } .card.red .card-label { color: var(--accent-red); }
+  .table-wrap { overflow-x: auto; margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  th { background: var(--ink); color: var(--cream); padding: 10px 14px; text-align: left; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--ink-light); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) { background: var(--warm-white); }
+  .quote { border-left: 3px solid var(--accent-amber); background: var(--accent-amber-light); padding: 14px 18px; margin: 16px 0; border-radius: 0 8px 8px 0; font-style: italic; font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .quote .attr { font-style: normal; font-size: 13px; color: var(--ink-faint); margin-top: 6px; }
+  .cycle { display: flex; align-items: stretch; gap: 0; margin: 24px 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 2px 12px var(--shadow); }
+  .cycle-item { flex: 1; padding: 18px 14px; text-align: center; border-right: 1px solid var(--border); }
+  .cycle-item:last-child { border-right: none; }
+  .cycle-item .num { font-family: 'Fraunces', serif; font-weight: 700; font-size: 20px; margin-bottom: 4px; }
+  .cycle-item .label { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+  .cycle-item .desc { font-size: 12.5px; color: var(--ink-light); line-height: 1.45; }
+  .c-blue { background: var(--accent-blue-light); } .c-blue .num, .c-blue .label { color: var(--accent-blue); }
+  .c-green { background: var(--accent-green-light); } .c-green .num, .c-green .label { color: var(--accent-green); }
+  .c-amber { background: var(--accent-amber-light); } .c-amber .num, .c-amber .label { color: var(--accent-amber); }
+  .c-purple { background: var(--accent-purple-light); } .c-purple .num, .c-purple .label { color: var(--accent-purple); }
+  .nuance { background: var(--accent-amber-light); border: 1px solid #E8D9A8; border-radius: 8px; padding: 14px 18px; margin: 16px 0; font-size: 14px; line-height: 1.6; color: var(--ink-light); }
+  .nuance strong { color: var(--accent-amber); }
+  .takeaway { background: var(--ink); color: var(--cream); border-radius: 12px; padding: 28px; margin-top: 40px; text-align: center; }
+  .takeaway .label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-amber); margin-bottom: 10px; }
+  .takeaway p { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 300; line-height: 1.6; color: var(--cream); margin-bottom: 0; }
+  @media (max-width: 600px) {
+    .container { padding: 32px 16px 60px; } .header h1 { font-size: 26px; }
+    .cycle { flex-direction: column; }
+    .cycle-item { border-right: none; border-bottom: 1px solid var(--border); }
+    .cycle-item:last-child { border-bottom: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="header-label">MG402 · Design Reading</div>
+    <h1>Design Process in Architecture</h1>
+    <div class="subtitle">From Concept to Completion</div>
+    <div class="source">Geoffrey Makstutis · Laurence King, 2018 · Chapters 1, 4, 6 & 8</div>
+  </div>
+
+  <!-- Ch 1: What is Design -->
+  <div class="section">
+    <div class="section-title">Chapter 1: What is Design?</div>
+
+    <div class="subsection-title">Three Properties of Design</div>
+
+    <div class="card blue">
+      <div class="card-label">🔧 Design is a Service</div>
+      <p>Expert advice on how to approach a problem, plus a clear plan for solving it. In architecture: a spatial solution. In public management: an organizational solution.</p>
+    </div>
+
+    <div class="card green">
+      <div class="card-label">🔄 Design is Iterative</div>
+      <p>Design doesn't happen once. It's a <strong>cyclical activity</strong> — the same process steps repeat at different levels of detail. Different outputs at different points, but strong similarities in the process.</p>
+    </div>
+
+    <div class="card purple">
+      <div class="card-label">🎨 Design is Personal</div>
+      <p>Successful designers develop <strong>their own process</strong>. Their work says something about their ideas and their way of seeing the world. The outcome is for others — but the process is yours.</p>
+    </div>
+
+    <div class="subsection-title">The Architect as Coordinator</div>
+    <p>Modern buildings involve many different professionals — architects, structural engineers, mechanical engineers, project managers, contractors. Each produces different information that must be coordinated.</p>
+
+    <div class="quote">
+      "The architect, along with others, must ensure that the design roles of these different groups are integrated into the overall process, so that the best possible ideas from each discipline are brought together. This means that there is a <strong>coordinating role</strong>, as well as a design role, for the architect."
+      <div class="attr">— Makstutis, p.14</div>
+    </div>
+
+    <div class="nuance">
+      <strong>⚡ Public management parallel:</strong> Stanton's role in the Blackstone Project is exactly this dual role — she's both designing the pilot AND coordinating air, water, hazwaste, and OTA specialists into a coherent system. The BPS readings describe the problem-solver as expert or facilitator. Makstutis adds a third role: <strong>coordinator</strong>.
+    </div>
+  </div>
+
+  <!-- Stages -->
+  <div class="section">
+    <div class="section-title">The Four Design Stages (Iterative Cycle)</div>
+
+    <div class="cycle">
+      <div class="cycle-item c-blue">
+        <div class="num">1</div>
+        <div class="label">Research</div>
+        <div class="desc">Understand the client, the site, the context. Look at <strong>precedents</strong>. "One of the primary methods of research for a designer is to look at what exists."</div>
+      </div>
+      <div class="cycle-item c-green">
+        <div class="num">2</div>
+        <div class="label">Proposition</div>
+        <div class="desc">Develop ideas into distinct proposals. Early propositions have little detail. <strong>Explore many potential solutions quickly</strong> — breadth before depth.</div>
+      </div>
+      <div class="cycle-item c-amber">
+        <div class="num">3</div>
+        <div class="label">Analysis</div>
+        <div class="desc">Evaluate against criteria: performance, function, concept, aesthetics. <strong>Crits and reviews</strong> from others. Client feedback is crucial. Analysis is "productive as well as reflective."</div>
+      </div>
+      <div class="cycle-item c-purple">
+        <div class="num">4</div>
+        <div class="label">Revision</div>
+        <div class="desc">If unworkable → new proposition. If promising → fine-tune. New information can reopen earlier decisions. <strong>Loops back</strong> to research, proposition, or analysis.</div>
+      </div>
+    </div>
+
+    <p>This cycle repeats at every scale — from the initial concept to the smallest detail. <strong>Iteration is not a weakness — it's how design works.</strong></p>
+  </div>
+
+  <!-- Ch 4: Approaches -->
+  <div class="section">
+    <div class="section-title">Chapter 4: Seven Design Approaches</div>
+    <p>Not a taxonomy — a toolkit to combine. Good designers develop a <strong>personal mix</strong> that fits each project.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Approach</th><th>Core Idea</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Conceptual</strong></td><td>Starts with questions about architecture's role; concept drives everything</td></tr>
+          <tr><td><strong>Formal</strong></td><td>Works within established rules and traditions; "reading" architectural language</td></tr>
+          <tr><td><strong>Material</strong></td><td>Interrogates the material itself to discover what it brings to the design</td></tr>
+          <tr><td><strong>Contextual</strong></td><td>Site, surroundings, and history are the primary driver — fitting in OR deliberately contrasting</td></tr>
+          <tr><td><strong>Functional</strong></td><td>Form follows function</td></tr>
+          <tr><td><strong>Computational</strong></td><td>Algorithms and digital tools to explore possibilities</td></tr>
+          <tr><td><strong>Collaborative</strong></td><td>Design emerges through teamwork and collective input</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Ch 6: Process in Action -->
+  <div class="section">
+    <div class="section-title">Chapter 6: The Design Process in Action</div>
+    <p>How a real project moves from concept to completion — progressive stages with increasing specificity:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Stage</th><th>What Happens</th><th>Character</th><th>≈ Pahl & Beitz</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Concept Design</strong></td><td>Establish broad parameters. Ideas are "slippery" — easy to miscommunicate. Avoid premature precision</td><td>Exploratory, abstract</td><td rowspan="2">Conceptual Design</td></tr>
+          <tr><td><strong>Concept Development</strong></td><td>Clarify and refine ideas. Push toward propositions that can be discussed in detail. Generation → convergence</td><td>Refining, still flexible</td></tr>
+          <tr><td><strong>Design Development</strong></td><td>Client signs off on one direction. Cost becomes important. Less expressive, more informational. Technical information integrated</td><td>Convergent, coordinated</td><td>Embodiment Design</td></tr>
+          <tr><td><strong>Detailed Design</strong></td><td>Resolve as many issues as possible. Translate drawings into manufacturing/construction information</td><td>Precise, specific</td><td rowspan="2">Detailed Design</td></tr>
+          <tr><td><strong>Production Design</strong></td><td>Final information for builders</td><td>Implementation-ready</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="nuance">
+      <strong>⚡ Course connection:</strong> Your professor asked for an <strong>embodiment design</strong> for the Blackstone HQ endeavor. That's the "Design Development" stage — where you've signed off on a direction (E-JUST's TV Conference as precedent for monthly meetings), and now you're making it specific enough to coordinate: who's there, what's on the agenda, how tasks are assigned. Less exploratory, more informational.
+    </div>
+  </div>
+
+  <!-- Ch 8: Developing -->
+  <div class="section">
+    <div class="section-title">Chapter 8: Developing Your Design Process</div>
+
+    <div class="card teal">
+      <div class="card-label">1. Expand Your World View</div>
+      <p>Constantly look for things that open new ways of thinking. "Why was it designed this way? How could it have been done differently?"</p>
+    </div>
+
+    <div class="card amber">
+      <div class="card-label">2. Reflective Practice</div>
+      <p>Actively review your own work and process. Not self-criticism — constructive self-analysis that helps you improve and think more clearly.</p>
+    </div>
+
+    <div class="card purple">
+      <div class="card-label">3. Build an Arsenal of Approaches</div>
+      <p>Every project is different. You need multiple starting points, exploration methods, and communication techniques. Combine, experiment, test yourself.</p>
+    </div>
+
+    <div class="quote">
+      "Your design process should be based on your ideas and your views. You may look to the work and process of others, as a way of exploring, but in the end you must find your own methods."
+      <div class="attr">— Makstutis, p.185</div>
+    </div>
+  </div>
+
+  <!-- Connections -->
+  <div class="section">
+    <div class="section-title">Connections to Course Frameworks</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Architecture Concept</th><th>Public Management Equivalent</th></tr></thead>
+        <tbody>
+          <tr><td>Architect as <strong>coordinator</strong> of specialists</td><td>Stanton coordinating air, water, hazwaste, OTA</td></tr>
+          <tr><td><strong>Precedents</strong> as primary research method</td><td>E-JUST's TV Conference as design precedent for Blackstone</td></tr>
+          <tr><td><strong>Iterative</strong> cycling through stages</td><td>Simon's design cycle; BPS methodology's iterations and explorations</td></tr>
+          <tr><td>Concept → development → detailed design</td><td>Pahl & Beitz: conceptual → embodiment → detailed</td></tr>
+          <tr><td><strong>Crits and reviews</strong></td><td>Monthly coordination meeting as review mechanism</td></tr>
+          <tr><td>Design as <strong>service</strong></td><td>BPS student's effort commitment — design the solution, can't implement</td></tr>
+          <tr><td><strong>Multiple approaches</strong> to combine</td><td>TRIZ, EAT, POSDCORB, diagnostic controls — different tools for different aspects</td></tr>
+          <tr><td>"No single right way to design"</td><td>Open-ended nature of business problems; satisficing</td></tr>
+          <tr><td>Design is <strong>personal</strong></td><td>Reflective practice — professor asking "what do you want to remember?"</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- What BPS Misses -->
+  <div class="section">
+    <div class="section-title">What Makstutis Adds That BPS Misses</div>
+
+    <div class="card red">
+      <div class="card-label">🔑 The Coordination Role</div>
+      <p>BPS frames the problem-solver as expert (content) or facilitator (process). Makstutis adds a third: <strong>coordinator</strong> — integrating many specialists into a coherent whole. This is arguably the most important role in public management, where programs always span multiple agencies and disciplines.</p>
+    </div>
+
+    <div class="card red">
+      <div class="card-label">🔑 Precedents as Design Source, Not Just Evaluation</div>
+      <p>BPS uses case-based reasoning to <strong>evaluate</strong> designs. Makstutis says precedents are also a primary source of <strong>design ideas</strong> — you look at what exists to understand how problems have already been solved. Dual use: inspiration AND evaluation.</p>
+    </div>
+
+    <div class="card red">
+      <div class="card-label">🔑 Progressive Stages with Richer Vocabulary</div>
+      <p>BPS has "design part → change part → learning part." Makstutis gives five stages from concept to production — a much more granular vocabulary for understanding where you are in the process and what that stage demands.</p>
+    </div>
+  </div>
+
+  <!-- Takeaway -->
+  <div class="takeaway">
+    <div class="label">💡 Key Takeaway</div>
+    <p>Design in architecture and design in public management share the same DNA: <strong>iterative, collaborative, precedent-informed, and never purely technical.</strong> The architect coordinates specialists toward a coherent building; the public manager coordinates agencies toward a coherent program. Both require creative leaps, progressive refinement from concept to detail, and balancing the designer's vision with the user's needs.</p>
+  </div>
+
+</div>
+</body>
+</html>
