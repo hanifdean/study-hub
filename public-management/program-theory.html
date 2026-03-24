@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Purposeful Program Theory — Chapters 2, 5 & 10</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2; --warm-white: #FFFDF9; --ink: #2C2420; --ink-light: #5C5550; --ink-faint: #9A948F;
+    --accent-blue: #3D6B8E; --accent-blue-light: #E8F0F6;
+    --accent-red: #C4523B; --accent-red-light: #FCEEE8;
+    --accent-green: #4A7C59; --accent-green-light: #EBF5EE;
+    --accent-amber: #B88B2B; --accent-amber-light: #FDF6E3;
+    --accent-purple: #7B5EA7; --accent-purple-light: #F3EFF8;
+    --accent-teal: #2D8E8E; --accent-teal-light: #E6F5F5;
+    --border: #E8E2DB; --shadow: rgba(44, 36, 32, 0.06);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Source Sans 3', sans-serif; background: var(--cream); color: var(--ink); line-height: 1.7; font-size: 17px; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 760px; margin: 0 auto; padding: 48px 24px 80px; }
+  .header { text-align: center; margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+  .header-label { font-size: 12px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent-blue); margin-bottom: 16px; }
+  .header h1 { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 8px; }
+  .header .subtitle { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 300; font-style: italic; color: var(--ink-light); }
+  .header .source { font-size: 13px; color: var(--ink-faint); margin-top: 12px; }
+  .section { margin-bottom: 52px; }
+  .section-title { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700; color: var(--ink); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--ink); display: inline-block; }
+  .subsection-title { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 700; color: var(--ink); margin: 24px 0 12px; }
+  p { margin-bottom: 14px; color: var(--ink-light); }
+  strong { color: var(--ink); font-weight: 600; }
+  ul, ol { padding-left: 20px; color: var(--ink-light); margin-bottom: 14px; }
+  li { margin-bottom: 6px; }
+  .card { background: var(--warm-white); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 12px var(--shadow); }
+  .card .card-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .card p { font-size: 15.5px; margin-bottom: 10px; }
+  .card p:last-child { margin-bottom: 0; }
+  .card.blue { border-left: 4px solid var(--accent-blue); } .card.blue .card-label { color: var(--accent-blue); }
+  .card.green { border-left: 4px solid var(--accent-green); } .card.green .card-label { color: var(--accent-green); }
+  .card.amber { border-left: 4px solid var(--accent-amber); } .card.amber .card-label { color: var(--accent-amber); }
+  .card.purple { border-left: 4px solid var(--accent-purple); } .card.purple .card-label { color: var(--accent-purple); }
+  .card.teal { border-left: 4px solid var(--accent-teal); } .card.teal .card-label { color: var(--accent-teal); }
+  .card.red { border-left: 4px solid var(--accent-red); } .card.red .card-label { color: var(--accent-red); }
+  .table-wrap { overflow-x: auto; margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  th { background: var(--ink); color: var(--cream); padding: 10px 14px; text-align: left; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--ink-light); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) { background: var(--warm-white); }
+  .quote { border-left: 3px solid var(--accent-amber); background: var(--accent-amber-light); padding: 14px 18px; margin: 16px 0; border-radius: 0 8px 8px 0; font-style: italic; font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .quote .attr { font-style: normal; font-size: 13px; color: var(--ink-faint); margin-top: 6px; }
+  .nuance { background: var(--accent-amber-light); border: 1px solid #E8D9A8; border-radius: 8px; padding: 14px 18px; margin: 16px 0; font-size: 14px; line-height: 1.6; color: var(--ink-light); }
+  .nuance strong { color: var(--accent-amber); }
+  .pipeline { display: flex; align-items: stretch; gap: 0; margin: 24px 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 2px 12px var(--shadow); }
+  .pipeline-item { flex: 1; padding: 16px 12px; text-align: center; border-right: 1px solid var(--border); }
+  .pipeline-item:last-child { border-right: none; }
+  .pipeline-item .label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .pipeline-item .desc { font-size: 12.5px; color: var(--ink-light); line-height: 1.4; }
+  .p-blue { background: var(--accent-blue-light); } .p-blue .label { color: var(--accent-blue); }
+  .p-green { background: var(--accent-green-light); } .p-green .label { color: var(--accent-green); }
+  .p-amber { background: var(--accent-amber-light); } .p-amber .label { color: var(--accent-amber); }
+  .p-purple { background: var(--accent-purple-light); } .p-purple .label { color: var(--accent-purple); }
+  .p-teal { background: var(--accent-teal-light); } .p-teal .label { color: var(--accent-teal); }
+  .takeaway { background: var(--ink); color: var(--cream); border-radius: 12px; padding: 28px; margin-top: 40px; text-align: center; }
+  .takeaway .label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-amber); margin-bottom: 10px; }
+  .takeaway p { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 300; line-height: 1.6; color: var(--cream); margin-bottom: 0; }
+  @media (max-width: 600px) {
+    .container { padding: 32px 16px 60px; } .header h1 { font-size: 26px; }
+    .pipeline { flex-direction: column; }
+    .pipeline-item { border-right: none; border-bottom: 1px solid var(--border); }
+    .pipeline-item:last-child { border-bottom: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="header-label">MG402 · Final Readings</div>
+    <h1>Purposeful Program Theory</h1>
+    <div class="subtitle">Effective Use of Theories of Change and Logic Models</div>
+    <div class="source">Sue C. Funnell & Patricia J. Rogers · Wiley, 2011 · Chapters 2, 5 & 10</div>
+  </div>
+
+  <!-- Chapter 2 -->
+  <div class="section">
+    <div class="section-title">Chapter 2: Variations of Program Theory Over Time</div>
+
+    <div class="subsection-title">What is Program Theory?</div>
+    <p>Program theory is an <strong>explicit description of how an intervention is expected to produce its outcomes</strong> — the causal chain from what you do to what you hope to achieve. It answers: <em>"Why do we think doing X will lead to result Y?"</em></p>
+    <p>Despite being called "new," the roots go back 50+ years. Key ideas have been articulated, forgotten, and rediscovered repeatedly.</p>
+
+    <div class="subsection-title">Historical Evolution</div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Period</th><th>Key Development</th><th>Contribution</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1959</strong></td><td>Kirkpatrick's Four Levels</td><td>First published program theory: Reactions → Learning → Behavior → Results. Use for planning (work backwards from outcomes) AND evaluation</td></tr>
+          <tr><td><strong>1967</strong></td><td>Suchman's "chain of objectives"</td><td>Argued evaluation needs to examine the <strong>intervening process</strong> between an activity and its objective — not just inputs and outputs</td></tr>
+          <tr><td><strong>1967</strong></td><td>Stufflebeam's CIPP model</td><td>Context, Input, Processes, Product — a generic program theory. One of the few to include context as intrinsic to the intervention</td></tr>
+          <tr><td><strong>1969</strong></td><td>Logical Framework (Logframe)</td><td>Standardized four components: Activities → Outputs → Purpose → Goal. Each with indicators, means of verification, and assumptions. Still widely used in international development</td></tr>
+          <tr><td><strong>1971</strong></td><td>Hall & O'Day's causal chain</td><td>Used intermediate variables for safety evaluations — more realistic than only measuring final results</td></tr>
+          <tr><td><strong>1972</strong></td><td>Carol Weiss's causal models</td><td>Sketched multiple causal chains from one intervention — 4-5 intermediate objectives, not just one level. First flexible, non-linear representation</td></tr>
+          <tr><td><strong>1975</strong></td><td>Bennett's Hierarchy</td><td>Seven sequential components for extension programs: Inputs → Activities → Participation → Reactions → KASA changes → Behavior changes → Social/economic/environmental changes</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="subsection-title">The First Boom (1980s)</div>
+    <p>Driven by public sector reforms demanding <strong>managing for results</strong>, not just compliance:</p>
+    <ul>
+      <li><strong>Chen & Rossi</strong> — "Theory-driven evaluation": six domain theories (treatment, implementation, environment, outcome, impact, intervening mechanisms, generalization)</li>
+      <li><strong>Bickman</strong> — Special issues on program theory in evaluation journals (1987, 1990)</li>
+      <li><strong>Australia, Canada</strong> — governments introduced program management requiring departments to articulate goals, explain plans, and report on performance</li>
+      <li><strong>New South Wales</strong> — Bryan Lenne pioneered "outcomes hierarchies" where external factors were included in program theory</li>
+    </ul>
+
+    <div class="subsection-title">Two Competing Representation Styles</div>
+
+    <div class="card blue">
+      <div class="card-label">Style 1: Standardized Template</div>
+      <p>A fixed number of boxes (usually 4-5) in a linear pipeline: Inputs → Activities → Outputs → Outcomes → Impact</p>
+      <p><strong>Examples:</strong> Logframe, United Way model, W.K. Kellogg Foundation Logic Model</p>
+      <p><strong>Pro:</strong> Easy to communicate, consistent across programs. <strong>Con:</strong> Oversimplifies, forces everything into predetermined categories</p>
+    </div>
+
+    <div class="card green">
+      <div class="card-label">Style 2: Flexible Chain of Results</div>
+      <p>Multiple branching pathways with many intermediate outcomes — no fixed number of levels or boxes</p>
+      <p><strong>Examples:</strong> Weiss's causal models, outcomes hierarchies</p>
+      <p><strong>Pro:</strong> Captures complexity and multiple causal pathways. <strong>Con:</strong> Harder to standardize, can become unwieldy</p>
+    </div>
+
+    <p>Both styles continue to be used. The choice depends on purpose: standardized templates for reporting and accountability; flexible chains for understanding and learning.</p>
+
+    <div class="subsection-title">Key Innovations</div>
+
+    <div class="card purple">
+      <div class="card-label">Realist Evaluation (Pawson & Tilley, 1994/1997)</div>
+      <p>Program theory as <strong>Context-Mechanism-Outcome (CMO) configurations</strong>. The critical insight: causal mechanisms only fire in favorable contexts. A program doesn't "work" universally — it works <em>for particular people in particular settings</em>.</p>
+    </div>
+
+    <div class="card teal">
+      <div class="card-label">Outcome Mapping (Earl, Carden & Smutylo, 2001)</div>
+      <p>For interventions where implementers <strong>can't control impacts</strong> but seek to influence them through "boundary partners." Acknowledges that many public programs work indirectly — changing others' behavior to produce outcomes, not producing outcomes directly.</p>
+    </div>
+
+    <div class="nuance">
+      <strong>⚡ Key insight:</strong> Program theory is used for BOTH planning (designing programs) AND evaluation (assessing programs). Kirkpatrick said: first use the chain of objectives to plan the program (work backwards from desired outcomes), then use the same chain as a framework for evaluation.
+    </div>
+  </div>
+
+  <!-- Chapter 5 -->
+  <div class="section">
+    <div class="section-title">Chapter 5: Simple, Complicated, and Complex</div>
+
+    <div class="quote">
+      "Everything should be made as simple as possible, but no simpler."
+      <div class="attr">— Albert Einstein (paraphrased), 1933</div>
+    </div>
+
+    <div class="subsection-title">The Three Types (Glouberman & Zimmerman)</div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th></th><th>🍳 Simple (Recipe)</th><th>🚀 Complicated (Rocket)</th><th>👶 Complex (Raising a Child)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Formula</strong></td><td>Recipe is essential</td><td>Formulae are critical and necessary</td><td>Formulae have limited application</td></tr>
+          <tr><td><strong>Replication</strong></td><td>Tested to ensure easy replication</td><td>Success with one increases confidence in next</td><td>Experience with one gives NO assurance of success with next</td></tr>
+          <tr><td><strong>Expertise</strong></td><td>Not required (but helps)</td><td>High expertise in many fields necessary</td><td>Expertise helps but is neither necessary nor sufficient</td></tr>
+          <tr><td><strong>Standardization</strong></td><td>Standardized products</td><td>Similar in critical ways</td><td>Every child is unique</td></tr>
+          <tr><td><strong>Certainty</strong></td><td>Good results every time</td><td>High certainty of outcome</td><td>Uncertainty remains</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The main message: health care systems (and most public programs) are <strong>complex</strong> — treating them as merely complicated is "doomed to failure."</p>
+
+    <div class="quote">
+      "If you try and take a cat apart to see how it works, the first thing you have on your hands is a non-working cat."
+      <div class="attr">— Douglas Adams</div>
+    </div>
+
+    <div class="subsection-title">Alternative Conceptualization (Zimmerman/Stacey)</div>
+    <p>A 2x2 matrix of <strong>agreement about ends</strong> × <strong>certainty about means</strong>:</p>
+    <ul>
+      <li><strong>Simple:</strong> Agreement about ends AND certainty about means</li>
+      <li><strong>Technically complicated:</strong> Agreement about ends, uncertainty about means</li>
+      <li><strong>Socially complicated:</strong> Disagreement about ends, certainty about means</li>
+      <li><strong>Complex:</strong> Neither agreement nor certainty</li>
+    </ul>
+
+    <div class="subsection-title">Snowden's Cynefin Framework</div>
+    <ul>
+      <li><strong>Simple</strong> = domain of the known; cause and effect well understood; best practices apply</li>
+      <li><strong>Complicated</strong> = domain of the knowable; expert knowledge required</li>
+      <li><strong>Complex</strong> = domain of the unknowable; patterns only visible in retrospect</li>
+      <li><strong>Chaotic</strong> = no patterns even in retrospect</li>
+      <li><strong>Disordered</strong> = classification unclear</li>
+    </ul>
+
+    <div class="subsection-title">Implications for Program Theory</div>
+
+    <div class="card blue">
+      <div class="card-label">Simple Interventions</div>
+      <p>Discrete, standardized, one agency, works the same everywhere. Both necessary and sufficient for outcomes. Constant dose-response. Can be evaluated as "what works."</p>
+      <p><em>Few real interventions meet these criteria exactly.</em></p>
+    </div>
+
+    <div class="card amber">
+      <div class="card-label">Complicated Interventions — Multiple Components</div>
+      <p><strong>Different valued outcomes:</strong> Partner organizations value different impacts (e.g., employment dept values jobs; education dept values qualifications; local gov values completed projects). These can conflict.</p>
+      <p><strong>Multiple and competing objectives:</strong> A participant who leaves a program for a job = success for employment, failure for training completion.</p>
+      <p><strong>Multiple levels:</strong> Interventions operate at individual, organizational, and system levels simultaneously.</p>
+      <p><strong>Multiple implementing agencies:</strong> Different organizations with different cultures, accountabilities, and definitions of success.</p>
+    </div>
+
+    <div class="card red">
+      <div class="card-label">Complex Interventions — Adaptation & Emergence</div>
+      <p><strong>Evolving focus:</strong> Objectives and activities change as the program develops.</p>
+      <p><strong>Emergent outcomes:</strong> Results that weren't planned or predicted.</p>
+      <p><strong>Fluid boundaries:</strong> Where the program ends and the context begins is unclear.</p>
+      <p><strong>Feedback loops:</strong> Outcomes influence inputs; the system responds to its own outputs.</p>
+    </div>
+
+    <div class="nuance">
+      <strong>⚡ Critical point:</strong> Most interventions have elements of ALL three. Vaccination is simple (one shot = immunity), complicated (logistics across a country), and complex (persuading people to participate). The classification is a <strong>heuristic</strong>, not an absolute label. The question is: which aspects of your intervention need which type of thinking?
+    </div>
+
+    <div class="subsection-title">Six Dimensions to Assess</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Dimension</th><th>Simple</th><th>Complicated</th><th>Complex</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Focus</strong></td><td>Agreed objectives</td><td>Multiple/competing objectives</td><td>Emergent, shifting objectives</td></tr>
+          <tr><td><strong>Governance</strong></td><td>One agency</td><td>Multiple agencies</td><td>Fluid, evolving partnerships</td></tr>
+          <tr><td><strong>Consistency</strong></td><td>Standardized everywhere</td><td>Adapted per site</td><td>Fundamentally different each time</td></tr>
+          <tr><td><strong>Sufficiency</strong></td><td>Program alone is enough</td><td>Needs other inputs</td><td>Outcomes depend on unpredictable interactions</td></tr>
+          <tr><td><strong>Necessariness</strong></td><td>Only way to achieve outcome</td><td>One of several possible routes</td><td>Many possible pathways to outcome</td></tr>
+          <tr><td><strong>Change trajectory</strong></td><td>Linear, predictable</td><td>Predictable with expertise</td><td>Non-linear, emergent</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Chapter 10 -->
+  <div class="section">
+    <div class="section-title">Chapter 10: Critiquing Program Theory</div>
+
+    <p>The goal of a critique is to ensure the program theory is <strong>useful rather than perfect</strong>. Program theories evolve over time — a review checks whether the current version is fit for purpose.</p>
+
+    <div class="subsection-title">Program Theory "Traps" (As Positive Questions)</div>
+    <div class="card green">
+      <div class="card-label">✅ Checklist for Sound Program Theory</div>
+      <p>• Does it show <strong>logical and defensible relationships</strong> between what the program does and the outcomes it seeks?</p>
+      <p>• Does it present a <strong>plausible solution</strong> to an identified problem?</p>
+      <p>• Are intended outcomes <strong>specified clearly enough</strong> to determine whether the approach is relevant?</p>
+      <p>• Could achievement of outcomes be <strong>recognized</strong>, if not precisely measured?</p>
+      <p>• Does it consider <strong>unintended outcomes</strong>?</p>
+      <p>• If complicated or complex: does it include <strong>coordination mechanisms, feedback loops, emergent outcomes, fluid boundaries</strong>?</p>
+      <p>• Can it <strong>generate useful evaluation questions</strong>?</p>
+      <p>• Is the type of program theory <strong>fit for its audience and purpose</strong>?</p>
+    </div>
+
+    <div class="subsection-title">Two Sets of Criteria</div>
+
+    <div class="card blue">
+      <div class="card-label">Internal Validity — Does It Hang Together?</div>
+      <p><strong>Clarity of description:</strong> Enough detail to see how the program will work — problem description, intended outcomes, planned activities, resources, and external factors.</p>
+      <p><strong>Outcomes chain as central organizer:</strong> Many program theories fail by concentrating on what the program <em>does</em> rather than what it <em>achieves</em>. Outcomes should range from immediate → intermediate → ultimate, arranged in sequence.</p>
+      <p><strong>Outcomes relate to the problem:</strong> Do intermediate outcomes mirror the causes the program addresses? If the problem is "parents don't encourage reading," there should be an outcome about "parents become more supportive of reading."</p>
+      <p><strong>Strength of logical argument:</strong> Test from both directions — from the end ("what needs to happen to achieve this?") AND from the start ("if we do this, what happens next?"). Check for gaps, breaks in temporal sequencing, and whether the program is actually sufficient.</p>
+    </div>
+
+    <div class="card purple">
+      <div class="card-label">External Validation — Is It Supported?</div>
+      <p><strong>Evidence base:</strong> Is there research supporting the causal claims? Is the evidence current?</p>
+      <p><strong>Consistency with accepted theories:</strong> Does the program theory align with what we know from social science, behavioral science, etc.?</p>
+      <p><strong>Context considered:</strong> Does it account for how context affects outcomes? (Connects to Pawson & Tilley's CMO configurations)</p>
+      <p><strong>Ethical base:</strong> Is the program theory ethically sound?</p>
+      <p><strong>Worth the effort:</strong> Given the purposes, was developing this program theory a good use of time and resources?</p>
+    </div>
+
+    <div class="subsection-title">Key Distinctions</div>
+
+    <div class="nuance">
+      <strong>⚡ Inputs, outputs, and outcomes are RELATIVE:</strong> What's an outcome for one program is an input for another. An advocacy program's outcome (funds generated) is the input for a service delivery program. A team-building activity's outcome (partners working together) looks like an activity — but if your program theory is about building the partnership, it IS an outcome. Context determines classification.
+    </div>
+
+    <div class="subsection-title">Diagnosing Program Failure</div>
+    <p>When a program fails, a critique can help identify whether the failure was due to:</p>
+    <ol>
+      <li><strong>Theory failure</strong> — the program theory itself was wrong (doing X doesn't actually lead to Y)</li>
+      <li><strong>Implementation failure</strong> — the theory was sound but wasn't implemented properly</li>
+      <li><strong>Context failure</strong> — the theory was sound, implementation was good, but the enabling context wasn't present</li>
+    </ol>
+    <p>This three-way distinction is crucial — without it, good programs get abandoned because of bad implementation, or bad theories persist because they were "well implemented."</p>
+  </div>
+
+  <!-- Connections -->
+  <div class="section">
+    <div class="section-title">Connections to Course Frameworks</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Program Theory Concept</th><th>MG402 Equivalent</th></tr></thead>
+        <tbody>
+          <tr><td>Outcomes chain (activities → outputs → outcomes → impact)</td><td>EAT Box B (tasks) → Box C (form of functioning / outcomes)</td></tr>
+          <tr><td>Context as intrinsic to the intervention</td><td>EAT Box A (contextual conditions — distal and proximal)</td></tr>
+          <tr><td>Theory failure vs. implementation failure vs. context failure</td><td>DRC's distinction: was the design wrong, or was the execution wrong, or was the context unfavorable?</td></tr>
+          <tr><td>Simple / complicated / complex</td><td>Blackstone = complicated (multiple agencies, competing objectives, different cultures). Kumbh Mela = complex (emergent, time-pressured, unprecedented scale)</td></tr>
+          <tr><td>Realist evaluation: Context-Mechanism-Outcome</td><td>Burke's pentad ratios (scene-act, scene-agent) — context shapes what actions are possible and who emerges as agent</td></tr>
+          <tr><td>Multiple valued outcomes across partner organizations</td><td>E-JUST: Egypt valued rapid launch; Japan valued governance quality. Blackstone: DEP valued compliance; OTA valued industry trust</td></tr>
+          <tr><td>Outcome mapping (influencing boundary partners)</td><td>Brazil in Action: SPI couldn't produce outcomes directly — it influenced ministries (boundary partners) to deliver</td></tr>
+          <tr><td>Standardized template vs. flexible chain</td><td>Logframe = standardized template. Weiss's model = flexible chain ≈ the richer EAT with multiple pathways</td></tr>
+          <tr><td>Program theory for planning AND evaluation</td><td>Embodiment design (planning) + diagnostic controls (evaluation) — same framework serves both purposes</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Takeaway -->
+  <div class="takeaway">
+    <div class="label">💡 Key Takeaway</div>
+    <p>Every public program rests on a theory — an assumption about <strong>why doing X will produce result Y</strong>. Making that theory explicit is the first step to both good design and good evaluation. But the theory must match the nature of the intervention: simple theories for simple programs, theories that embrace multiple components for complicated ones, and theories that allow for emergence and adaptation for complex ones. <strong>"As simple as possible, but no simpler."</strong></p>
+  </div>
+
+</div>
+</body>
+</html>
